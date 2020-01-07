@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit {
             { field: 'vin', header: 'Vin' },
             {field: 'year', header: 'Year' },
             { field: 'brand', header: 'Brand' },
-            { field: 'color', header: 'Color' }
+            { field: 'color', header: 'Color'},
         ];
   }
 }

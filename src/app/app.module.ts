@@ -49,7 +49,7 @@ import { reducers, metaReducers } from './reducers';
       metaReducers,
       runtimeChecks: {
         strictStateImmutability: true,
-        strictActionImmutability: true
+        strictActionImmutability: true,
       }
     }),
   ],

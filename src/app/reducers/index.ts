@@ -1,13 +1,11 @@
 import {
-  ActionReducer,
   ActionReducerMap,
-  createFeatureSelector,
-  createSelector,
-  MetaReducer
+  MetaReducer,
 } from '@ngrx/store';
 import { environment } from '../../environments/environment';
 
-export interface State {
+// tslint:disable-next-line: no-empty-interface
+export  interface State {
 
 }
 

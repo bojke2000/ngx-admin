@@ -50,7 +50,7 @@ import { reducers, metaReducers } from './reducers';
       runtimeChecks: {
         strictStateImmutability: true,
         strictActionImmutability: true,
-      }
+      },
     }),
   ],
   providers: [CarService],

@@ -1,38 +1,38 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { Car } from '../domain/car';
+import { Device } from '../domain/device';
 
 @Injectable()
-export class CarService {
+export class DeviceService {
 
     constructor(private http: HttpClient) { }
 
-    getCarsSmall() {
-    return this.http.get<any>('assets/showcase/data/cars-small.json')
+    getDevices() {
+    return this.http.get<any>('http://localhost:8081/device')
       .toPromise()
-      .then(res => <Car[]>res.data)
+      .then(res => <Device[]>res.data)
       .then(data => data);
     }
 
     getCarsMedium() {
     return this.http.get<any>('assets/showcase/data/cars-medium.json')
       .toPromise()
-      .then(res => <Car[]>res.data)
+      .then(res => <Device[]>res.data)
       .then(data => data);
     }
 
     getCarsLarge() {
     return this.http.get<any>('assets/showcase/data/cars-large.json')
       .toPromise()
-      .then(res => <Car[]>res.data)
+      .then(res => <Device[]>res.data)
       .then(data => data);
     }
 
   getCarsHuge() {
     return this.http.get<any>('assets/showcase/data/cars-huge.json')
       .toPromise()
-      .then(res => <Car[]>res.data)
+      .then(res => <Device[]>res.data)
       .then(data => data);
   }
 }

@@ -12,7 +12,7 @@ import { Subject } from 'rxjs';
 })
 export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit(): void {
-    this.sidebarService.toggle(true,'menu-sidebar');
+    this.sidebarService.toggle(true, 'menu-sidebar');
   }
 
   private destroy$: Subject<void> = new Subject<void>();

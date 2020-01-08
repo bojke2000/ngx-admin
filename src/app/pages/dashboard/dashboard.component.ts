@@ -5,7 +5,7 @@ import { Device } from '../../domain/device';
 @Component({
   selector: 'ngx-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.css']
+  styleUrls: ['./dashboard.css'],
 
 })
 export class DashboardComponent implements OnInit {

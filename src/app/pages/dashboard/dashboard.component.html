@@ -2,7 +2,10 @@
   <nb-card style="width: 100%">
     <nb-card-body>
       <h3>Devices</h3>
-      <p-table [columns]="cols" [value]="devices" [lazy]="true" (onLazyLoad)="loadDevicesLazy($event)" [loading]="loading"  [scrollable]="true" [paginator]="true"  [rows]="10" [style]="{width:'100%'}" scrollHeight="58vh" [totalRecords]="totalRecords">
+      <p-table [columns]="cols" [value]="devices" [lazy]="true" #table (onLazyLoad)="loadDevicesLazy($event)"
+        [loading]="loading" [scrollable]="true" [paginator]="true" [rows]="20" [style]="{width:'100%'}" scrollHeight="58vh"
+        selectionMode="single" [(selection)]="selectedDevice" dataKey="siteId"
+        [totalRecords]="totalRecords">
         <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
                 <col *ngFor="let col of columns | slice:1" [style.width]="col.width" [pSortableColumn]>
@@ -10,13 +13,14 @@
         </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th *ngFor="let col of columns | slice:1" [pSortableColumn]>
+                <th *ngFor="let col of columns | slice:1"  [pSortableColumn]="col.field" (onClick)=resetSort()>
                     {{col.header}}
+                    <p-sortIcon [field]="col.field"></p-sortIcon>
                 </th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-columns="columns">
-            <tr>
+            <tr [pSelectableRow]="rowData">
                 <td *ngFor="let col of columns | slice:1">
                     {{rowData[col.field]}}
                 </td>

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DeviceService } from '../../service/deviceservice';
 import { Device } from '../../domain/device';
 import { LazyLoadEvent } from 'primeng/api/public_api';
+import {Table} from 'primeng/table';
 
 @Component({
   selector: 'ngx-dashboard',
@@ -17,7 +18,8 @@ export class DashboardComponent implements OnInit {
   cols: any[];
   isResisable: boolean = true;
   loading: boolean;
-
+  @ViewChild('table', {static: false}) table: Table;
+  selectedDevice: Device;
 
   constructor(private deviceService: DeviceService) { }
 
@@ -34,11 +36,11 @@ export class DashboardComponent implements OnInit {
       { field: 'gsmId', header: 'GSM ID' , width: '100px' },
       { field: 'deviceId', header: 'Device ID' , width: '100px' },
       { field: 'mpn', header: 'MPN' , width: '100px' },
-      { field: 'countryId', header: 'Country ID' , width: '100px' },
+      { field: 'countryId', header: 'Country ID' , width: '120px' },
       { field: 'cityId', header: 'City ID' , width: '100px' },
       { field: 'street', header: 'Street' , width: '200px' },
-      { field: 'streetNo', header: 'Street No' , width: '100px' },
-      { field: 'deviation', header: 'Deviation' , width: '100px' },
+      { field: 'streetNo', header: 'Street No' , width: '120px' },
+      { field: 'deviation', header: 'Deviation' , width: '120px' },
       { field: 'customerName', header: 'Customer Name' , width: '250px' },
       { field: 'customerInfo', header: 'Customer Info' , width: '200px' },
       { field: 'siteRemark', header: 'Site Remark' , width: '250px' },
@@ -51,10 +53,10 @@ export class DashboardComponent implements OnInit {
       { field: 'unitB', header: 'Unit B' , width: '100px' },
       { field: 'unitC', header: 'Unit C' , width: '100px' },
       { field: 'unitD', header: 'Unit D' , width: '100px' },
-      { field: 'multiplierA', header: 'Multiplier A' , width: '100px' },
-      { field: 'multiplierB', header: 'Multiplier B' , width: '100px' },
-      { field: 'multiplierC', header: 'Multiplier C' , width: '100px' },
-      { field: 'multiplierD', header: 'Multiplier D' , width: '100px' },
+      { field: 'multiplierA', header: 'Multiplier A' , width: '120px' },
+      { field: 'multiplierB', header: 'Multiplier B' , width: '120px' },
+      { field: 'multiplierC', header: 'Multiplier C' , width: '120px' },
+      { field: 'multiplierD', header: 'Multiplier D' , width: '120px' },
     ];
 
     this.loading = true;
@@ -78,4 +80,10 @@ export class DashboardComponent implements OnInit {
         }
     }, 1000);
   }
+
+  resetSort() {
+    this.table.sortOrder = 0;
+    this.table.sortField = '';
+    this.table.reset();
+   }
 }

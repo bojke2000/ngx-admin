@@ -2,27 +2,27 @@
   <nb-card style="width: 100%">
     <nb-card-body>
       <h3>Devices</h3>
-        <p-table [columns]="cols" [value]="devices" [scrollable]="true" [resizableColumns]="true" [style]="{width:'100%'}" scrollHeight="58vh">
-          <ng-template pTemplate="colgroup" let-columns>
-              <colgroup>
-                  <col *ngFor="let col of columns" style="width: 100px" >
-              </colgroup>
-          </ng-template>
-          <ng-template pTemplate="header" let-columns >
-              <tr>
-                  <th *ngFor="let col of columns" pResizableColumn>
-                      {{col.header}}
-                  </th>
-              </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-rowData let-columns="columns">
-              <tr>
-                  <td *ngFor="let col of columns" class="ui-resizable-column">
-                      {{rowData[col.field]}}
-                  </td>
-              </tr>
-          </ng-template>
-      </p-table>
+      <p-table [columns]="cols" [value]="devices" [lazy]="true" (onLazyLoad)="loadDevicesLazy($event)" [loading]="loading"  [scrollable]="true" [paginator]="true"  [rows]="10" [style]="{width:'100%'}" scrollHeight="58vh" [totalRecords]="totalRecords">
+        <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+                <col *ngFor="let col of columns | slice:1" [style.width]="col.width" [pSortableColumn]>
+            </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns | slice:1" [pSortableColumn]>
+                    {{col.header}}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+                <td *ngFor="let col of columns | slice:1">
+                    {{rowData[col.field]}}
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
   </nb-card-body>
   </nb-card>
 </div>

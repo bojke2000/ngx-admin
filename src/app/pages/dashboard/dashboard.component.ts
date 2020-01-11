@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DeviceService } from '../../service/deviceservice';
 import { Device } from '../../domain/device';
+import { LazyLoadEvent } from 'primeng/api/public_api';
 
 @Component({
   selector: 'ngx-dashboard',
@@ -10,53 +11,71 @@ import { Device } from '../../domain/device';
 })
 export class DashboardComponent implements OnInit {
 
+  datasource: Device[];
   devices: Device[];
+  totalRecords: number;
   cols: any[];
-  isLoading: boolean;
   isResisable: boolean = true;
+  loading: boolean;
+
 
   constructor(private deviceService: DeviceService) { }
 
   ngOnInit(): void {
-    this.deviceService.getDevices().then(devices => this.devices = devices) ;
+    this.deviceService.getDevices().then(devices => {
+      this.datasource = devices;
+      this.totalRecords = this.datasource.length;
+    }) ;
 
-        this.cols = [
-          { field: 'id', header: 'id', width: '1%' },
-          { field: 'siteId', header: 'siteId' , width: '3%' },
-          { field: 'siteNo', header: 'siteNo' , width: '3%' },
-          { field: 'gsmId', header: 'gsmId' , width: '3%' },
-          { field: 'deviceId', header: 'deviceId' , width: '3%' },
-          { field: 'mpn', header: 'mpn' , width: '3%' },
-          { field: 'countryId', header: 'countryId' , width: '1%' },
-          { field: 'cityId', header: 'cityId' , width: '1%' },
-          { field: 'street', header: 'street' , width: '10%' },
-          { field: 'streetNo', header: 'streetNo' , width: '2%' },
-          { field: 'deviation', header: 'deviation' , width: '1%' },
-          { field: 'customerName', header: 'customerName' , width: '10%' },
-          { field: 'customerInfo', header: 'customerInfo' , width: '10%' },
-          { field: 'siteRemark', header: 'siteRemark' , width: '5%' },
-          { field: 'meterLocationRemark', header: 'meterLocationRemark' , width: '2%' },
-          { field: 'nameA', header: 'nameA' , width: '3%' },
-          { field: 'nameB', header: 'nameB' , width: '3%' },
-          { field: 'nameC', header: 'nameC' , width: '3%' },
-          { field: 'nameD', header: 'nameD' , width: '3%' },
-          { field: 'unitA', header: 'unitA' , width: '1%' },
-          { field: 'unitB', header: 'unitB' , width: '1%' },
-          { field: 'unitC', header: 'unitC' , width: '1%' },
-          { field: 'unitD', header: 'unitD' , width: '1%' },
-          { field: 'multiplierA', header: 'multiplierA' , width: '3%' },
-          { field: 'multiplierB', header: 'multiplierB' , width: '3%' },
-          { field: 'multiplierC', header: 'multiplierC' , width: '3%' },
-          { field: 'multiplierD', header: 'multiplierD' , width: '3%' },
-        ];
+    this.cols = [
+      { field: 'id', header: 'ID', width: '70px' },
+      { field: 'siteId', header: 'Site ID' , width: '100px' },
+      { field: 'siteNo', header: 'Site No' , width: '100px' },
+      { field: 'gsmId', header: 'GSM ID' , width: '100px' },
+      { field: 'deviceId', header: 'Device ID' , width: '100px' },
+      { field: 'mpn', header: 'MPN' , width: '100px' },
+      { field: 'countryId', header: 'Country ID' , width: '100px' },
+      { field: 'cityId', header: 'City ID' , width: '100px' },
+      { field: 'street', header: 'Street' , width: '200px' },
+      { field: 'streetNo', header: 'Street No' , width: '100px' },
+      { field: 'deviation', header: 'Deviation' , width: '100px' },
+      { field: 'customerName', header: 'Customer Name' , width: '250px' },
+      { field: 'customerInfo', header: 'Customer Info' , width: '200px' },
+      { field: 'siteRemark', header: 'Site Remark' , width: '250px' },
+      { field: 'meterLocationRemark', header: 'Remark' , width: '100px' },
+      { field: 'nameA', header: 'Name A' , width: '200px' },
+      { field: 'nameB', header: 'Name B' , width: '200px' },
+      { field: 'nameC', header: 'Name C' , width: '200px' },
+      { field: 'nameD', header: 'Name D' , width: '200px' },
+      { field: 'unitA', header: 'Unit A' , width: '100px' },
+      { field: 'unitB', header: 'Unit B' , width: '100px' },
+      { field: 'unitC', header: 'Unit C' , width: '100px' },
+      { field: 'unitD', header: 'Unit D' , width: '100px' },
+      { field: 'multiplierA', header: 'Multiplier A' , width: '100px' },
+      { field: 'multiplierB', header: 'Multiplier B' , width: '100px' },
+      { field: 'multiplierC', header: 'Multiplier C' , width: '100px' },
+      { field: 'multiplierD', header: 'Multiplier D' , width: '100px' },
+    ];
+
+    this.loading = true;
   }
 
-  resettable() {
-    this.isLoading = true;
-    this.devices = [...this.devices];
-    // this.dataTable.reset();
-    setTimeout( () => {
-      this.isLoading = false;
-    }, 3);
+  loadDevicesLazy(event: LazyLoadEvent) {
+    this.loading = true;
+
+    //in a real application, make a remote request to load data using state metadata from event
+    //event.first = First row offset
+    //event.rows = Number of rows per page
+    //event.sortField = Field name to sort with
+    //event.sortOrder = Sort order as number, 1 for asc and -1 for dec
+    //filters: FilterMetadata object having field as key and filter value, filter matchMode as value
+
+    //imitate db connection over a network
+    setTimeout(() => {
+        if (this.datasource) {
+            this.devices = this.datasource.slice(event.first, (event.first + event.rows));
+            this.loading = false;
+        }
+    }, 1000);
   }
 }

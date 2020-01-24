@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
   @ViewChild('table', {static: false}) table: Table;
   selectedDevice: Device;
 
-  constructor(private deviceService: DeviceService, private translate: TranslateService) {
+  constructor(private deviceService: DeviceService, translate: TranslateService) {
     translate.setDefaultLang('en');
     translate.use('rs');
   }

@@ -47,6 +47,8 @@
     "@ngrx/effects": "^8.6.0",
     "@ngrx/entity": "^8.6.0",
     "@ngrx/store": "^8.6.0",
+    "@ngx-translate/core": "^11.0.1",
+    "@ngx-translate/http-loader": "^4.0.0",
     "ag-grid-angular": "^22.1.1",
     "ag-grid-community": "^22.1.1",
     "bootstrap": "4.3.1",

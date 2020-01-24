@@ -21,6 +21,7 @@ import {
   NbSidebarModule,
   NbToastrModule,
   NbWindowModule,
+  NbButtonModule,
 } from '@nebular/theme';
 import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
@@ -32,6 +33,7 @@ import { reducers, metaReducers } from './reducers';
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
+    NbButtonModule,
 
     ThemeModule.forRoot(),
 

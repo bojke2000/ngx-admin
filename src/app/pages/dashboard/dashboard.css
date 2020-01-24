@@ -19,13 +19,29 @@ p {
     font-size: 12px !important;
   }
 
+  .divider{
+    width:5px;
+    height:auto;
+    display:inline-block;
+}
+
 /*
 ::ng-deep body .ui-table .ui-sortable-column.ui-state-highlight {
     background-color: #f4f4f4;
     color: #3366ff;
 }
-
-::ng-deep body .ui-table .ui-table-thead > tr > th {
-    color: #3366ff !important;
-}
 */
+::ng-deep body .ui-table .ui-table-thead > tr > th {
+   /* background-color: #007ad9 !important; */
+    color: #007ad9 !important;
+}
+
+
+::ng-deep body .ui-table .ui-sortable-column.ui-state-highlight {
+  background-color: #f4f4f4 !important;
+  color: #007ad9 !important;
+}
+
+::ng-deep body .ui-table .ui-sortable-column .ui-sortable-column-icon {
+  color: #848484 !important;
+}

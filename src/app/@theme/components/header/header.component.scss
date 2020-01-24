@@ -49,6 +49,13 @@
       @include nb-rtl(border-right, 1px solid nb-theme(divider-color));
       white-space: nowrap;
       text-decoration: none;
+
+    }
+
+    .logo_image {
+      background-repeat: no-repeat;
+      background-size: 100px auto;
+      background-image: url(assets/images/insa_logo.png);
     }
   }
 

@@ -3,7 +3,7 @@
     <nb-card-body>
       <div class="header-container" >
         <div style="display: inline-block;">
-          <h3>Devices</h3>
+          <h3>{{ 'devices' | translate }}</h3>
         </div>
         <div style="position: relative; float: right;">
           <p-button label="Export"></p-button>
@@ -29,7 +29,7 @@
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th *ngFor="let col of columns | slice:1"  [pSortableColumn]="col.field" (onClick)=resetSort()>
-                    {{col.header}}
+                    {{col.header | translate}}
                     <p-sortIcon [field]="col.field"></p-sortIcon>
                 </th>
             </tr>

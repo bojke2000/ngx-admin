@@ -3,6 +3,7 @@ import { DeviceService } from '../../service/deviceservice';
 import { Device } from '../../domain/device';
 import { LazyLoadEvent } from 'primeng/api/public_api';
 import {Table} from 'primeng/table';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'ngx-dashboard',
@@ -21,7 +22,10 @@ export class DashboardComponent implements OnInit {
   @ViewChild('table', {static: false}) table: Table;
   selectedDevice: Device;
 
-  constructor(private deviceService: DeviceService) { }
+  constructor(private deviceService: DeviceService, private translate: TranslateService) {
+    translate.setDefaultLang('en');
+    translate.use('rs');
+  }
 
   ngOnInit(): void {
     this.deviceService.getDevices().then(devices => {
@@ -31,7 +35,7 @@ export class DashboardComponent implements OnInit {
 
     this.cols = [
       { field: 'id', header: 'ID', width: '70px' },
-      { field: 'siteId', header: 'Site ID' , width: '100px' },
+      { field: 'siteId', header: 'siteId' , width: '100px' },
       { field: 'siteNo', header: 'Site No' , width: '100px' },
       { field: 'gsmId', header: 'GSM ID' , width: '100px' },
       { field: 'deviceId', header: 'Device ID' , width: '100px' },

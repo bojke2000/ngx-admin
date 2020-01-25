@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { MENU_ITEMS } from './pages-menu';
 import { TranslateService } from '@ngx-translate/core';
-import { NbMenuItem } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-pages',

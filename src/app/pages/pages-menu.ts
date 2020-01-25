@@ -1,5 +1,4 @@
 import { NbMenuItem } from '@nebular/theme';
-import { TranslateService } from '@ngx-translate/core';
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {

@@ -1,16 +1,7 @@
 import { NbMenuItem } from '@nebular/theme';
+import { TranslateService } from '@ngx-translate/core';
 
 export const MENU_ITEMS: NbMenuItem[] = [
-  {
-    title: 'Dashboard',
-    icon: 'home-outline',
-    link: '/pages/dashboard',
-    home: true,
-  },
-  {
-    title: 'FEATURES',
-    group: true,
-  },
   {
     title: 'Auth',
     icon: 'lock-outline',
@@ -32,5 +23,21 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/auth/reset-password',
       },
     ],
+  },
+  {
+    title: 'devices',
+    icon: 'book-outline',
+    link: '/pages/dashboard',
+    home: true,
+  },
+  {
+    title: 'Account management',
+    icon: 'credit-card-outline',
+    link: '/pages/account-management',
+    home: false,
+  },
+  {
+    title: 'FEATURES',
+    group: true,
   },
 ];

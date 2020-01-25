@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { MENU_ITEMS } from './pages-menu';
+import { TranslateService } from '@ngx-translate/core';
+import { NbMenuItem } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-pages',
@@ -12,7 +14,21 @@ import { MENU_ITEMS } from './pages-menu';
     </ngx-one-column-layout>
   `,
 })
-export class PagesComponent {
+export class PagesComponent implements OnInit {
 
-  menu = MENU_ITEMS;
+  menu = [];
+
+  constructor(private translate: TranslateService) {
+    translate.setDefaultLang('en');
+    translate.use('rs');
+  }
+
+  ngOnInit(): void {
+    MENU_ITEMS.forEach(item => {
+      this.translate.get(item.title).subscribe(response => {
+        item.title = response;    // update value field here.
+        this.menu.push(item);
+      });
+    });
+  }
 }

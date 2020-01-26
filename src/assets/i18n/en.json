@@ -1,4 +1,9 @@
 {
   "devices": "Devices",
-  "Account management": "Account management"
+  "Account management": "Account management",
+  "Register": "Register",
+  "Login": "Register",
+  "Auth": "Auth",
+  "Reset Password": "Reset Password",
+  "Request Password": "Request Password"
 }

@@ -24,10 +24,20 @@ export class PagesComponent implements OnInit {
 
   ngOnInit(): void {
     MENU_ITEMS.forEach(item => {
-      this.translate.get(item.title).subscribe(response => {
-        item.title = response;    // update value field here.
-        this.menu.push(item);
-      });
+      if (item.children !== undefined) {
+        item.children.forEach(subitem => {
+          this.localizeItem(subitem);    
+        })
+      } 
+      this.localizeItem(item);
+    });
+
+    this.menu = MENU_ITEMS;
+  }
+
+  private localizeItem(item) {
+    this.translate.get(item.title).subscribe(response => {
+      item.title = response; // update value field here.
     });
   }
 }

@@ -24,13 +24,13 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
   {
-    title: 'devices',
+    title: 'menu.devices',
     icon: 'book-outline',
     link: '/pages/dashboard',
     home: true,
   },
   {
-    title: 'Account management',
+    title: 'menu.Account management',
     icon: 'credit-card-outline',
     link: '/pages/account-management',
     home: false,

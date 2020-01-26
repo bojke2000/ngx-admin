@@ -24,13 +24,12 @@ import { UserAccountService } from '../../service/user-account.service';
     constructor(private userAccountService: UserAccountService, translate: TranslateService) {
       super(translate);
     }
-  
+
     ngOnInit(): void {
       this.userAccountService.getUserAccounts().then(userAccounts => {
         this.datasource = userAccounts;
         this.totalRecords = this.datasource.length;
       }) ;
-  
       this.cols = [
         { field: 'id', header: 'ID', width: '70px' },
         { field: 'name', header: 'Name' , width: '120px' },
@@ -39,10 +38,9 @@ import { UserAccountService } from '../../service/user-account.service';
         { field: 'email', header: 'Email' , width: '150px' },
         { field: 'active', header: 'Status' , width: '120px' },
       ];
-  
       this.loading = true;
     }
-  
+
     loadUserAccountsLazy(event: LazyLoadEvent) {
       this.loading = true;
       setTimeout(() => {
@@ -52,14 +50,11 @@ import { UserAccountService } from '../../service/user-account.service';
           }
       }, 1000);
     }
-  
+
     resetSort() {
       this.table.sortOrder = 0;
       this.table.sortField = '';
       this.table.reset();
      }
-
-
   }
-
-
+  

@@ -12,12 +12,12 @@ export class UserAccountService {
       .toPromise()
       .then(res => <UserAccount[]>res.data)
       .then(data => data);
-    };
+    }
 
     getUserAccounts() {
       return this.http.get<any>('assets/showcase/data/user-accounts.json')
         .toPromise()
         .then(res => <UserAccount[]>res.data)
         .then(data => data);
-    };
+    }
 }

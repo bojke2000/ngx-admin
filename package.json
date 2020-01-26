@@ -57,6 +57,7 @@
     "eva-icons": "^1.1.0",
     "intl": "1.2.5",
     "ionicons": "2.0.1",
+    "moment": "^2.24.0",
     "nebular-icons": "1.1.0",
     "ng": "0.0.0",
     "node-sass": "^4.12.0",

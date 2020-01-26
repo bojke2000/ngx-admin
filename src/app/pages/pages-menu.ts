@@ -24,15 +24,15 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
   {
-    title: 'menu.devices',
+    title: 'devices',
     icon: 'book-outline',
     link: '/pages/dashboard',
     home: true,
   },
   {
-    title: 'menu.Account management',
+    title: 'Account management',
     icon: 'credit-card-outline',
-    link: '/pages/account-management',
+    link: '/pages/user-account',
     home: false,
   },
   {

@@ -31,5 +31,11 @@
   "Multiplier A": "Multiplier A",
   "Multiplier B": "Multiplier B",
   "Multiplier C": "Multiplier C",
-  "Multiplier D": "Multiplier D"
+  "Multiplier D": "Multiplier D",
+  "Create Account": "Napravi nalog",
+  "Name": "Ime",
+  "City": "Grad",
+  "Account Type": "Tip naloga",
+  "Status": "Status"
+
 }

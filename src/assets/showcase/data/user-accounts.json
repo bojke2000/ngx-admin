@@ -1,0 +1,5 @@
+{
+    "data": [
+        {"id": "1", "name": "bzivkovic", "city": "Kragujevac", "type": "admin", "email": "bzivkovic@gmail.com", "active": true}
+    ]
+}

@@ -25,6 +25,7 @@ import {
 } from '@nebular/theme';
 import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
+import { UserAccountService } from './service/user-account.service';
 
 
 
@@ -56,7 +57,7 @@ import { reducers, metaReducers } from './reducers';
       },
     }),
   ],
-  providers: [DeviceService],
+  providers: [DeviceService, UserAccountService],
   bootstrap: [AppComponent],
 })
 export class AppModule {

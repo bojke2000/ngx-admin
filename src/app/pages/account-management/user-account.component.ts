@@ -12,7 +12,7 @@ import { UserAccountService } from '../../service/user-account.service';
     templateUrl: './user-account.component.html',
     styleUrls: ['./user-account.css'],
   })
-  export class UserAccountComponent extends AbstractComponent {
+  export class UserAccountComponent extends AbstractComponent implements OnInit {
     userAccounts: UserAccount[];
     datasource: UserAccount[];
     totalRecords: number;
@@ -57,4 +57,3 @@ import { UserAccountService } from '../../service/user-account.service';
       this.table.reset();
      }
   }
-  

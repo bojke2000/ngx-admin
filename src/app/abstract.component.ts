@@ -1,7 +1,7 @@
 import { OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
-export abstract class AbstractComponent implements OnInit {
+export abstract class AbstractComponent {
   translate: TranslateService;
 
   constructor( translateService: TranslateService) {
@@ -9,6 +9,4 @@ export abstract class AbstractComponent implements OnInit {
     this.translate.setDefaultLang('en');
     this.translate.use('rs');
   }
-
-  ngOnInit() {}
 }

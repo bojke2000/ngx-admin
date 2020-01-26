@@ -26,7 +26,7 @@ export class PagesComponent implements OnInit {
     MENU_ITEMS.forEach(item => {
       if (item.children !== undefined) {
         item.children.forEach(subitem => {
-          this.localizeItem(subitem); 
+          this.localizeItem(subitem);
         });
       }
       this.localizeItem(item);

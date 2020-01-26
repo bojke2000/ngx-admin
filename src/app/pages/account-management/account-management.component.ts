@@ -5,7 +5,6 @@ import { Component } from '@angular/core';
     templateUrl: './account-management.component.html',
     styleUrls: ['./account-management.css'],
   })
-  export class AccountManagementComponent {
-
-  }
+  export class AccountManagementComponent {}
   
+

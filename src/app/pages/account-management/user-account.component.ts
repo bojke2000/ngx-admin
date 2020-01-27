@@ -33,7 +33,7 @@ import { UserAccountService } from '../../service/user-account.service';
       this.cols = [
         { field: 'id', header: 'ID', width: '70px' },
         { field: 'username', header: 'Name' , width: '120px' },
-        { field: 'password', header: 'Password' , width: '120px' }, 
+        { field: 'password', header: 'Password' , width: '120px' },
         { field: 'email', header: 'Email' , width: '150px' },
         { field: 'city', header: 'City' , width: '150px' },
         { field: 'accountType', header: 'Account Type' , width: '120px' },

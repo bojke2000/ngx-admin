@@ -1,5 +1,3 @@
-import * as moment from 'moment';
-
 export interface UserAccount {
   id?: number;
   username: string;

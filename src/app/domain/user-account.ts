@@ -6,7 +6,7 @@ export interface UserAccount {
   password: string;
   email: string;
   city: string;
-  type: string;
+  accountType: string;
   active: boolean;
-  lastLogin: moment.Moment;
+  lastLogin: string;
 }

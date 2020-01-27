@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import {Table} from 'primeng/table';
 import { AbstractComponent } from '../../abstract.component';
 import { TranslateService } from '@ngx-translate/core';
@@ -32,11 +32,13 @@ import { UserAccountService } from '../../service/user-account.service';
       }) ;
       this.cols = [
         { field: 'id', header: 'ID', width: '70px' },
-        { field: 'name', header: 'Name' , width: '120px' },
-        { field: 'city', header: 'City' , width: '150px' },
-        { field: 'type', header: 'Account Type' , width: '120px' },
+        { field: 'username', header: 'Name' , width: '120px' },
+        { field: 'password', header: 'Password' , width: '120px' }, 
         { field: 'email', header: 'Email' , width: '150px' },
+        { field: 'city', header: 'City' , width: '150px' },
+        { field: 'accountType', header: 'Account Type' , width: '120px' },
         { field: 'active', header: 'Status' , width: '120px' },
+        { field: 'lastLogin', header: 'Last Login' , width: '120px' },
       ];
       this.loading = true;
     }

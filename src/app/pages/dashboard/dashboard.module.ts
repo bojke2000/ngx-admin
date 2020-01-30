@@ -4,6 +4,7 @@ import { NbCardModule, NbButtonModule } from '@nebular/theme';
 import { ThemeModule } from '../../@theme/theme.module';
 import { DashboardComponent } from './dashboard.component';
 import {TableModule} from 'primeng/table';
+import {DialogModule} from 'primeng/dialog';
 import {ButtonModule} from 'primeng/button';
 import {HttpClient} from '@angular/common/http';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
@@ -21,6 +22,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ButtonModule,
     ThemeModule,
     TableModule,
+    DialogModule,
     TranslateModule.forRoot({
       loader: {
           provide: TranslateLoader,

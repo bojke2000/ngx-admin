@@ -35,7 +35,74 @@
               </tr>
           </ng-template>
       </p-table>
+
+      <p-dialog header="User Account Details" [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true" showEffect="fade" [modal]="true"  [style]="{width: '300px'}">
+        <div class="ui-g ui-fluid" *ngIf="userAccount">
+            <div class="ui-g-12">
+                <div class="ui-g-4">
+                    <label for="username">Name</label>
+                </div>
+                <div class="ui-g-8">
+                    <input pInputText id="username" [(ngModel)]="userAccount.username" autofocus />
+                </div>
+            </div>
+            <div class="ui-g-12">
+                <div class="ui-g-4">
+                    <label for="password">Password</label>
+                </div>
+                <div class="ui-g-8">
+                    <input pInputText id="password" [(ngModel)]="userAccount.password" />
+                </div>
+            </div>
+            <div class="ui-g-12">
+                <div class="ui-g-4">
+                    <label for="email">Email</label>
+                </div>
+                <div class="ui-g-8">
+                    <input pInputText id="email" [(ngModel)]="userAccount.email" />
+                </div>
+            </div>
+            <div class="ui-g-12">
+                <div class="ui-g-4">
+                    <label for="city">City</label>
+                </div>
+                <div class="ui-g-8">
+                    <input pInputText id="city" [(ngModel)]="userAccount.city" />
+                </div>
+            </div>
+            <div class="ui-g-12">
+              <div class="ui-g-4">
+                  <label for="accountType">Account Type</label>
+              </div>
+              <div class="ui-g-8">
+                  <input pInputText id="accountType" [(ngModel)]="userAccount.accountType" />
+              </div>
+          </div>
+          <div class="ui-g-12">
+            <div class="ui-g-4">
+                <label for="active">Active</label>
+            </div>
+            <div class="ui-g-8">
+                <input pInputText id="active" [(ngModel)]="userAccount.active" />
+            </div>
+        </div>
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+              <label for="lastLogin">Last Login</label>
+          </div>
+          <div class="ui-g-8">
+              <input pInputText id="lastLogin" [(ngModel)]="userAccount.lastLogin" />
+          </div>
+      </div>
+        </div>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
+                <button type="button" pButton icon="fa fa-check" (click)="save()" label="Save"></button>
+            </div>
+        </p-footer>
+    </p-dialog>
+
     </nb-card-body>
     </nb-card>
   </div>
-  

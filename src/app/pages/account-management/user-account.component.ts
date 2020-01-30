@@ -14,6 +14,9 @@ import { UserAccountService } from '../../service/user-account.service';
   })
   export class UserAccountComponent extends AbstractComponent implements OnInit {
     userAccounts: UserAccount[];
+    userAccount: UserAccount;
+    newUserAccount: boolean;
+    displayDialog: boolean;
     datasource: UserAccount[];
     totalRecords: number;
     cols: any[];
@@ -21,12 +24,12 @@ import { UserAccountService } from '../../service/user-account.service';
   @ViewChild('table', {static: false}) table: Table;
     selectedUserAccount: UserAccount;
 
-    constructor(private userAccountService: UserAccountService, translate: TranslateService) {
+    constructor(private userAccountservice: UserAccountService, translate: TranslateService) {
       super(translate);
     }
 
     ngOnInit(): void {
-      this.userAccountService.getUserAccounts().then(userAccounts => {
+      this.userAccountservice.getUserAccounts().then(userAccounts => {
         this.datasource = userAccounts;
         this.totalRecords = this.datasource.length;
       }) ;
@@ -58,4 +61,53 @@ import { UserAccountService } from '../../service/user-account.service';
       this.table.sortField = '';
       this.table.reset();
      }
+
+     showDialogToAdd() {
+      this.newUserAccount = true;
+      this.userAccount = null;
+      this.displayDialog = true;
+  }
+
+  save() {
+      const userAccounts = [...this.userAccounts];
+      if (this.newUserAccount)
+          userAccounts.push(this.userAccount);
+      else
+          userAccounts[this.userAccounts.indexOf(this.selectedUserAccount)] = this.userAccount;
+
+      this.userAccounts = userAccounts;
+      this.userAccount = null;
+      this.displayDialog = false;
+  }
+
+  delete() {
+      const index = this.userAccounts.indexOf(this.selectedUserAccount);
+      this.userAccounts = this.userAccounts.filter((val, i) => i != index);
+      this.userAccount = null;
+      this.displayDialog = false;
+  }
+
+  onRowSelect(event) {
+      this.newUserAccount = false;
+      this.userAccount = this.cloneUserAccount(event.data);
+      this.displayDialog = true;
+  }
+
+  cloneUserAccount(c: UserAccount): UserAccount {
+      const userAccount = { id: undefined,
+                            username: undefined,
+                            password: undefined,
+                            email: undefined,
+                            city: undefined,
+                            accountType: undefined,
+                            active: undefined,
+                            lastLogin: undefined};
+
+      for (const prop in c) {
+        if (c[prop] !== undefined) {
+          userAccount[prop] = c[prop];
+        }
+      }
+      return userAccount;
+  }
   }

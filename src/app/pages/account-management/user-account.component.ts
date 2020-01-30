@@ -82,7 +82,7 @@ import { UserAccountService } from '../../service/user-account.service';
 
   delete() {
       const index = this.userAccounts.indexOf(this.selectedUserAccount);
-      this.userAccounts = this.userAccounts.filter((val, i) => i != index);
+      this.userAccounts = this.userAccounts.filter((val, i) => i !== index);
       this.userAccount = null;
       this.displayDialog = false;
   }

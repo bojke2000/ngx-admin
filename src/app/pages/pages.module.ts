@@ -6,6 +6,7 @@ import { PagesComponent } from './pages.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import {HttpClient} from '@angular/common/http';
+import {DialogModule} from 'primeng/dialog';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { AccountManagementModule } from './account-management/account-management.module';
@@ -21,6 +22,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ThemeModule,
     NbMenuModule,
     DashboardModule,
+    DialogModule,
     AccountManagementModule,
     TranslateModule.forRoot({
       loader: {

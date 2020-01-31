@@ -15,6 +15,7 @@ import { UserAccountService } from '../../service/user-account.service';
   export class UserAccountComponent extends AbstractComponent implements OnInit {
     userAccounts: UserAccount[];
     userAccount: UserAccount;
+    selectedUserAccount: UserAccount;
     newUserAccount: boolean;
     displayDialog: boolean;
     datasource: UserAccount[];
@@ -22,7 +23,6 @@ import { UserAccountService } from '../../service/user-account.service';
     cols: any[];
     loading: boolean;
   @ViewChild('table', {static: false}) table: Table;
-    selectedUserAccount: UserAccount;
 
     constructor(private userAccountservice: UserAccountService, translate: TranslateService) {
       super(translate);

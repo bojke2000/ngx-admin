@@ -64,6 +64,7 @@
     "node-sass": "^4.12.0",
     "normalize.css": "6.0.0",
     "pace-js": "1.0.2",
+    "primeflex": "^1.0.0",
     "primeicons": "^2.0.0",
     "primeng": "^9.0.0-rc.4",
     "roboto-fontface": "0.8.0",

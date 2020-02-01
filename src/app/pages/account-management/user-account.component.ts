@@ -64,7 +64,14 @@ import { UserAccountService } from '../../service/user-account.service';
 
      showDialogToAdd() {
       this.newUserAccount = true;
-      this.userAccount = null;
+      this.userAccount = { id: undefined,
+        username: undefined,
+        password: undefined,
+        email: undefined,
+        city: undefined,
+        accountType: undefined,
+        active: undefined,
+        lastLogin: undefined};
       this.displayDialog = true;
   }
 

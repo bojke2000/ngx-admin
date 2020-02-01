@@ -6,7 +6,7 @@
             <h3>{{ 'Account Management' | translate }}</h3>
           </div>
           <div style="position: relative; float: right;">
-            <p-button label="Create Account"></p-button>
+            <p-button icon="fa fa-plus" (click)="showDialogToAdd()" label="{{ translate.get('Create Account') | async }}"></p-button>
             <div class="divider"></div>
           </div>
         </div>
@@ -40,7 +40,7 @@
         <div class="ui-g ui-fluid" *ngIf="userAccount">
             <div class="ui-g-12">
                 <div class="ui-g-4">
-                    <label for="username">Name</label>
+                    <label for="username">Name:</label>
                 </div>
                 <div class="ui-g-8">
                     <input pInputText id="username" [(ngModel)]="userAccount.username" autofocus />
@@ -48,7 +48,7 @@
             </div>
             <div class="ui-g-12">
                 <div class="ui-g-4">
-                    <label for="password">Password</label>
+                    <label for="password">Password:</label>
                 </div>
                 <div class="ui-g-8">
                     <input pInputText id="password" [(ngModel)]="userAccount.password" />
@@ -56,7 +56,7 @@
             </div>
             <div class="ui-g-12">
                 <div class="ui-g-4">
-                    <label for="email">Email</label>
+                    <label for="email">Email:</label>
                 </div>
                 <div class="ui-g-8">
                     <input pInputText id="email" [(ngModel)]="userAccount.email" />
@@ -64,7 +64,7 @@
             </div>
             <div class="ui-g-12">
                 <div class="ui-g-4">
-                    <label for="city">City</label>
+                    <label for="city">City:</label>
                 </div>
                 <div class="ui-g-8">
                     <input pInputText id="city" [(ngModel)]="userAccount.city" />
@@ -72,7 +72,7 @@
             </div>
             <div class="ui-g-12">
               <div class="ui-g-4">
-                  <label for="accountType">Account Type</label>
+                  <label for="accountType">Account Type:</label>
               </div>
               <div class="ui-g-8">
                   <input pInputText id="accountType" [(ngModel)]="userAccount.accountType" />
@@ -80,20 +80,12 @@
           </div>
           <div class="ui-g-12">
             <div class="ui-g-4">
-                <label for="active">Active</label>
+                <label for="active">Active:</label>
             </div>
             <div class="ui-g-8">
                 <input pInputText id="active" [(ngModel)]="userAccount.active" />
             </div>
         </div>
-        <div class="ui-g-12">
-          <div class="ui-g-4">
-              <label for="lastLogin">Last Login</label>
-          </div>
-          <div class="ui-g-8">
-              <input pInputText id="lastLogin" [(ngModel)]="userAccount.lastLogin" />
-          </div>
-      </div>
         </div>
         <p-footer>
             <div class="ui-dialog-buttonpane ui-helper-clearfix">

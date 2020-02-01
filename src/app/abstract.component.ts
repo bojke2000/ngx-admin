@@ -5,7 +5,7 @@ export abstract class AbstractComponent {
 
   constructor( translateService: TranslateService) {
     this.translate = translateService;
-    this.translate.setDefaultLang('en');
+    this.translate.setDefaultLang('rs');
     this.translate.use('rs');
   }
 }

@@ -35,9 +35,9 @@
   "Create Account": "Napravi nalog",
   "Name": "Ime",
   "City": "Grad",
+  "Password": "Lozinka",
   "Account Type": "Tip naloga",
   "Status": "Status",
   "User Account Details": "Korisnicki nalog - detalji",
   "Last Login": "Poslednje logovanje"
-
 }

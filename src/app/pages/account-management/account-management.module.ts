@@ -9,6 +9,7 @@ import {InputTextModule} from 'primeng/inputtext';
 import {PanelModule} from 'primeng/panel';
 import {HttpClient} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { UserAccountComponent } from './user-account.component';
@@ -27,6 +28,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ThemeModule,
     TableModule,
     FormsModule,
+    ReactiveFormsModule,
     DialogModule,
     TranslateModule.forRoot({
       loader: {

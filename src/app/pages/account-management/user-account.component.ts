@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { LazyLoadEvent } from 'primeng/api/public_api';
 import { UserAccount } from '../../domain/user-account';
 import { UserAccountService } from '../../service/user-account.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 
 @Component({
@@ -13,6 +14,8 @@ import { UserAccountService } from '../../service/user-account.service';
   styleUrls: ['./user-account.css'],
 })
 export class UserAccountComponent extends AbstractComponent implements OnInit {
+  userAccountForm: FormGroup;
+  submitted = false;
   userAccounts: UserAccount[];
   userAccount: UserAccount;
   selectedUserAccount: UserAccount;
@@ -24,7 +27,7 @@ export class UserAccountComponent extends AbstractComponent implements OnInit {
   loading: boolean;
   @ViewChild('table', { static: false }) table: Table;
 
-  constructor(private userAccountservice: UserAccountService, translate: TranslateService) {
+  constructor(private userAccountservice: UserAccountService, translate: TranslateService, private formBuilder: FormBuilder) {
     super(translate);
   }
 
@@ -44,7 +47,22 @@ export class UserAccountComponent extends AbstractComponent implements OnInit {
       { field: 'lastLogin', header: 'Last Login', width: '120px' },
     ];
     this.loading = true;
+
+    this.userAccountForm = this.formBuilder.group({
+      id : [''],
+      username: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      email: ['', [Validators.required,
+        Validators.email,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
+      city: ['', Validators.required],
+      accountType: ['', Validators.required],
+      active: ['', Validators.required],
+
+    });
   }
+
+      // convenience getter for easy access to form fields
+  get f() { return this.userAccountForm.controls; }
 
   loadUserAccountsLazy(event: LazyLoadEvent) {
     this.loading = true;
@@ -64,6 +82,7 @@ export class UserAccountComponent extends AbstractComponent implements OnInit {
 
   showDialogToAdd() {
     this.newUserAccount = true;
+    this.submitted = false;
     this.userAccount = {
       id: undefined,
       username: undefined,
@@ -74,11 +93,20 @@ export class UserAccountComponent extends AbstractComponent implements OnInit {
       active: undefined,
       lastLogin: undefined,
     };
+    this.userAccountForm.patchValue({...this.userAccount});
     this.displayDialog = true;
   }
 
   save() {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.userAccountForm.invalid) {
+        return;
+    }
+
     const userAccounts = [...this.userAccounts];
+    this.userAccount = {...this.userAccountForm.value};
 
     if (this.newUserAccount) {
       this.userAccountservice.addUserAccount(this.userAccount).subscribe(ua => {
@@ -86,7 +114,7 @@ export class UserAccountComponent extends AbstractComponent implements OnInit {
       });
     } else {
       this.userAccountservice.updateUserAccount(this.userAccount).subscribe(ua => {
-        userAccounts[this.userAccounts.indexOf(this.selectedUserAccount)] = this.userAccount;
+        userAccounts[this.userAccounts.indexOf(this.selectedUserAccount)] = ua;
       });
     }
 
@@ -108,7 +136,10 @@ export class UserAccountComponent extends AbstractComponent implements OnInit {
 
   onRowSelect(event) {
     this.newUserAccount = false;
+    this.submitted = false;
     this.userAccount = this.cloneUserAccount(event.data);
+    this.userAccountForm.patchValue({...this.userAccount});
+
     this.displayDialog = true;
   }
 

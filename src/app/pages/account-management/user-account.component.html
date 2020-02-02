@@ -1,5 +1,5 @@
 <div class="row">
-    <nb-card style="width: 100%">
+<nb-card style="width: 100%">
       <nb-card-body>
         <div class="header-container" >
           <div style="display: inline-block;">
@@ -37,21 +37,29 @@
       </p-table>
 
       <p-dialog header="User Account Details" [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true" showEffect="fade" [modal]="true"  [style]="{width: '500px'}">
-        <div class="ui-g ui-fluid" *ngIf="userAccount">
+          <div class="ui-g ui-fluid" *ngIf="userAccount">
+            <form [formGroup]="userAccountForm" (ngSubmit)="save()">
             <div class="ui-g-12">
                 <div class="ui-g-4">
                     <label for="username">Name:</label>
                 </div>
                 <div class="ui-g-8">
-                    <input pInputText id="username" [(ngModel)]="userAccount.username" autofocus />
-                </div>
+                    <input pInputText id="username" formControlName="username" autofocus class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+                    <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                        <div *ngIf="f.username.errors.required">First Name is required</div>
+                    </div>
+              </div>
             </div>
             <div class="ui-g-12">
                 <div class="ui-g-4">
                     <label for="password">Password:</label>
                 </div>
                 <div class="ui-g-8">
-                    <input pInputText id="password" [(ngModel)]="userAccount.password" />
+                    <input pInputText id="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                        <div *ngIf="f.password.errors.required">Password is required</div>
+                        <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+                    </div>
                 </div>
             </div>
             <div class="ui-g-12">
@@ -59,7 +67,11 @@
                     <label for="email">Email:</label>
                 </div>
                 <div class="ui-g-8">
-                    <input pInputText id="email" [(ngModel)]="userAccount.email" />
+                    <input pInputText id="email" type="email"  name="email" email formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                        <div *ngIf="f.email.errors.required">Email is required</div>
+                        <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                    </div>
                 </div>
             </div>
             <div class="ui-g-12">
@@ -67,25 +79,35 @@
                     <label for="city">City:</label>
                 </div>
                 <div class="ui-g-8">
-                    <input pInputText id="city" [(ngModel)]="userAccount.city" />
+                    <input pInputText id="city" formControlName="city" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.city.errors }" />
+                    <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                        <div *ngIf="f.city.errors.required">First Name is required</div>
+                    </div>
                 </div>
-            </div>
+              </div>
             <div class="ui-g-12">
               <div class="ui-g-4">
                   <label for="accountType">Account Type:</label>
               </div>
               <div class="ui-g-8">
-                  <input pInputText id="accountType" [(ngModel)]="userAccount.accountType" />
+                  <input pInputText id="accountType" formControlName="accountType" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.accountType.errors }" />
+                  <div *ngIf="submitted && f.accountType.errors" class="invalid-feedback">
+                      <div *ngIf="f.accountType.errors.required">First Name is required</div>
+                  </div>
               </div>
-          </div>
+            </div>
           <div class="ui-g-12">
             <div class="ui-g-4">
                 <label for="active">Active:</label>
             </div>
             <div class="ui-g-8">
-                <input pInputText id="active" [(ngModel)]="userAccount.active" />
+                <input pInputText id="active" formControlName="active" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.active.errors }" />
+                <div *ngIf="submitted && f.active.errors" class="invalid-feedback">
+                    <div *ngIf="f.active.errors.required">First Name is required</div>
+                </div>
             </div>
-        </div>
+          </div>
+          </form>
         </div>
         <p-footer>
             <div class="ui-dialog-buttonpane ui-helper-clearfix">

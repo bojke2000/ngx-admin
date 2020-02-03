@@ -26,6 +26,7 @@ import {
 import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
 import { UserAccountService } from './service/user-account.service';
+import { UserAccountTypesService } from './service/useraccounttypes.service';
 
 
 
@@ -57,7 +58,7 @@ import { UserAccountService } from './service/user-account.service';
       },
     }),
   ],
-  providers: [DeviceService, UserAccountService],
+  providers: [DeviceService, UserAccountService, UserAccountTypesService],
   bootstrap: [AppComponent],
 })
 export class AppModule {

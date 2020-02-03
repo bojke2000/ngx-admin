@@ -6,7 +6,9 @@ import {TableModule} from 'primeng/table';
 import {DialogModule} from 'primeng/dialog';
 import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
+import {DropdownModule} from 'primeng/dropdown';
 import {PanelModule} from 'primeng/panel';
+import { HttpClientModule } from '@angular/common/http';
 import {HttpClient} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -24,10 +26,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     NbButtonModule,
     ButtonModule,
     InputTextModule,
+    DropdownModule,
     PanelModule,
     ThemeModule,
     TableModule,
     FormsModule,
+    HttpClientModule,
     ReactiveFormsModule,
     DialogModule,
     TranslateModule.forRoot({

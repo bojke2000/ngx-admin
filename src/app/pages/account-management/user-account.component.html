@@ -90,10 +90,7 @@
                   <label for="accountType">Account Type:</label>
               </div>
               <div class="ui-g-8">
-                  <input pInputText id="accountType" formControlName="accountType" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.accountType.errors }" />
-                  <div *ngIf="submitted && f.accountType.errors" class="invalid-feedback">
-                      <div *ngIf="f.accountType.errors.required">First Name is required</div>
-                  </div>
+                  <p-dropdown [options]="accountTypes" formControlName="accountType"></p-dropdown>
               </div>
             </div>
           <div class="ui-g-12">

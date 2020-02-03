@@ -3,9 +3,11 @@ import { Table } from 'primeng/table';
 import { AbstractComponent } from '../../abstract.component';
 import { TranslateService } from '@ngx-translate/core';
 import { LazyLoadEvent } from 'primeng/api/public_api';
+import {SelectItem} from 'primeng/api';
 import { UserAccount } from '../../domain/user-account';
 import { UserAccountService } from '../../service/user-account.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UserAccountTypesService } from '../../service/useraccounttypes.service';
 
 
 @Component({
@@ -25,9 +27,11 @@ export class UserAccountComponent extends AbstractComponent implements OnInit {
   totalRecords: number;
   cols: any[];
   loading: boolean;
+  accountTypes: SelectItem[];
   @ViewChild('table', { static: false }) table: Table;
 
-  constructor(private userAccountservice: UserAccountService, translate: TranslateService, private formBuilder: FormBuilder) {
+  constructor(private userAccountservice: UserAccountService, private userAccountTypesService: UserAccountTypesService,
+    translate: TranslateService, private formBuilder: FormBuilder) {
     super(translate);
   }
 
@@ -47,6 +51,15 @@ export class UserAccountComponent extends AbstractComponent implements OnInit {
       { field: 'lastLogin', header: 'Last Login', width: '120px' },
     ];
     this.loading = true;
+
+    this.accountTypes = [
+      {label: 'Select Account Type', value: null},
+      {label: 'Citizen', value: 'Citizen'},
+      {label: 'User', value: 'User'},
+      {label: 'Admin', value: 'Admin'},
+      {label: 'Superadmin', value: 'Superadmin'},
+    ];
+
 
     this.userAccountForm = this.formBuilder.group({
       id : [''],
@@ -89,7 +102,7 @@ export class UserAccountComponent extends AbstractComponent implements OnInit {
       password: undefined,
       email: undefined,
       city: undefined,
-      accountType: undefined,
+      accountType: 'User',
       active: undefined,
       lastLogin: undefined,
     };

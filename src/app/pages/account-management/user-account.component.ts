@@ -8,6 +8,8 @@ import { UserAccount } from '../../domain/user-account';
 import { UserAccountService } from '../../service/user-account.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { UserAccountTypesService } from '../../service/useraccounttypes.service';
+import {CityService} from '../../service/cityservice';
+import {City} from '../../domain/city';
 
 
 @Component({
@@ -28,9 +30,16 @@ export class UserAccountComponent extends AbstractComponent implements OnInit {
   cols: any[];
   loading: boolean;
   accountTypes: SelectItem[];
+  statuses: SelectItem[];
+  cities: City[];
+
+
+
   @ViewChild('table', { static: false }) table: Table;
 
-  constructor(private userAccountservice: UserAccountService, private userAccountTypesService: UserAccountTypesService,
+  constructor(private userAccountservice: UserAccountService,
+    private userAccountTypesService: UserAccountTypesService,
+    private cityService: CityService,
     translate: TranslateService, private formBuilder: FormBuilder) {
     super(translate);
   }
@@ -60,6 +69,8 @@ export class UserAccountComponent extends AbstractComponent implements OnInit {
       {label: 'Superadmin', value: 'Superadmin'},
     ];
 
+    this.statuses = [{label: 'Active', value: 'Active'}, {label: 'Disabled', value: 'Disabled'}]
+
 
     this.userAccountForm = this.formBuilder.group({
       id : [''],
@@ -69,7 +80,7 @@ export class UserAccountComponent extends AbstractComponent implements OnInit {
         Validators.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
       city: ['', Validators.required],
       accountType: ['', Validators.required],
-      active: ['', Validators.required],
+      active: ['Active', Validators.required],
 
     });
   }
@@ -87,6 +98,13 @@ export class UserAccountComponent extends AbstractComponent implements OnInit {
     }, 1000);
   }
 
+  search(event) {
+    this.cityService.getCities(event).then(cities => {
+        this.cities = cities;
+    });
+  }
+
+
   resetSort() {
     this.table.sortOrder = 0;
     this.table.sortField = '';
@@ -103,7 +121,7 @@ export class UserAccountComponent extends AbstractComponent implements OnInit {
       email: undefined,
       city: undefined,
       accountType: 'User',
-      active: undefined,
+      active: 'Active',
       lastLogin: undefined,
     };
     this.userAccountForm.patchValue({...this.userAccount});

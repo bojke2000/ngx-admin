@@ -11,6 +11,7 @@ import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DeviceService } from './service/deviceservice';
+import { CityService } from './service/cityservice';
 import {HttpClientModule} from '@angular/common/http';
 
 import {
@@ -58,7 +59,7 @@ import { UserAccountTypesService } from './service/useraccounttypes.service';
       },
     }),
   ],
-  providers: [DeviceService, UserAccountService, UserAccountTypesService],
+  providers: [DeviceService, UserAccountService, UserAccountTypesService, CityService],
   bootstrap: [AppComponent],
 })
 export class AppModule {

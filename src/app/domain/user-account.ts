@@ -5,6 +5,6 @@ export interface UserAccount {
   email: string;
   city: string;
   accountType: string;
-  active: boolean;
+  active: string;
   lastLogin: string;
 }

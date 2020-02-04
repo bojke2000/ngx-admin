@@ -14,25 +14,4 @@ export class DeviceService {
       .then(res => <Device[]>res.data)
       .then(data => data);
     }
-
-    getCarsMedium() {
-    return this.http.get<any>('assets/showcase/data/cars-medium.json')
-      .toPromise()
-      .then(res => <Device[]>res.data)
-      .then(data => data);
-    }
-
-    getCarsLarge() {
-    return this.http.get<any>('assets/showcase/data/cars-large.json')
-      .toPromise()
-      .then(res => <Device[]>res.data)
-      .then(data => data);
-    }
-
-  getCarsHuge() {
-    return this.http.get<any>('assets/showcase/data/cars-huge.json')
-      .toPromise()
-      .then(res => <Device[]>res.data)
-      .then(data => data);
-  }
 }

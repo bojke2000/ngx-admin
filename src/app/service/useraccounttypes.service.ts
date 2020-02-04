@@ -9,9 +9,7 @@ export class UserAccountTypesService {
     getUserAccountTypes() {
      return this.http.get<any>('http://localhost:8081/user-account-types')
       .toPromise()
-      .then(res => {
-        console.log(res);
-        return <string[]>res.data;
-      }).then(data => data.map( (el) => ({label: el, value: el}))).then(res => res);
+      .then(res =>  <string[]>res.data)
+      .then(data => data.map( (el) => ({label: el, value: el}))).then(res => res);
     }
 }

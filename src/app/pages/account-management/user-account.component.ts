@@ -6,8 +6,7 @@ import { LazyLoadEvent } from 'primeng/api/public_api';
 import {SelectItem} from 'primeng/api';
 import { UserAccount } from '../../domain/user-account';
 import { UserAccountService } from '../../service/user-account.service';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { UserAccountTypesService } from '../../service/useraccounttypes.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {CityService} from '../../service/cityservice';
 import {City} from '../../domain/city';
 
@@ -38,7 +37,6 @@ export class UserAccountComponent extends AbstractComponent implements OnInit {
   @ViewChild('table', { static: false }) table: Table;
 
   constructor(private userAccountservice: UserAccountService,
-    private userAccountTypesService: UserAccountTypesService,
     private cityService: CityService,
     translate: TranslateService, private formBuilder: FormBuilder) {
     super(translate);
@@ -69,7 +67,7 @@ export class UserAccountComponent extends AbstractComponent implements OnInit {
       {label: 'Superadmin', value: 'Superadmin'},
     ];
 
-    this.statuses = [{label: 'Active', value: 'Active'}, {label: 'Disabled', value: 'Disabled'}]
+    this.statuses = [{label: 'Active', value: 'Active'}, {label: 'Disabled', value: 'Disabled'}];
 
 
     this.userAccountForm = this.formBuilder.group({

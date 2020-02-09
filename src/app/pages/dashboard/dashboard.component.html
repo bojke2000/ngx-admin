@@ -5,17 +5,7 @@
         <div style="display: inline-block;">
           <h3>{{ 'devices' | translate }}</h3>
         </div>
-        <div style="position: relative; float: right;">
-          <p-button label="Export"></p-button>
-          <div class="divider"></div>
-          <p-button label="Import"></p-button>
-          <div class="divider"></div>
-          <p-button label="Delete"></p-button>
-          <div class="divider"></div>
-          <p-button label="Edit"></p-button>
-          <div class="divider"></div>
-          <p-button label="Add"></p-button>
-        </div>
+
       </div>
       <p-table [columns]="cols" [value]="devices" [lazy]="true" #table (onLazyLoad)="loadDevicesLazy($event)"
         [loading]="loading" [scrollable]="true" [paginator]="true" [rows]="20" [style]="{width:'100%'}" scrollHeight="58vh"
@@ -42,6 +32,17 @@
             </tr>
         </ng-template>
     </p-table>
+    <div style="position: relative; float: right; margin-top: 5px;">
+      <p-button label="Export"></p-button>
+      <div class="divider"></div>
+      <p-button label="Import"></p-button>
+      <div class="divider"></div>
+      <p-button label="Delete"></p-button>
+      <div class="divider"></div>
+      <p-button label="Edit"></p-button>
+      <div class="divider"></div>
+      <p-button label="Add"></p-button>
+    </div>
   </nb-card-body>
   </nb-card>
 </div>

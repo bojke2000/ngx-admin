@@ -49,7 +49,7 @@ export class UserAccountComponent extends AbstractComponent implements OnInit {
       this.totalRecords = this.datasource.length;
     });
     this.cols = [
-      { field: 'id', header: 'ID', width: '70px' },
+      { field: 'id', header: 'ID', width: '50px' },
       { field: 'username', header: 'Name', width: '120px' },
       { field: 'password', header: 'Password', width: '120px' },
       { field: 'email', header: 'Email', width: '150px' },

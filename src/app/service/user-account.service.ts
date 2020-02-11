@@ -8,6 +8,7 @@ import { catchError } from 'rxjs/operators';
 export class UserAccountService {
 
     private userAccountUrl = 'http://localhost:8081/user-accounts';
+
     private httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -17,14 +18,15 @@ export class UserAccountService {
     constructor(private http: HttpClient) { }
 
     getUserAccounts() {
-      return this.http.get<any>(this.userAccountUrl)
+      return this.http.get<any>(this.userAccountUrl.concat('?page=0&size=10&sort=username,asc'))
         .toPromise()
         .then(res => <UserAccount[]>res.data)
         .then(data => data);
     }
 
     searchUserAccounts(query: string) {
-      let uri = this.userAccountUrl + '?username=' + query;
+      const uri = this.userAccountUrl.concat('?search=username==').concat(query)
+      .concat('*,email==*').concat(query).concat('*').concat('&page=0&size=10&sort=username,asc');
       return this.http.get<any>(uri)
         .toPromise()
         .then(res => <UserAccount[]>res.data)

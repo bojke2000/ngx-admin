@@ -201,6 +201,6 @@ export class UserAccountComponent extends AbstractComponent implements OnInit {
   onUserSearch(event) {
     this.userAccountservice.searchUserAccounts(this.userSearch).then(data => {
       this.userAccounts = data;
-    })
+    });
   }
 }

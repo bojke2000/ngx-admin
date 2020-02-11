@@ -1,5 +1,5 @@
 {
-  "Account management": "Upravljanje nalozima",
+  "Account Management": "Korisnički nalozi",
   "Auth": "Autentikacija",
   "Reset Password": "Resetuj lozinku",
   "Request Password": "Zatraži lozinku",
@@ -39,5 +39,7 @@
   "Account Type": "Tip naloga",
   "Status": "Status",
   "User Account Details": "Korisnicki nalog - detalji",
-  "Last Login": "Poslednje logovanje"
+  "Last Login": "Poslednje logovanje",
+  "Search by username or email": "Brza pretraga po imenu ili mejlu",
+  "Search": "Pretraga"
 }

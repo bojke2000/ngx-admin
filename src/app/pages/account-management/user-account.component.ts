@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { Table } from 'primeng/table';
 import { AbstractComponent } from '../../abstract.component';
 import { TranslateService } from '@ngx-translate/core';
@@ -9,6 +9,8 @@ import { UserAccountService } from '../../service/user-account.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {CityService} from '../../service/cityservice';
 import { Option } from '../../domain/option';
+import { ChangeDetectorRef } from '@angular/core';
+
 
 
 @Component({
@@ -16,7 +18,7 @@ import { Option } from '../../domain/option';
   templateUrl: './user-account.component.html',
   styleUrls: ['./user-account.css'],
 })
-export class UserAccountComponent extends AbstractComponent implements OnInit {
+export class UserAccountComponent extends AbstractComponent implements OnInit, AfterViewInit {
   userAccountForm: FormGroup;
   submitted = false;
   userAccounts: UserAccount[];
@@ -24,7 +26,6 @@ export class UserAccountComponent extends AbstractComponent implements OnInit {
   selectedUserAccount: UserAccount;
   newUserAccount: boolean;
   displayDialog: boolean;
-  datasource: UserAccount[];
   totalRecords: number;
   cols: any[];
   loading: boolean;
@@ -32,22 +33,19 @@ export class UserAccountComponent extends AbstractComponent implements OnInit {
   statuses: SelectItem[];
   cities: Option[];
   userSearch: string;
-
-
-
   @ViewChild('table', { static: false }) table: Table;
 
   constructor(private userAccountservice: UserAccountService,
     private cityService: CityService,
-    translate: TranslateService, private formBuilder: FormBuilder) {
+    translate: TranslateService, private formBuilder: FormBuilder,
+    private cdr: ChangeDetectorRef) {
     super(translate);
   }
 
   ngOnInit(): void {
-    this.userAccountservice.getUserAccounts().then(userAccounts => {
-      this.datasource = userAccounts;
-      this.totalRecords = this.datasource.length;
-    });
+
+    this.loadUserAccounts(0, 20, 'id,asc');
+
     this.cols = [
       { field: 'id', header: 'ID', width: '50px' },
       { field: 'username', header: 'Name', width: '120px' },
@@ -58,7 +56,6 @@ export class UserAccountComponent extends AbstractComponent implements OnInit {
       { field: 'active', header: 'Status', width: '120px' },
       { field: 'lastLogin', header: 'Last Login', width: '120px' },
     ];
-    this.loading = true;
 
     this.accountTypes = [
       {label: 'Select Account Type', value: null},
@@ -69,7 +66,6 @@ export class UserAccountComponent extends AbstractComponent implements OnInit {
     ];
 
     this.statuses = [{label: 'Active', value: 'Active'}, {label: 'Disabled', value: 'Disabled'}];
-
 
     this.userAccountForm = this.formBuilder.group({
       id : [''],
@@ -84,21 +80,27 @@ export class UserAccountComponent extends AbstractComponent implements OnInit {
     });
   }
 
-      // convenience getter for easy access to form fields
+  ngAfterViewInit() {
+    this.cdr.detectChanges();
+  }
+
+  private loadUserAccounts(page: number, size: number, sort?: string) {
+    const pageable = { page, size, sort};
+    this.userAccountservice.getUserAccounts(pageable).then(ngresp => {
+      this.userAccounts = ngresp.data;
+      this.totalRecords = ngresp.totalPages;
+      this.loading = false;
+    });
+  }
+
+  // convenience getter for easy access to form fields
   get f() { return this.userAccountForm.controls; }
 
   loadUserAccountsLazy(event: LazyLoadEvent) {
-
-
-
-
     this.loading = true;
-    setTimeout(() => {
-      if (this.datasource) {
-        this.userAccounts = this.datasource.slice(event.first, (event.first + event.rows));
-        this.loading = false;
-      }
-    }, 1000);
+    const sortBy = event.sortField === undefined ? 'id' : event.sortField;
+    const sortOrder = event.sortOrder === -1 ? 'desc' : 'asc';
+    this.loadUserAccounts(event.first, event.rows, sortBy + ',' + sortOrder);
   }
 
   search(event) {
@@ -107,11 +109,21 @@ export class UserAccountComponent extends AbstractComponent implements OnInit {
     });
   }
 
+  onUserSearch() {
+    const pageable = {page: 0, size: 20, sort: 'username,asc'};
+    this.loading = true;
+    this.userAccountservice.searchUserAccounts(this.userSearch, pageable).then(ngresp => {
+      this.userAccounts = ngresp.data;
+      this.totalRecords = ngresp.totalPages;
+      this.loading = false;
+    });
+  }
 
   resetSort() {
     this.table.sortOrder = 0;
     this.table.sortField = '';
     this.table.reset();
+    this.loading = false;
   }
 
   showDialogToAdd() {
@@ -195,12 +207,7 @@ export class UserAccountComponent extends AbstractComponent implements OnInit {
         userAccount[prop] = c[prop];
       }
     }
-    return userAccount;
-  }
 
-  onUserSearch(event) {
-    this.userAccountservice.searchUserAccounts(this.userSearch).then(data => {
-      this.userAccounts = data;
-    });
+    return userAccount;
   }
 }

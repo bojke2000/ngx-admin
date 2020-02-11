@@ -3,9 +3,12 @@ import { Injectable } from '@angular/core';
 import { UserAccount } from '../domain/user-account';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Pageable } from '../domain/pageable';
+import { AbstractService } from '../abstract.service';
+import { NgPrimeGridResponse } from '../domain/ngprime-grid-response';
 
 @Injectable()
-export class UserAccountService {
+export class UserAccountService extends AbstractService {
 
     private userAccountUrl = 'http://localhost:8081/user-accounts';
 
@@ -15,22 +18,22 @@ export class UserAccountService {
       }),
     };
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {
+      super();
+     }
 
-    getUserAccounts() {
-      return this.http.get<any>(this.userAccountUrl.concat('?page=0&size=10&sort=username,asc'))
+    getUserAccounts(pageable?: Pageable) {
+      return this.http.get<any>(this.userAccountUrl.concat('?').concat(this.jsonToHttpParams(pageable)))
         .toPromise()
-        .then(res => <UserAccount[]>res.data)
-        .then(data => data);
+        .then(res => <NgPrimeGridResponse>res);
     }
 
-    searchUserAccounts(query: string) {
+    searchUserAccounts(query: string, pageable?: Pageable) {
       const uri = this.userAccountUrl.concat('?search=username==').concat(query)
-      .concat('*,email==*').concat(query).concat('*').concat('&page=0&size=10&sort=username,asc');
+      .concat('*,email==*').concat(query).concat('*').concat('&').concat(this.jsonToHttpParams(pageable));
       return this.http.get<any>(uri)
         .toPromise()
-        .then(res => <UserAccount[]>res.data)
-        .then(data => data);
+        .then(res => <NgPrimeGridResponse>res);
     }
 
     addUserAccount (userAccount: UserAccount): Observable<UserAccount> {

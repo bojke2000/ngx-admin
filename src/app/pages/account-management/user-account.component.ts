@@ -8,7 +8,7 @@ import { UserAccount } from '../../domain/user-account';
 import { UserAccountService } from '../../service/user-account.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {CityService} from '../../service/cityservice';
-import {City} from '../../domain/city';
+import { Option } from '../../domain/option';
 
 
 @Component({
@@ -30,7 +30,8 @@ export class UserAccountComponent extends AbstractComponent implements OnInit {
   loading: boolean;
   accountTypes: SelectItem[];
   statuses: SelectItem[];
-  cities: City[];
+  cities: Option[];
+  userSearch: string;
 
 
 
@@ -87,6 +88,10 @@ export class UserAccountComponent extends AbstractComponent implements OnInit {
   get f() { return this.userAccountForm.controls; }
 
   loadUserAccountsLazy(event: LazyLoadEvent) {
+
+
+
+
     this.loading = true;
     setTimeout(() => {
       if (this.datasource) {
@@ -136,6 +141,7 @@ export class UserAccountComponent extends AbstractComponent implements OnInit {
 
     const userAccounts = [...this.userAccounts];
     this.userAccount = {...this.userAccountForm.value};
+    this.userAccount.city = this.userAccountForm.value.city.label;
 
     if (this.newUserAccount) {
       this.userAccountservice.addUserAccount(this.userAccount).subscribe(ua => {
@@ -190,5 +196,11 @@ export class UserAccountComponent extends AbstractComponent implements OnInit {
       }
     }
     return userAccount;
+  }
+
+  onUserSearch(event) {
+    this.userAccountservice.searchUserAccounts(this.userSearch).then(data => {
+      this.userAccounts = data;
+    })
   }
 }

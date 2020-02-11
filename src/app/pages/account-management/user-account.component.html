@@ -2,9 +2,23 @@
 <nb-card style="width: 100%">
       <nb-card-body>
         <div class="header-container" >
-          <div style="display: inline-block;">
+          <div>
             <h3>{{ 'Account Management' | translate }}</h3>
           </div>
+          <div style="display: inline-block;">
+            <h3>&nbsp;  </h3>
+          </div>
+
+          <div style="position: relative; float: right;margin-top: 5px;margin-bottom: 5px;">
+            <div class="ui-inputgroup">
+              <span class="ui-float-label">
+                <input id="float-input" type="text" size="50" [(ngModel)]="userSearch" pInputText style="padding-top: 7px; padding-bottom: 7px;">
+                <label for="float-input">Search by username or email</label>
+                <button id="search-btn" type="button" icon="pi pi-search" pButton label="Search"  (click)="onUserSearch()" ></button>
+            </span>
+
+          </div>
+        </div>
 
         <p-table [columns]="cols" [value]="userAccounts" [lazy]="true" #table (onLazyLoad)="loadUserAccountsLazy($event)"
           [loading]="loading" [scrollable]="true" [paginator]="true" [rows]="20" [style]="{width:'100%'}" scrollHeight="58vh"
@@ -82,7 +96,7 @@
                     <label for="city">City:</label>
                 </div>
                 <div class="ui-g-8">
-                  <p-autoComplete formControlName="city" [suggestions]="cities" field="name" (completeMethod)="search($event)"
+                  <p-autoComplete formControlName="city" [suggestions]="cities" field="label" (completeMethod)="search($event)"
                   [minLength]="1"></p-autoComplete>
                 </div>
               </div>

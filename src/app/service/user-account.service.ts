@@ -23,6 +23,14 @@ export class UserAccountService {
         .then(data => data);
     }
 
+    searchUserAccounts(query: string) {
+      let uri = this.userAccountUrl + '?username=' + query;
+      return this.http.get<any>(uri)
+        .toPromise()
+        .then(res => <UserAccount[]>res.data)
+        .then(data => data);
+    }
+
     addUserAccount (userAccount: UserAccount): Observable<UserAccount> {
       return this.http.post<UserAccount>(this.userAccountUrl, userAccount, this.httpOptions)
         .pipe(catchError(this.handleError));

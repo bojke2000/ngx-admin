@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {City} from '../domain/city';
+import { Option } from '../domain/option';
 
 @Injectable()
 export class CityService {
@@ -11,7 +11,7 @@ export class CityService {
     const query = event.query;
     return this.http.get<any>('http://localhost:8081/cities?query=' + query)
       .toPromise()
-      .then(res => <City[]>res.data)
+      .then(res => <Option[]>res.data)
       .then(data => data);
     }
 }

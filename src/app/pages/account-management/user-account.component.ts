@@ -102,7 +102,7 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, A
 
   loadUserAccountsLazy(event: LazyLoadEvent) {
     this.loading = true;
-    const sortBy = event.sortField === undefined ? 'id' : event.sortField;
+    const sortBy = event.sortField === undefined ? 'id' : event.sortField === 'city' ? 'city.name' : event.sortField;
     const sortOrder = event.sortOrder === -1 ? 'desc' : 'asc';
     this.loadUserAccounts(event.first, event.rows, sortBy + ',' + sortOrder);
   }

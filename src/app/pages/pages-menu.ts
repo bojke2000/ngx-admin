@@ -42,7 +42,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Email Management',
         icon: 'email-outline',
-        link: '/pages/email-account',
+        link: '/pages/mail-account',
         home: false,
       },
     ],

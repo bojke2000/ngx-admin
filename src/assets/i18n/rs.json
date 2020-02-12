@@ -43,5 +43,7 @@
   "Search by username or email": "Brza pretraga po imenu ili mejlu",
   "Search": "Pretraga",
   "Administration": "Administracija",
-  "Email Management": "Mejl nalozi"
+  "Email Management": "Mejl nalozi",
+  "GSM2 Management": "GSM2 Menadžment",
+  "Search by account or server": "Brza pretraga po nalogu ili serveru"
 }

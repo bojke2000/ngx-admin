@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserAccountComponent } from './account-management/user-account.component';
+import { MailAccountComponent } from './account-management/mail-account.component';
 
 const routes: Routes = [{
   path: '',
@@ -16,6 +17,10 @@ const routes: Routes = [{
     {
       path: 'user-account',
       component: UserAccountComponent,
+    },
+    {
+      path: 'mail-account',
+      component: MailAccountComponent,
     },
     {
       path: '',

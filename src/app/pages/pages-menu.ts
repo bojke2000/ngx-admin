@@ -30,7 +30,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: true,
   },
   {
-    title: 'Account management',
+    title: 'Account Management',
     icon: 'credit-card-outline',
     link: '/pages/user-account',
     home: false,

@@ -142,7 +142,7 @@ export class MailAccountComponent extends AbstractComponent implements OnInit, A
 
     const mailAccounts = [...this.mailAccounts];
     this.mailAccount = {...this.mailAccountForm.value};
-    
+
     if (this.newMailAccount) {
       this.mailAccountService.addMailAccount(this.mailAccount).subscribe(ua => {
         mailAccounts.push(ua);

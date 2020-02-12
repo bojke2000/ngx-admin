@@ -48,11 +48,11 @@ export class MailAccountComponent extends AbstractComponent implements OnInit, A
       { field: 'password', header: 'Password', width: '120px' },
       { field: 'server', header: 'Server', width: '150px' },
       { field: 'protocol', header: 'Protocol', width: '150px' },
-      { field: 'port', header: 'Port', width: '120px' },
+      { field: 'port', header: 'Port', width: '70px' },
       { field: 'active', header: 'Status', width: '120px' },
       { field: 'sender', header: 'Sender', width: '120px' },
       { field: 'checkTime', header: 'Check Time', width: '120px' },
-      { field: 'lastCheck', header: 'Last Check', width: '120px' },
+      { field: 'lastCheck', header: 'Last Check', width: '150px' },
     ];
 
     this.protocols = [

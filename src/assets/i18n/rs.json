@@ -45,5 +45,10 @@
   "Administration": "Administracija",
   "Email Management": "Mejl nalozi",
   "GSM2 Management": "GSM2 Menadžment",
-  "Search by account or server": "Brza pretraga po nalogu ili serveru"
+  "Search by account or server": "Brza pretraga po nalogu ili serveru",
+  "Protocol": "Protokol",
+  "Account": "Nalog",
+  "Check Time": "Vreme provere",
+  "Last Check": "Vreme zadnje provere"
+
 }

@@ -56,7 +56,7 @@ export class MailAccountComponent extends AbstractComponent implements OnInit, A
 
     this.protocols = [
       {label: 'imap', value: 'imap'},
-      {label: 'pop3', value: 'pop3'}
+      {label: 'pop3', value: 'pop3'},
     ];
 
     this.statuses = [{label: 'Active', value: 'Active'}, {label: 'Disabled', value: 'Disabled'}];
@@ -125,7 +125,7 @@ export class MailAccountComponent extends AbstractComponent implements OnInit, A
       protocol: 'imap',
       port: undefined,
       active: 'Active',
-      sender: undefined, 
+      sender: undefined,
       lastCheck: undefined,
     };
     this.mailAccountForm.patchValue({...this.mailAccount});

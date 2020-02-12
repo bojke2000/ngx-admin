@@ -7,9 +7,12 @@ export class CityService {
 
     constructor(private http: HttpClient) { }
 
-    getCities(event) {
-    const query = event.query;
-    return this.http.get<any>('http://localhost:8081/cities?query=' + query)
+    getCities(query?: string) {
+    let url = 'http://localhost:8081/cities';
+    if (query !== undefined) {
+      url += 'query=' + query;
+    }
+    return this.http.get<any>(url)
       .toPromise()
       .then(res => <Option[]>res.data)
       .then(data => data);

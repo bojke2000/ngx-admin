@@ -73,10 +73,14 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, A
       password: ['', [Validators.required, Validators.minLength(6)]],
       email: ['', [Validators.required,
         Validators.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
-      city: ['', Validators.required],
+      city: [{label: '', value: ''}, Validators.required],
       accountType: ['', Validators.required],
       active: ['Active', Validators.required],
 
+    });
+
+    this.cityService.getCities().then(cities => {
+      this.cities = cities;
     });
   }
 
@@ -101,12 +105,6 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, A
     const sortBy = event.sortField === undefined ? 'id' : event.sortField;
     const sortOrder = event.sortOrder === -1 ? 'desc' : 'asc';
     this.loadUserAccounts(event.first, event.rows, sortBy + ',' + sortOrder);
-  }
-
-  search(event) {
-    this.cityService.getCities(event).then(cities => {
-        this.cities = cities;
-    });
   }
 
   onUserSearch() {
@@ -186,6 +184,10 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, A
     this.submitted = false;
     this.userAccount = this.cloneUserAccount(event.data);
     this.userAccountForm.patchValue({...this.userAccount});
+
+    const selectedCity = this.cities.filter(el => el.label === this.userAccount.city);
+    this.userAccountForm.patchValue({
+      city: selectedCity[0]});
 
     this.displayDialog = true;
   }

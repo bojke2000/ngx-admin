@@ -96,8 +96,7 @@
                     <label for="city">City:</label>
                 </div>
                 <div class="ui-g-8">
-                  <p-autoComplete formControlName="city" [suggestions]="cities" dataKey='label' field="label" (completeMethod)="search($event)"
-                  [minLength]="1"></p-autoComplete>
+                  <p-dropdown formControlName="city" [options]="cities" optionLabel="label" ></p-dropdown>
                 </div>
               </div>
             <div class="ui-g-12">

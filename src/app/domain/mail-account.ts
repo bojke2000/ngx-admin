@@ -7,5 +7,6 @@ export interface MailAccount {
   port: number;
   active: string;
   sender: string;
+  checkTime?: string;
   lastCheck?: string;
 }

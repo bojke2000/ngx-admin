@@ -51,6 +51,7 @@ export class MailAccountComponent extends AbstractComponent implements OnInit, A
       { field: 'port', header: 'Port', width: '120px' },
       { field: 'active', header: 'Status', width: '120px' },
       { field: 'sender', header: 'Sender', width: '120px' },
+      { field: 'checkTime', header: 'Check Time', width: '120px' },
       { field: 'lastCheck', header: 'Last Check', width: '120px' },
     ];
 
@@ -71,6 +72,7 @@ export class MailAccountComponent extends AbstractComponent implements OnInit, A
       port: ['', Validators.required],
       active: ['Active', Validators.required],
       sender: ['', Validators.required],
+      checkTime: ['', [Validators.required, Validators.pattern('^[0-9]{2}:[0-9]{2}$')]],
     });
   }
 

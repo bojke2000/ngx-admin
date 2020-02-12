@@ -61,7 +61,7 @@
                     <label for="username">Name:</label>
                 </div>
                 <div class="ui-g-8">
-                    <input pInputText id="username" formControlName="username" autofocus class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+                    <input pInputText id="username" formControlName="username" onclick="this.setSelectionRange(0, this.value.length)" autofocus class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
                     <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
                         <div *ngIf="f.username.errors.required">First Name is required</div>
                     </div>
@@ -72,7 +72,7 @@
                     <label for="password">Password:</label>
                 </div>
                 <div class="ui-g-8">
-                    <input pInputText id="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                    <input pInputText id="password" formControlName="password" onclick="this.setSelectionRange(0, this.value.length)"   class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
                     <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                         <div *ngIf="f.password.errors.required">Password is required</div>
                         <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
@@ -84,7 +84,7 @@
                     <label for="email">Email:</label>
                 </div>
                 <div class="ui-g-8">
-                    <input pInputText id="email" type="email"  name="email" email formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                    <input pInputText id="email" type="email"  name="email" email formControlName="email" (click)="$event.target.select()"  class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
                     <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                         <div *ngIf="f.email.errors.required">Email is required</div>
                         <div *ngIf="f.email.errors.email">Email must be a valid email address</div>

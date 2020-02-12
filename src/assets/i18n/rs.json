@@ -49,6 +49,7 @@
   "Protocol": "Protokol",
   "Account": "Nalog",
   "Check Time": "Vreme provere",
-  "Last Check": "Vreme zadnje provere"
+  "Last Check": "Vreme zadnje provere",
+  "Mail check time is required and must in time format like e.g. '23:02'": "Unesite vreme promene u formatu 'sati:minuta', na primer '23:02'"
 
 }

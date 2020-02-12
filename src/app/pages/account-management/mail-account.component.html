@@ -136,7 +136,8 @@
             <div class="ui-g-8">
               <input pInputText id="checkTime" name="checkTime"  formControlName="checkTime" (click)="$event.target.select()"  class="form-control" [ngClass]="{ 'is-invalid': submitted && f.checkTime.errors }" />
                   <div *ngIf="submitted && f.checkTime.errors" class="invalid-feedback">
-                      <div *ngIf="f.checkTime.errors.required">Mail check time is required and must in a format like e.g. '23:02'</div>
+                      <div *ngIf="f.checkTime.errors.required">Mail check time is required</div>
+                      <div *ngIf="f.checkTime.errors.pattern">{{ "Mail check time is required and must in time format like e.g. '23:02'" | translate }} </div>
                   </div>
             </div>
           </div>

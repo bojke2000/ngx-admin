@@ -72,7 +72,7 @@ export class MailAccountComponent extends AbstractComponent implements OnInit, A
       port: ['', Validators.required],
       active: ['Active', Validators.required],
       sender: ['', Validators.required],
-      checkTime: ['', [Validators.required, Validators.pattern('^[0-9]{2}:[0-9]{2}$')]],
+      checkTime: ['', [Validators.required, Validators.pattern('^([0-9]{2}:[0-9]{2})+(,[0-9]{2}:[0-9]{2}){0,}$')]],
     });
   }
 
@@ -136,7 +136,7 @@ export class MailAccountComponent extends AbstractComponent implements OnInit, A
 
   showDialogToRun() {
     this.mailAccountService.fetchDataFromServer(this.mailAccount).subscribe(ua => {
-       alert('<i class="pi pi-info"></i><p>Sucessfully retrieved messages from server.</p>');
+       alert('Sucessfully retrieved messages from server');
     });
 
   }

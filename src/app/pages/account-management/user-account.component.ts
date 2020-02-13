@@ -180,15 +180,23 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, A
   }
 
   onRowSelect(event) {
-    this.newUserAccount = false;
-    this.submitted = false;
     this.userAccount = this.cloneUserAccount(event.data);
-    this.userAccountForm.patchValue({...this.userAccount});
+  }
 
-    const selectedCity = this.cities.filter(el => el.label === this.userAccount.city);
-    this.userAccountForm.patchValue({
-      city: selectedCity[0]});
+  onRowUnselect() {
+    this.userAccount = undefined;
+  }
 
+  showDialogToEdit() {
+    if (this.userAccount !== undefined) {
+      this.newUserAccount = false;
+      this.submitted = false;
+      this.userAccountForm.patchValue({...this.userAccount});
+
+      const selectedCity = this.cities.filter(el => el.label === this.userAccount.city);
+      this.userAccountForm.patchValue({
+        city: selectedCity[0]});
+    }
     this.displayDialog = true;
   }
 

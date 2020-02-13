@@ -17,6 +17,9 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { UserAccountComponent } from './user-account.component';
 import { MailAccountComponent } from './mail-account.component';
 import {AutoCompleteModule} from 'primeng/autocomplete';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -33,6 +36,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     PanelModule,
     ThemeModule,
     TableModule,
+    MessageModule,
+    MessagesModule,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,

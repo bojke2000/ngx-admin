@@ -23,7 +23,7 @@
         <p-table [columns]="cols" [value]="userAccounts" [lazy]="true" #table (onLazyLoad)="loadUserAccountsLazy($event)"
           [loading]="loading" [scrollable]="true" [paginator]="true" [rows]="20" [style]="{width:'100%'}" scrollHeight="58vh"
           selectionMode="single" [(selection)]="selectedUserAccount" dataKey="id"
-          [totalRecords]="totalRecords" (onRowSelect)="onRowSelect($event)" >
+          [totalRecords]="totalRecords" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)" >
           <ng-template pTemplate="colgroup" let-columns>
               <colgroup>
                   <col *ngFor="let col of columns " [style.width]="col.width" [pSortableColumn]>
@@ -49,11 +49,18 @@
         <p-button icon="fa fa-plus" (click)="showDialogToAdd()" label="{{ translate.get('Create Account') | async }}"></p-button>
         <div class="divider"></div>
       </div>
+      <div style="position: relative; float: right;margin-top: 5px;">
+        <p-button icon="fa fa-edit" (click)="showDialogToEdit()" label="{{ translate.get('Edit Account') | async }}"></p-button>
+        <div class="divider"></div>
+      </div>
     </div>
 
       <p-dialog header="User Account Details" [(visible)]="displayDialog" [focusOnShow]="false"
                 [responsive]="true" showEffect="fade" [modal]="true"  height="600"
                 [style]="{width: '500px'}">
+          <div class="ui-g ui-fluid" *ngIf="!userAccount">
+              <i class="pi pi-info"></i><p>&nbsp;&nbsp; {{"Select row to edit"| translate }}</p>
+          </div>
           <div class="ui-g ui-fluid" *ngIf="userAccount">
             <form [formGroup]="userAccountForm" (ngSubmit)="save()">
             <div class="ui-g-12">
@@ -118,10 +125,12 @@
           </form>
         </div>
         <p-footer>
+          <div *ngIf="userAccount">
             <div class="ui-dialog-buttonpane ui-helper-clearfix">
                 <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
                 <button type="button" pButton icon="fa fa-check" (click)="save()" label="Save"></button>
             </div>
+          </div>
         </p-footer>
     </p-dialog>
 

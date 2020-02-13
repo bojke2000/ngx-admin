@@ -23,7 +23,7 @@ p {
     width:5px;
     height:auto;
     display:inline-block;
-}
+  }
 
 /*
 ::ng-deep body .ui-table .ui-sortable-column.ui-state-highlight {

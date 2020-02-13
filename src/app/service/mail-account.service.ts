@@ -11,6 +11,7 @@ import { NgPrimeGridResponse } from '../domain/ngprime-grid-response';
 export class MailAccountService extends AbstractService {
 
     private mailAccountUrl = 'http://localhost:8081/mail-accounts';
+    private mailFetchUrl = 'http://localhost:8081/mail-fetch';
 
     private httpOptions = {
       headers: new HttpHeaders({
@@ -49,6 +50,12 @@ export class MailAccountService extends AbstractService {
     deleteMailAccount (mailAccount: MailAccount): Observable<MailAccount> {
       const url = `${this.mailAccountUrl}/${mailAccount.id}`; // DELETE api/heroes/42
       return this.http.delete<MailAccount>(url, this.httpOptions)
+      .pipe(catchError(this.handleError));
+    }
+
+    fetchDataFromServer (mailAccount: MailAccount): Observable<MailAccount> {
+      const url = `${this.mailFetchUrl}/${mailAccount.id}`; // DELETE api/heroes/42
+      return this.http.get<MailAccount>(url, this.httpOptions)
       .pipe(catchError(this.handleError));
     }
 

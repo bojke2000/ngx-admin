@@ -43,13 +43,15 @@
   "Search by username or email": "Brza pretraga po imenu ili mejlu",
   "Search": "Pretraga",
   "Administration": "Administracija",
-  "Email Management": "Mejl nalozi",
+  "GSM2 Email Management": "GSM2 mejl nalozi",
   "GSM2 Management": "GSM2 Menadžment",
   "Search by account or server": "Brza pretraga po nalogu ili serveru",
   "Protocol": "Protokol",
   "Account": "Nalog",
-  "Check Time": "Vreme provere",
+  "Check Time": "Postavljeno vreme provere",
   "Last Check": "Vreme zadnje provere",
-  "Mail check time is required and must in time format like e.g. '23:02'": "Unesite vreme promene u formatu 'sati:minuta', na primer '23:02'"
-
+  "Mail check time is required and must in time format like e.g. '23:02'": "Unesite vreme promene u formatu 'sati:minuta', na primer '23:02'",
+  "Edit Account": "Izmeni nalog",
+  "Fetch data from server": "Dohvati podatke sa servera",
+  "Please select a row for an action.": "Selektujte red za željenju akciju."
 }

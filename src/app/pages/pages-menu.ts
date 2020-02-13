@@ -40,7 +40,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
         home: false,
       },
       {
-        title: 'Email Management',
+        title: 'GSM2 Email Management',
         icon: 'email-outline',
         link: '/pages/mail-account',
         home: false,

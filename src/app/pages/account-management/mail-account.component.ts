@@ -134,6 +134,20 @@ export class MailAccountComponent extends AbstractComponent implements OnInit, A
     this.displayDialog = true;
   }
 
+  showDialogToRun() {
+    this.mailAccountService.fetchDataFromServer(this.mailAccount).subscribe(ua => {
+       alert('<i class="pi pi-info"></i><p>Sucessfully retrieved messages from server.</p>');
+    });
+
+  }
+
+  showDialogToEdit() {
+    this.newMailAccount = false;
+    this.submitted = false;
+    this.mailAccountForm.patchValue({...this.mailAccount});
+    this.displayDialog = true;
+  }
+
   save() {
     this.submitted = true;
 
@@ -172,18 +186,11 @@ export class MailAccountComponent extends AbstractComponent implements OnInit, A
   }
 
   onRowSelect(event) {
-    this.newMailAccount = false;
-    this.submitted = false;
     this.mailAccount = this.cloneMailAccount(event.data);
-    this.mailAccountForm.patchValue({...this.mailAccount});
+  }
 
-    /*
-    const selectedProtocol = this.protocols.filter(el => el.label === this.mailAccount.protocol);
-    this.mailAccountForm.patchValue({
-      protocol: selectedProtocol[0]});
-    */
-
-    this.displayDialog = true;
+  onRowUnselect() {
+    this.mailAccount = undefined;
   }
 
   cloneMailAccount(c: MailAccount): MailAccount {

@@ -23,7 +23,7 @@
         <p-table [columns]="cols" [value]="mailAccounts" [lazy]="true" #table (onLazyLoad)="loadMailAccountsLazy($event)"
           [loading]="loading" [scrollable]="true" [paginator]="true" [rows]="20" [style]="{width:'100%'}" scrollHeight="58vh"
           selectionMode="single" [(selection)]="selectedMailAccount" dataKey="id"
-          [totalRecords]="totalRecords" (onRowSelect)="onRowSelect($event)" >
+          [totalRecords]="totalRecords" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)" >
           <ng-template pTemplate="colgroup" let-columns>
               <colgroup>
                   <col *ngFor="let col of columns " [style.width]="col.width" [pSortableColumn]>
@@ -45,8 +45,17 @@
               </tr>
           </ng-template>
       </p-table>
+
       <div style="position: relative; float: right;margin-top: 5px;">
         <p-button icon="fa fa-plus" (click)="showDialogToAdd()" label="{{ translate.get('Create Account') | async }}"></p-button>
+        <div class="divider"></div>
+      </div>
+      <div style="position: relative; float: right;margin-top: 5px;">
+        <p-button icon="fa fa-edit" (click)="showDialogToEdit()" label="{{ translate.get('Edit Account') | async }}"></p-button>
+        <div class="divider"></div>
+      </div>
+      <div style="position: relative; float: right;margin-top: 5px;">
+        <p-button icon="fa fa-gavel" (click)="showDialogToRun()" label="{{ translate.get('Fetch data from server') | async }}"></p-button>
         <div class="divider"></div>
       </div>
     </div>
@@ -54,6 +63,9 @@
       <p-dialog header="User Account Details" [(visible)]="displayDialog" [focusOnShow]="false"
                 [responsive]="true" showEffect="fade" [modal]="true"  height="600"
                 [style]="{width: '500px'}">
+          <div class="ui-g ui-fluid" *ngIf="!mailAccount">
+            <i class="pi pi-info"></i><p>&nbsp;&nbsp; {{"Please select a row for an action."| translate }}</p>
+          </div>
           <div class="ui-g ui-fluid" *ngIf="mailAccount">
             <form [formGroup]="mailAccountForm" (ngSubmit)="save()">
             <div class="ui-g-12">
@@ -61,7 +73,7 @@
                     <label for="account">Name:</label>
                 </div>
                 <div class="ui-g-8">
-                    <input pInputText type="email" id="account" formControlName="account" onclick="this.setSelectionRange(0, this.value.length)" autofocus 
+                    <input pInputText type="email" id="account" formControlName="account" onclick="this.setSelectionRange(0, this.value.length)" autofocus
                       class="form-control" [ngClass]="{ 'is-invalid': submitted && f.account.errors }" />
                     <div *ngIf="submitted && f.account.errors" class="invalid-feedback">
                         <div *ngIf="f.account.errors.required">First Name is required</div>
@@ -144,10 +156,12 @@
           </form>
         </div>
         <p-footer>
+          <div *ngIf="mailAccount">
             <div class="ui-dialog-buttonpane ui-helper-clearfix">
                 <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
                 <button type="button" pButton icon="fa fa-check" (click)="save()" label="Save"></button>
             </div>
+          </div>
         </p-footer>
     </p-dialog>
 

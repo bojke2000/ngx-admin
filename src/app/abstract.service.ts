@@ -1,6 +1,12 @@
-import { HttpParams } from '@angular/common/http';
+import { HttpParams, HttpHeaders } from '@angular/common/http';
 
 export abstract class AbstractService {
+
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json',
+    }),
+  };
 
   jsonToHttpParams(json: any): string {
     let params = new HttpParams();

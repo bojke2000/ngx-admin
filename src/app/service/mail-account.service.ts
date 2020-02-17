@@ -13,12 +13,6 @@ export class MailAccountService extends AbstractService {
     private mailAccountUrl = 'http://localhost:8081/mail-accounts';
     private mailFetchUrl = 'http://localhost:8081/mail-fetch';
 
-    private httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-      }),
-    };
-
     constructor(private http: HttpClient) {
       super();
      }

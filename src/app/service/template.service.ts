@@ -1,7 +1,5 @@
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 import { AbstractService } from '../abstract.service';
 import { NgPrimeGridResponse } from '../domain/ngprime-grid-response';
 import { Option } from '../domain/option';
@@ -10,12 +8,6 @@ import { Option } from '../domain/option';
 export class TemplateService extends AbstractService {
 
     private url = 'http://localhost:8081/templates';
-
-    private httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-      }),
-    };
 
     constructor(private http: HttpClient) {
       super();

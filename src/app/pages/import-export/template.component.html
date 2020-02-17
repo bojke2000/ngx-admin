@@ -1,0 +1,54 @@
+<div class="row">
+  <nb-card style="width: 100%">
+    <nb-card-body>
+
+      <div class="header-container">
+        <div>
+          <h3>{{ 'Template Management' | translate }}</h3>
+        </div>
+        <div style="display: inline-block;">
+          <h3>&nbsp; </h3>
+        </div>
+
+        <div style="position: relative; float: right; margin-top: 5px;margin-bottom: 5px;">
+          <div class="ui-inputgroup" >
+              <p-dropdown [(ngModel)]="template" [options]="templates" optionLabel="label" placeholder="Select a template"
+          (onChange)="onTemplateChange($event)"  autoWidth="false" [style]="{'width':'400px'}"></p-dropdown>
+          </div>
+        </div>
+
+        <p-table [columns]="cols" [value]="mappings" [style]="{width:'100%'}" scrollHeight="58vh">
+
+          <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+              <col *ngFor="let col of columns " [style.width]="col.width">
+            </colgroup>
+          </ng-template>
+
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th *ngFor="let col of columns ">
+                {{col.header | translate}}
+              </th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-rowData let-columns="cols">
+            <tr>
+              <td *ngFor="let col of cols " pEditableColumn>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <input pInputText type="text" [(ngModel)]="rowData[col.field]">
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{rowData[col.field]}}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</div>

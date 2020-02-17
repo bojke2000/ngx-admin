@@ -1,0 +1,11 @@
+.ui-g label {
+  font-weight: bold;
+  margin-top: .25em;
+  display: block;
+}
+
+.divider{
+  width:5px;
+  height:auto;
+  display:inline-block;
+}

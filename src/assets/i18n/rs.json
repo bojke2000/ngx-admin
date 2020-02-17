@@ -52,5 +52,9 @@
   "Mail check time is required and must in time format like e.g. '23:02'": "Unesite vreme promene u formatu 'sati:minuta', na primer '23:02'",
   "Edit Account": "Izmeni nalog",
   "Fetch data from server": "Dohvati podatke sa servera",
-  "Please select a row for an action.": "Selektujte red za željenju akciju."
+  "Please select a row for an action.": "Selektujte red za željenju akciju.",
+  "Template Management": "Template menadžment",
+  "Field": "Polje",
+  "Mapping": "Mapiranje",
+  "Select Template": "Izaberi templejt"
 }

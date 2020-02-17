@@ -48,7 +48,15 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
   {
-    title: 'FEATURES',
-    group: true,
+    title: 'Import/Export',
+    icon: 'book-open-outline',
+    children: [
+      {
+        title: 'Templates',
+        icon: 'people-outline',
+        link: '/pages/template',
+        home: false,
+      },
+    ],
   },
 ];

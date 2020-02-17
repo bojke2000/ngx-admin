@@ -10,6 +10,7 @@ import {DialogModule} from 'primeng/dialog';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { AccountManagementModule } from './account-management/account-management.module';
+import { ImportExportModule } from './import-export/import-export.module';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -24,6 +25,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     DashboardModule,
     DialogModule,
     AccountManagementModule,
+    ImportExportModule,
     TranslateModule.forRoot({
       loader: {
           provide: TranslateLoader,

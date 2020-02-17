@@ -29,6 +29,7 @@ import { reducers, metaReducers } from './reducers';
 import { UserAccountService } from './service/user-account.service';
 import { MailAccountService } from './service/mail-account.service';
 import { UserAccountTypesService } from './service/useraccounttypes.service';
+import { TemplateService } from './service/template.service';
 
 
 
@@ -60,7 +61,7 @@ import { UserAccountTypesService } from './service/useraccounttypes.service';
       },
     }),
   ],
-  providers: [DeviceService, UserAccountService, MailAccountService, UserAccountTypesService, CityService],
+  providers: [DeviceService, UserAccountService, MailAccountService, UserAccountTypesService, CityService, TemplateService],
   bootstrap: [AppComponent],
 })
 export class AppModule {

@@ -5,6 +5,7 @@ import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserAccountComponent } from './account-management/user-account.component';
 import { MailAccountComponent } from './account-management/mail-account.component';
+import { TemplateComponent } from './import-export/template.component';
 
 const routes: Routes = [{
   path: '',
@@ -21,6 +22,10 @@ const routes: Routes = [{
     {
       path: 'mail-account',
       component: MailAccountComponent,
+    },
+    {
+      path: 'template',
+      component: TemplateComponent,
     },
     {
       path: '',

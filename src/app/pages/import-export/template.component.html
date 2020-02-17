@@ -12,8 +12,8 @@
 
         <div style="position: relative; float: right; margin-top: 5px;margin-bottom: 5px;">
           <div class="ui-inputgroup" >
-              <p-dropdown [(ngModel)]="template" [options]="templates" optionLabel="label" placeholder="Select a template"
-          (onChange)="onTemplateChange($event)"  autoWidth="false" [style]="{'width':'400px'}"></p-dropdown>
+              <p-dropdown [(ngModel)]="template" editable="true"  [options]="templates" optionLabel="label"
+              (onChange)="onTemplateChange($event)"  autoWidth="false" [style]="{'width':'400px'}"></p-dropdown>
           </div>
         </div>
 
@@ -34,11 +34,11 @@
           </ng-template>
 
           <ng-template pTemplate="body" let-rowData let-columns="cols">
-            <tr>
-              <td *ngFor="let col of cols " pEditableColumn>
+            <tr >
+              <td  *ngFor="let col of cols; let i = index" [attr.data-index]="i" pEditableColumn   [ngClass]="i%2 === 0 ? 'key-col' : null" >
                 <p-cellEditor>
                   <ng-template pTemplate="input">
-                    <input pInputText type="text" [(ngModel)]="rowData[col.field]">
+                    <input pInputText type="text" [(ngModel)]="rowData[col.field]" [disabled]="i%2 === 0">
                   </ng-template>
                   <ng-template pTemplate="output">
                     {{rowData[col.field]}}

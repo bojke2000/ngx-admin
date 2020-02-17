@@ -1,48 +1,52 @@
 <div class="row">
   <nb-card style="width: 100%">
     <nb-card-body>
-      <div class="header-container" >
+      <div class="header-container">
         <div style="display: inline-block;">
           <h3>{{ 'devices' | translate }}</h3>
         </div>
 
       </div>
       <p-table [columns]="cols" [value]="devices" [lazy]="true" #table (onLazyLoad)="loadDevicesLazy($event)"
-        [loading]="loading" [scrollable]="true" [paginator]="true" [rows]="20" [style]="{width:'100%'}" scrollHeight="58vh"
-        selectionMode="single" [(selection)]="selectedDevice" dataKey="siteId"
+        [loading]="loading" [scrollable]="true" [paginator]="true" [rows]="20" [style]="{width:'100%'}"
+        scrollHeight="58vh" selectionMode="single" [(selection)]="selectedDevice" dataKey="siteId"
         [totalRecords]="totalRecords">
+
         <ng-template pTemplate="colgroup" let-columns>
-            <colgroup>
-                <col *ngFor="let col of columns | slice:1" [style.width]="col.width" [pSortableColumn]>
-            </colgroup>
+          <colgroup>
+            <col *ngFor="let col of columns | slice:1" [style.width]="col.width" [pSortableColumn]>
+          </colgroup>
         </ng-template>
+
         <ng-template pTemplate="header" let-columns>
-            <tr>
-                <th *ngFor="let col of columns | slice:1"  [pSortableColumn]="col.field" (onClick)=resetSort()>
-                    {{col.header | translate}}
-                    <p-sortIcon [field]="col.field"></p-sortIcon>
-                </th>
-            </tr>
+          <tr>
+            <th *ngFor="let col of columns | slice:1" [pSortableColumn]="col.field" (onClick)=resetSort()>
+              {{col.header | translate}}
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+          </tr>
         </ng-template>
+
         <ng-template pTemplate="body" let-rowData let-columns="columns">
-            <tr [pSelectableRow]="rowData">
-                <td *ngFor="let col of columns | slice:1">
-                    {{rowData[col.field]}}
-                </td>
-            </tr>
+          <tr [pSelectableRow]="rowData">
+            <td *ngFor="let col of columns | slice:1">
+              {{rowData[col.field]}}
+            </td>
+          </tr>
         </ng-template>
-    </p-table>
-    <div style="position: relative; float: right; margin-top: 5px;">
-      <p-button label="Export"></p-button>
-      <div class="divider"></div>
-      <p-button label="Import"></p-button>
-      <div class="divider"></div>
-      <p-button label="Delete"></p-button>
-      <div class="divider"></div>
-      <p-button label="Edit"></p-button>
-      <div class="divider"></div>
-      <p-button label="Add"></p-button>
-    </div>
-  </nb-card-body>
+
+      </p-table>
+      <div style="position: relative; float: right; margin-top: 5px;">
+        <p-button label="Export"></p-button>
+        <div class="divider"></div>
+        <p-button label="Import"></p-button>
+        <div class="divider"></div>
+        <p-button label="Delete"></p-button>
+        <div class="divider"></div>
+        <p-button label="Edit"></p-button>
+        <div class="divider"></div>
+        <p-button label="Add"></p-button>
+      </div>
+    </nb-card-body>
   </nb-card>
 </div>

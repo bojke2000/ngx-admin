@@ -1,11 +1,5 @@
-.ui-g label {
+.key-col {
+  background-color:#007ad9  !important;
+  color: #ffffff !important;
   font-weight: bold;
-  margin-top: .25em;
-  display: block;
-}
-
-.divider{
-  width:5px;
-  height:auto;
-  display:inline-block;
 }

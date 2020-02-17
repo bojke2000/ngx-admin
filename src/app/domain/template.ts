@@ -1,1 +1,3 @@
-export interface Template {}
+export interface Template {
+  id?: number;
+}

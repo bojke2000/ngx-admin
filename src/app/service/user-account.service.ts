@@ -12,12 +12,6 @@ export class UserAccountService extends AbstractService {
 
     private userAccountUrl = 'http://localhost:8081/user-accounts';
 
-    private httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-      }),
-    };
-
     constructor(private http: HttpClient) {
       super();
      }

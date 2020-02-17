@@ -30,12 +30,12 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
 
   ngOnInit(): void {
     this.cols = [
-      { field: 'key1', header: 'Field', width: '200px' },
-      { field: 'val1', header: 'Mapping', width: '200px' },
-      { field: 'key2', header: 'Field', width: '200px' },
-      { field: 'val2', header: 'Mapping', width: '200px' },
-      { field: 'key3', header: 'Field', width: '200px' },
-      { field: 'val3', header: 'Mapping', width: '200px' },
+      { field: 'key1', header: 'Field', width: '350px' },
+      { field: 'val1', header: 'Mapping', width: '100px' },
+      { field: 'key2', header: 'Field', width: '350px' },
+      { field: 'val2', header: 'Mapping', width: '100px' },
+      { field: 'key3', header: 'Field', width: '350px' },
+      { field: 'val3', header: 'Mapping', width: '100px' },
     ];
 
     this.templateService.getTemplates().then(templates => {

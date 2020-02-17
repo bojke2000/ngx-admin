@@ -46,15 +46,14 @@
           </ng-template>
       </p-table>
 
-      <div style="position: relative; float: right;margin-top: 5px;">
+      <div class="button-positioner">
         <p-button icon="fa fa-plus" (click)="showDialogToAdd()" label="{{ translate.get('Create Account') | async }}"></p-button>
-        <div class="divider"></div>
       </div>
-      <div style="position: relative; float: right;margin-top: 5px;">
+      <div class="button-positioner">
         <p-button icon="fa fa-edit" (click)="showDialogToEdit()" label="{{ translate.get('Edit Account') | async }}"></p-button>
         <div class="divider"></div>
       </div>
-      <div style="position: relative; float: right;margin-top: 5px;">
+      <div class="button-positioner">
         <p-button icon="fa fa-gavel" (click)="showDialogToRun()" label="{{ translate.get('Fetch data from server') | async }}"></p-button>
         <div class="divider"></div>
       </div>

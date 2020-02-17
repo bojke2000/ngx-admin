@@ -35,10 +35,10 @@ export class DashboardComponent implements OnInit {
 
     this.cols = [
       { field: 'id', header: 'ID', width: '70px' },
+      { field: 'deviceId', header: 'Device ID' , width: '150px' },
       { field: 'siteId', header: 'siteId' , width: '120px' },
       { field: 'siteNo', header: 'Site No' , width: '150px' },
       { field: 'gsmId', header: 'GSM ID' , width: '120px' },
-      { field: 'deviceId', header: 'Device ID' , width: '150px' },
       { field: 'mpn', header: 'MPN' , width: '120px' },
       { field: 'countryId', header: 'Country ID' , width: '120px' },
       { field: 'cityId', header: 'City ID' , width: '120px' },

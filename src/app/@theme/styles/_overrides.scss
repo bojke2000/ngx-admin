@@ -39,14 +39,13 @@
   display:inline-block;
 }
 
-/*
-::ng-deep body .ui-table .ui-sortable-column.ui-state-highlight {
-  background-color: #f4f4f4;
-  color: #3366ff;
+.button-positioner {
+  position: relative;
+  float: right;
+  margin-top: 10px;
 }
-*/
+
 body .ui-table .ui-table-thead > tr > th {
- /* background-color: #007ad9 !important; */
   color: #007ad9 !important;
 }
 

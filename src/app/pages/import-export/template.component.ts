@@ -1,13 +1,12 @@
-import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
-import { Table } from 'primeng/table';
-import { AbstractComponent } from '../../abstract.component';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { Table } from 'primeng/table';
+
+import { AbstractComponent } from '../../abstract.component';
+import { Option } from '../../domain/option';
+import { TemplateDto } from '../../domain/template-dto';
 import { TemplateMapping } from '../../domain/template-mapping';
 import { TemplateService } from '../../service/template.service';
-import { Option } from '../../domain/option';
-import { ChangeDetectorRef } from '@angular/core';
-import { TemplateDto } from '../../domain/template-dto';
-import { Reference } from '../../domain/reference';
 
 
 @Component({

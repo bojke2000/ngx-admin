@@ -57,10 +57,13 @@
           <div class="divider"></div>
         </div>
         <div class="button-positioner">
-          <p-button icon="fa fa-save" label="{{ translate.get('Save Template') | async }}"></p-button>
+          <p-button icon="fa fa-save"  (click)="save()" label="{{ translate.get('Save Template') | async }}"></p-button>
           <div class="divider"></div>
         </div>
-
+        <div class="button-positioner">
+          <p-button icon="fa fa-trash"  (click)="delete()" label="{{ translate.get('Delete Template') | async }}"></p-button>
+          <div class="divider"></div>
+        </div>
       </div>
     </nb-card-body>
   </nb-card>

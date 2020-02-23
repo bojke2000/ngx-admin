@@ -6,6 +6,7 @@ import { TemplateMapping } from '../../domain/template-mapping';
 import { TemplateService } from '../../service/template.service';
 import { Option } from '../../domain/option';
 import { ChangeDetectorRef } from '@angular/core';
+import { TemplateDto } from '../../domain/template-dto';
 
 
 @Component({
@@ -57,7 +58,10 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
     });
   }
 
-  save() {}
+  save() {
+    const templateDto = {id: this.template.value, label: this.template.label, mappings: [...this.mappings]} as TemplateDto;
+    this.templateService.updateTemplate(templateDto);
+  }
 
   delete() {}
 

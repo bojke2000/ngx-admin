@@ -1,8 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError } from 'rxjs/operators';
+
 import { AbstractService } from '../abstract.service';
 import { NgPrimeGridResponse } from '../domain/ngprime-grid-response';
 import { Option } from '../domain/option';
+import { TemplateDto } from '../domain/template-dto';
 
 @Injectable()
 export class TemplateService extends AbstractService {
@@ -23,5 +26,10 @@ export class TemplateService extends AbstractService {
       return this.http.get<any>(this.url.concat('/').concat(templateId))
         .toPromise()
         .then(res => <NgPrimeGridResponse>res);
+    }
+
+    updateTemplate(templateDto: TemplateDto) {
+      return this.http.put<TemplateDto>(this.url, templateDto, this.httpOptions)
+        .pipe(catchError(this.handleError));
     }
   }

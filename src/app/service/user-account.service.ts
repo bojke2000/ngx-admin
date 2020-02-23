@@ -1,11 +1,12 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { UserAccount } from '../domain/user-account';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Pageable } from '../domain/pageable';
+
 import { AbstractService } from '../abstract.service';
 import { NgPrimeGridResponse } from '../domain/ngprime-grid-response';
+import { Pageable } from '../domain/pageable';
+import { UserAccount } from '../domain/user-account';
 
 @Injectable()
 export class UserAccountService extends AbstractService {

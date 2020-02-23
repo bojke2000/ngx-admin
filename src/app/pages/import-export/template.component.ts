@@ -7,6 +7,7 @@ import { TemplateService } from '../../service/template.service';
 import { Option } from '../../domain/option';
 import { ChangeDetectorRef } from '@angular/core';
 import { TemplateDto } from '../../domain/template-dto';
+import { Reference } from '../../domain/reference';
 
 
 @Component({
@@ -31,12 +32,12 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
 
   ngOnInit(): void {
     this.cols = [
-      { field: 'key1', header: 'Field', width: '350px' },
-      { field: 'val1', header: 'Mapping', width: '100px' },
-      { field: 'key2', header: 'Field', width: '350px' },
-      { field: 'val2', header: 'Mapping', width: '100px' },
-      { field: 'key3', header: 'Field', width: '350px' },
-      { field: 'val3', header: 'Mapping', width: '100px' },
+      { field: 'key1', header: 'Field', width: '250px' },
+      { field: 'val1', header: 'Mapping', width: '70px' },
+      { field: 'key2', header: 'Field', width: '250px' },
+      { field: 'val2', header: 'Mapping', width: '70px' },
+      { field: 'key3', header: 'Field', width: '250px' },
+      { field: 'val3', header: 'Mapping', width: '70px' },
     ];
 
     this.templateService.getTemplates().then(templates => {

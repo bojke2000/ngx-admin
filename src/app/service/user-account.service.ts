@@ -11,20 +11,20 @@ import { UserAccount } from '../domain/user-account';
 @Injectable()
 export class UserAccountService extends AbstractService {
 
-    private userAccountUrl = 'http://localhost:8081/user-accounts';
+    private url = 'http://localhost:8081/user-accounts';
 
     constructor(private http: HttpClient) {
       super();
      }
 
     getUserAccounts(pageable?: Pageable) {
-      return this.http.get<any>(this.userAccountUrl.concat('?').concat(this.jsonToHttpParams(pageable)))
+      return this.http.get<any>(this.url.concat('?').concat(this.jsonToHttpParams(pageable)))
         .toPromise()
         .then(res => <NgPrimeGridResponse>res);
     }
 
     searchUserAccounts(query: string, pageable?: Pageable) {
-      const uri = this.userAccountUrl.concat('?search=username==').concat(query)
+      const uri = this.url.concat('?search=username==').concat(query)
       .concat('*,email==*').concat(query).concat('*').concat('&').concat(this.jsonToHttpParams(pageable));
       return this.http.get<any>(uri)
         .toPromise()
@@ -32,25 +32,18 @@ export class UserAccountService extends AbstractService {
     }
 
     addUserAccount (userAccount: UserAccount): Observable<UserAccount> {
-      return this.http.post<UserAccount>(this.userAccountUrl, userAccount, this.httpOptions)
+      return this.http.post<UserAccount>(this.url, userAccount, this.httpOptions)
         .pipe(catchError(this.handleError));
     }
 
     updateUserAccount (userAccount: UserAccount): Observable<UserAccount> {
-      return this.http.put<UserAccount>(this.userAccountUrl, userAccount, this.httpOptions)
+      return this.http.put<UserAccount>(this.url, userAccount, this.httpOptions)
         .pipe(catchError(this.handleError));
     }
 
     deleteUserAccount (userAccount: UserAccount): Observable<UserAccount> {
-      const url = `${this.userAccountUrl}/${userAccount.id}`; // DELETE api/heroes/42
+      const url = `${this.url}/${userAccount.id}`; // DELETE api/heroes/42
       return this.http.delete<UserAccount>(url, this.httpOptions)
       .pipe(catchError(this.handleError));
-    }
-
-    getTestAccounts() {
-      return this.http.get<any>('assets/showcase/data/user-accounts.json')
-        .toPromise()
-        .then(res => <UserAccount[]>res.data)
-        .then(data => data);
     }
 }

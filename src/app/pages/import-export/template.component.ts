@@ -43,7 +43,7 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
       this.templates = templates;
       if (this.templates.length > 0) {
         this.template = templates[0];
-        this.templateService.getTemplate(this.template.value).then(result => this.mappings = result.data);
+        this.templateService.getTemplate(this.template.value).then(result => this.mappings = result.mappings);
       }
     });
   }
@@ -53,14 +53,16 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
   }
 
   onTemplateChange() {
-    this.templateService.getTemplate(this.template.value).then(ngresp => {
-        this.mappings = ngresp.data;
+    this.templateService.getTemplate(this.template.value).then(dto => {
+        this.mappings = dto.mappings;
     });
   }
 
   save() {
-    const templateDto = {id: this.template.value, label: this.template.label, mappings: [...this.mappings]} as TemplateDto;
-    this.templateService.updateTemplate(templateDto);
+    const templateDto = {id: this.template.value, label: this.template.label, mappings: [...this.mappings]};
+    this.templateService.updateTemplate(templateDto).subscribe(newDto => {
+        this.mappings = newDto.mappings;
+    });
   }
 
   delete() {}

@@ -80,8 +80,5 @@
   "Alarms": "Alarmi",
   "Main Battery": "Glavna baterija",
   "GSM Battery": "GSM Baterija",
-  "Create Template": "Napravi template",
-  "Edit Template": "Izmeni template",
-  "Save Template": "Snimi template",
-  "Delete Template": "Izbriši template"
+  "Save Changes": "Snimi izmene"
 }

@@ -3,6 +3,8 @@ import { throwError } from 'rxjs';
 
 export abstract class AbstractService {
 
+  prefix = 'http://localhost:8081/';
+
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',

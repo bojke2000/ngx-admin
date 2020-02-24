@@ -1,20 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Option } from '../domain/option';
+import { AbstractService } from '../abstract.service';
 
 @Injectable()
-export class CityService {
+export class CityService extends AbstractService {
 
-    constructor(private http: HttpClient) { }
+  private url = this.prefix + 'cities';
 
-    getCities(query?: string) {
-    let url = 'http://localhost:8081/cities';
+  constructor(private http: HttpClient) {
+    super();
+  }
+
+  getCities(query?: string) {
     if (query !== undefined) {
-      url += 'query=' + query;
+      this.url += 'query=' + query;
     }
-    return this.http.get<any>(url)
+    return this.http.get<any>(this.url)
       .toPromise()
       .then(res => <Option[]>res.data)
       .then(data => data);
-    }
+  }
 }

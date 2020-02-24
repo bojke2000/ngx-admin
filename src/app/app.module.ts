@@ -12,7 +12,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DeviceService } from './service/deviceservice';
 import { CityService } from './service/cityservice';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import {
   NbChatModule,
@@ -30,6 +30,7 @@ import { UserAccountService } from './service/user-account.service';
 import { MailAccountService } from './service/mail-account.service';
 import { UserAccountTypesService } from './service/useraccounttypes.service';
 import { TemplateService } from './service/template.service';
+import { NbPasswordAuthStrategy, NbAuthModule } from '@nebular/auth';
 
 
 
@@ -59,6 +60,35 @@ import { TemplateService } from './service/template.service';
         strictStateImmutability: true,
         strictActionImmutability: true,
       },
+    }),
+    NbAuthModule.forRoot({
+      strategies: [
+        NbPasswordAuthStrategy.setup({
+          name: 'email',
+          baseEndpoint: 'http://localhost:8081',
+          login: {
+            endpoint: '/auth/sign-in',
+            method: 'post',
+          },
+          register: {
+            endpoint: '/auth/sign-up',
+            method: 'post',
+          },
+          logout: {
+            endpoint: '/auth/sign-out',
+            method: 'post',
+          },
+          requestPass: {
+            endpoint: '/auth/request-pass',
+            method: 'post',
+          },
+          resetPass: {
+            endpoint: '/auth/reset-pass',
+            method: 'post',
+          },
+        }),
+      ],
+      forms: {},
     }),
   ],
   providers: [DeviceService, UserAccountService, MailAccountService, UserAccountTypesService, CityService, TemplateService],

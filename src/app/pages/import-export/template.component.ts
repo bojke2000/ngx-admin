@@ -4,7 +4,6 @@ import { Table } from 'primeng/table';
 
 import { AbstractComponent } from '../../abstract.component';
 import { Option } from '../../domain/option';
-import { TemplateDto } from '../../domain/template-dto';
 import { TemplateMapping } from '../../domain/template-mapping';
 import { TemplateService } from '../../service/template.service';
 

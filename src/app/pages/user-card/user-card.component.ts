@@ -92,6 +92,6 @@ export class UserCardComponent implements OnInit {
    }
 
    onImportClick() {
-      alert("onImportClick");
+      alert('onImportClick');
    }
 }

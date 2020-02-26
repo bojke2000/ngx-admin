@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
-  user: User = {name: '', picture: '',};
+  user: User = {name: '', picture: ''};
 
   themes = [
     {

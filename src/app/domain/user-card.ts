@@ -1,9 +1,9 @@
-export interface Device {
+export interface UserCard {
   id?: number;
   siteId: string;
   siteNo: string;
   gsmId: number;
-  deviceId: string;
+  userCardId: string;
   mpn: string;
   countryId: number;
   cityId: number;

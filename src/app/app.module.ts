@@ -28,7 +28,7 @@ import { AuthGuard } from './auth-guard.service';
 import { NbAuthJWTInterceptor } from './jwt-interceptor';
 import { metaReducers, reducers } from './reducers';
 import { CityService } from './service/cityservice';
-import { DeviceService } from './service/deviceservice';
+import { UserCardService } from './service/user-card.service';
 import { MailAccountService } from './service/mail-account.service';
 import { TemplateService } from './service/template.service';
 import { UserAccountService } from './service/user-account.service';
@@ -103,7 +103,7 @@ import { UserAccountTypesService } from './service/useraccounttypes.service';
       forms: {},
     }),
   ],
-  providers: [AuthGuard, DeviceService, UserAccountService, MailAccountService,
+  providers: [AuthGuard, UserCardService, UserAccountService, MailAccountService,
     UserAccountTypesService, CityService, TemplateService,
     { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true},
     { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: () => false}],

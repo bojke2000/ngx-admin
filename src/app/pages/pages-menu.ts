@@ -24,7 +24,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
   {
-    title: 'devices',
+    title: 'userCards',
     icon: 'book-outline',
     link: '/pages/dashboard',
     home: true,

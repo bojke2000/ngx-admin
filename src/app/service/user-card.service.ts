@@ -2,19 +2,19 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { AbstractService } from '../abstract.service';
-import { Device } from '../domain/device';
+import { UserCard } from '../domain/user-card';
 
 @Injectable()
-export class DeviceService extends AbstractService {
+export class UserCardService extends AbstractService {
 
-  private url = this.prefix + 'devices';
+  private url = this.prefix + 'user-cards';
 
   constructor(private http: HttpClient) { super(); }
 
-  getDevices() {
+  getUserCards() {
     return this.http.get<any>(this.url, this.httpOptions)
       .toPromise()
-      .then(res => <Device[]>res.data)
+      .then(res => <UserCard[]>res.data)
       .then(data => data);
   }
 }

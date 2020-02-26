@@ -3,13 +3,13 @@
     <nb-card-body>
       <div class="header-container">
         <div style="display: inline-block;">
-          <h3>{{ 'devices' | translate }}</h3>
+          <h3>{{ 'userCards' | translate }}</h3>
         </div>
 
       </div>
-      <p-table [columns]="cols" [value]="devices" [lazy]="true" #table (onLazyLoad)="loadDevicesLazy($event)"
+      <p-table [columns]="cols" [value]="userCards" [lazy]="true" #table (onLazyLoad)="loadUserCardsLazy($event)"
         [loading]="loading" [scrollable]="true" [paginator]="true" [rows]="20" [style]="{width:'100%'}"
-        scrollHeight="58vh" selectionMode="single" [(selection)]="selectedDevice" dataKey="siteId"
+        scrollHeight="58vh" selectionMode="single" [(selection)]="selectedUserCard" dataKey="siteId"
         [totalRecords]="totalRecords">
 
         <ng-template pTemplate="colgroup" let-columns>

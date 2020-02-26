@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { DeviceService } from '../../service/deviceservice';
-import { Device } from '../../domain/device';
+import { UserCardService } from '../../service/user-card.service';
+import { UserCard } from '../../domain/user-card';
 import { LazyLoadEvent } from 'primeng/api/public_api';
 import {Table} from 'primeng/table';
 import { TranslateService } from '@ngx-translate/core';
@@ -13,29 +13,29 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class DashboardComponent implements OnInit {
 
-  datasource: Device[];
-  devices: Device[];
+  datasource: UserCard[];
+  userCards: UserCard[];
   totalRecords: number;
   cols: any[];
   isResisable: boolean = true;
   loading: boolean;
   @ViewChild('table', {static: false}) table: Table;
-  selectedDevice: Device;
+  selectedUserCard: UserCard;
 
-  constructor(private deviceService: DeviceService, translate: TranslateService) {
+  constructor(private userCardService: UserCardService, translate: TranslateService) {
     translate.setDefaultLang('en');
     translate.use('rs');
   }
 
   ngOnInit(): void {
-    this.deviceService.getDevices().then(devices => {
-      this.datasource = devices;
+    this.userCardService.getUserCards().then(userCards => {
+      this.datasource = userCards;
       this.totalRecords = this.datasource.length;
     }) ;
 
     this.cols = [
       { field: 'id', header: 'ID', width: '70px' },
-      { field: 'deviceId', header: 'Device ID' , width: '150px' },
+      { field: 'userCardId', header: 'UserCard ID' , width: '150px' },
       { field: 'siteId', header: 'siteId' , width: '120px' },
       { field: 'siteNo', header: 'Site No' , width: '150px' },
       { field: 'gsmId', header: 'GSM ID' , width: '120px' },
@@ -66,7 +66,7 @@ export class DashboardComponent implements OnInit {
     this.loading = true;
   }
 
-  loadDevicesLazy(event: LazyLoadEvent) {
+  loadUserCardsLazy(event: LazyLoadEvent) {
     this.loading = true;
 
     // in a real application, make a remote request to load data using state metadata from event
@@ -79,7 +79,7 @@ export class DashboardComponent implements OnInit {
     // imitate db connection over a network
     setTimeout(() => {
         if (this.datasource) {
-            this.devices = this.datasource.slice(event.first, (event.first + event.rows));
+            this.userCards = this.datasource.slice(event.first, (event.first + event.rows));
             this.loading = false;
         }
     }, 1000);

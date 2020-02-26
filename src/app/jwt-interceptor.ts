@@ -1,8 +1,8 @@
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Inject, Injectable, Injector } from '@angular/core';
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpHeaders } from '@angular/common/http';
+import { NB_AUTH_TOKEN_INTERCEPTOR_FILTER, NbAuthService, NbAuthToken } from '@nebular/auth';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { NB_AUTH_TOKEN_INTERCEPTOR_FILTER, NbAuthToken, NbAuthService } from '@nebular/auth';
 
 @Injectable()
 export class NbAuthJWTInterceptor implements HttpInterceptor {
@@ -21,34 +21,14 @@ export class NbAuthJWTInterceptor implements HttpInterceptor {
               return this.authService.getToken().pipe(
                 switchMap((token: NbAuthToken) => {
                   const JWT = `Bearer ${token.getValue()}`;
-
-                  /*
-                  req = req.clone({
-                    headers: new HttpHeaders({
-                      'Content-Type':  'application/json',
-                      'Authorization': JWT,
-                    }),
-                  });*/
-
                   req = req.clone({
                     headers: req.headers
                       .set('Content-Type', 'application/json')
                       .set('Authorization', JWT),
                   });
-
-                  console.log('Intercepted HTTP call', req);
-
-                  /*req = req.clone({
-                    setHeaders: {
-                      Authorization: JWT,
-                    },
-                  });*/
-
-
-
                   return next.handle(req);
                 }),
-              )
+              );
             } else {
               // Request is sent to server without authentication so that the client code
               // receives the 401/403 error and can act as desired ('session expired', redirect to login, aso)

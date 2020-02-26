@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { NbTokenService } from '@nebular/auth';
 
 import { AbstractService } from '../abstract.service';
 import { Device } from '../domain/device';
-import { NbTokenService } from '@nebular/auth';
 
 @Injectable()
 export class DeviceService extends AbstractService {

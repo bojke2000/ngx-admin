@@ -7,7 +7,7 @@ import {SelectItem} from 'primeng/api';
 import { UserAccount } from '../../domain/user-account';
 import { UserAccountService } from '../../service/user-account.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {CityService} from '../../service/cityservice';
+import {CityService} from '../../service/city.service';
 import { Option } from '../../domain/option';
 import { ChangeDetectorRef } from '@angular/core';
 

@@ -27,7 +27,7 @@ import { AppComponent } from './app.component';
 import { AuthGuard } from './auth-guard.service';
 import { NbAuthJWTInterceptor } from './jwt-interceptor';
 import { metaReducers, reducers } from './reducers';
-import { CityService } from './service/cityservice';
+import { CityService } from './service/city.service';
 import { UserCardService } from './service/user-card.service';
 import { MailAccountService } from './service/mail-account.service';
 import { TemplateService } from './service/template.service';

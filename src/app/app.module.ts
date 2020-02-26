@@ -3,18 +3,13 @@
  * Copyright Akveo. All Rights Reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
-import { CoreModule } from './@core/core.module';
-import { ThemeModule } from './@theme/theme.module';
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
-import { DeviceService } from './service/deviceservice';
-import { CityService } from './service/cityservice';
-import { HttpClientModule } from '@angular/common/http';
-
+import { NbAuthJWTToken, NbAuthModule, NbPasswordAuthStrategy, NB_AUTH_TOKEN_INTERCEPTOR_FILTER } from '@nebular/auth';
 import {
+  NbButtonModule,
   NbChatModule,
   NbDatepickerModule,
   NbDialogModule,
@@ -22,16 +17,22 @@ import {
   NbSidebarModule,
   NbToastrModule,
   NbWindowModule,
-  NbButtonModule,
 } from '@nebular/theme';
 import { StoreModule } from '@ngrx/store';
-import { reducers, metaReducers } from './reducers';
-import { UserAccountService } from './service/user-account.service';
-import { MailAccountService } from './service/mail-account.service';
-import { UserAccountTypesService } from './service/useraccounttypes.service';
-import { TemplateService } from './service/template.service';
-import { NbPasswordAuthStrategy, NbAuthModule } from '@nebular/auth';
 
+import { CoreModule } from './@core/core.module';
+import { ThemeModule } from './@theme/theme.module';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { AuthGuard } from './auth-guard.service';
+import { NbAuthJWTInterceptor } from './jwt-interceptor';
+import { metaReducers, reducers } from './reducers';
+import { CityService } from './service/cityservice';
+import { DeviceService } from './service/deviceservice';
+import { MailAccountService } from './service/mail-account.service';
+import { TemplateService } from './service/template.service';
+import { UserAccountService } from './service/user-account.service';
+import { UserAccountTypesService } from './service/useraccounttypes.service';
 
 
 @NgModule({
@@ -42,7 +43,6 @@ import { NbPasswordAuthStrategy, NbAuthModule } from '@nebular/auth';
     HttpClientModule,
     AppRoutingModule,
     NbButtonModule,
-
     ThemeModule.forRoot(),
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
@@ -63,35 +63,50 @@ import { NbPasswordAuthStrategy, NbAuthModule } from '@nebular/auth';
     }),
     NbAuthModule.forRoot({
       strategies: [
+
         NbPasswordAuthStrategy.setup({
           name: 'email',
-          baseEndpoint: 'http://localhost:8081',
-          login: {
-            endpoint: '/auth/sign-in',
-            method: 'post',
-          },
-          register: {
-            endpoint: '/auth/sign-up',
-            method: 'post',
-          },
+          baseEndpoint: 'http://localhost:8081/',
+          requestPass: false,
           logout: {
-            endpoint: '/auth/sign-out',
+            endpoint: 'auth/logout',
             method: 'post',
-          },
-          requestPass: {
-            endpoint: '/auth/request-pass',
-            method: 'post',
+            requireValidToken: true,
           },
           resetPass: {
-            endpoint: '/auth/reset-pass',
+            endpoint: 'auth/reset',
+            redirect: {
+              success: '/',
+              failure: '/auth/login',
+            },
+          },
+          refreshToken: {
+            endpoint: 'auth/refresh',
             method: 'post',
+          },
+          login: {
+            endpoint: 'auth/login',
+            method: 'post',
+            redirect: {
+              success: '/pages',
+            },
+            requireValidToken: true,
+          },
+          token: {
+            class: NbAuthJWTToken,
+            key: 'jwt',
           },
         }),
       ],
+
+
       forms: {},
     }),
   ],
-  providers: [DeviceService, UserAccountService, MailAccountService, UserAccountTypesService, CityService, TemplateService],
+  providers: [AuthGuard, DeviceService, UserAccountService, MailAccountService,
+    UserAccountTypesService, CityService, TemplateService,
+    { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true},
+    { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: () => false}],
   bootstrap: [AppComponent],
 })
 export class AppModule {

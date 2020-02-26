@@ -1,18 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { Device } from '../domain/device';
 import { AbstractService } from '../abstract.service';
+import { Device } from '../domain/device';
+import { NbTokenService } from '@nebular/auth';
 
 @Injectable()
 export class DeviceService extends AbstractService {
 
   private url = this.prefix + 'devices';
 
-  constructor(private http: HttpClient) { super(); }
+  constructor(private http: HttpClient, private nbTokenService: NbTokenService) { super(); }
 
   getDevices() {
-    return this.http.get<any>(this.url)
+    return this.http.get<any>(this.url, this.httpOptions)
       .toPromise()
       .then(res => <Device[]>res.data)
       .then(data => data);

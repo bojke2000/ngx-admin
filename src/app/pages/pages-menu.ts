@@ -26,7 +26,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'userCards',
     icon: 'book-outline',
-    link: '/pages/dashboard',
+    link: '/pages/user-card',
     home: true,
   },
   {

@@ -2,7 +2,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 import { PagesComponent } from './pages.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { UserCardComponent } from './user-card/user-card.component';
 import { UserAccountComponent } from './account-management/user-account.component';
 import { MailAccountComponent } from './account-management/mail-account.component';
 import { TemplateComponent } from './import-export/template.component';
@@ -12,8 +12,8 @@ const routes: Routes = [{
   component: PagesComponent,
   children: [
     {
-      path: 'dashboard',
-      component: DashboardComponent,
+      path: 'user-card',
+      component: UserCardComponent,
     },
     {
       path: 'user-account',
@@ -29,7 +29,7 @@ const routes: Routes = [{
     },
     {
       path: '',
-      redirectTo: 'dashboard',
+      redirectTo: 'user-card',
       pathMatch: 'full',
     },
   ],

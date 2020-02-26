@@ -3,7 +3,7 @@ import { NbMenuModule } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';
-import { DashboardModule } from './dashboard/dashboard.module';
+import { UserCardModule } from './user-card/user-card.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import {HttpClient} from '@angular/common/http';
 import {DialogModule} from 'primeng/dialog';
@@ -22,7 +22,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     PagesRoutingModule,
     ThemeModule,
     NbMenuModule,
-    DashboardModule,
+    UserCardModule,
     DialogModule,
     AccountManagementModule,
     ImportExportModule,

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { NbCardModule, NbButtonModule } from '@nebular/theme';
 
 import { ThemeModule } from '../../@theme/theme.module';
-import { DashboardComponent } from './dashboard.component';
+import { UserCardComponent } from './user-card.component';
 import {TableModule} from 'primeng/table';
 import {DialogModule} from 'primeng/dialog';
 import {ButtonModule} from 'primeng/button';
@@ -32,7 +32,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
   ],
   declarations: [
-    DashboardComponent,
+    UserCardComponent,
   ],
 })
-export class DashboardModule { }
+export class UserCardModule { }

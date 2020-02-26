@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, AfterViewInit } from '@angular/core';
 import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
 import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
 
-import { UserData } from '../../../@core/data/users';
+import { UserData, User } from '../../../@core/data/users';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
-  user: {};
+  user: User;
 
   themes = [
     {
@@ -54,7 +54,8 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe((token: NbAuthJWTToken) => {
 
         if (token.isValid()) {
-          this.user = token.getPayload(); // here we receive a payload from the token and assigns it to our `user` variable
+          const payload = token.getPayload();
+          this.user.name = payload.sub; // here we receive a payload from the token and assigns it to our `user` variable
         }
 
       });
@@ -64,9 +65,11 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     this.currentTheme = this.themeService.currentTheme;
 
 
+    
     this.userService.getUsers()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((users: any) => this.user = users.nick);
+      .subscribe((users: any) => this.user.picture = users.nick.picture);
+    
 
     const { xl } = this.breakpointService.getBreakpointsMap();
     this.themeService.onMediaQueryChange()

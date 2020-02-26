@@ -6,12 +6,12 @@ import {Table} from 'primeng/table';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'ngx-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.css'],
+  selector: 'ngx-user-card',
+  templateUrl: './user-card.component.html',
+  styleUrls: ['./user-card.component.css'],
 
 })
-export class DashboardComponent implements OnInit {
+export class UserCardComponent implements OnInit {
 
   datasource: UserCard[];
   userCards: UserCard[];

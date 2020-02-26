@@ -90,4 +90,8 @@ export class UserCardComponent implements OnInit {
     this.table.sortField = '';
     this.table.reset();
    }
+
+   onImportClick() {
+      alert("onImportClick");
+   }
 }

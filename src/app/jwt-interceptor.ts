@@ -35,7 +35,7 @@ export class NbAuthJWTInterceptor implements HttpInterceptor {
               return next.handle(req);
             }
           }),
-        )
+        );
     } else {
       return next.handle(req);
     }

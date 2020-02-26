@@ -67,7 +67,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     this.userService.getUsers()
       .pipe(takeUntil(this.destroy$))
       .subscribe((users: any) => this.user.picture = users.nick.picture);
-    
+
     const { xl } = this.breakpointService.getBreakpointsMap();
     this.themeService.onMediaQueryChange()
       .pipe(

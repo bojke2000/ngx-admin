@@ -50,7 +50,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     private themeService: NbThemeService,
     private userService: UserData,
     private router: Router,
-    private nbTokenService:NbTokenService,
+    private nbTokenService: NbTokenService,
     private breakpointService: NbMediaBreakpointsService,
     private authService: NbAuthService) {
 
@@ -68,10 +68,10 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
       .pipe(filter(({ tag }) => tag === this.tag))
       .subscribe(bag => {
         
-        if (bag.item.title === "Log out") {
-          this.authService.logout("email");
+        if (bag.item.title === 'Log out') {
+          this.authService.logout('email');
           this.nbTokenService.clear();
-          router.navigate(['/']);
+          this.router.navigate(['/']);
         }
       });
   }

@@ -80,7 +80,7 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
   showDialogToAdd() {
     this.submitted = false;
     this.displayDialog = true;
-    this.addTemplateNameForm.setValue({'templateName':''});
+    this.addTemplateNameForm.setValue({'templateName': ''});
   }
 
   saveNewTemplate() {

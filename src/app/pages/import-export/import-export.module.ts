@@ -18,6 +18,7 @@ import { TemplateComponent } from './template.component';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -37,6 +38,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TableModule,
     MessageModule,
     MessagesModule,
+    ConfirmDialogModule,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,

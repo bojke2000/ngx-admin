@@ -7,6 +7,7 @@ import { Table } from 'primeng/table';
 import { AbstractComponent } from '../../abstract.component';
 import { TemplateMapping } from '../../domain/template-mapping';
 import { TemplateService } from '../../service/template.service';
+import {ConfirmationService} from 'primeng/api';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
   constructor(private templateService: TemplateService,
     translate: TranslateService,
     private formBuilder: FormBuilder,
+    private confirmationService: ConfirmationService,
     private cdr: ChangeDetectorRef) {
     super(translate);
   }
@@ -119,9 +121,14 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
       this.displayMessage = true;
     }
     if (index !== undefined) {
-      this.templateService.deleteTemplate(index).subscribe(ua => {
-        this.loadTemplates();
 
+      this.confirmationService.confirm({
+        message: this.translate.instant('Are you sure that you want to perform this action?'),
+        accept: () => {
+          this.templateService.deleteTemplate(index).subscribe(ua => {
+            this.loadTemplates();
+          });
+        },
       });
     }
     this.displayDialog = false;

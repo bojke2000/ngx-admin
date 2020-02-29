@@ -3,8 +3,6 @@ import { NgModule } from '@angular/core';
 import { NbMenuModule } from '@nebular/theme';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { ConfirmationService } from 'primeng/api';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 
 import { ThemeModule } from '../@theme/theme.module';
@@ -28,7 +26,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     DialogModule,
     AccountManagementModule,
     ImportExportModule,
-    ConfirmDialogModule,
     TranslateModule.forRoot({
       loader: {
           provide: TranslateLoader,
@@ -37,7 +34,6 @@ export function HttpLoaderFactory(http: HttpClient) {
       },
     }),
   ],
-  providers: [ConfirmationService],
   declarations: [
     PagesComponent,
   ],

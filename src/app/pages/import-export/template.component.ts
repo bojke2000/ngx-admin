@@ -1,21 +1,20 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { SelectItem } from 'primeng/api/selectitem';
 import { Table } from 'primeng/table';
+import { Subscription } from 'rxjs';
 
 import { AbstractComponent } from '../../abstract.component';
 import { TemplateMapping } from '../../domain/template-mapping';
 import { TemplateService } from '../../service/template.service';
-import {ConfirmationService} from 'primeng/api';
-
 
 @Component({
   selector: 'ie-template',
   templateUrl: './template.component.html',
   styleUrls: ['./template.component.css'],
 })
-export class TemplateComponent extends AbstractComponent implements OnInit, AfterViewInit {
+export class TemplateComponent extends AbstractComponent implements OnInit, AfterViewInit, OnDestroy {
   addTemplateNameForm: FormGroup;
   templates: SelectItem[];
   template: SelectItem;
@@ -24,12 +23,13 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
   submitted = false;
   mappings: TemplateMapping[];
   cols: any[];
+  private destroyed = false;
+  private subs: Subscription = new Subscription();
   @ViewChild('table', { static: false }) table: Table;
 
   constructor(private templateService: TemplateService,
     translate: TranslateService,
     private formBuilder: FormBuilder,
-    private confirmationService: ConfirmationService,
     private cdr: ChangeDetectorRef) {
     super(translate);
   }
@@ -54,7 +54,18 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
   }
 
   ngAfterViewInit() {
-    this.cdr.detectChanges();
+    if (!this.cdr['destroyed']) {
+      this.cdr.detectChanges();
+  }
+  }
+
+  ngOnDestroy() {
+    this.subs.unsubscribe();
+    if (!(this.cdr as ViewRef).destroyed) {
+      this.cdr.detectChanges()
+      // do other tasks
+    }
+    console.log("Template OnDestroy");
   }
 
   loadTemplates() {
@@ -75,9 +86,12 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
 
   save() {
     const templateDto = { id: this.template.value, name: this.template.label, mappings: [...this.mappings] };
-    this.templateService.updateTemplate(templateDto).subscribe(newDto => {
+    const sub = this.templateService.updateTemplate(templateDto).subscribe(newDto => {
       this.mappings = newDto.mappings;
     });
+
+    this.subs.add(sub);
+    
   }
 
   showDialogToAdd() {
@@ -98,7 +112,7 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
 
     this.templateService.getTemplate('1').then(result => {
       templateDto.mappings = result.mappings;
-      this.templateService.addTemplate(templateDto).subscribe(newDto => {
+      const sub = this.templateService.addTemplate(templateDto).subscribe(newDto => {
         this.templateService.getTemplates().then(templates => {
           this.templates = [];
           templates.forEach(el => {
@@ -111,7 +125,9 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
           this.displayDialog = false;
         });
       });
+      this.subs.add(sub);
     });
+    
     this.displayDialog = false;
   }
 
@@ -121,17 +137,12 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
       this.displayMessage = true;
     }
     if (index !== undefined) {
-
-      this.confirmationService.confirm({
-        message: this.translate.instant('Are you sure that you want to perform this action?'),
-        accept: () => {
-          this.templateService.deleteTemplate(index).subscribe(ua => {
-            this.loadTemplates();
-          });
-        },
+      const sub = this.templateService.deleteTemplate(index).subscribe(ua => {
+      this.loadTemplates();
       });
     }
     this.displayDialog = false;
+    this.cdr.detectChanges();
   }
 
   closeMessageDialog() {

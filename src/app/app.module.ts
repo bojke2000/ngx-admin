@@ -33,7 +33,6 @@ import { MailAccountService } from './service/mail-account.service';
 import { TemplateService } from './service/template.service';
 import { UserAccountService } from './service/user-account.service';
 import { UserAccountTypesService } from './service/useraccounttypes.service';
-import {ConfirmationService} from 'primeng/api';
 
 @NgModule({
   declarations: [AppComponent],
@@ -108,7 +107,7 @@ import {ConfirmationService} from 'primeng/api';
     }),
   ],
   providers: [AuthGuard, UserCardService, UserAccountService, MailAccountService,
-    UserAccountTypesService, CityService, TemplateService, ConfirmationService,
+    UserAccountTypesService, CityService, TemplateService,
     { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true},
     { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: () => false}],
   bootstrap: [AppComponent],

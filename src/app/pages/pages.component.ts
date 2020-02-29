@@ -26,14 +26,8 @@ export class PagesComponent implements OnInit, OnDestroy  {
   ngOnInit(): void {
     MENU_ITEMS.forEach(item => {
       if (item.children !== undefined) {
-        item.children.forEach(subitem => {
-          //subitem.title = this.translate.instant(subitem.title);
-          this.localizeItem(subitem
-            );
-        });
+        item.children.forEach(subitem => this.localizeItem(subitem));
       }
-
-      //item.title = this.translate.instant(item.title);
       this.localizeItem(item);
     });
 
@@ -42,15 +36,15 @@ export class PagesComponent implements OnInit, OnDestroy  {
 
   ngOnDestroy() {
     this.sub.unsubscribe();
-    console.log("Page OnDestroy");
     this.cdr.detach();
   }
 
 
   private localizeItem(item) {
-    this.sub = this.translate.get(item.title).subscribe(response => {
+    const su = this.translate.get(item.title).subscribe(response => {
       item.title = response; // update value field here.
       this.cdr.detectChanges();
     });
+    this.sub.add(su);
   }
 }

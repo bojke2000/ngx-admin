@@ -23,7 +23,6 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
   submitted = false;
   mappings: TemplateMapping[];
   cols: any[];
-  private destroyed = false;
   private subs: Subscription = new Subscription();
   @ViewChild('table', { static: false }) table: Table;
 
@@ -62,7 +61,7 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
   ngOnDestroy() {
     this.subs.unsubscribe();
     if (!(this.cdr as ViewRef).destroyed) {
-      this.cdr.detectChanges()
+      this.cdr.detectChanges();
     }
   }
 
@@ -88,7 +87,7 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
       this.mappings = newDto.mappings;
     });
 
-    this.subs.add(sub); 
+    this.subs.add(sub);
   }
 
   showDialogToAdd() {
@@ -124,7 +123,7 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
       });
       this.subs.add(sub);
     });
-    
+
     this.displayDialog = false;
   }
 
@@ -137,6 +136,7 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
       const sub = this.templateService.deleteTemplate(index).subscribe(ua => {
       this.loadTemplates();
       });
+      this.subs.add(sub);
     }
     this.displayDialog = false;
     this.cdr.detectChanges();

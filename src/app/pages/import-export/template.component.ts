@@ -129,5 +129,5 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
 
   closeMessageDialog() {
     this.displayMessage = false;
-  } 
+  }
 }

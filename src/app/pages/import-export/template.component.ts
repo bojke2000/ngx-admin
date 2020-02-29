@@ -1,13 +1,12 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+import { SelectItem } from 'primeng/api/selectitem';
 import { Table } from 'primeng/table';
 
 import { AbstractComponent } from '../../abstract.component';
-import { Option } from '../../domain/option';
 import { TemplateMapping } from '../../domain/template-mapping';
 import { TemplateService } from '../../service/template.service';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { SelectItem } from 'primeng/api/selectitem';
 
 
 @Component({
@@ -111,14 +110,13 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
         });
       });
     });
-      
     this.displayDialog = false;
   }
 
   delete() {
     const index = this.template.value;
     if (index === '1' || index === '2') {
-      alert(this.translate.instant("It's not allowed to delete default import or export template."));
+      alert(this.translate.instant('It\'s not allowed to delete default import or export template.'));
     }
     if (index !== undefined ) {
       this.templateService.deleteTemplate(index).subscribe(ua => {

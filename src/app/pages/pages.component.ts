@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
   `,
 })
 export class PagesComponent implements OnInit, OnDestroy  {
-  private sub: Subscription = new Subscription();;
+  private sub: Subscription = new Subscription();
   menu = [];
 
   constructor(private translate: TranslateService, private cdr: ChangeDetectorRef) {

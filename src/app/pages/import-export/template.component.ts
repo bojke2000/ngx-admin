@@ -63,9 +63,7 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
     this.subs.unsubscribe();
     if (!(this.cdr as ViewRef).destroyed) {
       this.cdr.detectChanges()
-      // do other tasks
     }
-    console.log("Template OnDestroy");
   }
 
   loadTemplates() {
@@ -90,8 +88,7 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
       this.mappings = newDto.mappings;
     });
 
-    this.subs.add(sub);
-    
+    this.subs.add(sub); 
   }
 
   showDialogToAdd() {

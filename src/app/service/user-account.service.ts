@@ -18,7 +18,7 @@ export class UserAccountService extends AbstractService {
   }
 
   getUserAccounts(pageable?: Pageable) {
-    return this.http.get<any>(this.url.concat('?').concat(this.jsonToHttpParams(pageable)))
+    return this.http.get<any>(this.url.concat('?').concat(this.jsonToHttpParams(pageable)),  this.httpOptions)
       .toPromise()
       .then(res => <NgPrimeGridResponse>res);
   }
@@ -26,7 +26,7 @@ export class UserAccountService extends AbstractService {
   searchUserAccounts(query: string, pageable?: Pageable) {
     const uri = this.url.concat('?search=username==').concat(query)
       .concat('*,email==*').concat(query).concat('*').concat('&').concat(this.jsonToHttpParams(pageable));
-    return this.http.get<any>(uri)
+    return this.http.get<any>(uri, this.httpOptions)
       .toPromise()
       .then(res => <NgPrimeGridResponse>res);
   }

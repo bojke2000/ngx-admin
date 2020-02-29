@@ -34,4 +34,15 @@ export class TemplateService extends AbstractService {
       templateDto, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
+
+  addTemplate(dto: TemplateDto): Observable<TemplateDto> {
+    return this.http.post<TemplateDto>(this.url, dto, this.httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  deleteTemplate(id: string): Observable<TemplateDto> {
+    const url = `${this.url}/${id}`; // DELETE api/heroes/42
+    return this.http.delete<TemplateDto>(url, this.httpOptions)
+      .pipe(catchError(this.handleError));
+  }
 }

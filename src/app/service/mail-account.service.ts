@@ -19,7 +19,7 @@ export class MailAccountService extends AbstractService {
   }
 
   getMailAccounts(pageable?: Pageable) {
-    return this.http.get<any>(this.mailAccountUrl.concat('?').concat(this.jsonToHttpParams(pageable)))
+    return this.http.get<any>(this.mailAccountUrl.concat('?').concat(this.jsonToHttpParams(pageable)), this.httpOptions)
       .toPromise()
       .then(res => <NgPrimeGridResponse>res);
   }
@@ -27,7 +27,7 @@ export class MailAccountService extends AbstractService {
   searchMailAccounts(query: string, pageable?: Pageable) {
     const uri = this.mailAccountUrl.concat('?search=account==').concat(query)
       .concat('*,server==*').concat(query).concat('*').concat('&').concat(this.jsonToHttpParams(pageable));
-    return this.http.get<any>(uri)
+    return this.http.get<any>(uri, this.httpOptions)
       .toPromise()
       .then(res => <NgPrimeGridResponse>res);
   }

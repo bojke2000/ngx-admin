@@ -1,6 +1,6 @@
 import { TemplateMapping } from './template-mapping';
 export interface TemplateDto {
   id: string;
-  label: string;
+  name: string;
   mappings: TemplateMapping[];
 }

@@ -80,5 +80,9 @@
   "Alarms": "Alarmi",
   "Main Battery": "Glavna baterija",
   "GSM Battery": "GSM Baterija",
-  "Save Changes": "Snimi izmene"
+  "Save Changes": "Snimi izmene",
+  "Add Template": "Dodaj templejt",
+  "Template Name": "Ime novog templejta",
+  "Delete Template": "Obriši templejt",
+  "It's not allowed to delete default import or export template.": "Nije dozvoljeno brisanje default templejta."
 }

@@ -6,6 +6,8 @@ import { AbstractComponent } from '../../abstract.component';
 import { Option } from '../../domain/option';
 import { TemplateMapping } from '../../domain/template-mapping';
 import { TemplateService } from '../../service/template.service';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { SelectItem } from 'primeng/api/selectitem';
 
 
 @Component({
@@ -14,16 +16,18 @@ import { TemplateService } from '../../service/template.service';
   styleUrls: ['./template.component.css'],
 })
 export class TemplateComponent extends AbstractComponent implements OnInit, AfterViewInit {
-  templates: Option[];
-  template: Option;
-
+  addTemplateNameForm: FormGroup;
+  templates: SelectItem[];
+  template: SelectItem;
+  displayDialog: boolean;
+  submitted = false;
   mappings: TemplateMapping[];
   cols: any[];
-
   @ViewChild('table', { static: false }) table: Table;
 
   constructor(private templateService: TemplateService,
     translate: TranslateService,
+    private formBuilder: FormBuilder,
     private cdr: ChangeDetectorRef) {
     super(translate);
   }
@@ -38,6 +42,20 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
       { field: 'val3', header: 'Mapping', width: '70px' },
     ];
 
+    this.loadTemplates();
+
+    this.addTemplateNameForm = this.formBuilder.group({
+      templateName: ['', [Validators.required]],
+    });
+  }
+
+    ngAfterViewInit() {
+    this.cdr.detectChanges();
+  }
+
+  get f() { return this.addTemplateNameForm.controls; }
+
+  loadTemplates() {
     this.templateService.getTemplates().then(templates => {
       this.templates = templates;
       if (this.templates.length > 0) {
@@ -47,10 +65,6 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
     });
   }
 
-  ngAfterViewInit() {
-    this.cdr.detectChanges();
-  }
-
   onTemplateChange() {
     this.templateService.getTemplate(this.template.value).then(dto => {
         this.mappings = dto.mappings;
@@ -58,12 +72,60 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
   }
 
   save() {
-    const templateDto = {id: this.template.value, label: this.template.label, mappings: [...this.mappings]};
+    const templateDto = {id: this.template.value, name: this.template.label, mappings: [...this.mappings]};
     this.templateService.updateTemplate(templateDto).subscribe(newDto => {
         this.mappings = newDto.mappings;
     });
   }
 
-  delete() {}
+  showDialogToAdd() {
+    this.submitted = false;
+    this.displayDialog = true;
+    this.addTemplateNameForm.setValue({'templateName':''});
+  }
 
+  saveNewTemplate() {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.addTemplateNameForm.invalid) {
+        return;
+    }
+
+    const templateDto = {id: undefined, name: this.addTemplateNameForm.value.templateName, mappings: []};
+
+    this.templateService.getTemplate('1').then(result => {
+      templateDto.mappings = result.mappings;
+      this.templateService.addTemplate(templateDto).subscribe(newDto => {
+        this.templateService.getTemplates().then(templates => {
+          this.template = {value: newDto.id, label: newDto.name};
+          this.templates = [];
+          templates.forEach(el => {
+            this.templates.push({...el});
+          });
+          if (this.templates.length > 0) {
+            this.mappings = newDto.mappings;
+            this.displayDialog = false;
+            setTimeout(() => (this.template = {value: newDto.id, label: newDto.name}), 500);
+          }
+        });
+      });
+    });
+      
+    this.displayDialog = false;
+  }
+
+  delete() {
+    const index = this.template.value;
+    if (index === '1' || index === '2') {
+      alert(this.translate.instant("It's not allowed to delete default import or export template."));
+    }
+    if (index !== undefined ) {
+      this.templateService.deleteTemplate(index).subscribe(ua => {
+        this.loadTemplates();
+
+      });
+    }
+    this.displayDialog = false;
+  }
 }

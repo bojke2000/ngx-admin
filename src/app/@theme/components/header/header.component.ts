@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit, AfterViewInit } from '@angular/core';
 import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
-import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
+import { NbAuthJWTToken, NbAuthService, NbTokenService } from '@nebular/auth';
 
 import { UserData, User } from '../../../@core/data/users';
-import { map, takeUntil } from 'rxjs/operators';
+import { map, takeUntil, filter } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-header',
@@ -40,6 +41,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   ];
 
   currentTheme = 'default';
+  tag = 'profile-context-menu';
 
   userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
 
@@ -47,6 +49,8 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     private menuService: NbMenuService,
     private themeService: NbThemeService,
     private userService: UserData,
+    private router: Router,
+    private nbTokenService:NbTokenService,
     private breakpointService: NbMediaBreakpointsService,
     private authService: NbAuthService) {
 
@@ -58,6 +62,17 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
           this.user.name = payload.sub; // here we receive a payload from the token and assigns it to our `user` variable
         }
 
+      });
+
+    this.menuService.onItemClick()
+      .pipe(filter(({ tag }) => tag === this.tag))
+      .subscribe(bag => {
+        
+        if (bag.item.title === "Log out") {
+          this.authService.logout("email");
+          this.nbTokenService.clear();
+          router.navigate(['/']);
+        }
       });
   }
 

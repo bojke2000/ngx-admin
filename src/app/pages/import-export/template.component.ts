@@ -32,6 +32,8 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
     super(translate);
   }
 
+  get f() { return this.addTemplateNameForm.controls; }
+
   ngOnInit(): void {
     this.cols = [
       { field: 'key1', header: 'Field', width: '250px' },
@@ -52,8 +54,6 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
   ngAfterViewInit() {
     this.cdr.detectChanges();
   }
-
-  get f() { return this.addTemplateNameForm.controls; }
 
   loadTemplates() {
     this.templateService.getTemplates().then(templates => {
@@ -130,4 +130,5 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
   closeMessageDialog() {
     this.displayMessage = false;
   }
+  
 }

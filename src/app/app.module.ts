@@ -72,6 +72,10 @@ import { UserAccountTypesService } from './service/useraccounttypes.service';
             endpoint: 'auth/logout',
             method: 'post',
             requireValidToken: true,
+            redirect: {
+              success: '/',
+              failure: '/',
+            },
           },
           resetPass: {
             endpoint: 'auth/reset',

@@ -19,6 +19,7 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
   templates: SelectItem[];
   template: SelectItem;
   displayDialog: boolean;
+  displayMessage: boolean;
   submitted = false;
   mappings: TemplateMapping[];
   cols: any[];
@@ -48,7 +49,7 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
     });
   }
 
-    ngAfterViewInit() {
+  ngAfterViewInit() {
     this.cdr.detectChanges();
   }
 
@@ -66,21 +67,21 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
 
   onTemplateChange() {
     this.templateService.getTemplate(this.template.value).then(dto => {
-        this.mappings = dto.mappings;
+      this.mappings = dto.mappings;
     });
   }
 
   save() {
-    const templateDto = {id: this.template.value, name: this.template.label, mappings: [...this.mappings]};
+    const templateDto = { id: this.template.value, name: this.template.label, mappings: [...this.mappings] };
     this.templateService.updateTemplate(templateDto).subscribe(newDto => {
-        this.mappings = newDto.mappings;
+      this.mappings = newDto.mappings;
     });
   }
 
   showDialogToAdd() {
     this.submitted = false;
     this.displayDialog = true;
-    this.addTemplateNameForm.setValue({'templateName': ''});
+    this.addTemplateNameForm.setValue({ 'templateName': '' });
   }
 
   saveNewTemplate() {
@@ -88,25 +89,24 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
 
     // stop here if form is invalid
     if (this.addTemplateNameForm.invalid) {
-        return;
+      return;
     }
 
-    const templateDto = {id: undefined, name: this.addTemplateNameForm.value.templateName, mappings: []};
+    const templateDto = { id: undefined, name: this.addTemplateNameForm.value.templateName, mappings: [] };
 
     this.templateService.getTemplate('1').then(result => {
       templateDto.mappings = result.mappings;
       this.templateService.addTemplate(templateDto).subscribe(newDto => {
         this.templateService.getTemplates().then(templates => {
-          this.template = {value: newDto.id, label: newDto.name};
           this.templates = [];
           templates.forEach(el => {
-            this.templates.push({...el});
+            this.templates.push({ ...el });
+            if (el.label === this.addTemplateNameForm.value.templateName) {
+              this.template = el;
+            }
           });
-          if (this.templates.length > 0) {
-            this.mappings = newDto.mappings;
-            this.displayDialog = false;
-            setTimeout(() => (this.template = {value: newDto.id, label: newDto.name}), 500);
-          }
+          this.mappings = newDto.mappings;
+          this.displayDialog = false;
         });
       });
     });
@@ -116,14 +116,18 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
   delete() {
     const index = this.template.value;
     if (index === '1' || index === '2') {
-      alert(this.translate.instant('It\'s not allowed to delete default import or export template.'));
+      this.displayMessage = true;
     }
-    if (index !== undefined ) {
+    if (index !== undefined) {
       this.templateService.deleteTemplate(index).subscribe(ua => {
         this.loadTemplates();
 
       });
     }
     this.displayDialog = false;
+  }
+
+  closeMessageDialog() {
+    this.displayMessage = false; 
   }
 }

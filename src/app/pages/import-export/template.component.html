@@ -66,9 +66,9 @@
       </div>
 
       <p-dialog header="Add Template" [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true"
-        showEffect="fade" [modal]="true" height="600" [style]="{width: '500px'}">
+        showEffect="fade" [modal]="true" height="600" [style]="{width: '600px'}">
+        <form [formGroup]="addTemplateNameForm" (ngSubmit)="saveNewTemplate()">
         <div class="ui-g ui-fluid">
-          <form [formGroup]="addTemplateNameForm" (ngSubmit)="saveNewTemplate()">
             <div class="ui-g-12">
               <div class="ui-g-4">
                 <label for="templateName">{{ 'Template Name' | translate}}:</label>
@@ -82,8 +82,8 @@
                 </div>
               </div>
             </div>
-          </form>
         </div>
+      </form>
       <p-footer>
         <div class="ui-dialog-buttonpane ui-helper-clearfix">
           <button type="button" pButton icon="fa fa-check" (click)="saveNewTemplate()"
@@ -91,6 +91,19 @@
         </div>
       </p-footer>
     </p-dialog>
+
+    <p-dialog header="Message Template" [(visible)]="displayMessage" [focusOnShow]="false" [responsive]="true"
+        showEffect="fade" [modal]="true" height="600" [style]="{width: '500px'}">
+        <div class="ui-g-12">
+          <i class="fa fa-info"></i><div class="divider"></div><label >{{ 'It\'s not allowed to delete default import or export template.' | translate}}</label>
+        </div>
+        <p-footer>
+          <div class="ui-dialog-buttonpane ui-helper-clearfix">
+            <button type="button" pButton (click)="closeMessageDialog()"
+              label="{{ translate.get('Close') | async }}"></button>
+          </div>
+        </p-footer>
+      </p-dialog>
 
 </nb-card-body>
 </nb-card>

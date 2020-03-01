@@ -11,7 +11,36 @@ export class NbAuthJWTInterceptor implements HttpInterceptor {
     @Inject(NB_AUTH_TOKEN_INTERCEPTOR_FILTER) protected filter) {
   }
 
+
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // do not intercept request whose urls are filtered by the injected filter
+    if (!this.filter(req)) {
+              return this.authService.getToken().pipe(
+                switchMap((token: NbAuthToken) => {
+                  const JWT = `Bearer ${token.getValue()}`;
+
+                  if (req.headers === undefined) {
+                    req = req.clone({headers: new HttpHeaders({
+                      'Content-Type':  'application/json',
+                      'Authorization': JWT,
+                      }),
+                    });
+                  } else {
+                    req = req.clone({
+                      headers: req.headers
+                        .set('Content-Type', 'application/json')
+                        .set('Authorization', JWT),
+                    });
+                }
+                  return next.handle(req);
+                }),
+              );
+    } else {
+      return next.handle(req);
+    }
+  }
+
+  interceptOld(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // do not intercept request whose urls are filtered by the injected filter
     if (!this.filter(req)) {
       return this.authService.isAuthenticatedOrRefresh()

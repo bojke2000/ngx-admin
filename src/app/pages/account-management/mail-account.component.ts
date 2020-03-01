@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { Table } from 'primeng/table';
 import { AbstractComponent } from '../../abstract.component';
 import { TranslateService } from '@ngx-translate/core';
@@ -9,13 +9,15 @@ import { MailAccountService } from '../../service/mail-account.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Option } from '../../domain/option';
 import { ChangeDetectorRef } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'mail-account',
   templateUrl: './mail-account.component.html',
   styleUrls: ['./mail-account.component.css'],
 })
-export class MailAccountComponent extends AbstractComponent implements OnInit, AfterViewInit {
+export class MailAccountComponent extends AbstractComponent implements OnInit, OnDestroy, AfterViewInit {
   mailAccountForm: FormGroup;
   submitted = false;
   mailAccounts: MailAccount[];
@@ -30,6 +32,7 @@ export class MailAccountComponent extends AbstractComponent implements OnInit, A
   statuses: SelectItem[];
   cities: Option[];
   mailAccountSearch: string;
+  protected destroy$ = new Subject<void>();
   @ViewChild('table', { static: false }) table: Table;
 
   constructor(private mailAccountService: MailAccountService,
@@ -87,6 +90,11 @@ export class MailAccountComponent extends AbstractComponent implements OnInit, A
       this.totalRecords = ngresp.totalPages;
       this.loading = false;
     });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   // convenience getter for easy access to form fields
@@ -160,11 +168,15 @@ export class MailAccountComponent extends AbstractComponent implements OnInit, A
     this.mailAccount = {...this.mailAccountForm.value};
 
     if (this.newMailAccount) {
-      this.mailAccountService.addMailAccount(this.mailAccount).subscribe(ua => {
+      this.mailAccountService.addMailAccount(this.mailAccount)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(ua => {
         mailAccounts.push(ua);
       });
     } else {
-      this.mailAccountService.updateMailAccount(this.mailAccount).subscribe(ua => {
+      this.mailAccountService.updateMailAccount(this.mailAccount)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(ua => {
         mailAccounts[this.mailAccounts.indexOf(this.selectedMailAccount)] = ua;
       });
     }
@@ -177,7 +189,9 @@ export class MailAccountComponent extends AbstractComponent implements OnInit, A
   delete() {
     const index = this.mailAccounts.indexOf(this.selectedMailAccount);
     if (index !== 0) {
-      this.mailAccountService.deleteMailAccount(this.mailAccount).subscribe(ua => {
+      this.mailAccountService.deleteMailAccount(this.mailAccount)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(ua => {
         this.mailAccounts = this.mailAccounts.filter((val, i) => i !== index);
       });
     }

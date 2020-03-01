@@ -55,6 +55,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     private authService: NbAuthService) {
 
     this.authService.onTokenChange()
+      .pipe(takeUntil(this.destroy$))
       .subscribe((token: NbAuthJWTToken) => {
 
         if (token.isValid()) {
@@ -65,7 +66,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
       });
 
     this.menuService.onItemClick()
-      .pipe(filter(({ tag }) => tag === this.tag))
+      .pipe(takeUntil(this.destroy$), filter(({ tag }) => tag === this.tag))
       .subscribe(bag => {
         if (bag.item.title === 'Log out') {
           this.authService.logout('email');

@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { Table } from 'primeng/table';
 import { AbstractComponent } from '../../abstract.component';
 import { TranslateService } from '@ngx-translate/core';
@@ -10,6 +10,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {CityService} from '../../service/city.service';
 import { Option } from '../../domain/option';
 import { ChangeDetectorRef } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 
 
@@ -18,7 +20,7 @@ import { ChangeDetectorRef } from '@angular/core';
   templateUrl: './user-account.component.html',
   styleUrls: ['./user-account.css'],
 })
-export class UserAccountComponent extends AbstractComponent implements OnInit, AfterViewInit {
+export class UserAccountComponent extends AbstractComponent implements OnInit, OnDestroy, AfterViewInit {
   userAccountForm: FormGroup;
   submitted = false;
   userAccounts: UserAccount[];
@@ -33,6 +35,7 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, A
   statuses: SelectItem[];
   cities: Option[];
   userSearch: string;
+  protected destroy$ = new Subject<void>();
   @ViewChild('table', { static: false }) table: Table;
 
   constructor(private userAccountservice: UserAccountService,
@@ -86,6 +89,11 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, A
 
   ngAfterViewInit() {
     this.cdr.detectChanges();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private loadUserAccounts(page: number, size: number, sort?: string) {
@@ -154,11 +162,15 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, A
     this.userAccount.city = this.userAccountForm.value.city.label;
 
     if (this.newUserAccount) {
-      this.userAccountservice.addUserAccount(this.userAccount).subscribe(ua => {
+      this.userAccountservice.addUserAccount(this.userAccount)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(ua => {
         userAccounts.push(ua);
       });
     } else {
-      this.userAccountservice.updateUserAccount(this.userAccount).subscribe(ua => {
+      this.userAccountservice.updateUserAccount(this.userAccount)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(ua => {
         userAccounts[this.userAccounts.indexOf(this.selectedUserAccount)] = ua;
       });
     }
@@ -171,7 +183,9 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, A
   delete() {
     const index = this.userAccounts.indexOf(this.selectedUserAccount);
     if (index !== 0) {
-      this.userAccountservice.deleteUserAccount(this.userAccount).subscribe(ua => {
+      this.userAccountservice.deleteUserAccount(this.userAccount)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(ua => {
         this.userAccounts = this.userAccounts.filter((val, i) => i !== index);
       });
     }

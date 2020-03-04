@@ -1,13 +1,14 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NbButtonModule, NbCardModule, NbStepComponent, NbStepperComponent, NbStepperModule } from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbStepperModule } from '@nebular/theme';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
+import { FileUploadModule } from 'primeng/fileupload';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
@@ -15,9 +16,8 @@ import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
 
 import { ThemeModule } from '../../@theme/theme.module';
-import { TemplateComponent } from './template.component';
 import { ImportUserCardComponent } from './import-user-card.component';
-import {FileUploadModule} from 'primeng/fileupload';
+import { TemplateComponent } from './template.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {

@@ -1,9 +1,9 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+import { SelectItem } from 'primeng/api/selectitem';
 
 import { AbstractComponent } from '../../abstract.component';
-import { SelectItem } from 'primeng/api/selectitem';
 import { TemplateService } from '../../service/template.service';
 
 @Component({

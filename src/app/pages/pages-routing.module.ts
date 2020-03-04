@@ -6,6 +6,7 @@ import { UserCardComponent } from './user-card/user-card.component';
 import { UserAccountComponent } from './account-management/user-account.component';
 import { MailAccountComponent } from './account-management/mail-account.component';
 import { TemplateComponent } from './import-export/template.component';
+import { ImportUserCardComponent } from './import-export/import-user-card.component';
 
 const routes: Routes = [{
   path: '',
@@ -26,6 +27,10 @@ const routes: Routes = [{
     {
       path: 'template',
       component: TemplateComponent,
+    },
+    {
+      path: 'import-user-card',
+      component: ImportUserCardComponent,
     },
     {
       path: '',

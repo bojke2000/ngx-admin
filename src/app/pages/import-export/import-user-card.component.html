@@ -1,0 +1,70 @@
+<div class="row">
+  <nb-card style="width: 100%">
+    <nb-card-body>
+
+      <div class="header-container">
+        <div>
+          <h3>{{ 'Import User Card' | translate }}</h3>
+        </div>
+        <div style="display: inline-block;">
+          <h3>&nbsp; </h3>
+        </div>
+      </div>
+
+      <nb-stepper #stepper>
+        <nb-step [stepControl]="firstForm" label=" {{ 'Select Template' | translate }}">
+          <form [formGroup]="firstForm" (ngSubmit)="onFirstSubmit()" class="step-container">
+            <p class="lorem">
+              {{ 'Select Template' | translate }}
+            </p>
+            <div class="input-group">
+              <div class="ui-inputgroup">
+                <p-dropdown formControlName="templateName" [options]="templates" optionLabel="label" name="templateName"
+                  autoWidth="false" [style]="{'width':'400px'}"></p-dropdown>
+              </div>
+            </div>
+            <button nbButton nbStepperNext>next</button>
+          </form>
+        </nb-step>
+        <nb-step [stepControl]="secondForm" label="{{ 'Select File Type' | translate }}">
+          <form [formGroup]="secondForm" (ngSubmit)="onSecondSubmit()" class="step-container">
+            <p class="lorem">
+              {{ 'Select File Type' | translate }}
+            </p>
+            <div class="input-group">
+              <div class="ui-inputgroup">
+                <p-dropdown formControlName="templateName" [options]="templates" optionLabel="label" name="templateName"
+                  autoWidth="false" [style]="{'width':'400px'}"></p-dropdown>
+              </div>
+            </div>
+            <button nbButton nbStepperPrevious>prev</button>
+            <div class="divider"></div>
+            <button nbButton nbStepperNext>next</button>
+          </form>
+        </nb-step>
+        <nb-step [stepControl]="thirdForm" label="Third step">
+          <form [formGroup]="thirdForm" (ngSubmit)="onThirdSubmit()" class="step-container">
+            <p class="lorem">
+              Things boom shackalack rhoncus yo. In fo shizzle my nizzle gangsta platea dictumst. Check it out pot.
+            </p>
+            <div class="input-group">
+              <input nbInput type="text" placeholder="Enter something" class="form-control" formControlName="thirdCtrl"
+                     [ngClass]="{'form-control-danger': thirdForm.invalid && (thirdForm.dirty || thirdForm.touched)}">
+            </div>
+            <button nbButton nbStepperPrevious>prev</button>
+            <div class="divider"></div>
+            <button nbButton nbStepperNext>Confirm</button>
+          </form>
+        </nb-step>
+        <nb-step [stepControl]="thirdForm" [hidden]="true" label="Third step">
+          <div class="step-container">
+            <h3>Wizard completed!</h3>
+            <button nbButton (click)="stepper.reset()">Try again</button>
+          </div>
+        </nb-step>
+      </nb-stepper>
+
+
+</nb-card-body>
+</nb-card>
+</div>

@@ -35,6 +35,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/template',
         home: false,
       },
+      {
+        title: 'Import User Card',
+        icon: 'people-outline',
+        link: '/pages/import-user-card',
+        home: false,
+      },
     ],
   },
 ];

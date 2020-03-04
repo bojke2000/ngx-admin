@@ -84,5 +84,8 @@
   "Add Template": "Dodaj templejt",
   "Template Name": "Ime novog templejta",
   "Delete Template": "Obriši templejt",
-  "It's not allowed to delete default import or export template.": "Nije dozvoljeno brisanje default templejta."
+  "It's not allowed to delete default import or export template.": "Nije dozvoljeno brisanje default templejta.",
+  "Templates": "Kreiraj templejt",
+  "Import User Card": "Uvezi korisničku karticu",
+  "Select File Type": "Izaberi tip fajla"
 }

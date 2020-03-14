@@ -14,6 +14,7 @@ import { TemplateService } from '../../service/template.service';
 export class ImportUserCardComponent extends AbstractComponent implements OnInit, AfterViewInit, OnDestroy {
 
   templates: SelectItem[];
+  fileTypes: SelectItem[];
 
   firstForm: FormGroup;
   secondForm: FormGroup;
@@ -31,7 +32,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     });
 
     this.secondForm = this.fb.group({
-      templateName: ['', [Validators.required]],
+      fileType: ['XML', [Validators.required]],
     });
 
     this.thirdForm = this.fb.group({
@@ -39,11 +40,20 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     });
 
     this.loadTemplates();
+
+    this.fileTypes = [
+      {label: 'XML', value: 'XML'},
+      {label: 'CSV', value: 'CSV'},
+      {label: 'XLS', value: 'XLS'},
+    ];
   }
 
   private loadTemplates() {
     this.templateService.getTemplates().then(templates => {
       this.templates = templates;
+      if (this.templates.length > 0) {
+        this.firstForm.patchValue({'templateName': templates[0].value});
+      }
     });
   }
 

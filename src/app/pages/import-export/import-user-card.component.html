@@ -12,26 +12,11 @@
       </div>
 
       <nb-stepper #stepper>
-        <nb-step [stepControl]="firstForm" label=" {{ 'Select Template' | translate }}">
-          <form [formGroup]="firstForm" (ngSubmit)="onFirstSubmit()" class="step-container">
-            <p class="lorem">
-              {{ 'Select Template' | translate }}
-            </p>
-            <div class="input-group">
-              <div class="ui-inputgroup">
-                <p-dropdown formControlName="templateName" [options]="templates" optionLabel="label" name="templateName"
-                  autoWidth="false" [style]="{'width':'400px'}"></p-dropdown>
-              </div>
-            </div>
-            <button nbButton nbStepperNext>next</button>
-          </form>
-        </nb-step>
 
-        <nb-step [stepControl]="secondForm" label="{{ 'Select File Type' | translate }}">
-          <form [formGroup]="secondForm" (ngSubmit)="onSecondSubmit()" class="step-container">
-            <p class="lorem">
-              {{ 'Select File Type' | translate }}
-            </p>
+        <nb-step [stepControl]="firstForm" label="{{ 'Select File Type' | translate }}">
+          <form [formGroup]="firstForm" (ngSubmit)="onFirstSubmit()" class="step-container">
+              <h4>{{ 'Select File Type' | translate }}</h4>
+              <br>
             <div class="input-group">
               <div class="ui-inputgroup">
                 <p-dropdown formControlName="fileType" [options]="fileTypes" optionLabel="label" name="fileType"
@@ -44,22 +29,20 @@
           </form>
         </nb-step>
 
-        <nb-step [stepControl]="thirdForm" label="{{ 'Select File' | translate }}">
+        <nb-step [stepControl]="secondForm" label="{{ 'Upload File' | translate }}">
           <p-toast></p-toast>
 
-          <form [formGroup]="thirdForm" (ngSubmit)="onThirdSubmit()" class="step-container">
-            <p class="lorem">
-              {{ 'Select File' | translate }}
-            </p>
+          <form [formGroup]="secondForm" (ngSubmit)="onSecondSubmit()" class="step-container">
+            <h4>{{ 'Upload File' | translate }}</h4>
+            <br>
             <div class="input-group">
               <div class="ui-inputgroup">
-                <p-fileUpload name="importFile[]" customUpload="true"
-                (uploadHandler)="onFileUpload($event)">
-                     accept=".ts" maxFileSize="1000000">
+                <p-fileUpload name="importFile[]" customUpload="true" (uploadHandler)="onFileUpload($event)">
+                  accept=".ts" maxFileSize="1000000">
 
                   <ng-template pTemplate="content">
                     <ul *ngIf="uploadedFiles.length">
-                        <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                      <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
                     </ul>
                   </ng-template>
                 </p-fileUpload>
@@ -71,14 +54,13 @@
           </form>
         </nb-step>
 
-        <nb-step [stepControl]="secondForm" label="{{ 'Select File Type' | translate }}">
-          <form [formGroup]="secondForm" (ngSubmit)="onSecondSubmit()" class="step-container">
-            <p class="lorem">
-              {{ 'Select File Type' | translate }}
-            </p>
+        <nb-step [stepControl]="thirdForm" label="{{ 'Map columns' | translate }}">
+          <form [formGroup]="thirdForm" (ngSubmit)="onThirdSubmit()" class="step-container">
+            <h4>{{ 'Map columns' | translate }}</h4>
+              <br>
             <div class="input-group">
               <div class="ui-inputgroup">
-                <import-mapper ></import-mapper>
+                <import-mapper></import-mapper>
               </div>
             </div>
             <button nbButton nbStepperPrevious>prev</button>
@@ -87,8 +69,7 @@
           </form>
         </nb-step>
 
-
-        <nb-step [stepControl]="thirdForm" [hidden]="true" label="Third step">
+        <nb-step [stepControl]="fourthForm" [hidden]="true" label="Third step">
           <div class="step-container">
             <h3>Wizard completed!</h3>
             <button nbButton (click)="stepper.reset()">Try again</button>
@@ -96,7 +77,6 @@
         </nb-step>
       </nb-stepper>
 
-
-</nb-card-body>
-</nb-card>
+    </nb-card-body>
+  </nb-card>
 </div>

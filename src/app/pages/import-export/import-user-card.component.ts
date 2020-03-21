@@ -15,12 +15,11 @@ import { TemplateService } from '../../service/template.service';
 })
 export class ImportUserCardComponent extends AbstractComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  templates: SelectItem[];
   fileTypes: SelectItem[];
-
   firstForm: FormGroup;
   secondForm: FormGroup;
   thirdForm: FormGroup;
+  fourthForm: FormGroup;
 
   uploadedFiles: any[] = [];
 
@@ -32,34 +31,23 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
   }
 
   ngOnInit() {
-    this.firstForm = this.fb.group({
-      templateName: ['', [Validators.required]],
-    });
 
-    this.secondForm = this.fb.group({
+    this.firstForm = this.fb.group({
       fileType: ['XML', [Validators.required]],
     });
 
-    this.thirdForm = this.fb.group({
+    this.secondForm = this.fb.group({
       uploadFlag: [undefined, Validators.requiredTrue],
     });
 
-    this.loadTemplates();
+    this.thirdForm = this.fb.group({
+    });
 
     this.fileTypes = [
       {label: 'XML', value: 'XML'},
       {label: 'CSV', value: 'CSV'},
       {label: 'XLS', value: 'XLS'},
     ];
-  }
-
-  private loadTemplates() {
-    this.templateService.getTemplates().then(templates => {
-      this.templates = templates;
-      if (this.templates.length > 0) {
-        this.firstForm.patchValue({'templateName': templates[0].value});
-      }
-    });
   }
 
   onFirstSubmit() {
@@ -86,7 +74,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     const file = data.files[0];
     formData.append('importFile', file, file.name);
     this.importUserCardService.importUserCard(formData).then(() => {
-        this.thirdForm.patchValue({uploadFlag: true});
+        this.secondForm.patchValue({uploadFlag: true});
     });
   }
 }

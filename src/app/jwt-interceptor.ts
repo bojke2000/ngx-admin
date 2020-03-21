@@ -1,4 +1,4 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpHeaders } from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Inject, Injectable, Injector } from '@angular/core';
 import { NB_AUTH_TOKEN_INTERCEPTOR_FILTER, NbAuthService, NbAuthToken } from '@nebular/auth';
 import { Observable } from 'rxjs';
@@ -21,14 +21,12 @@ export class NbAuthJWTInterceptor implements HttpInterceptor {
 
                   if (req.headers === undefined) {
                     req = req.clone({headers: new HttpHeaders({
-                      //'Content-Type':  'application/json',
                       'Authorization': JWT,
                       }),
                     });
                   } else {
                     req = req.clone({
                       headers: req.headers
-                        //.set('Content-Type', 'application/json')
                         .set('Authorization', JWT),
                     });
                 }

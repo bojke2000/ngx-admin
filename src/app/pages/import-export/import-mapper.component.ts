@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SelectItem } from 'primeng/api';
+
 import { ImportUserCardService } from '../../service/import-user-card.service';
 
 @Component({
@@ -41,7 +42,7 @@ export class ImportMapperComponent implements OnInit {
             {label: 'Mercedes', value: 'Mercedes'},
             {label: 'Renault', value: 'Renault'},
             {label: 'VW', value: 'VW'},
-            {label: 'Volvo', value: 'Volvo'}
+            {label: 'Volvo', value: 'Volvo'},
         ];
     }
 

@@ -2,8 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { MessageService } from 'primeng/api';
-import {SelectItem} from 'primeng/api';
+import { MessageService, SelectItem } from 'primeng/api';
 
 import { AbstractComponent } from '../../abstract.component';
 import { ImportUserCardService } from '../../service/import-user-card.service';

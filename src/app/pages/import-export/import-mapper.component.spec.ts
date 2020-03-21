@@ -1,10 +1,9 @@
-import { TestBed, async } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { async, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { TableModule } from 'primeng/table';
 
 import { ImportMapperComponent } from './import-mapper.component';
-import { TableModule } from 'primeng/table';
-import { DialogModule } from 'primeng/dialog';
 
 describe('ImportComponent', () => {
     beforeEach(async(() => {
@@ -13,10 +12,9 @@ describe('ImportComponent', () => {
                 FormsModule,
                 HttpClientTestingModule,
                 TableModule,
-                DialogModule
             ],
             declarations: [
-                ImportMapperComponent
+                ImportMapperComponent,
             ],
         }).compileComponents();
     }));

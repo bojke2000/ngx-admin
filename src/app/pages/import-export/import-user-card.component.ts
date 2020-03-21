@@ -28,7 +28,6 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
   constructor(private templateService: TemplateService,
     translate: TranslateService,
     private importUserCardService: ImportUserCardService,
-    private httpClient: HttpClient,
     private fb: FormBuilder) {
     super(translate);
   }

@@ -7,7 +7,7 @@ import { ImportUserCardService } from '../../service/import-user-card.service';
     selector: 'import-mapper',
     templateUrl: './import-mapper.component.html',
     styleUrls: ['./import-mapper.component.css'],
-    providers: [ImportUserCardService]
+    providers: [ImportUserCardService],
 })
 export class ImportMapperComponent implements OnInit {
 

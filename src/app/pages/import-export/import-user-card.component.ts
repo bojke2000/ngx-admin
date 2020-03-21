@@ -79,11 +79,11 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
 
     const file = data.files[0];
     formData.append('importFile', file, file.name);
-    this.importUserCardService.importUserCard(formData).then(data => {
+    this.importUserCardService.importUserCard(formData).then(mappingData => {
 
-      if (data.length > 0) {
+      if (mappingData.length > 0) {
         const newCols = [];
-        const keys = Object.keys(data[0]);
+        const keys = Object.keys(mappingData[0]);
         const obj: { [k: string]: any } = {};
         for (const key of keys) {
           obj[key] = this.translate.instant('[Click To Select Mapping]');
@@ -94,7 +94,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
         }
 
         this.cols = newCols;
-        this.imports = [obj, ...data];
+        this.imports = [obj, ...mappingData];
       }
 
       this.secondForm.patchValue({ uploadFlag: true });

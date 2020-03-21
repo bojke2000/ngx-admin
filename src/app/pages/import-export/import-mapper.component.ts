@@ -25,7 +25,7 @@ export class ImportMapperComponent implements OnInit {
         return of(this.cols);
     }
 
-    constructor(private importService: ImportUserCardService) { }
+    constructor() { }
 
     ngOnInit() {
         this.choices = [

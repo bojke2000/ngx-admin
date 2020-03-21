@@ -5,7 +5,6 @@ import { MessageService, SelectItem } from 'primeng/api';
 
 import { AbstractComponent } from '../../abstract.component';
 import { ImportUserCardService } from '../../service/import-user-card.service';
-import { TemplateService } from '../../service/template.service';
 
 @Component({
   selector: 'import-user-card',
@@ -23,7 +22,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
 
   uploadedFiles: any[] = [];
 
-  constructor(private templateService: TemplateService,
+  constructor(
     translate: TranslateService,
     private importUserCardService: ImportUserCardService,
     private fb: FormBuilder) {

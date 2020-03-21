@@ -1,0 +1,28 @@
+<p-table [columns]="cols" [value]="imports" selectionMode="single" [paginator]="true" rows="10">
+    <ng-template pTemplate="body" let-rowData let-columns="columns" let-i="rowIndex">
+        <tr>
+            <ng-container *ngFor="let col of columns">
+                <td *ngIf="i === 0" pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-dropdown [options]="choices" (selectedOption)="choices[0]" [(ngModel)]="rowData[col.field]"
+                                        [style]="{'width':'100%'}"></p-dropdown>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <div style="color: #007ad9"><b>{{rowData[col.field]}}</b></div>
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td *ngIf="i !== 0" >
+                    {{rowData[col.field]}}
+                </td>
+            </ng-container>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="summary" let-rowData>
+        <div style="text-align:left">
+            <button type="button" pButton icon="pi pi-save" (click)="save()" label="Save"></button>
+        </div>
+    </ng-template>
+</p-table>

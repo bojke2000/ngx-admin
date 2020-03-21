@@ -14,10 +14,11 @@ import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
-
+import {ToastModule} from 'primeng/toast';
 import { ThemeModule } from '../../@theme/theme.module';
 import { ImportUserCardComponent } from './import-user-card.component';
 import { TemplateComponent } from './template.component';
+import { ImportMapperComponent } from './import-mapper.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -36,6 +37,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     PanelModule,
     ThemeModule,
     TableModule,
+    ToastModule,
     MessageModule,
     MessagesModule,
     FormsModule,
@@ -53,6 +55,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   declarations: [
     TemplateComponent,
+    ImportMapperComponent,
     ImportUserCardComponent,
   ],
 })

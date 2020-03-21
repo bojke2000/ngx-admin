@@ -1,15 +1,19 @@
+import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { SelectItem } from 'primeng/api/selectitem';
+import { MessageService } from 'primeng/api';
+import {SelectItem} from 'primeng/api';
 
 import { AbstractComponent } from '../../abstract.component';
+import { ImportUserCardService } from '../../service/import-user-card.service';
 import { TemplateService } from '../../service/template.service';
 
 @Component({
   selector: 'import-user-card',
   templateUrl: './import-user-card.component.html',
   styleUrls: ['./import-user-card.component.css'],
+  providers: [MessageService],
 })
 export class ImportUserCardComponent extends AbstractComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -20,8 +24,12 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
   secondForm: FormGroup;
   thirdForm: FormGroup;
 
+  uploadedFiles: any[] = [];
+
   constructor(private templateService: TemplateService,
     translate: TranslateService,
+    private importUserCardService: ImportUserCardService,
+    private httpClient: HttpClient,
     private fb: FormBuilder) {
     super(translate);
   }
@@ -36,7 +44,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     });
 
     this.thirdForm = this.fb.group({
-      thirdCtrl: ['', Validators.required],
+      uploadFlag: [undefined, Validators.requiredTrue],
     });
 
     this.loadTemplates();
@@ -73,5 +81,15 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
   }
 
   ngOnDestroy() {
+  }
+
+  onFileUpload(data: { files: File }): void {
+    const formData: FormData = new FormData();
+
+    const file = data.files[0];
+    formData.append('importFile', file, file.name);
+    this.importUserCardService.importUserCard(formData).then(() => {
+        this.thirdForm.patchValue({uploadFlag: true});
+    });
   }
 }

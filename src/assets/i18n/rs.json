@@ -87,5 +87,6 @@
   "It's not allowed to delete default import or export template.": "Nije dozvoljeno brisanje default templejta.",
   "Templates": "Kreiraj templejt",
   "Import User Card": "Uvezi korisničku karticu",
-  "Select File Type": "Izaberi tip fajla"
+  "Select File Type": "Izaberi tip fajla",
+  "Select File": "Izaberi fajl"
 }

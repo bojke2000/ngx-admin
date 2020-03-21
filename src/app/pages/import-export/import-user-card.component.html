@@ -26,6 +26,7 @@
             <button nbButton nbStepperNext>next</button>
           </form>
         </nb-step>
+
         <nb-step [stepControl]="secondForm" label="{{ 'Select File Type' | translate }}">
           <form [formGroup]="secondForm" (ngSubmit)="onSecondSubmit()" class="step-container">
             <p class="lorem">
@@ -42,20 +43,51 @@
             <button nbButton nbStepperNext>next</button>
           </form>
         </nb-step>
-        <nb-step [stepControl]="thirdForm" label="Third step">
+
+        <nb-step [stepControl]="thirdForm" label="{{ 'Select File' | translate }}">
+          <p-toast></p-toast>
+
           <form [formGroup]="thirdForm" (ngSubmit)="onThirdSubmit()" class="step-container">
             <p class="lorem">
-              Things boom shackalack rhoncus yo. In fo shizzle my nizzle gangsta platea dictumst. Check it out pot.
+              {{ 'Select File' | translate }}
             </p>
             <div class="input-group">
-              <input nbInput type="text" placeholder="Enter something" class="form-control" formControlName="thirdCtrl"
-                     [ngClass]="{'form-control-danger': thirdForm.invalid && (thirdForm.dirty || thirdForm.touched)}">
+              <div class="ui-inputgroup">
+                <p-fileUpload name="importFile[]" customUpload="true"
+                (uploadHandler)="onFileUpload($event)">
+                     accept=".ts" maxFileSize="1000000">
+
+                  <ng-template pTemplate="content">
+                    <ul *ngIf="uploadedFiles.length">
+                        <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                    </ul>
+                  </ng-template>
+                </p-fileUpload>
+              </div>
             </div>
             <button nbButton nbStepperPrevious>prev</button>
             <div class="divider"></div>
-            <button nbButton nbStepperNext>Confirm</button>
+            <button nbButton nbStepperNext>next</button>
           </form>
         </nb-step>
+
+        <nb-step [stepControl]="secondForm" label="{{ 'Select File Type' | translate }}">
+          <form [formGroup]="secondForm" (ngSubmit)="onSecondSubmit()" class="step-container">
+            <p class="lorem">
+              {{ 'Select File Type' | translate }}
+            </p>
+            <div class="input-group">
+              <div class="ui-inputgroup">
+                <import-mapper ></import-mapper>
+              </div>
+            </div>
+            <button nbButton nbStepperPrevious>prev</button>
+            <div class="divider"></div>
+            <button nbButton nbStepperNext>next</button>
+          </form>
+        </nb-step>
+
+
         <nb-step [stepControl]="thirdForm" [hidden]="true" label="Third step">
           <div class="step-container">
             <h3>Wizard completed!</h3>

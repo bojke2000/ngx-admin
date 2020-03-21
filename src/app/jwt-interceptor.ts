@@ -21,14 +21,14 @@ export class NbAuthJWTInterceptor implements HttpInterceptor {
 
                   if (req.headers === undefined) {
                     req = req.clone({headers: new HttpHeaders({
-                      'Content-Type':  'application/json',
+                      //'Content-Type':  'application/json',
                       'Authorization': JWT,
                       }),
                     });
                   } else {
                     req = req.clone({
                       headers: req.headers
-                        .set('Content-Type', 'application/json')
+                        //.set('Content-Type', 'application/json')
                         .set('Authorization', JWT),
                     });
                 }

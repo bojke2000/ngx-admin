@@ -45,11 +45,12 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
       { field: 'val3', header: 'Mapping', width: '70px' },
     ];
 
-    this.loadTemplates();
-
     this.addTemplateNameForm = this.formBuilder.group({
       templateName: ['', [Validators.required]],
     });
+
+    this.loadTemplates();
+
   }
 
   ngAfterViewInit() {
@@ -70,6 +71,7 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
       this.templates = templates;
       if (this.templates.length > 0) {
         this.template = templates[0];
+        this.addTemplateNameForm.patchValue({...templates[0]});
         this.templateService.getTemplate(this.template.value).then(result => this.mappings = result.mappings);
       }
     });

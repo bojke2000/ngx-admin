@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { SelectItem } from 'primeng/api';
+import { Observable, of } from 'rxjs';
 
 import { ImportUserCardService } from '../../service/import-user-card.service';
 
@@ -10,39 +11,34 @@ import { ImportUserCardService } from '../../service/import-user-card.service';
     providers: [ImportUserCardService],
 })
 export class ImportMapperComponent implements OnInit {
-
+    @Input()
     imports: any[];
-    cols = new Array();
+    @Input()
+    cols = [];
     choices: SelectItem[];
+
+    public get myImports$(): Observable<any[]> {
+        return of(this.imports);
+    }
+
+    public get cols$() {
+        return of(this.cols);
+    }
 
     constructor(private importService: ImportUserCardService) { }
 
     ngOnInit() {
-        this.importService.loadImport().then(imports => {
-            const keys = Object.keys(imports[0]);
-            const obj: {[k: string]: any} = {};
-            for (const key of keys) {
-                obj[key] = '[Click To Select Mapping]';
-            }
-            this.imports = [obj, ...imports];
-
-            for (const key of keys) {
-                this.cols.push({'field': key, 'header': key});
-            }
-            return this.imports;
-        });
-
         this.choices = [
-            {label: 'Audi', value: 'Audi'},
-            {label: 'BMW', value: 'BMW'},
-            {label: 'Fiat', value: 'Fiat'},
-            {label: 'Ford', value: 'Ford'},
-            {label: 'Honda', value: 'Honda'},
-            {label: 'Jaguar', value: 'Jaguar'},
-            {label: 'Mercedes', value: 'Mercedes'},
-            {label: 'Renault', value: 'Renault'},
-            {label: 'VW', value: 'VW'},
-            {label: 'Volvo', value: 'Volvo'},
+            { label: 'Audi', value: 'Audi' },
+            { label: 'BMW', value: 'BMW' },
+            { label: 'Fiat', value: 'Fiat' },
+            { label: 'Ford', value: 'Ford' },
+            { label: 'Honda', value: 'Honda' },
+            { label: 'Jaguar', value: 'Jaguar' },
+            { label: 'Mercedes', value: 'Mercedes' },
+            { label: 'Renault', value: 'Renault' },
+            { label: 'VW', value: 'VW' },
+            { label: 'Volvo', value: 'Volvo' },
         ];
     }
 

@@ -15,15 +15,14 @@
 
         <nb-step [stepControl]="firstForm" label="{{ 'Select File Type' | translate }}">
           <form [formGroup]="firstForm" (ngSubmit)="onFirstSubmit()" class="step-container">
-              <h4>{{ 'Select File Type' | translate }}</h4>
-              <br>
+            <h4>{{ 'Select File Type' | translate }}</h4>
+            <br>
             <div class="input-group">
               <div class="ui-inputgroup">
                 <p-dropdown formControlName="fileType" [options]="fileTypes" optionLabel="label" name="fileType"
                   autoWidth="false" [style]="{'width':'400px'}"></p-dropdown>
               </div>
             </div>
-            <button nbButton nbStepperPrevious>prev</button>
             <div class="divider"></div>
             <button nbButton nbStepperNext>next</button>
           </form>
@@ -57,10 +56,12 @@
         <nb-step [stepControl]="thirdForm" label="{{ 'Map columns' | translate }}">
           <form [formGroup]="thirdForm" (ngSubmit)="onThirdSubmit()" class="step-container">
             <h4>{{ 'Map columns' | translate }}</h4>
-              <br>
+            <br>
             <div class="input-group">
               <div class="ui-inputgroup">
-                <import-mapper></import-mapper>
+                <ng-container *ngIf="imports$ | async as imports">
+                  <import-mapper [imports]="imports" [cols]="cols"></import-mapper>
+                </ng-container>
               </div>
             </div>
             <button nbButton nbStepperPrevious>prev</button>

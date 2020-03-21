@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { MessageService, SelectItem } from 'primeng/api';
+import { Observable, of } from 'rxjs';
 
 import { AbstractComponent } from '../../abstract.component';
 import { ImportUserCardService } from '../../service/import-user-card.service';
@@ -19,6 +20,8 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
   secondForm: FormGroup;
   thirdForm: FormGroup;
   fourthForm: FormGroup;
+  imports: any[];
+  cols: any[];
 
   uploadedFiles: any[] = [];
 
@@ -27,6 +30,10 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     private importUserCardService: ImportUserCardService,
     private fb: FormBuilder) {
     super(translate);
+  }
+
+  get imports$(): Observable<any[]> {
+    return of(this.imports);
   }
 
   ngOnInit() {
@@ -43,9 +50,9 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     });
 
     this.fileTypes = [
-      {label: 'XML', value: 'XML'},
-      {label: 'CSV', value: 'CSV'},
-      {label: 'XLS', value: 'XLS'},
+      { label: 'XML', value: 'XML' },
+      { label: 'CSV', value: 'CSV' },
+      { label: 'XLS', value: 'XLS' },
     ];
   }
 
@@ -72,8 +79,25 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
 
     const file = data.files[0];
     formData.append('importFile', file, file.name);
-    this.importUserCardService.importUserCard(formData).then(() => {
-        this.secondForm.patchValue({uploadFlag: true});
+    this.importUserCardService.importUserCard(formData).then(data => {
+
+      if (data.length > 0) {
+        const newCols = [];
+        const keys = Object.keys(data[0]);
+        const obj: { [k: string]: any } = {};
+        for (const key of keys) {
+          obj[key] = this.translate.instant('[Click To Select Mapping]');
+        }
+
+        for (const key of keys) {
+          newCols.push({ 'field': key, 'header': key });
+        }
+
+        this.cols = newCols;
+        this.imports = [obj, ...data];
+      }
+
+      this.secondForm.patchValue({ uploadFlag: true });
     });
   }
 }

@@ -6,7 +6,6 @@ import { Observable, of } from 'rxjs';
 
 import { AbstractComponent } from '../../abstract.component';
 import { ImportUserCardService } from '../../service/import-user-card.service';
-import { ImportSample } from '../../domain/import-sample';
 
 @Component({
   selector: 'import-user-card',
@@ -70,7 +69,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
 
   onThirdSubmit() {
     this.thirdForm.markAsDirty();
-    //this.loading = true;
+    this.loading = true;
     const postMappings = [];
     const keys = Object.keys(this.mappings);
     for (const key of keys) {
@@ -82,7 +81,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     }
     const postData = {mappings: postMappings, fileName: this.fileName};
     this.importUserCardService.import(postData).then(resp => {
-      //this.loading = false;
+      this.loading = false;
     });
   }
 
@@ -102,7 +101,6 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     this.importUserCardService.upload(formData).then(importSample => {
 
       if (importSample.samples.length > 0) {
-        const newCols = [];
         const keys = Object.keys(importSample.samples[0]);
         const obj: { [k: string]: any } = {};
         for (const key of keys) {

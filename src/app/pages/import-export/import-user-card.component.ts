@@ -23,7 +23,8 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
   imports: any[];
   cols: any[];
   loading = false;
-
+  fileName?: string = undefined;
+  mappings = undefined;
   uploadedFiles: any[] = [];
 
   constructor(
@@ -67,8 +68,21 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
   }
 
   onThirdSubmit() {
-    alert(this.thirdForm.controls.value);
     this.thirdForm.markAsDirty();
+    this.loading = true;
+    const postMappings = [];
+    const keys = Object.keys(this.mappings);
+    for (const key of keys) {
+      const val: string = this.mappings[key];
+      if (this.mappings.hasOwnProperty(key) && val && !val.startsWith('[')) {
+        const element = {id: key, name: this.mappings[key]};
+        postMappings.push(element);
+      }
+    }
+    const postData = {mappings: postMappings, fileName: this.fileName};
+    this.importUserCardService.import(postData).then(resp => {
+      this.loading = false;
+    });
   }
 
   ngAfterViewInit() {
@@ -83,7 +97,8 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
 
     const file = data.files[0];
     formData.append('importFile', file, file.name);
-    this.importUserCardService.importUserCard(formData).then(mappingData => {
+    this.fileName = file.name;
+    this.importUserCardService.upload(formData).then(mappingData => {
 
       if (mappingData.length > 0) {
         const newCols = [];
@@ -105,6 +120,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     });
   }
 
-  selectValue(mappings: string) {
+  selectValue(obj: any) {
+    this.mappings = obj.mappings;
   }
 }

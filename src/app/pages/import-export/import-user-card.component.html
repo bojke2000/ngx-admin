@@ -1,5 +1,5 @@
 <div class="row">
-  <nb-card style="width: 100%"  [nbSpinner]="loading" nbSpinnerStatus="danger">
+  <nb-card style="width: 100%" [nbSpinner]="loading" nbSpinnerStatus="danger">
     <nb-card-body>
 
       <div class="header-container">
@@ -60,15 +60,16 @@
             <div class="input-group">
               <div class="ui-inputgroup">
                 <ng-container *ngIf="imports$ | async as imports">
-                  <import-mapper
-                  (onSelectValue)='selectValue($event)'
-                  [imports]="imports" [cols]="cols"></import-mapper>
+                  <import-mapper (onSelectValue)='selectValue($event)' [imports]="imports" [cols]="cols">
+                  </import-mapper>
                 </ng-container>
               </div>
+              <div><b>* {{ 'This table displays just subset of the imported data needed for mapping.' | translate }}</b></div>
             </div>
+
             <button nbButton nbStepperPrevious>prev</button>
             <div class="divider"></div>
-            <button nbButton nbStepperNext>next</button>
+            <button nbButton nbStepperNext>import</button>
           </form>
         </nb-step>
 

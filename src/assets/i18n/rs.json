@@ -86,10 +86,11 @@
   "Delete Template": "Obriši templejt",
   "It's not allowed to delete default import or export template.": "Nije dozvoljeno brisanje default templejta.",
   "Templates": "Kreiraj templejt",
-  "Import User Card": "Uvezi korisničku karticu",
+  "Import User Card": "Uvezi potrošačku karticu",
   "Select File Type": "Izaberi tip fajla",
   "Select File": "Izaberi fajl",
   "Upload File": "Uvezi fajl",
   "Map columns": "Mapiraj kolone",
-  "[Click To Select Mapping]": "[Klikni me da izaberes mapiranje]"
+  "[Click To Select Mapping]": "[Klikni me da izaberes mapiranje]",
+  "This table displays just subset of the imported data needed for mapping.": "Ova tabela prikazuje samo deo uvezenih podataka; Deo dovoljan za mapiranje."
 }

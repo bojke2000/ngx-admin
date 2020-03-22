@@ -8,16 +8,18 @@ export class ImportUserCardService extends AbstractService {
 
   private url = this.prefix + 'import-user-card';
 
-  httpOptions = {
-    headers: new HttpHeaders({
-     // 'Content-Type':  'multipart/form-data',
-    }),
-  };
-
   constructor(private http: HttpClient) { super(); }
 
-  importUserCard(formData: FormData) {
-    return this.http.post<any>(this.url, formData, this.httpOptions)
+  upload(formData: FormData) {
+    const myHttpOptions = { headers: new HttpHeaders({})};
+
+    return this.http.post<any>(this.url + '/upload', formData, myHttpOptions)
+      .toPromise()
+      .then(data => data);
+  }
+
+  import(formData: any) {
+    return this.http.post<any>(this.url + '/import', formData, this.httpOptions)
       .toPromise()
       .then(data => data);
   }

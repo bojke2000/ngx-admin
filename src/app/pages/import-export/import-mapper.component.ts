@@ -14,7 +14,7 @@ export class ImportMapperComponent implements OnInit {
   @Input()
   cols = [];
   choices: SelectItem[];
-  @Output() onSelectValue = new EventEmitter<{ mappings: string }>();
+  @Output() onSelectValue = new EventEmitter<{ mappings: any }>();
 
   ngOnInit() {
     this.choices = [
@@ -35,9 +35,8 @@ export class ImportMapperComponent implements OnInit {
     this.onSelectValue.emit({ mappings: this.getMappings() });
   }
 
-  private getMappings(): string {
-    const insaMapping = this.imports[0];
-    return JSON.stringify(insaMapping);
+  private getMappings(): any {
+    return this.imports[0];
   }
 
   save() {

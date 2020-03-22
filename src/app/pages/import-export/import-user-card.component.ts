@@ -48,7 +48,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     });
 
     this.thirdForm = this.fb.group({
-      imports: [undefined],
+      mappings: ['', Validators.required],
     });
 
     this.fileTypes = [
@@ -106,6 +106,5 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
   }
 
   selectValue(mappings: string) {
-    console.log(mappings);
   }
 }

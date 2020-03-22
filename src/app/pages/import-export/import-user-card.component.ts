@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs';
 
 import { AbstractComponent } from '../../abstract.component';
 import { ImportUserCardService } from '../../service/import-user-card.service';
+import { ImportSample } from '../../domain/import-sample';
 
 @Component({
   selector: 'import-user-card',
@@ -69,7 +70,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
 
   onThirdSubmit() {
     this.thirdForm.markAsDirty();
-    this.loading = true;
+    //this.loading = true;
     const postMappings = [];
     const keys = Object.keys(this.mappings);
     for (const key of keys) {
@@ -81,7 +82,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     }
     const postData = {mappings: postMappings, fileName: this.fileName};
     this.importUserCardService.import(postData).then(resp => {
-      this.loading = false;
+      //this.loading = false;
     });
   }
 
@@ -98,22 +99,18 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     const file = data.files[0];
     formData.append('importFile', file, file.name);
     this.fileName = file.name;
-    this.importUserCardService.upload(formData).then(mappingData => {
+    this.importUserCardService.upload(formData).then(importSample => {
 
-      if (mappingData.length > 0) {
+      if (importSample.samples.length > 0) {
         const newCols = [];
-        const keys = Object.keys(mappingData[0]);
+        const keys = Object.keys(importSample.samples[0]);
         const obj: { [k: string]: any } = {};
         for (const key of keys) {
           obj[key] = this.translate.instant('[Mapping]');
         }
 
-        for (const key of keys) {
-          newCols.push({ 'field': key, 'header': key });
-        }
-
-        this.cols = newCols;
-        this.imports = [obj, ...mappingData];
+        this.cols = [...importSample.columns];
+        this.imports = [obj, ...importSample.samples];
       }
       this.loading = false;
       this.secondForm.patchValue({ uploadFlag: true });

@@ -1,8 +1,8 @@
-<p-table [columns]="cols" [value]="imports" [lazy]="true" #table [scrollable]="true" [paginator]="true" [rows]="20"  [style]="{width:'60%'}" scrollHeight="40vh" >
+<p-table [columns]="cols" [value]="imports" #table [scrollable]="true" [paginator]="true" [rows]="20"  [style]="{width:'59%'}" scrollHeight="40vh" >
 
   <ng-template pTemplate="colgroup" let-columns>
     <colgroup>
-      <col *ngFor="let col of cols" [style.width]="'100px'">
+      <col *ngFor="let col of cols" [style.width]="col.width + 'px'">
     </colgroup>
   </ng-template>
 

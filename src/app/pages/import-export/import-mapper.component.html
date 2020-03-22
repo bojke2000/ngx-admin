@@ -1,4 +1,11 @@
-<p-table [columns]="cols" [value]="imports" selectionMode="single" [paginator]="true" rows="10">
+<p-table [columns]="cols" [value]="imports" [lazy]="true" #table [scrollable]="true" [paginator]="true" [rows]="20"  [style]="{width:'60%'}" scrollHeight="40vh" >
+
+  <ng-template pTemplate="colgroup" let-columns>
+    <colgroup>
+      <col *ngFor="let col of cols" [style.width]="'100px'">
+    </colgroup>
+  </ng-template>
+
   <ng-template pTemplate="body" let-rowData let-columns="columns" let-i="rowIndex">
     <tr>
       <ng-container *ngFor="let col of columns">

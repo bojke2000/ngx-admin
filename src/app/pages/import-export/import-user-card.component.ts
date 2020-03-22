@@ -105,7 +105,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
         const keys = Object.keys(mappingData[0]);
         const obj: { [k: string]: any } = {};
         for (const key of keys) {
-          obj[key] = this.translate.instant('[Click To Select Mapping]');
+          obj[key] = this.translate.instant('[Mapping]');
         }
 
         for (const key of keys) {

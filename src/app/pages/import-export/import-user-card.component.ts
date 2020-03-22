@@ -22,6 +22,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
   fourthForm: FormGroup;
   imports: any[];
   cols: any[];
+  loading = false;
 
   uploadedFiles: any[] = [];
 
@@ -75,6 +76,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
   }
 
   onFileUpload(data: { files: File }): void {
+    this.loading = true;
     const formData: FormData = new FormData();
 
     const file = data.files[0];
@@ -96,7 +98,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
         this.cols = newCols;
         this.imports = [obj, ...mappingData];
       }
-
+      this.loading = false;
       this.secondForm.patchValue({ uploadFlag: true });
     });
   }

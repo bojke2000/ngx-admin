@@ -60,7 +60,9 @@
             <div class="input-group">
               <div class="ui-inputgroup">
                 <ng-container *ngIf="imports$ | async as imports">
-                  <import-mapper [imports]="imports" [cols]="cols"></import-mapper>
+                  <import-mapper
+                  (onSelectValue)='selectValue($event)'
+                  [imports]="imports" [cols]="cols"></import-mapper>
                 </ng-container>
               </div>
             </div>

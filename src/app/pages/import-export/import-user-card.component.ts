@@ -48,6 +48,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     });
 
     this.thirdForm = this.fb.group({
+      imports: [undefined],
     });
 
     this.fileTypes = [
@@ -66,6 +67,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
   }
 
   onThirdSubmit() {
+    alert(this.thirdForm.controls.value);
     this.thirdForm.markAsDirty();
   }
 
@@ -101,5 +103,9 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
       this.loading = false;
       this.secondForm.patchValue({ uploadFlag: true });
     });
+  }
+
+  selectValue(mappings: string) {
+    console.log(mappings);
   }
 }

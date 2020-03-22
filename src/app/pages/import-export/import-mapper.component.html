@@ -5,7 +5,9 @@
         <td *ngIf="i === 0" pEditableColumn>
           <p-cellEditor>
             <ng-template pTemplate="input">
-              <p-dropdown [options]="choices" (selectedOption)="choices[0]" [(ngModel)]="rowData[col.field]"
+              <p-dropdown [options]="choices"
+              (onChange)="onSelectionChange()"
+              (selectedOption)="choices[0]" [(ngModel)]="rowData[col.field]"
                 [style]="{'width':'100%'}"></p-dropdown>
             </ng-template>
             <ng-template pTemplate="output">

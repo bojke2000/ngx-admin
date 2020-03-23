@@ -1,12 +1,12 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SelectItem } from 'primeng/api';
-import { ImportUserCardService } from '../../service/import-user-card.service';
+
+import { CardColumnService } from '../../service/card-column.service';
 
 @Component({
   selector: 'import-mapper',
   templateUrl: './import-mapper.component.html',
   styleUrls: ['./import-mapper.component.css'],
-  providers: [ImportUserCardService],
 })
 export class ImportMapperComponent implements OnInit {
   @Input()
@@ -16,19 +16,10 @@ export class ImportMapperComponent implements OnInit {
   choices: SelectItem[];
   @Output() onSelectValue = new EventEmitter<{ mappings: any }>();
 
+  constructor(private cardColumnService: CardColumnService) { }
+
   ngOnInit() {
-    this.choices = [
-      { label: 'Audi', value: 'Audi' },
-      { label: 'BMW', value: 'BMW' },
-      { label: 'Fiat', value: 'Fiat' },
-      { label: 'Ford', value: 'Ford' },
-      { label: 'Honda', value: 'Honda' },
-      { label: 'Jaguar', value: 'Jaguar' },
-      { label: 'Mercedes', value: 'Mercedes' },
-      { label: 'Renault', value: 'Renault' },
-      { label: 'VW', value: 'VW' },
-      { label: 'Volvo', value: 'Volvo' },
-    ];
+    this.cardColumnService.getCardColumns().then(data => this.choices = data);
   }
 
   onSelectionChange() {

@@ -34,6 +34,7 @@ import { TemplateService } from './service/template.service';
 import { UserAccountService } from './service/user-account.service';
 import { UserAccountTypesService } from './service/useraccounttypes.service';
 import { ImportUserCardService } from './service/import-user-card.service';
+import { CardColumnService } from './service/card-column.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -109,7 +110,7 @@ import { ImportUserCardService } from './service/import-user-card.service';
   ],
   providers: [AuthGuard, UserCardService, UserAccountService, MailAccountService,
     UserAccountTypesService, CityService, TemplateService, ImportUserCardService,
-    { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true},
+    CardColumnService, { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true},
     { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: () => false}],
   bootstrap: [AppComponent],
 })

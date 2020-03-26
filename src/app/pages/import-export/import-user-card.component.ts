@@ -13,7 +13,7 @@ import { ImportUserCardService } from '../../service/import-user-card.service';
   styleUrls: ['./import-user-card.component.css'],
   providers: [MessageService],
 })
-export class ImportUserCardComponent extends AbstractComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ImportUserCardComponent extends AbstractComponent implements OnInit {
 
   fileTypes: SelectItem[];
   firstForm: FormGroup;
@@ -59,6 +59,20 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     ];
   }
 
+  private toSelected(mappings: any[]): any[] {
+    const selected = [];
+    const keys = Object.keys(mappings);
+    for (const key of keys) {
+      const val: string = this.mappings[key];
+      if (this.mappings.hasOwnProperty(key) && val && !val.startsWith('[')) {
+        const element = {col: key, value: mappings[key]};
+        selected.push(element);
+      }
+    }
+
+    return selected;
+  }
+
   onFirstSubmit() {
     this.firstForm.markAsDirty();
   }
@@ -70,25 +84,10 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
   onThirdSubmit() {
     this.thirdForm.markAsDirty();
     this.loading = true;
-    const postMappings = [];
-    const keys = Object.keys(this.mappings);
-    for (const key of keys) {
-      const val: string = this.mappings[key];
-      if (this.mappings.hasOwnProperty(key) && val && !val.startsWith('[')) {
-        const element = {col: key, value: this.mappings[key]};
-        postMappings.push(element);
-      }
-    }
-    const postData = {mappings: postMappings, fileName: this.fileName};
+    const postData = {mappings: this.toSelected(this.mappings), fileName: this.fileName};
     this.importUserCardService.import(postData).then(resp => {
       this.loading = false;
     });
-  }
-
-  ngAfterViewInit() {
-  }
-
-  ngOnDestroy() {
   }
 
   onFileUpload(data: { files: File }): void {

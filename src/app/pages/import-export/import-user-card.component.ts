@@ -75,7 +75,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     for (const key of keys) {
       const val: string = this.mappings[key];
       if (this.mappings.hasOwnProperty(key) && val && !val.startsWith('[')) {
-        const element = {id: key, name: this.mappings[key]};
+        const element = {col: key, value: this.mappings[key]};
         postMappings.push(element);
       }
     }

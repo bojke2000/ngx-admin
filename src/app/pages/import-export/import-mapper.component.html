@@ -18,16 +18,15 @@
                 [style]="{'width':'100%'}">
 
                 <ng-template pTemplate="item" let-item>
-                  {{item.label | translate}}
+                  {{ item.label | translate}}
                   </ng-template>
                   <ng-template let-selectedItem pTemplate="selectedItem">
-                    {{selectedItem.label | translate}}
+                    {{ selectedItem.label | translate}}
                     </ng-template>
-
               </p-dropdown>
             </ng-template>
             <ng-template pTemplate="output">
-              <div style="color: #007ad9"><b>{{ rowData[col.field] | translate }}</b></div>
+              <div style="color: #007ad9"><b>{{ choices === undefined || choices === undefined || choices[rowData[col.field]] === undefined ? rowData[col.field] :  choices[rowData[col.field] -1].label  | translate }}</b></div>
             </ng-template>
           </p-cellEditor>
         </td>

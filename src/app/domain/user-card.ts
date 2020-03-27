@@ -13,7 +13,7 @@ export interface UserCard {
   customerName: string;
   customerInfo: string;
   siteRemark: string;
-  meterLocationRemark: string;
+  routeRemark: string;
   nameA: string;
   nameB: string;
   nameC: string;

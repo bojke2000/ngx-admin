@@ -65,7 +65,8 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     for (const key of keys) {
       const val: string = this.mappings[key];
       if (this.mappings.hasOwnProperty(key) && val && !val.startsWith('[')) {
-        const element = {col: key, value: mappings[key]};
+        const col = key.substring(3);
+        const element = { col: col, value: mappings[key] };
         selected.push(element);
       }
     }
@@ -84,7 +85,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
   onThirdSubmit() {
     this.thirdForm.markAsDirty();
     this.loading = true;
-    const postData = {mappings: this.toSelected(this.mappings), fileName: this.fileName};
+    const postData = { mappings: this.toSelected(this.mappings), fileName: this.fileName, ext: this.firstForm.controls['fileType'].value };
     this.importUserCardService.import(postData).then(resp => {
       this.loading = false;
     });

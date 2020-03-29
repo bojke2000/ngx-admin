@@ -1,30 +1,35 @@
 export interface UserCard {
   id?: number;
-  siteId: string;
-  siteNo: string;
-  gsmId: number;
-  userCardId: string;
-  mpn: string;
-  countryId: number;
-  cityId: number;
-  street: string;
-  streetNo: string;
-  deviation: number;
+  customerId: string;
   customerName: string;
-  customerInfo: string;
-  siteRemark: string;
-  routeRemark: string;
-  nameA: string;
-  nameB: string;
-  nameC: string;
-  nameD: string;
-  unitA: string;
-  unitB: string;
-  unitC: string;
-  unitD: string;
-  multiplierA: number;
-  multiplierB: number;
-  multiplierC: number;
-  multiplierD: number;
+  cityId: number;
+  address: string;
+  addressNo: string;
+  addressNo2: string;
+
+  deviceId: string;
+  gsmId: number;
+  wmbusId: number;
+  medium: string;
+
+  customerRemarks: string;
+  siteRemarks: string;
+  routeRemarks: string;
+  route: string;
+  adogsmLocation: string;
+  adogsmRemarks: string;
+
+  multiplier: number;
+  readTimestamp: string;
+  watermeterStatus: number;
+  reverseFlowStatus: number;
+  diffLastRead: number;
+  readDayStatus: number;
+  magneticSabotageTime: number;
+
+  signalStrength: number;
+  alarms: number;
+  mainBattery: number;
+  gsmBattery: number;
 }
 

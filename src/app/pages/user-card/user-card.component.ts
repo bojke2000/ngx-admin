@@ -4,6 +4,7 @@ import { UserCard } from '../../domain/user-card';
 import { LazyLoadEvent } from 'primeng/api/public_api';
 import {Table} from 'primeng/table';
 import { TranslateService } from '@ngx-translate/core';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'ngx-user-card',
@@ -22,7 +23,7 @@ export class UserCardComponent implements OnInit {
   @ViewChild('table', {static: false}) table: Table;
   selectedUserCard: UserCard;
 
-  constructor(private userCardService: UserCardService, translate: TranslateService) {
+  constructor(private userCardService: UserCardService, private translate: TranslateService) {
     translate.setDefaultLang('en');
     translate.use('rs');
   }
@@ -35,33 +36,40 @@ export class UserCardComponent implements OnInit {
 
     this.cols = [
       { field: 'id', header: 'ID', width: '70px' },
-      { field: 'userCardId', header: 'UserCard ID' , width: '150px' },
-      { field: 'siteId', header: 'siteId' , width: '120px' },
-      { field: 'siteNo', header: 'Site No' , width: '150px' },
-      { field: 'gsmId', header: 'GSM ID' , width: '120px' },
-      { field: 'mpn', header: 'MPN' , width: '120px' },
-      { field: 'countryId', header: 'Country ID' , width: '120px' },
-      { field: 'cityId', header: 'City ID' , width: '120px' },
-      { field: 'street', header: 'Street' , width: '200px' },
-      { field: 'streetNo', header: 'Street No' , width: '80px' },
-      { field: 'deviation', header: 'Deviation' , width: '120px' },
-      { field: 'customerName', header: 'Customer Name' , width: '250px' },
-      { field: 'customerInfo', header: 'Customer Info' , width: '200px' },
-      { field: 'siteRemark', header: 'Site Remark' , width: '250px' },
-      { field: 'routeRemark', header: 'Remark' , width: '200px' },
-      { field: 'nameA', header: 'Name A' , width: '200px' },
-      { field: 'nameB', header: 'Name B' , width: '200px' },
-      { field: 'nameC', header: 'Name C' , width: '200px' },
-      { field: 'nameD', header: 'Name D' , width: '200px' },
-      { field: 'unitA', header: 'Unit A' , width: '120px' },
-      { field: 'unitB', header: 'Unit B' , width: '120px' },
-      { field: 'unitC', header: 'Unit C' , width: '120px' },
-      { field: 'unitD', header: 'Unit D' , width: '120px' },
-      { field: 'multiplierA', header: 'Multiplier A' , width: '120px' },
-      { field: 'multiplierB', header: 'Multiplier B' , width: '120px' },
-      { field: 'multiplierC', header: 'Multiplier C' , width: '120px' },
-      { field: 'multiplierD', header: 'Multiplier D' , width: '120px' },
+      { field: 'customerId', header: 'Customer ID', width: '70px' },
+      { field: 'customerName', header: 'Customer name', width: '70px' },
+      { field: 'city', header: 'City', width: '70px' },
+      { field: 'address', header: 'Address', width: '70px' },
+      { field: 'addressNo', header: 'Address number', width: '100px' },
+      { field: 'addressNo2', header: 'Address number 2', width: '100px' },
+      { field: 'deviceId', header: 'Device ID', width: '70px' },
+      { field: 'gsmId', header: 'ADOGSM-2 ID', width: '70px' },
+      { field: 'wmbusId', header: 'WMBUS ID', width: '70px' },
+      { field: 'medium', header: 'Medium', width: '70px' },
+      { field: 'custmerRemarks', header: 'Customer remarks', width: '70px' },
+      { field: 'siteRemarks', header: 'Site remarks', width: '70px' },
+      { field: 'routeRemarks', header: 'Route Remarks', width: '70px' },
+      { field: 'route', header: 'Route', width: '70px' },
+      { field: 'adogsmLocation', header: 'AdoGsm location', width: '70px' },
+      { field: 'adogsmRemarks', header: 'AdoGsm remarks', width: '70px' },
+      { field: 'multiplier', header: 'Multiplier', width: '70px' },
+      { field: 'readTimestamp', header: 'Read Datetime', width: '70px' },
+      { field: 'watermeterStatus', header: 'Watermeter Status', width: '70px' },
+      { field: 'reverseFLowStatus', header: 'Reverse Flow Status', width: '70px' },
+      { field: 'diffLastRead', header: 'Difference from last reading', width: '70px' },
+      { field: 'readDayStatus', header: 'Status on day of reading', width: '70px' },
+      { field: 'magneticSabotageTime', header: 'Magnetic sabotage time', width: '70px' },
+      { field: 'signalStrength', header: 'Signal Strength', width: '70px' },
+      { field: 'alarms', header: 'Alarms', width: '70px' },
+      { field: 'mainBattery', header: 'Main Battery', width: '70px' },
+      { field: 'gmsBattery', header: 'GSM Battery', width: '70px' },
     ];
+
+    this.cols.forEach(col => {
+      if (col.field !== 'addressNo' && col.field !== 'addressNo2') {
+        col.width = `${ this.translate.instant(col.header).length * 11 + 40}px`;
+      }
+    });
 
     this.loading = true;
   }

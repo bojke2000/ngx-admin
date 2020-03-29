@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UserCardService } from '../../service/user-card.service';
-import { UserCard } from '../../domain/user-card';
-import { LazyLoadEvent } from 'primeng/api/public_api';
-import {Table} from 'primeng/table';
 import { TranslateService } from '@ngx-translate/core';
-import { of } from 'rxjs';
+import { LazyLoadEvent } from 'primeng/api/public_api';
+import { Table } from 'primeng/table';
+
+import { UserCard } from '../../domain/user-card';
+import { UserCardService } from '../../service/user-card.service';
 
 @Component({
   selector: 'ngx-user-card',

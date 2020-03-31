@@ -2,7 +2,6 @@ export interface UserCard {
   id?: number;
   customerId: string;
   customerName: string;
-  cityId: number;
   address: string;
   addressNo: string;
   addressNo2: string;

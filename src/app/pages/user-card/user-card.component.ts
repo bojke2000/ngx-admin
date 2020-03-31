@@ -5,6 +5,7 @@ import { Table } from 'primeng/table';
 
 import { UserCard } from '../../domain/user-card';
 import { UserCardService } from '../../service/user-card.service';
+import { of, Observable } from 'rxjs';
 
 @Component({
   selector: 'ngx-user-card',
@@ -35,43 +36,48 @@ export class UserCardComponent implements OnInit {
     }) ;
 
     this.cols = [
-      { field: 'id', header: 'ID', width: '70px' },
-      { field: 'customerId', header: 'Customer ID', width: '70px' },
-      { field: 'customerName', header: 'Customer name', width: '70px' },
-      { field: 'city', header: 'City', width: '70px' },
-      { field: 'address', header: 'Address', width: '70px' },
-      { field: 'addressNo', header: 'Address number', width: '100px' },
-      { field: 'addressNo2', header: 'Address number 2', width: '100px' },
-      { field: 'deviceId', header: 'Device ID', width: '70px' },
-      { field: 'gsmId', header: 'ADOGSM-2 ID', width: '70px' },
-      { field: 'wmbusId', header: 'WMBUS ID', width: '70px' },
-      { field: 'medium', header: 'Medium', width: '70px' },
-      { field: 'custmerRemarks', header: 'Customer remarks', width: '70px' },
-      { field: 'siteRemarks', header: 'Site remarks', width: '70px' },
-      { field: 'routeRemarks', header: 'Route Remarks', width: '70px' },
-      { field: 'route', header: 'Route', width: '70px' },
-      { field: 'adogsmLocation', header: 'AdoGsm location', width: '70px' },
-      { field: 'adogsmRemarks', header: 'AdoGsm remarks', width: '70px' },
-      { field: 'multiplier', header: 'Multiplier', width: '70px' },
-      { field: 'readTimestamp', header: 'Read Datetime', width: '70px' },
-      { field: 'watermeterStatus', header: 'Watermeter Status', width: '70px' },
-      { field: 'reverseFLowStatus', header: 'Reverse Flow Status', width: '70px' },
-      { field: 'diffLastRead', header: 'Difference from last reading', width: '70px' },
-      { field: 'readDayStatus', header: 'Status on day of reading', width: '70px' },
-      { field: 'magneticSabotageTime', header: 'Magnetic sabotage time', width: '70px' },
-      { field: 'signalStrength', header: 'Signal Strength', width: '70px' },
-      { field: 'alarms', header: 'Alarms', width: '70px' },
-      { field: 'mainBattery', header: 'Main Battery', width: '70px' },
-      { field: 'gmsBattery', header: 'GSM Battery', width: '70px' },
+      { field: 'id', header: 'ID', width: '50px' },
+      { field: 'customerId', header: 'Customer ID', width: '150px' },
+      { field: 'customerName', header: 'Customer name', width: '250px' },
+      { field: 'address', header: 'Address', width: '250px' },
+      { field: 'addressNo', header: 'Address number', width: '90px' },
+      { field: 'addressNo2', header: 'Address number 2', width: '90px' },
+      { field: 'deviceId', header: 'Device ID', width: '150px' },
+      { field: 'gsmId', header: 'ADOGSM-2 ID', width: '150px' },
+      { field: 'wmbusId', header: 'WMBUS ID', width: '150px' },
+      { field: 'medium', header: 'Medium', width: '100px' },
+      { field: 'custmerRemarks', header: 'Customer remarks', width: '250px' },
+      { field: 'siteRemarks', header: 'Site remarks', width: '250px' },
+      { field: 'routeRemarks', header: 'Route Remarks', width: '250px' },
+      { field: 'route', header: 'Route', width: '200px' },
+      { field: 'adogsmLocation', header: 'AdoGsm location', width: '250px' },
+      { field: 'adogsmRemarks', header: 'AdoGsm remarks', width: '250px' },
+      { field: 'multiplier', header: 'Multiplier', width: '100px' },
+      { field: 'readTimestamp', header: 'Read Datetime', width: '200px' },
+      { field: 'watermeterStatus', header: 'Watermeter Status', width: '200px' },
+      { field: 'reverseFLowStatus', header: 'Reverse Flow Status', width: '200px' },
+      { field: 'diffLastRead', header: 'Difference from last reading', width: '350px' },
+      { field: 'readDayStatus', header: 'Status on day of reading', width: '300px' },
+      { field: 'magneticSabotageTime', header: 'Magnetic sabotage time', width: '250px' },
+      { field: 'signalStrength', header: 'Signal Strength', width: '150px' },
+      { field: 'alarms', header: 'Alarms', width: '120px' },
+      { field: 'mainBattery', header: 'Main Battery', width: '150px' },
+      { field: 'gmsBattery', header: 'GSM Battery', width: '150px' },
     ];
 
+    /*
     this.cols.forEach(col => {
-      if (col.field !== 'addressNo' && col.field !== 'addressNo2') {
+      if (col.field !== 'addressNo' && col.field !== 'addressNo2' && col.field !== 'address') {
         col.width = `${ this.translate.instant(col.header).length * 11 + 40}px`;
       }
     });
+    */
 
     this.loading = true;
+  }
+
+  get cols$(): Observable<any[]> {
+    return of(this.cols);
   }
 
   loadUserCardsLazy(event: LazyLoadEvent) {

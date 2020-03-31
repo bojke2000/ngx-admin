@@ -24,7 +24,7 @@ export class UserCardComponent implements OnInit {
   @ViewChild('table', {static: false}) table: Table;
   selectedUserCard: UserCard;
 
-  constructor(private userCardService: UserCardService, private translate: TranslateService) {
+  constructor(private userCardService: UserCardService, translate: TranslateService) {
     translate.setDefaultLang('en');
     translate.use('rs');
   }

@@ -8,11 +8,10 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { AbstractComponent } from '../../abstract.component';
-import { Option } from '../../domain/option';
 import { UserAccount } from '../../domain/user-account';
+import { CityService } from '../../service/city.service';
 import { RoleService } from '../../service/role.service';
 import { UserAccountService } from '../../service/user-account.service';
-import { CityService } from '../../service/city.service';
 
 
 

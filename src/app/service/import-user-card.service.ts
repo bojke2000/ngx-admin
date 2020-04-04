@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { AbstractService } from '../abstract.service';
-import { ImportSample } from '../domain/import-sample';
 
 @Injectable()
 export class ImportUserCardService extends AbstractService {

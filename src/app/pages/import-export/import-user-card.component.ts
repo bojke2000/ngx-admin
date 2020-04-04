@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { MessageService, SelectItem } from 'primeng/api';
 import { Observable, of } from 'rxjs';
+import { Router } from '@angular/router';
 
 import { AbstractComponent } from '../../abstract.component';
 import { ImportUserCardService } from '../../service/import-user-card.service';
@@ -29,6 +30,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
 
   constructor(
     translate: TranslateService,
+    private router: Router,
     private importUserCardService: ImportUserCardService,
     private fb: FormBuilder) {
     super(translate);
@@ -90,8 +92,9 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
       fileName: this.fileName,
       ext: this.firstForm.controls['fileType'].value.label,
     };
-    this.importUserCardService.import(postData).then(resp => {
+    this.importUserCardService.import(postData).then(() => {
       this.loading = false;
+      this.router.navigate(['user-card']);
     });
   }
 

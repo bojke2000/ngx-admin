@@ -22,7 +22,7 @@
   "Name": "Ime",
   "City": "Grad",
   "Password": "Lozinka",
-  "Account Type": "Tip naloga",
+  "Role": "Uloga",
   "Status": "Status",
   "User Account Details": "Korisnicki nalog - detalji",
   "Last Login": "Poslednje logovanje",

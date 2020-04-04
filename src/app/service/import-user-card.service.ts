@@ -21,14 +21,6 @@ export class ImportUserCardService extends AbstractService {
 
   import(formData: any) {
     return this.http.post<any>(this.url + '/import', formData, this.httpOptions)
-      .toPromise()
-      .then(data => <ImportSample>data);
+      .toPromise();
   }
-
-  loadImport() {
-    return this.http.get<any>('assets/showcase/data/cars-small.json')
-        .toPromise()
-        .then(res => <any[]> res.data)
-        .then(data => data);
-}
 }

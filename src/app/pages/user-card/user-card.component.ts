@@ -7,6 +7,7 @@ import { UserCard } from '../../domain/user-card';
 import { UserCardService } from '../../service/user-card.service';
 import { of, Observable } from 'rxjs';
 
+
 @Component({
   selector: 'ngx-user-card',
   templateUrl: './user-card.component.html',
@@ -39,7 +40,7 @@ export class UserCardComponent implements OnInit {
       { field: 'id', header: 'ID', width: '50px' },
       { field: 'customerId', header: 'Customer ID', width: '150px' },
       { field: 'customerName', header: 'Customer name', width: '250px' },
-      { field: 'address', header: 'Address', width: '250px' },
+      { field: 'address', header: 'Address', width: '200px' },
       { field: 'addressNo', header: 'Address number', width: '90px' },
       { field: 'addressNo2', header: 'Address number 2', width: '90px' },
       { field: 'deviceId', header: 'Device ID', width: '150px' },

@@ -3,8 +3,8 @@ export interface UserAccount {
   username: string;
   password: string;
   email: string;
+  role: string;
   city: string;
-  accountType: string;
   active: string;
   lastLogin: string;
 }

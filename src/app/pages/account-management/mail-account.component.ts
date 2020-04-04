@@ -75,7 +75,6 @@ export class MailAccountComponent extends AbstractComponent implements OnInit, O
       port: ['', Validators.required],
       active: ['Active', Validators.required],
       sender: ['', Validators.required],
-      checkTime: ['', [Validators.required, Validators.pattern('^([0-9]{2}:[0-9]{2})+(,[0-9]{2}:[0-9]{2}){0,}$')]],
     });
   }
 

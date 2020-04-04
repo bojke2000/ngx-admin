@@ -1,17 +1,18 @@
-import { Component, ViewChild, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-import { Table } from 'primeng/table';
-import { AbstractComponent } from '../../abstract.component';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+import { SelectItem } from 'primeng/api';
 import { LazyLoadEvent } from 'primeng/api/public_api';
-import {SelectItem} from 'primeng/api';
-import { UserAccount } from '../../domain/user-account';
-import { UserAccountService } from '../../service/user-account.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {CityService} from '../../service/city.service';
-import { Option } from '../../domain/option';
-import { ChangeDetectorRef } from '@angular/core';
+import { Table } from 'primeng/table';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+import { AbstractComponent } from '../../abstract.component';
+import { Option } from '../../domain/option';
+import { UserAccount } from '../../domain/user-account';
+import { RoleService } from '../../service/role.service';
+import { UserAccountService } from '../../service/user-account.service';
+import { CityService } from '../../service/city.service';
 
 
 
@@ -31,16 +32,19 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
   totalRecords: number;
   cols: any[];
   loading: boolean;
-  accountTypes: SelectItem[];
   statuses: SelectItem[];
-  cities: Option[];
+  roles: SelectItem[];
+  cities: SelectItem[];
   userSearch: string;
+
   protected destroy$ = new Subject<void>();
   @ViewChild('table', { static: false }) table: Table;
 
   constructor(private userAccountservice: UserAccountService,
     private cityService: CityService,
-    translate: TranslateService, private formBuilder: FormBuilder,
+    private roleService: RoleService,
+    translate: TranslateService,
+    private formBuilder: FormBuilder,
     private cdr: ChangeDetectorRef) {
     super(translate);
   }
@@ -55,17 +59,9 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
       { field: 'password', header: 'Password', width: '120px' },
       { field: 'email', header: 'Email', width: '150px' },
       { field: 'city', header: 'City', width: '150px' },
-      { field: 'accountType', header: 'Account Type', width: '120px' },
+      { field: 'role', header: 'Role', width: '120px' },
       { field: 'active', header: 'Status', width: '120px' },
       { field: 'lastLogin', header: 'Last Login', width: '120px' },
-    ];
-
-    this.accountTypes = [
-      {label: 'Select Account Type', value: null},
-      {label: 'Citizen', value: 'Citizen'},
-      {label: 'User', value: 'User'},
-      {label: 'Admin', value: 'Admin'},
-      {label: 'Superadmin', value: 'Superadmin'},
     ];
 
     this.statuses = [{label: 'Active', value: 'Active'}, {label: 'Disabled', value: 'Disabled'}];
@@ -76,14 +72,18 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
       password: ['', [Validators.required, Validators.minLength(6)]],
       email: ['', [Validators.required,
         Validators.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
-      city: [{label: '', value: ''}, Validators.required],
-      accountType: ['', Validators.required],
+      city: [undefined, Validators.required],
+      role: [undefined, Validators.required],
       active: ['Active', Validators.required],
 
     });
 
     this.cityService.getCities().then(cities => {
       this.cities = cities;
+    });
+
+    this.roleService.getRoles().then(roles => {
+        this.roles = roles;
     });
   }
 
@@ -110,7 +110,7 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
 
   loadUserAccountsLazy(event: LazyLoadEvent) {
     this.loading = true;
-    const sortBy = event.sortField === undefined ? 'id' : event.sortField === 'city' ? 'city.name' : event.sortField;
+    const sortBy = event.sortField === undefined ? 'id' : event.sortField === 'role' ? 'role.name' : event.sortField;
     const sortOrder = event.sortOrder === -1 ? 'desc' : 'asc';
     this.loadUserAccounts(event.first, event.rows, sortBy + ',' + sortOrder);
   }
@@ -141,7 +141,7 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
       password: undefined,
       email: undefined,
       city: undefined,
-      accountType: 'User',
+      role: undefined,
       active: 'Active',
       lastLogin: undefined,
     };
@@ -159,8 +159,6 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
 
     const userAccounts = [...this.userAccounts];
     this.userAccount = {...this.userAccountForm.value};
-    this.userAccount.city = this.userAccountForm.value.city.label;
-
     if (this.newUserAccount) {
       this.userAccountservice.addUserAccount(this.userAccount)
       .pipe(takeUntil(this.destroy$))
@@ -209,8 +207,13 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
 
       const selectedCity = this.cities.filter(el => el.label === this.userAccount.city);
       this.userAccountForm.patchValue({
-        city: selectedCity[0]});
+        city: selectedCity[0].value});
+
+      const selectedRole = this.roles.filter(el => el.label === this.userAccount.role);
+      this.userAccountForm.patchValue({
+        role: selectedRole[0].value});
     }
+
     this.displayDialog = true;
   }
 
@@ -221,7 +224,7 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
       password: undefined,
       email: undefined,
       city: undefined,
-      accountType: undefined,
+      role: undefined,
       active: undefined,
       lastLogin: undefined,
     };

@@ -30,7 +30,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'book-open-outline',
     children: [
       {
-        title: 'Templates',
+        title: 'Column Template',
         icon: 'people-outline',
         link: '/pages/template',
         home: false,

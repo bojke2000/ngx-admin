@@ -6,6 +6,7 @@ import { Table } from 'primeng/table';
 import { UserCard } from '../../domain/user-card';
 import { UserCardService } from '../../service/user-card.service';
 import { of, Observable } from 'rxjs';
+import { UserCardColumnService } from '../../service/user-card-column.service';
 
 
 @Component({
@@ -25,7 +26,10 @@ export class UserCardComponent implements OnInit {
   @ViewChild('table', {static: false}) table: Table;
   selectedUserCard: UserCard;
 
-  constructor(private userCardService: UserCardService, translate: TranslateService) {
+  constructor(
+    private userCardService: UserCardService,
+    private userCardColumnService: UserCardColumnService,
+    translate: TranslateService) {
     translate.setDefaultLang('en');
     translate.use('rs');
   }
@@ -38,6 +42,13 @@ export class UserCardComponent implements OnInit {
 
     this.cols = [
       { field: 'id', header: 'ID', width: '50px' },
+    ];
+
+    this.userCardColumnService.findAll().then(columns => {
+      this.cols = [...this.cols, ...columns];
+    });
+
+    /*
       { field: 'customerId', header: 'Customer ID', width: '150px' },
       { field: 'customerName', header: 'Customer name', width: '250px' },
       { field: 'address', header: 'Address', width: '200px' },
@@ -56,7 +67,7 @@ export class UserCardComponent implements OnInit {
       { field: 'multiplier', header: 'Multiplier', width: '100px' },
       { field: 'readTimestamp', header: 'Read Datetime', width: '200px' },
       { field: 'watermeterStatus', header: 'Watermeter Status', width: '200px' },
-      { field: 'reverseFLowStatus', header: 'Reverse Flow Status', width: '200px' },
+      { field: 'reverseFlowStatus', header: 'Reverse Flow Status', width: '200px' },
       { field: 'diffLastRead', header: 'Difference from last reading', width: '350px' },
       { field: 'readDayStatus', header: 'Status on day of reading', width: '300px' },
       { field: 'magneticSabotageTime', header: 'Magnetic sabotage time', width: '250px' },
@@ -65,13 +76,6 @@ export class UserCardComponent implements OnInit {
       { field: 'mainBattery', header: 'Main Battery', width: '150px' },
       { field: 'gmsBattery', header: 'GSM Battery', width: '150px' },
     ];
-
-    /*
-    this.cols.forEach(col => {
-      if (col.field !== 'addressNo' && col.field !== 'addressNo2' && col.field !== 'address') {
-        col.width = `${ this.translate.instant(col.header).length * 11 + 40}px`;
-      }
-    });
     */
 
     this.loading = true;

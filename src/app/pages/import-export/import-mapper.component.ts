@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SelectItem } from 'primeng/api';
 
-import { CardColumnService } from '../../service/card-column.service';
+import { UserCardColumnService } from '../../service/user-card-column.service';
 
 @Component({
   selector: 'import-mapper',
@@ -16,10 +16,10 @@ export class ImportMapperComponent implements OnInit {
   choices: SelectItem[];
   @Output() onSelectValue = new EventEmitter<{ mappings: any }>();
 
-  constructor(private cardColumnService: CardColumnService) { }
+  constructor(private cardColumnService: UserCardColumnService) { }
 
   ngOnInit() {
-    this.cardColumnService.getCardColumns().then(data => this.choices = data);
+    this.cardColumnService.findAllOptions().then(data => this.choices = data);
   }
 
   onSelectionChange() {

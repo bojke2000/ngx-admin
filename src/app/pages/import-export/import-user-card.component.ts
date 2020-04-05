@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 
 import { AbstractComponent } from '../../abstract.component';
 import { ImportUserCardService } from '../../service/import-user-card.service';
+import { CityService } from '../../service/city.service';
 
 @Component({
   selector: 'import-user-card',
@@ -17,6 +18,7 @@ import { ImportUserCardService } from '../../service/import-user-card.service';
 export class ImportUserCardComponent extends AbstractComponent implements OnInit {
 
   fileTypes: SelectItem[];
+  zeroForm: FormGroup;
   firstForm: FormGroup;
   secondForm: FormGroup;
   thirdForm: FormGroup;
@@ -27,10 +29,12 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
   fileName?: string = undefined;
   mappings = undefined;
   uploadedFiles: any[] = [];
+  cities: SelectItem[];
 
   constructor(
     translate: TranslateService,
     private router: Router,
+    private cityService: CityService,
     private importUserCardService: ImportUserCardService,
     private fb: FormBuilder) {
     super(translate);
@@ -42,17 +46,14 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
 
   ngOnInit() {
 
-    this.firstForm = this.fb.group({
-      fileType: ['XML', [Validators.required]],
+    this.zeroForm = this.fb.group({ city: [undefined, [Validators.required]]});
+    this.cityService.getCities().then(cities => {
+      this.cities = cities;
+      this.zeroForm.patchValue({city: this.cities[0].value});
     });
-
-    this.secondForm = this.fb.group({
-      uploadFlag: [undefined, Validators.requiredTrue],
-    });
-
-    this.thirdForm = this.fb.group({
-      mappings: ['', Validators.required],
-    });
+    this.firstForm = this.fb.group({ fileType: ['XML', [Validators.required]]});
+    this.secondForm = this.fb.group({ uploadFlag: [undefined, Validators.requiredTrue]});
+    this.thirdForm = this.fb.group({ mappings: ['', Validators.required]});
 
     this.fileTypes = [
       { label: 'XML', value: 'XML' },
@@ -76,6 +77,10 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     return selected;
   }
 
+  onZerotSubmit() {
+    this.zeroForm.markAsDirty();
+  }
+
   onFirstSubmit() {
     this.firstForm.markAsDirty();
   }
@@ -89,6 +94,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     this.loading = true;
     const postData = {
       mappings: this.toSelected(this.mappings),
+      cityId: this.zeroForm.value.city,
       fileName: this.fileName,
       ext: this.firstForm.controls['fileType'].value.label,
     };

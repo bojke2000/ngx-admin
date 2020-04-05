@@ -12,6 +12,20 @@
       </div>
 
       <nb-stepper #stepper>
+        <nb-step [stepControl]="zeroForm" label="{{ 'Select City' | translate }}">
+          <form [formGroup]="zeroForm" (ngSubmit)="onZeroSubmit()" class="step-container">
+            <h4>{{ 'Select City' | translate }}</h4>
+            <br>
+            <div class="input-group">
+              <div class="ui-inputgroup">
+                <p-dropdown formControlName="city" [options]="cities" name="city"
+                  autoWidth="false" [style]="{'width':'400px'}"></p-dropdown>
+              </div>
+            </div>
+            <div class="divider"></div>
+            <button nbButton nbStepperNext>next</button>
+          </form>
+        </nb-step>
 
         <nb-step [stepControl]="firstForm" label="{{ 'Select File Type' | translate }}">
           <form [formGroup]="firstForm" (ngSubmit)="onFirstSubmit()" class="step-container">

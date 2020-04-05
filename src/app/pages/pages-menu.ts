@@ -2,7 +2,7 @@ import { NbMenuItem } from '@nebular/theme';
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {
-    title: 'userCards',
+    title: 'User Card',
     icon: 'book-outline',
     link: '/pages/user-card',
     home: true,
@@ -23,6 +23,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/mail-account',
         home: false,
       },
+      {
+        title: 'Column Template',
+        icon: 'keypad-outline',
+        link: '/pages/template',
+        home: false,
+      },
     ],
   },
   {
@@ -30,14 +36,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'book-open-outline',
     children: [
       {
-        title: 'Column Template',
-        icon: 'people-outline',
-        link: '/pages/template',
-        home: false,
-      },
-      {
         title: 'Import User Card',
-        icon: 'people-outline',
+        icon: 'corner-right-up-outline',
         link: '/pages/import-user-card',
         home: false,
       },

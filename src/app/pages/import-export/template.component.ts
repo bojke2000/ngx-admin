@@ -131,7 +131,7 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
 
   delete() {
     const index = this.template.value;
-    if (index === '1' || index === '2') {
+    if (index === '1' || index === '2' || index === '3') {
       this.displayMessage = true;
     }
     if (index !== undefined) {

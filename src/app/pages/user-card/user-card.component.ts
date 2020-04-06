@@ -59,7 +59,7 @@ export class UserCardComponent implements OnInit {
 
   loadUserCardsLazy(event: LazyLoadEvent) {
     this.loading = true;
-    const sortBy = event.sortField === undefined ? 'id' : event.sortField;
+    const sortBy = event.sortField === undefined ? 'id' : event.sortField === 'city' ? 'cityId' : event.sortField;
     const sortOrder = event.sortOrder === -1 ? 'desc' : 'asc';
     this.loadPage(event.first / event.rows, event.rows, sortBy + ',' + sortOrder);
   }

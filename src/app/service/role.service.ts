@@ -9,8 +9,8 @@ export class RoleService extends AbstractService {
 
   private url = this.prefix + 'roles';
 
-  constructor(private http: HttpClient) {
-    super();
+  constructor(http: HttpClient) {
+    super(http);
   }
 
   getRoles() {

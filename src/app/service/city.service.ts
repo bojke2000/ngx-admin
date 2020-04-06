@@ -8,8 +8,8 @@ export class CityService extends AbstractService {
 
   private url = this.prefix + 'cities';
 
-  constructor(private http: HttpClient) {
-    super();
+  constructor(http: HttpClient) {
+    super(http);
   }
 
   getCities(query?: string) {

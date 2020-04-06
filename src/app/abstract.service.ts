@@ -1,5 +1,7 @@
-import { HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpErrorResponse, HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
 import { throwError } from 'rxjs';
+import { Pageable } from './domain/pageable';
+import { NgPrimeGridResponse } from './domain/ngprime-grid-response';
 
 export abstract class AbstractService {
 
@@ -10,6 +12,19 @@ export abstract class AbstractService {
       'Content-Type':  'application/json',
     }),
   };
+
+  http: HttpClient;
+
+  constructor(http: HttpClient) {
+    this.http = http;
+   }
+
+
+  get(url: string, pageable?: Pageable) {
+    return this.http.get<any>(url.concat('?').concat(this.jsonToHttpParams(pageable)),  this.httpOptions)
+      .toPromise()
+      .then(res => <NgPrimeGridResponse>res);
+  }
 
   jsonToHttpParams(json: any): string {
     let params = new HttpParams();

@@ -8,7 +8,7 @@ export class ImportUserCardService extends AbstractService {
 
   private url = this.prefix + 'import-user-card';
 
-  constructor(private http: HttpClient) { super(); }
+  constructor(http: HttpClient) { super(http);  }
 
   upload(formData: FormData) {
     const myHttpOptions = { headers: new HttpHeaders({})};

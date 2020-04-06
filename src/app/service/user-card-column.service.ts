@@ -10,8 +10,8 @@ export class UserCardColumnService extends AbstractService {
 
   private url = this.prefix + 'card-columns';
 
-  constructor(private http: HttpClient) {
-    super();
+  constructor(http: HttpClient) {
+    super(http);
   }
 
   findAllOptions() {

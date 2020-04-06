@@ -13,8 +13,8 @@ export class UserAccountService extends AbstractService {
 
   private url = this.prefix + 'user-accounts';
 
-  constructor(private http: HttpClient) {
-    super();
+  constructor(http: HttpClient) {
+    super(http);
   }
 
   getUserAccounts(pageable?: Pageable) {

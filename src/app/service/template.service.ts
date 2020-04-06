@@ -13,8 +13,8 @@ export class TemplateService extends AbstractService {
 
   private url = this.prefix + 'templates';
 
-  constructor(private http: HttpClient) {
-    super();
+  constructor(http: HttpClient) {
+    super(http);
   }
 
   getTemplates() {

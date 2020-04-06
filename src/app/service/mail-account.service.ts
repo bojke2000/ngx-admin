@@ -14,8 +14,8 @@ export class MailAccountService extends AbstractService {
   private mailAccountUrl = this.prefix + 'mail-accounts';
   private mailFetchUrl = this.prefix + 'mail-fetch';
 
-  constructor(private http: HttpClient) {
-    super();
+  constructor(http: HttpClient) {
+    super(http);
   }
 
   getMailAccounts(pageable?: Pageable) {

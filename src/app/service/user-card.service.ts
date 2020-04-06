@@ -3,18 +3,17 @@ import { Injectable } from '@angular/core';
 
 import { AbstractService } from '../abstract.service';
 import { UserCard } from '../domain/user-card';
+import { Pageable } from '../domain/pageable';
+import { NgPrimeGridResponse } from '../domain/ngprime-grid-response';
 
 @Injectable()
 export class UserCardService extends AbstractService {
 
   private url = this.prefix + 'user-cards';
 
-  constructor(private http: HttpClient) { super(); }
+  constructor(http: HttpClient) { super(http); }
 
-  getUserCards() {
-    return this.http.get<any>(this.url, this.httpOptions)
-      .toPromise()
-      .then(res => <UserCard[]>res.data)
-      .then(data => data);
+  findAll(pageable?: Pageable) {
+    return this.get(this.url, pageable);
   }
 }

@@ -7,7 +7,7 @@ export class UserAccountTypesService extends AbstractService {
 
   private url = this.prefix + 'user-account-types';
 
-  constructor(private http: HttpClient) { super(); }
+  constructor(http: HttpClient) { super(http);  }
 
   getUserAccountTypes() {
     return this.http.get<any>(this.url)

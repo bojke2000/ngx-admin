@@ -2,9 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { AbstractService } from '../abstract.service';
-import { UserCard } from '../domain/user-card';
 import { Pageable } from '../domain/pageable';
-import { NgPrimeGridResponse } from '../domain/ngprime-grid-response';
 
 @Injectable()
 export class UserCardService extends AbstractService {

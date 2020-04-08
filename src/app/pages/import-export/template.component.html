@@ -66,7 +66,7 @@
       </div>
 
       <p-dialog header="Add Template" [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true"
-        showEffect="fade" [modal]="true" height="600" [style]="{width: '600px'}">
+        showEffect="fade" [modal]="true" height="500px" [style]="{width: '600px'}">
         <form [formGroup]="addTemplateNameForm" (ngSubmit)="saveNewTemplate()">
         <div class="ui-g ui-fluid">
             <div class="ui-g-12">
@@ -74,12 +74,8 @@
                 <label for="templateName">{{ 'Template Name' | translate}}:</label>
               </div>
               <div class="ui-g-8">
-                <input pInputText id="templateName" formControlName="templateName"
-                  onclick="this.setSelectionRange(0, this.value.length)" autofocus class="form-control"
-                  [ngClass]="{ 'is-invalid': submitted && f.templateName.errors }" />
-                <div *ngIf="submitted && f.templateName.errors" class="invalid-feedback">
-                  <div *ngIf="f.templateName.errors.required">Template Name is required.</div>
-                </div>
+                <p-dropdown formControlName="cityId" [options]="cities" name="city"
+                autoWidth="false" [style]="{'width':'300px'}"></p-dropdown>
               </div>
             </div>
         </div>

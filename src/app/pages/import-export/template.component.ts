@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { AbstractComponent } from '../../abstract.component';
 import { TemplateMapping } from '../../domain/template-mapping';
 import { TemplateService } from '../../service/template.service';
+import { CityService } from '../../service/city.service';
 
 @Component({
   selector: 'ie-template',
@@ -15,12 +16,14 @@ import { TemplateService } from '../../service/template.service';
   styleUrls: ['./template.component.css'],
 })
 export class TemplateComponent extends AbstractComponent implements OnInit, AfterViewInit, OnDestroy {
+
+  displayDialog = false;
+  displayMessage = false;
+  submitted = false;
   addTemplateNameForm: FormGroup;
   templates: SelectItem[];
   template: SelectItem;
-  displayDialog: boolean;
-  displayMessage: boolean;
-  submitted = false;
+  cities: SelectItem[];
   mappings: TemplateMapping[];
   cols: any[];
   private subs: Subscription = new Subscription();
@@ -29,6 +32,7 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
   constructor(private templateService: TemplateService,
     translate: TranslateService,
     private formBuilder: FormBuilder,
+    private cityService: CityService,
     private cdr: ChangeDetectorRef) {
     super(translate);
   }
@@ -46,10 +50,15 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
     ];
 
     this.addTemplateNameForm = this.formBuilder.group({
-      templateName: ['', [Validators.required]],
+      cityId: [undefined, [Validators.required]],
     });
 
     this.loadTemplates();
+
+    this.cityService.getCities().then(cities => {
+      this.cities = cities;
+      this.addTemplateNameForm.patchValue({cityId: this.cities[0].value});
+    });
 
   }
 
@@ -84,7 +93,7 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
   }
 
   save() {
-    const templateDto = { id: this.template.value, name: this.template.label, mappings: [...this.mappings] };
+    const templateDto = { id: this.template.value, cityId: undefined, name: this.template.label, mappings: [...this.mappings] };
     const sub = this.templateService.updateTemplate(templateDto).subscribe(newDto => {
       this.mappings = newDto.mappings;
     });
@@ -106,7 +115,11 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
       return;
     }
 
-    const templateDto = { id: undefined, name: this.addTemplateNameForm.value.templateName, mappings: [] };
+    const templateDto = {
+      id: undefined,
+      cityId: this.addTemplateNameForm.value.cityId,
+      name: undefined,
+      mappings: [] };
 
     this.templateService.getTemplate('1').then(result => {
       templateDto.mappings = result.mappings;

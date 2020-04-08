@@ -77,7 +77,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     return selected;
   }
 
-  onZerotSubmit() {
+  onZeroSubmit() {
     this.zeroForm.markAsDirty();
   }
 

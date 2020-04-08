@@ -53,7 +53,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     });
     this.firstForm = this.fb.group({ fileType: ['XML', [Validators.required]]});
     this.secondForm = this.fb.group({ uploadFlag: [undefined, Validators.requiredTrue]});
-    this.thirdForm = this.fb.group({ mappings: ['', Validators.required]});
+    this.thirdForm = this.fb.group({ mappings: ['']});
 
     this.fileTypes = [
       { label: 'XML', value: 'XML' },
@@ -91,6 +91,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
 
   onThirdSubmit() {
     this.thirdForm.markAsDirty();
+
     this.loading = true;
     const postData = {
       mappings: this.toSelected(this.mappings),
@@ -100,8 +101,11 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     };
     this.importUserCardService.import(postData).then(() => {
       this.loading = false;
-      this.router.navigate(['user-card']);
     });
+  }
+
+  onImport() {
+    this.router.navigate(['user-card']);
   }
 
   onFileUpload(data: { files: File }): void {

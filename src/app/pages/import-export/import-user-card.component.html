@@ -83,14 +83,14 @@
 
             <button nbButton nbStepperPrevious>prev</button>
             <div class="divider"></div>
-            <button nbButton nbStepperNext>import</button>
+            <button nbButton nbStepperNext>next</button>
           </form>
         </nb-step>
 
-        <nb-step [stepControl]="fourthForm" [hidden]="true" label="Third step">
+        <nb-step [stepControl]="fourthForm" label="Finish">
           <div class="step-container">
             <h3>Wizard completed!</h3>
-            <button nbButton (click)="stepper.reset()">Try again</button>
+            <button nbButton (click)="onImport()">finish</button>
           </div>
         </nb-step>
       </nb-stepper>

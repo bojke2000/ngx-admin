@@ -91,7 +91,9 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
 
   onThirdSubmit() {
     this.thirdForm.markAsDirty();
+  }
 
+  onImport() {
     this.loading = true;
     const postData = {
       mappings: this.toSelected(this.mappings),
@@ -99,13 +101,11 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
       fileName: this.fileName,
       ext: this.firstForm.controls['fileType'].value.label,
     };
+
     this.importUserCardService.import(postData).then(() => {
       this.loading = false;
+      this.router.navigate(['user-card']);
     });
-  }
-
-  onImport() {
-    this.router.navigate(['user-card']);
   }
 
   onFileUpload(data: { files: File }): void {

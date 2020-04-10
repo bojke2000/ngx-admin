@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { AbstractService } from '../abstract.service';
+import { ImportUserCardRespDto } from '../domain/import-user-card-resp.dto';
 
 @Injectable()
 export class ImportUserCardService extends AbstractService {
@@ -18,8 +19,8 @@ export class ImportUserCardService extends AbstractService {
       .then(data => data);
   }
 
-  import(formData: any) {
-    return this.http.post<any>(this.url + '/import', formData, this.httpOptions)
+  import(importUserCardRespDto: ImportUserCardRespDto) {
+    return this.http.post<any>(this.url + '/import', importUserCardRespDto, this.httpOptions)
       .toPromise();
   }
 }

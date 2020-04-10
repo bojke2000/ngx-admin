@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { AbstractComponent } from '../../abstract.component';
 import { ImportUserCardService } from '../../service/import-user-card.service';
 import { CityService } from '../../service/city.service';
+import { MockDataModule } from '../../@core/mock/mock-data.module';
 
 @Component({
   selector: 'import-user-card',
@@ -23,12 +24,12 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
   secondForm: FormGroup;
   thirdForm: FormGroup;
   fourthForm: FormGroup;
-  imports: any[];
+  data: any[];
   cols: any[];
+  uploadedFiles: any[] = [];
   loading = false;
   fileName?: string = undefined;
   mappings = undefined;
-  uploadedFiles: any[] = [];
   cities: SelectItem[];
 
   constructor(
@@ -40,8 +41,8 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     super(translate);
   }
 
-  get imports$(): Observable<any[]> {
-    return of(this.imports);
+  get data$(): Observable<any[]> {
+    return of(this.data);
   }
 
   ngOnInit() {
@@ -51,7 +52,8 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
       this.cities = cities;
       this.zeroForm.patchValue({city: this.cities[0].value});
     });
-    this.firstForm = this.fb.group({ fileType: ['XML', [Validators.required]]});
+
+    this.firstForm = this.fb.group({ fileType: [undefined, [Validators.required]]});
     this.secondForm = this.fb.group({ uploadFlag: [undefined, Validators.requiredTrue]});
     this.thirdForm = this.fb.group({ mappings: ['']});
 
@@ -60,6 +62,8 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
       { label: 'CSV', value: 'CSV' },
       { label: 'XLS', value: 'XLS' },
     ];
+    this.firstForm.patchValue({fileType: 'XML'});
+
   }
 
   private toSelected(mappings: any[]): any[] {
@@ -95,14 +99,15 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
 
   onImport() {
     this.loading = true;
-    const postData = {
+
+    const importUserCardRespDto = {
       mappings: this.toSelected(this.mappings),
       cityId: this.zeroForm.value.city,
       fileName: this.fileName,
-      ext: this.firstForm.controls['fileType'].value.label,
+      fileType: this.firstForm.controls['fileType'].value,
     };
 
-    this.importUserCardService.import(postData).then(() => {
+    this.importUserCardService.import(importUserCardRespDto).then(() => {
       this.loading = false;
       this.router.navigate(['user-card']);
     });
@@ -115,17 +120,17 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     const file = data.files[0];
     formData.append('importFile', file, file.name);
     this.fileName = file.name;
-    this.importUserCardService.upload(formData).then(importSample => {
+    this.importUserCardService.upload(formData).then(importUserCardDto => {
 
-      if (importSample.samples.length > 0) {
-        const keys = Object.keys(importSample.samples[0]);
+      if (importUserCardDto.data.length > 0) {
+        const keys = Object.keys(importUserCardDto.data[0]);
         const obj: { [k: string]: any } = {};
         for (const key of keys) {
           obj[key] = this.translate.instant('[Mapping]');
         }
 
-        this.cols = [...importSample.columns];
-        this.imports = [obj, ...importSample.samples];
+        this.cols = [...importUserCardDto.cols];
+        this.data = [obj, ...importUserCardDto.data];
       }
       this.loading = false;
       this.secondForm.patchValue({ uploadFlag: true });

@@ -10,7 +10,7 @@ import { UserCardColumnService } from '../../service/user-card-column.service';
 })
 export class ImportMapperComponent implements OnInit {
   @Input()
-  imports: any[];
+  data: any[];
   @Input()
   cols = [];
   choices: SelectItem[];
@@ -27,11 +27,11 @@ export class ImportMapperComponent implements OnInit {
   }
 
   private getMappings(): any {
-    return this.imports[0];
+    return this.data[0];
   }
 
   save() {
-    const insaMapping = this.imports[0];
+    const insaMapping = this.data[0];
     const result = JSON.stringify(insaMapping);
     alert(result);
   }

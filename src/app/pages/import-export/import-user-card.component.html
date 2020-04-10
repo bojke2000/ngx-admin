@@ -33,7 +33,7 @@
             <br>
             <div class="input-group">
               <div class="ui-inputgroup">
-                <p-dropdown formControlName="fileType" [options]="fileTypes" optionLabel="label" name="fileType"
+                <p-dropdown formControlName="fileType" [options]="fileTypes" name="fileType"
                   autoWidth="false" [style]="{'width':'400px'}"></p-dropdown>
               </div>
             </div>
@@ -73,8 +73,8 @@
             <br>
             <div class="input-group">
               <div class="ui-inputgroup">
-                <ng-container *ngIf="imports$ | async as imports">
-                  <import-mapper (onSelectValue)='selectValue($event)' [imports]="imports" [cols]="cols">
+                <ng-container *ngIf="data$ | async as data">
+                  <import-mapper (onSelectValue)='selectValue($event)' [data]="data" [cols]="cols">
                   </import-mapper>
                 </ng-container>
               </div>

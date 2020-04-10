@@ -5,7 +5,7 @@ import { catchError } from 'rxjs/operators';
 
 import { AbstractService } from '../abstract.service';
 import { Option } from '../domain/option';
-import { TemplateDto } from '../domain/template-dto';
+import { TemplateDto } from '../domain/template.dto';
 
 
 @Injectable()

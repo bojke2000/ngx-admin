@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MessageService, SelectItem } from 'primeng/api';
 import { Observable, of } from 'rxjs';
-import { Router } from '@angular/router';
 
 import { AbstractComponent } from '../../abstract.component';
-import { ImportUserCardService } from '../../service/import-user-card.service';
 import { CityService } from '../../service/city.service';
-import { MockDataModule } from '../../@core/mock/mock-data.module';
+import { ImportUserCardService } from '../../service/import-user-card.service';
 
 @Component({
   selector: 'import-user-card',

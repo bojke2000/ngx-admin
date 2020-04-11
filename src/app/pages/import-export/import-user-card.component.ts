@@ -59,7 +59,8 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     this.fileTypes = [
       { label: 'XML', value: 'XML' },
       { label: 'CSV', value: 'CSV' },
-      { label: 'XLS', value: 'XLS' },
+      { label: 'TAB', value: 'TAB' },
+      { label: 'DBF', value: 'DBF' },
     ];
     this.firstForm.patchValue({fileType: 'XML'});
 

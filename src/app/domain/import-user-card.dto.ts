@@ -1,5 +1,5 @@
-import { ColumnMeta } from './column-meta';
+import { Column } from './column';
 export interface ImportUserCardDto {
   data: any[];
-  headers: ColumnMeta[];
+  headers: Column[];
 }

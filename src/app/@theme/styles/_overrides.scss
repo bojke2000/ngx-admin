@@ -10,6 +10,11 @@
   }
 }
 
+.ui-datatable thead th {
+  white-space:normal !important;
+}
+
+
 .nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column {
   padding: 1.35rem 2.25rem 0.75rem !important;
 }

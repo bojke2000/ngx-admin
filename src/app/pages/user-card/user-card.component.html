@@ -9,9 +9,9 @@
       </div>
 
       <ng-container *ngIf="cols$ | async as cols">
-        <p-table [columns]="cols" [value]="userCards" [lazy]="true" #table (onLazyLoad)="loadUserCardsLazy($event)"
-          [loading]="loading" [scrollable]="true" [paginator]="true" [rows]="20" [style]="{width:'100%'}"
-          scrollHeight="58vh" selectionMode="single" [(selection)]="selectedUserCard" dataKey="siteId"
+        <p-table [columns]="cols" [value]="userCards" [lazy]="true" (onLazyLoad)="loadUserCardsLazy($event)"
+          [loading]="loading" [scrollable]="true"  [paginator]="true" [rows]="20" [style]="{width:'100%'}"
+          scrollHeight="58vh" selectionMode="single" [(selection)]="selectedUserCard" dataKey="customerId"
           [totalRecords]="totalRecords">
 
           <ng-template pTemplate="colgroup" let-columns>

@@ -24,7 +24,6 @@
             <tr>
               <th *ngFor="let col of columns | slice:1" [pSortableColumn]="col.field" (onClick)=resetSort()>
                 {{col.header | translate}}
-                <p-sortIcon [field]="col.field"></p-sortIcon>
               </th>
             </tr>
           </ng-template>

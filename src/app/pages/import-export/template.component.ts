@@ -5,7 +5,7 @@ import { SelectItem } from 'primeng/api/selectitem';
 import { Table } from 'primeng/table';
 import { Subscription } from 'rxjs';
 
-import { AbstractComponent } from '../../abstract.component';
+import { AbstractComponent } from '../../AbstractComponent';
 import { TemplateMapping } from '../../domain/template-mapping';
 import { TemplateService } from '../../service/template.service';
 import { CityService } from '../../service/city.service';
@@ -86,14 +86,19 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
     });
   }
 
-  onTemplateChange() {
+  onTemplateChange(event) {
     this.templateService.getTemplate(this.template.value).then(dto => {
       this.mappings = dto.mappings;
     });
   }
 
   save() {
-    const templateDto = { id: this.template.value, cityId: undefined, name: this.template.label, mappings: [...this.mappings] };
+    const templateDto = {
+      id: this.template.value,
+      cityId: undefined,
+      name: this.template.label,
+      mappings: [...this.mappings] };
+
     const sub = this.templateService.updateTemplate(templateDto).subscribe(newDto => {
       this.mappings = newDto.mappings;
     });

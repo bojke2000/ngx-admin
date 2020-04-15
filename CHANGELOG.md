@@ -42,7 +42,7 @@
 
 ### Bug Fixes
 
-* **user-card:** update title country->region the orders list component  ([#1987](https://github.com/akveo/ngx-admin/issues/1987)) ([cf1bf4d](https://github.com/akveo/ngx-admin/commit/cf1bf4d))
+* **dashboard:** update title country->region the orders list component  ([#1987](https://github.com/akveo/ngx-admin/issues/1987)) ([cf1bf4d](https://github.com/akveo/ngx-admin/commit/cf1bf4d))
 * **readme:** fix demo links ([#2028](https://github.com/akveo/ngx-admin/issues/2028)) ([1fb3205](https://github.com/akveo/ngx-admin/commit/1fb3205))
 * **rtl:** remove duplicate of nebular styles ([#1824](https://github.com/akveo/ngx-admin/issues/1824)) ([d8e7092](https://github.com/akveo/ngx-admin/commit/d8e7092))
 * **setting-sidebar:** Ie and firefox position bugs, linter ([#2023](https://github.com/akveo/ngx-admin/issues/2023)) ([8d471ba](https://github.com/akveo/ngx-admin/commit/8d471ba))
@@ -91,7 +91,7 @@
 ### Features
 
 * **app:** update Nebular to the latest 2.0.1 version ([#1868](https://github.com/akveo/ngx-admin/issues/1868)) ([16bcc90](https://github.com/akveo/ngx-admin/commit/16bcc90)), closes [#1866](https://github.com/akveo/ngx-admin/issues/1866)
-* **user-card:** add new E-commerce user-card ([#1754](https://github.com/akveo/ngx-admin/issues/1754)) ([56e4709](https://github.com/akveo/ngx-admin/commit/56e4709))
+* **dashboard:** add new E-commerce dashboard ([#1754](https://github.com/akveo/ngx-admin/issues/1754)) ([56e4709](https://github.com/akveo/ngx-admin/commit/56e4709))
 * **icons:** update font awesome to 5.2.0 ([#1798](https://github.com/akveo/ngx-admin/issues/1798)) ([f20c371](https://github.com/akveo/ngx-admin/commit/f20c371))
 * add a bunch of new Nebular demos ([#1911](https://github.com/akveo/ngx-admin/issues/1911)) ([3f1f4c5](https://github.com/akveo/ngx-admin/commit/3f1f4c5))
 * **icons:** add eva-icons ([#1912](https://github.com/akveo/ngx-admin/issues/1912)) ([b3d7b7b](https://github.com/akveo/ngx-admin/commit/b3d7b7b))
@@ -155,7 +155,7 @@ The following libraries were updated:
 
 ### Bug Fixes
 
-* **user-card:** fix temp/humidity buttons ([0f494dc](https://github.com/akveo/ngx-admin/commit/0f494dc))
+* **dashboard:** fix temp/humidity buttons ([0f494dc](https://github.com/akveo/ngx-admin/commit/0f494dc))
 * **echarts:** fix x-axis style ([ba6877c](https://github.com/akveo/ngx-admin/commit/ba6877c))
 * **icons:** remove All Nebular Icons link as there are no more icons ([edb05b7](https://github.com/akveo/ngx-admin/commit/edb05b7)), closes [#1597](https://github.com/akveo/ngx-admin/issues/1597)
 * **ie:** add es7 object polyfill for IE ([0630fe7](https://github.com/akveo/ngx-admin/commit/0630fe7))
@@ -177,7 +177,7 @@ Nebular updated to rc.6.
 ### Bug Fixes
 
 * **bootstrap:** radio temp fix ([14f5112](https://github.com/akveo/ngx-admin/commit/14f5112))
-* **user-card:** update btn group toggle html ([#1566](https://github.com/akveo/ngx-admin/issues/1566)) ([2aa114b](https://github.com/akveo/ngx-admin/commit/2aa114b))
+* **dashboard:** update btn group toggle html ([#1566](https://github.com/akveo/ngx-admin/issues/1566)) ([2aa114b](https://github.com/akveo/ngx-admin/commit/2aa114b))
 
 
 ### Features
@@ -197,8 +197,8 @@ Nebular updated to rc.6.
 
 ### Bug Fixes
 
-* **user-card:** fix mistyped ngbDropdownMenu in some ngbDropdown ul elements ([#1458](https://github.com/akveo/ngx-admin/issues/1458)) ([fa83572](https://github.com/akveo/ngx-admin/commit/fa83572))
-* **user-card:** fix typo in styles ([#1460](https://github.com/akveo/ngx-admin/issues/1460)) ([630c249](https://github.com/akveo/ngx-admin/commit/630c249))
+* **dashboard:** fix mistyped ngbDropdownMenu in some ngbDropdown ul elements ([#1458](https://github.com/akveo/ngx-admin/issues/1458)) ([fa83572](https://github.com/akveo/ngx-admin/commit/fa83572))
+* **dashboard:** fix typo in styles ([#1460](https://github.com/akveo/ngx-admin/issues/1460)) ([630c249](https://github.com/akveo/ngx-admin/commit/630c249))
 
 
 ### Features

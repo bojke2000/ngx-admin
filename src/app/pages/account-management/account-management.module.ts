@@ -19,6 +19,7 @@ import { MailAccountComponent } from './mail-account.component';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
+import {MatInputModule} from '@angular/material/input';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -38,6 +39,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TableModule,
     MessageModule,
     MessagesModule,
+    MatInputModule,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,

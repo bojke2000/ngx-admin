@@ -7,7 +7,7 @@ import { Table } from 'primeng/table';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { AbstractComponent } from '../../abstract.component';
+import { AbstractComponent } from '../../AbstractComponent';
 import { UserAccount } from '../../domain/user-account';
 import { CityService } from '../../service/city.service';
 import { RoleService } from '../../service/role.service';
@@ -194,7 +194,7 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
     this.userAccount = this.cloneUserAccount(event.data);
   }
 
-  onRowUnselect() {
+  onRowUnselect(event) {
     this.userAccount = undefined;
   }
 

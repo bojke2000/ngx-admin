@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'ngx-one-column-layout',
@@ -9,7 +9,7 @@ import { Component, AfterViewInit, ChangeDetectorRef } from '@angular/core';
         <ngx-header></ngx-header>
       </nb-layout-header>
 
-      <nb-sidebar class="menu-sidebar" tag="menu-sidebar" responsive start>
+      <nb-sidebar class="menu-sidebar" tag="menu-sidebar" responsive>
         <ng-content select="nb-menu"></ng-content>
       </nb-sidebar>
 
@@ -23,12 +23,4 @@ import { Component, AfterViewInit, ChangeDetectorRef } from '@angular/core';
     </nb-layout>
   `,
 })
-export class OneColumnLayoutComponent implements AfterViewInit {
-
-  constructor(private cdr: ChangeDetectorRef) {}
-
-  ngAfterViewInit(): void {
-    this.cdr.detectChanges();
-  }
-}
-
+export class OneColumnLayoutComponent {}

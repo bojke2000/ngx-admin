@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MessageService, SelectItem } from 'primeng/api';
 import { Observable, of } from 'rxjs';
 
-import { AbstractComponent } from '../../abstract.component';
+import { AbstractComponent } from '../../AbstractComponent';
 import { CityService } from '../../service/city.service';
 import { ImportUserCardService } from '../../service/import-user-card.service';
 

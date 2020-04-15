@@ -8,15 +8,25 @@
       right: 0.41rem !important;
     }
   }
+
+  nb-card nb-list {
+    @include nb-scrollbars(
+      nb-theme(card-scrollbar-color),
+      nb-theme(card-scrollbar-background-color),
+      nb-theme(card-scrollbar-width));
+  }
+
+  .table {
+    color: nb-theme(text-basic-color) !important;
+  }
+}
+
+.nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column {
+  padding: 1.35rem 2.25rem 0.75rem !important;
 }
 
 .ui-datatable thead th {
   white-space:normal !important;
-}
-
-
-.nb-theme-default nb-layout .layout .layout-container .content .columns nb-layout-column {
-  padding: 1.35rem 2.25rem 0.75rem !important;
 }
 
 .ui-datatable .ui-datatable-loading {
@@ -69,3 +79,4 @@ color: #848484 !important;
   margin-top: 0.25em;
   display: block;
 }
+

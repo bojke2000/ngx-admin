@@ -1,30 +1,28 @@
-import { Component, OnDestroy, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
-import { NbAuthJWTToken, NbAuthService, NbTokenService } from '@nebular/auth';
 
-import { UserData, User } from '../../../@core/data/users';
-import { map, takeUntil, filter } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { Router } from '@angular/router';
+import { UserData } from '../../../@core/data/users';
+import { LayoutService } from '../../../@core/utils';
+import { map, takeUntil } from 'rxjs/operators';
+import { Subject, Observable } from 'rxjs';
+import { RippleService } from '../../../@core/utils/ripple.service';
 
 @Component({
   selector: 'ngx-header',
   styleUrls: ['./header.component.scss'],
   templateUrl: './header.component.html',
 })
-export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
-  ngAfterViewInit(): void {
-    this.sidebarService.toggle(true, 'menu-sidebar');
-  }
+export class HeaderComponent implements OnInit, OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>();
+  public readonly materialTheme$: Observable<boolean>;
   userPictureOnly: boolean = false;
-  user: User = {name: '', picture: ''};
+  user: any;
 
   themes = [
     {
       value: 'default',
-      name: 'Corporate',
+      name: 'Light',
     },
     {
       value: 'dark',
@@ -36,44 +34,36 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     },
     {
       value: 'corporate',
-      name: 'Light',
+      name: 'Corporate',
+    },
+    {
+      value: 'material-light',
+      name: 'Material Light',
+    },
+    {
+      value: 'material-dark',
+      name: 'Material Dark',
     },
   ];
 
   currentTheme = 'default';
-  tag = 'profile-context-menu';
 
-  userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
+  userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
 
-  constructor(private sidebarService: NbSidebarService,
+  public constructor(
+    private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
     private themeService: NbThemeService,
     private userService: UserData,
-    private router: Router,
-    private nbTokenService: NbTokenService,
+    private layoutService: LayoutService,
     private breakpointService: NbMediaBreakpointsService,
-    private authService: NbAuthService) {
-
-    this.authService.onTokenChange()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((token: NbAuthJWTToken) => {
-
-        if (token.isValid()) {
-          const payload = token.getPayload();
-          this.user.name = payload.sub; // here we receive a payload from the token and assigns it to our `user` variable
-        }
-
-      });
-
-    this.menuService.onItemClick()
-      .pipe(takeUntil(this.destroy$), filter(({ tag }) => tag === this.tag))
-      .subscribe(bag => {
-        if (bag.item.title === 'Log out') {
-          this.authService.logout('email');
-          this.nbTokenService.clear();
-          this.router.navigate(['/']);
-        }
-      });
+    private rippleService: RippleService,
+  ) {
+    this.materialTheme$ = this.themeService.onThemeChange()
+      .pipe(map(theme => {
+        const themeName: string = theme?.name || '';
+        return themeName.startsWith('material');
+      }));
   }
 
   ngOnInit() {
@@ -81,7 +71,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.userService.getUsers()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((users: any) => this.user.picture = users.nick.picture);
+      .subscribe((users: any) => this.user = users.nick);
 
     const { xl } = this.breakpointService.getBreakpointsMap();
     this.themeService.onMediaQueryChange()
@@ -96,7 +86,10 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
         map(({ name }) => name),
         takeUntil(this.destroy$),
       )
-      .subscribe(themeName => this.currentTheme = themeName);
+      .subscribe(themeName => {
+        this.currentTheme = themeName;
+        this.rippleService.toggle(themeName?.startsWith('material'));
+      });
   }
 
   ngOnDestroy() {
@@ -110,6 +103,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
   toggleSidebar(): boolean {
     this.sidebarService.toggle(true, 'menu-sidebar');
+    this.layoutService.changeLayoutSize();
 
     return false;
   }

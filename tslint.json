@@ -31,7 +31,7 @@
     "label-position": true,
     "max-line-length": [
       true,
-      140
+      120
     ],
     "member-access": false,
     "no-arg": true,
@@ -101,6 +101,18 @@
       "check-operator",
       "check-separator",
       "check-type"
+    ],
+    "directive-selector": [
+      true,
+      "attribute",
+      "ngx",
+      "camelCase"
+    ],
+    "component-selector": [
+      true,
+      "element",
+      "ngx",
+      "kebab-case"
     ],
     "ban": [
       true,

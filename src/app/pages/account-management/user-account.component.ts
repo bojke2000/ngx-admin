@@ -16,7 +16,7 @@ import { UserAccountService } from '../../service/user-account.service';
 
 
 @Component({
-  selector: 'user-account',
+  selector: 'ngx-user-account',
   templateUrl: './user-account.component.html',
   styleUrls: ['./user-account.css'],
 })

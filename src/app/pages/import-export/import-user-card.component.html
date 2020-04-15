@@ -74,8 +74,8 @@
             <div class="input-group">
               <div class="ui-inputgroup">
                 <ng-container *ngIf="data$ | async as data">
-                  <import-mapper (onSelectValue)='selectValue($event)' [data]="data" [cols]="cols">
-                  </import-mapper>
+                  <ngx-import-mapper (onSelectValue)='selectValue($event)' [data]="data" [cols]="cols">
+                  </ngx-import-mapper>
                 </ng-container>
               </div>
               <div><b>* {{ 'This table displays just subset of the imported data needed for mapping.' | translate }}</b></div>

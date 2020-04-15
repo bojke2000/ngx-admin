@@ -11,7 +11,7 @@ import { TemplateService } from '../../service/template.service';
 import { CityService } from '../../service/city.service';
 
 @Component({
-  selector: 'ie-template',
+  selector: 'ngx-template',
   templateUrl: './template.component.html',
   styleUrls: ['./template.component.css'],
 })

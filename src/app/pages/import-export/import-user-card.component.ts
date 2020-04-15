@@ -10,7 +10,7 @@ import { CityService } from '../../service/city.service';
 import { ImportUserCardService } from '../../service/import-user-card.service';
 
 @Component({
-  selector: 'import-user-card',
+  selector: 'ngx-import-user-card',
   templateUrl: './import-user-card.component.html',
   styleUrls: ['./import-user-card.component.css'],
   providers: [MessageService],

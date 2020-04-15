@@ -8,7 +8,6 @@
 @import '~@nebular/theme/styles/core/mixins';
 
 $theme: (
-  /*
   color-primary-100: #e8cbfe,
   color-primary-200: #ce97fd,
   color-primary-300: #ae63f9,
@@ -18,17 +17,6 @@ $theme: (
   color-primary-700: #3800ab,
   color-primary-800: #27008a,
   color-primary-900: #1b0072,
-  */
-  color-primary-100: rgba(63, 81, 181, 0.288),
-  color-primary-200: rgba(63, 81, 181, 0.514),
-  color-primary-300: rgba(63, 81, 181, 0.747),
-  color-primary-400: #3F51B5,
-  color-primary-500: rgba(63, 81, 181, 0.925),
-  color-primary-600: #3F51B5,
-  color-primary-700: rgb(43, 56, 129),
-  color-primary-800: rgb(10, 25, 109),
-  color-primary-900: #100142,
-
 
   color-primary-transparent-100: rgba(98, 0, 238, 0.08),
   color-primary-transparent-200: rgba(98, 0, 238, 0.16),

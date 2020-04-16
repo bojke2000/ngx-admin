@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { NbCardModule, NbButtonModule } from '@nebular/theme';
 
 import { ThemeModule } from '../../@theme/theme.module';
@@ -9,6 +9,7 @@ import {ButtonModule} from 'primeng/button';
 import {HttpClient} from '@angular/common/http';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {ToolboxComponentsModule} from '../../libs/toolbox-components/toolbox-components.module';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -23,6 +24,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ThemeModule,
     TableModule,
     DialogModule,
+    ToolboxComponentsModule,
     TranslateModule.forRoot({
       loader: {
           provide: TranslateLoader,

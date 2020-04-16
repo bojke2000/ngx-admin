@@ -1,12 +1,7 @@
 <div class="row">
   <nb-card style="width: 100%">
     <nb-card-body>
-      <div class="header-container">
-        <div style="display: inline-block;">
-          <h3>{{ 'User Card' | translate }}</h3>
-        </div>
-
-      </div>
+      <ngx-page-header title='User Card'></ngx-page-header>
 
       <ng-container *ngIf="cols$ | async as cols">
         <p-table [columns]="cols" [value]="userCards" [lazy]="true" (onLazyLoad)="loadUserCardsLazy($event)"

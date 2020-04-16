@@ -2,14 +2,7 @@
   <nb-card style="width: 100%" [nbSpinner]="loading" nbSpinnerStatus="danger">
     <nb-card-body>
 
-      <div class="header-container">
-        <div>
-          <h3>{{ 'Import User Card' | translate }}</h3>
-        </div>
-        <div style="display: inline-block;">
-          <h3>&nbsp; </h3>
-        </div>
-      </div>
+      <ngx-page-header title='Import User Card'></ngx-page-header>
 
       <nb-stepper #stepper>
         <nb-step [stepControl]="zeroForm" label="{{ 'Select City' | translate }}">

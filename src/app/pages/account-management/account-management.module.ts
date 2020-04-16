@@ -20,6 +20,7 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import {MatInputModule} from '@angular/material/input';
+import { ToolboxComponentsModule } from '../../libs/toolbox-components/toolbox-components.module';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -43,6 +44,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    ToolboxComponentsModule,
     DialogModule,
     TranslateModule.forRoot({
       loader: {

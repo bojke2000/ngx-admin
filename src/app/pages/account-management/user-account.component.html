@@ -1,13 +1,8 @@
 <div class="row">
   <nb-card style="width: 100%">
     <nb-card-body>
-      <div class="header-container">
-        <div>
-          <h3>{{ 'Account Management' | translate }}</h3>
-        </div>
-        <div style="display: inline-block;">
-          <h3>&nbsp; </h3>
-        </div>
+
+        <ngx-page-header title='Account Management'></ngx-page-header>
 
         <div style="position: relative; float: right;margin-top: 5px;margin-bottom: 5px;">
           <div class="ui-inputgroup">
@@ -56,7 +51,6 @@
           </p-button>
           <div class="divider"></div>
         </div>
-      </div>
 
       <p-dialog header="User Account Details" [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true"
         showEffect="fade" [modal]="true" height="600" [style]="{width: '500px'}">

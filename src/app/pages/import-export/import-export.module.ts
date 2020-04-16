@@ -1,7 +1,7 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NbButtonModule, NbCardModule, NbStepperModule, NbSpinnerModule } from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbSpinnerModule, NbStepperModule } from '@nebular/theme';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -14,11 +14,13 @@ import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
-import {ToastModule} from 'primeng/toast';
+import { ToastModule } from 'primeng/toast';
+
 import { ThemeModule } from '../../@theme/theme.module';
+import { ToolboxComponentsModule } from '../../libs/toolbox-components/toolbox-components.module';
+import { ImportMapperComponent } from './import-mapper.component';
 import { ImportUserCardComponent } from './import-user-card.component';
 import { TemplateComponent } from './template.component';
-import { ImportMapperComponent } from './import-mapper.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -46,6 +48,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     ReactiveFormsModule,
     DialogModule,
+    ToolboxComponentsModule,
     TranslateModule.forRoot({
       loader: {
           provide: TranslateLoader,

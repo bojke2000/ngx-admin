@@ -1,15 +1,15 @@
-import { NgModule, Component } from '@angular/core';
-import { NbCardModule, NbButtonModule } from '@nebular/theme';
+import { HttpClient } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { NbButtonModule, NbCardModule } from '@nebular/theme';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { TableModule } from 'primeng/table';
 
 import { ThemeModule } from '../../@theme/theme.module';
+import { ToolboxComponentsModule } from '../../libs/toolbox-components/toolbox-components.module';
 import { UserCardComponent } from './user-card.component';
-import {TableModule} from 'primeng/table';
-import {DialogModule} from 'primeng/dialog';
-import {ButtonModule} from 'primeng/button';
-import {HttpClient} from '@angular/common/http';
-import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {ToolboxComponentsModule} from '../../libs/toolbox-components/toolbox-components.module';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {

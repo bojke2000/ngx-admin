@@ -60,7 +60,9 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
         if (token.isValid()) {
           const payload = token.getPayload();
-          this.user.name = payload.sub; // here we receive a payload from the token and assigns it to our `user` variable
+          // here we receive a payload from the token
+          // and assigns it to our `user` variable
+          this.user.name = payload.sub;
         }
 
       });

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { PageHeaderComponent } from './page-header/page-header.component';
+import { TitleHeaderComponent } from './title-header/title-header.component';
 
 
 // AoT requires an exported function for factories
@@ -22,9 +22,9 @@ export function HttpLoaderFactory(http: HttpClient) {
       },
     }),
   ],
-  exports: [PageHeaderComponent],
+  exports: [TitleHeaderComponent],
   declarations: [
-    PageHeaderComponent,
+    TitleHeaderComponent,
   ],
 })
 export class ToolboxComponentsModule { }

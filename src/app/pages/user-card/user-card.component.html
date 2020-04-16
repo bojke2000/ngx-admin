@@ -1,7 +1,7 @@
 <div class="row">
   <nb-card style="width: 100%">
     <nb-card-body>
-      <ngx-page-header title='User Card'></ngx-page-header>
+      <ngx-title-header title='User Card'></ngx-title-header>
 
       <ng-container *ngIf="cols$ | async as cols">
         <p-table [columns]="cols" [value]="userCards" [lazy]="true" (onLazyLoad)="loadUserCardsLazy($event)"

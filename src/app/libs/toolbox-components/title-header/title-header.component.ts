@@ -4,11 +4,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { AbstractComponent } from '../../../AbstractComponent';
 
 @Component({
-  selector: 'ngx-page-header',
-  templateUrl: './page-header.component.html',
-  styleUrls: ['./page-header.component.scss'],
+  selector: 'ngx-title-header',
+  templateUrl: './title-header.component.html',
+  styleUrls: ['./title-header.component.scss'],
 })
-export class PageHeaderComponent extends AbstractComponent {
+export class TitleHeaderComponent extends AbstractComponent {
   @Input()
   title: string;
 

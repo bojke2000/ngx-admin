@@ -16,8 +16,8 @@
   "Site remarks": "Napomena o mernom mestu",
   "Route Remarks": "Napomena o ruti",
   "Route": "Ruta",
-  "AdoGsm location": "Lokacija AdoGsm uredjaja",
-  "AdoGsm remarks": "Napomena o AdoGsm uredjaju",
+  "AdoGsm location": "Lokacija AdoGsm uređaja",
+  "AdoGsm remarks": "Napomena o AdoGsm uređaju",
   "Create Account": "Napravi nalog",
   "Name": "Ime",
   "City": "Grad",
@@ -82,5 +82,5 @@
   "This table displays just subset of the imported data needed for mapping.": "Ova tabela prikazuje samo deo uvezenih podataka; Deo dovoljan za mapiranje.",
   "Select City": "Izaberi grad",
   "User Card": "Potrošačka kartica",
-  "Devices": "Uredjaji"
+  "Devices": "Uređaji"
 }

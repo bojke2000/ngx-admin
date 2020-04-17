@@ -1,9 +1,9 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { of } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 import { AbstractComponent } from '../../../AbstractComponent';
-import { of } from 'rxjs';
-import { tap, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'ngx-table',

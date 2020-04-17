@@ -1,8 +1,8 @@
-import { HttpErrorResponse, HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
-import { throwError, Observable } from 'rxjs';
-import { Pageable } from './domain/pageable';
-import { NgPrimeGridResponse } from './domain/ngprime-grid-response';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+
+import { Pageable } from './domain/pageable';
 
 export abstract class AbstractService {
 

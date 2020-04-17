@@ -9,8 +9,6 @@ import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { AbstractComponent } from '../../AbstractComponent';
 import { City } from '../../domain/city';
 import { CityService } from '../../service/city.service';
-import { RoleService } from '../../service/role.service';
-
 
 
 @Component({
@@ -35,7 +33,6 @@ export class CityComponent extends AbstractComponent implements OnInit, OnDestro
 
   constructor(private citieservice: CityService,
     private cityService: CityService,
-    private roleService: RoleService,
     translate: TranslateService,
     private formBuilder: FormBuilder,
     private cdr: ChangeDetectorRef) {

@@ -8,7 +8,6 @@ import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 import { AbstractComponent } from '../../AbstractComponent';
 import { City } from '../../domain/city';
-import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
 import { CityService } from '../../service/city.service';
 import { RoleService } from '../../service/role.service';
 

@@ -1,11 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Option } from '../domain/option';
+
 import { AbstractService } from '../abstract.service';
-import { Pageable } from '../domain/pageable';
 import { City } from '../domain/city';
-import { Observable } from 'rxjs';
-import { NgPrimeGridResponse } from '../domain/ngprime-grid-response';
+import { Option } from '../domain/option';
+import { Pageable } from '../domain/pageable';
 
 @Injectable()
 export class CityService extends AbstractService {

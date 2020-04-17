@@ -37,7 +37,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     TableModule,
     MessageModule,
     MessagesModule,
-    MatInputModule,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,

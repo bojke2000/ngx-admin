@@ -2,14 +2,7 @@
   <nb-card style="width: 100%" [nbSpinner]="loading" nbSpinnerStatus="danger">
     <nb-card-body>
 
-      <div class="header-container">
-        <div>
-          <h3>{{ 'Import User Card' | translate }}</h3>
-        </div>
-        <div style="display: inline-block;">
-          <h3>&nbsp; </h3>
-        </div>
-      </div>
+      <ngx-title-header title='Import User Card'></ngx-title-header>
 
       <nb-stepper #stepper>
         <nb-step [stepControl]="zeroForm" label="{{ 'Select City' | translate }}">
@@ -23,7 +16,7 @@
               </div>
             </div>
             <div class="divider"></div>
-            <button nbButton nbStepperNext>next</button>
+            <button nbButton status="primary" nbStepperNext>next</button>
           </form>
         </nb-step>
 
@@ -74,8 +67,8 @@
             <div class="input-group">
               <div class="ui-inputgroup">
                 <ng-container *ngIf="data$ | async as data">
-                  <import-mapper (onSelectValue)='selectValue($event)' [data]="data" [cols]="cols">
-                  </import-mapper>
+                  <ngx-import-mapper (onSelectValue)='selectValue($event)' [data]="data" [cols]="cols">
+                  </ngx-import-mapper>
                 </ng-container>
               </div>
               <div><b>* {{ 'This table displays just subset of the imported data needed for mapping.' | translate }}</b></div>

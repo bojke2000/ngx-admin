@@ -1,24 +1,24 @@
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { NbCardModule, NbButtonModule } from '@nebular/theme';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NbButtonModule, NbCardModule } from '@nebular/theme';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
+import { MessagesModule } from 'primeng/messages';
+import { PanelModule } from 'primeng/panel';
+import { TableModule } from 'primeng/table';
 
 import { ThemeModule } from '../../@theme/theme.module';
-import {TableModule} from 'primeng/table';
-import {DialogModule} from 'primeng/dialog';
-import {ButtonModule} from 'primeng/button';
-import {InputTextModule} from 'primeng/inputtext';
-import {DropdownModule} from 'primeng/dropdown';
-import {PanelModule} from 'primeng/panel';
-import { HttpClientModule } from '@angular/common/http';
-import {HttpClient} from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
-import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import { UserAccountComponent } from './user-account.component';
+import { ToolboxComponentsModule } from '../../libs/toolbox-components/toolbox-components.module';
 import { MailAccountComponent } from './mail-account.component';
-import {AutoCompleteModule} from 'primeng/autocomplete';
-import {MessagesModule} from 'primeng/messages';
-import {MessageModule} from 'primeng/message';
+import { NgxTableComponent } from './ngx-table/ngx-table.component';
+import { UserAccountComponent } from './user-account.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -41,6 +41,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    ToolboxComponentsModule,
+    ToolboxComponentsModule,
     DialogModule,
     TranslateModule.forRoot({
       loader: {
@@ -53,6 +55,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     UserAccountComponent,
     MailAccountComponent,
+    NgxTableComponent,
   ],
 })
 export class AccountManagementModule { }

@@ -2,13 +2,7 @@
   <nb-card style="width: 100%">
     <nb-card-body>
 
-      <div class="header-container">
-        <div>
-          <h3>{{ 'Column Template' | translate }}</h3>
-        </div>
-        <div style="display: inline-block;">
-          <h3>&nbsp; </h3>
-        </div>
+      <ngx-title-header title='Column Template'></ngx-title-header>
 
         <div style="position: relative; float: right; margin-top: 5px;margin-bottom: 5px;">
           <div class="ui-inputgroup">
@@ -62,8 +56,6 @@
           <p-button icon="fa fa-trash" (click)="delete()" label="{{ translate.get('Delete Template') | async }}"></p-button>
           <div class="divider"></div>
         </div>
-
-      </div>
 
       <p-dialog header="Add Template" [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true"
         showEffect="fade" [modal]="true" height="500px" [style]="{width: '600px'}">

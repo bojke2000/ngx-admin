@@ -4,7 +4,7 @@ import { SelectItem } from 'primeng/api';
 import { UserCardColumnService } from '../../service/user-card-column.service';
 
 @Component({
-  selector: 'import-mapper',
+  selector: 'ngx-import-mapper',
   templateUrl: './import-mapper.component.html',
   styleUrls: ['./import-mapper.component.css'],
 })

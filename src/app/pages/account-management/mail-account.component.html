@@ -1,15 +1,9 @@
 <div class="row">
 <nb-card style="width: 100%">
       <nb-card-body>
-        <div class="header-container" >
-          <div>
-            <h3>{{ 'GSM2 Management' | translate }}</h3>
-          </div>
-          <div style="display: inline-block;">
-            <h3>&nbsp;  </h3>
-          </div>
+        <ngx-title-header title='GSM2 Management'></ngx-title-header>
 
-          <div style="position: relative; float: right;margin-top: 5px;margin-bottom: 5px;">
+        <div style="position: relative; float: right;margin-top: 5px;margin-bottom: 5px;">
             <div class="ui-inputgroup">
               <span class="ui-float-label">
                 <input id="float-input" type="text" size="50" [(ngModel)]="mailAccountSearch" pInputText onclick="this.setSelectionRange(0, this.value.length)" style="padding-top: 7px; padding-bottom: 7px;">
@@ -33,7 +27,6 @@
               <tr>
                   <th *ngFor="let col of columns "  [pSortableColumn]="col.field" (onClick)=resetSort()>
                       {{col.header | translate}}
-                      <p-sortIcon [field]="col.field"></p-sortIcon>
                   </th>
               </tr>
           </ng-template>
@@ -57,7 +50,6 @@
         <p-button icon="fa fa-gavel" (click)="showDialogToRun()" label="{{ translate.get('Fetch data from server') | async }}"></p-button>
         <div class="divider"></div>
       </div>
-    </div>
 
       <p-dialog header="User Account Details" [(visible)]="displayDialog" [focusOnShow]="false"
                 [responsive]="true" showEffect="fade" [modal]="true"  height="600"

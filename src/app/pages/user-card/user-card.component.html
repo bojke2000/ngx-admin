@@ -1,12 +1,7 @@
 <div class="row">
   <nb-card style="width: 100%">
     <nb-card-body>
-      <div class="header-container">
-        <div style="display: inline-block;">
-          <h3>{{ 'User Card' | translate }}</h3>
-        </div>
-
-      </div>
+      <ngx-title-header title='User Card'></ngx-title-header>
 
       <ng-container *ngIf="cols$ | async as cols">
         <p-table [columns]="cols" [value]="userCards" [lazy]="true" (onLazyLoad)="loadUserCardsLazy($event)"
@@ -24,7 +19,6 @@
             <tr>
               <th *ngFor="let col of columns | slice:1" [pSortableColumn]="col.field" (onClick)=resetSort()>
                 {{col.header | translate}}
-                <p-sortIcon [field]="col.field"></p-sortIcon>
               </th>
             </tr>
           </ng-template>

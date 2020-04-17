@@ -1,6 +1,6 @@
 import { Component, ViewChild, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { Table } from 'primeng/table';
-import { AbstractComponent } from '../../abstract.component';
+import { AbstractComponent } from '../../AbstractComponent';
 import { TranslateService } from '@ngx-translate/core';
 import { LazyLoadEvent } from 'primeng/api/public_api';
 import {SelectItem} from 'primeng/api';
@@ -13,7 +13,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'mail-account',
+  selector: 'ngx-mail-account',
   templateUrl: './mail-account.component.html',
   styleUrls: ['./mail-account.component.css'],
 })
@@ -202,7 +202,7 @@ export class MailAccountComponent extends AbstractComponent implements OnInit, O
     this.mailAccount = this.cloneMailAccount(event.data);
   }
 
-  onRowUnselect() {
+  onRowUnselect(event) {
     this.mailAccount = undefined;
   }
 

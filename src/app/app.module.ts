@@ -36,6 +36,7 @@ import { UserAccountTypesService } from './service/useraccounttypes.service';
 import { ImportUserCardService } from './service/import-user-card.service';
 import { UserCardColumnService } from './service/user-card-column.service';
 import { RoleService } from './service/role.service';
+import { ToolboxComponentsModule } from './libs/toolbox-components/toolbox-components.module';
 
 @NgModule({
   declarations: [AppComponent],

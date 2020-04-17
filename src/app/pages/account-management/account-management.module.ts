@@ -17,7 +17,6 @@ import { TableModule } from 'primeng/table';
 import { ThemeModule } from '../../@theme/theme.module';
 import { ToolboxComponentsModule } from '../../libs/toolbox-components/toolbox-components.module';
 import { MailAccountComponent } from './mail-account.component';
-import { NgxTableComponent } from './ngx-table/ngx-table.component';
 import { UserAccountComponent } from './user-account.component';
 
 // AoT requires an exported function for factories
@@ -42,7 +41,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     ReactiveFormsModule,
     ToolboxComponentsModule,
-    ToolboxComponentsModule,
     DialogModule,
     TranslateModule.forRoot({
       loader: {
@@ -55,7 +53,6 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     UserAccountComponent,
     MailAccountComponent,
-    NgxTableComponent,
   ],
 })
 export class AccountManagementModule { }

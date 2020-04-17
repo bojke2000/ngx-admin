@@ -36,7 +36,6 @@ export class NgxTableComponent extends AbstractComponent {
 
   get loading$() {
     return of(this.loading).pipe(
-      tap(loading => console.log("@@@@@ LOADING", loading)),
       distinctUntilChanged(),
     );
   }

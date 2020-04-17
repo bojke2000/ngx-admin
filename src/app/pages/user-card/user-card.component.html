@@ -3,35 +3,9 @@
     <nb-card-body>
       <ngx-title-header title='User Card'></ngx-title-header>
 
-      <ng-container *ngIf="cols$ | async as cols">
-        <p-table [columns]="cols" [value]="userCards" [lazy]="true" (onLazyLoad)="loadUserCardsLazy($event)"
-          [loading]="loading" [scrollable]="true"  [paginator]="true" [rows]="20" [style]="{width:'100%'}"
-          scrollHeight="58vh" selectionMode="single" [(selection)]="selectedUserCard" dataKey="customerId"
-          [totalRecords]="totalRecords">
-
-          <ng-template pTemplate="colgroup" let-columns>
-            <colgroup>
-              <col *ngFor="let col of columns | slice:1" [style.width]="col.width" [pSortableColumn]>
-            </colgroup>
-          </ng-template>
-
-          <ng-template pTemplate="header" let-columns>
-            <tr>
-              <th *ngFor="let col of columns | slice:1" [pSortableColumn]="col.field" (onClick)=resetSort()>
-                {{col.header | translate}}
-              </th>
-            </tr>
-          </ng-template>
-
-          <ng-template pTemplate="body" let-rowData let-columns="columns">
-            <tr [pSelectableRow]="rowData">
-              <td *ngFor="let col of columns | slice:1">
-                {{rowData[col.field]}}
-              </td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </ng-container>
+      <ngx-table [columns]="cols$ | async" [value]="userCards" (lazyLoad)="loadUserCardsLazy($event)"
+      [selection]="selectedUserCard" dataKey="customerId" [totalRecords]="totalRecords" [loading]="loading">
+      </ngx-table>
 
       <div style="position: relative; float: right; margin-top: 5px;">
         <p-button label="Export"></p-button>

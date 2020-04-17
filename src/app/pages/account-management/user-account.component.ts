@@ -4,8 +4,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { SelectItem } from 'primeng/api';
 import { LazyLoadEvent } from 'primeng/api/public_api';
 import { Table } from 'primeng/table';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, of } from 'rxjs';
+import { takeUntil, distinctUntilChanged } from 'rxjs/operators';
 
 import { AbstractComponent } from '../../AbstractComponent';
 import { UserAccount } from '../../domain/user-account';
@@ -84,6 +84,18 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
     this.roleService.getRoles().then(roles => {
         this.roles = roles;
     });
+  }
+
+  get loading$() {
+    return of(this.loading).pipe(
+      distinctUntilChanged(),
+    );
+  }
+
+  get userAccounts$() {
+    return of(this.userAccounts).pipe(
+      distinctUntilChanged(),
+    );
   }
 
   ngAfterViewInit() {

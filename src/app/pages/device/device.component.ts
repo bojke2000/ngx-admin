@@ -8,12 +8,12 @@ import { of, Observable } from 'rxjs';
 import { UserCardColumnService } from '../../service/user-card-column.service';
 
 @Component({
-  selector: 'ngx-user-card',
-  templateUrl: './user-card.component.html',
-  styleUrls: ['./user-card.component.css'],
+  selector: 'ngx-device',
+  templateUrl: './device.component.html',
+  styleUrls: ['./device.component.css'],
 
 })
-export class UserCardComponent implements OnInit {
+export class DeviceComponent implements OnInit {
 
   userCards: UserCard[];
   totalRecords: number;

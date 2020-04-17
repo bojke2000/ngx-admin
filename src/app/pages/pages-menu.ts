@@ -29,6 +29,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/template',
         home: false,
       },
+      {
+        title: 'Devices',
+        icon: 'keypad-outline',
+        link: '/pages/device',
+        home: false,
+      },
     ],
   },
   {

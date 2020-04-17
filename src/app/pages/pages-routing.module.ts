@@ -7,6 +7,7 @@ import { UserAccountComponent } from './account-management/user-account.componen
 import { MailAccountComponent } from './account-management/mail-account.component';
 import { TemplateComponent } from './import-export/template.component';
 import { ImportUserCardComponent } from './import-export/import-user-card.component';
+import { DeviceComponent } from './device/device.component';
 
 const routes: Routes = [{
   path: '',
@@ -31,6 +32,10 @@ const routes: Routes = [{
     {
       path: 'import-user-card',
       component: ImportUserCardComponent,
+    },
+    {
+      path: 'device',
+      component: DeviceComponent,
     },
     {
       path: '',

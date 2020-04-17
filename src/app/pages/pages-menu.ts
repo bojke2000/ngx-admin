@@ -35,6 +35,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/device',
         home: false,
       },
+      {
+        title: 'Cities',
+        icon: 'keypad-outline',
+        link: '/pages/city',
+        home: false,
+      },
     ],
   },
   {

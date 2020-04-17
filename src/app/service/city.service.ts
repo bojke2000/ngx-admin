@@ -2,6 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Option } from '../domain/option';
 import { AbstractService } from '../abstract.service';
+import { Pageable } from '../domain/pageable';
+import { City } from '../domain/city';
+import { Observable } from 'rxjs';
+import { NgPrimeGridResponse } from '../domain/ngprime-grid-response';
 
 @Injectable()
 export class CityService extends AbstractService {
@@ -12,13 +16,33 @@ export class CityService extends AbstractService {
     super(http);
   }
 
-  getCities(query?: string) {
+  getCitiesAsOptions(query?: string) {
     if (query !== undefined) {
-      this.url += 'query=' + query;
+      this.url += '/options?query=' + query;
     }
     return this.http.get<any>(this.url)
       .toPromise()
       .then(res => <Option[]>res.data)
       .then(data => data);
+  }
+
+  search(criteria: string, pageable: Pageable) {
+    return this.getAll(pageable);
+  }
+
+  getAll(pageable: Pageable) {
+    return super.get(this.url, pageable);
+  }
+
+  createCity(city: City) {
+    return super.post(this.url, city);
+  }
+
+  updateCity(city: City) {
+    return super.put(this.url, city);
+  }
+
+  deleteCity(city: City) {
+    return super.delete(this.url, `${city.id}`);
   }
 }

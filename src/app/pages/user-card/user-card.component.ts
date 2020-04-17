@@ -6,6 +6,7 @@ import { UserCard } from '../../domain/user-card';
 import { UserCardService } from '../../service/user-card.service';
 import { of, Observable } from 'rxjs';
 import { UserCardColumnService } from '../../service/user-card-column.service';
+import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
 
 @Component({
   selector: 'ngx-user-card',
@@ -49,7 +50,7 @@ export class UserCardComponent implements OnInit {
 
   private loadPage(page: number, size: number, sort?: string) {
     const pageable = { page, size, sort};
-    this.userCardService.findAll(pageable).then(ngresp => {
+    this.userCardService.findAll(pageable).then((ngresp: NgPrimeGridResponse) => {
       this.userCards = ngresp.data;
       this.totalRecords = ngresp.data.length * ngresp.totalPages;
       this.loading = false;

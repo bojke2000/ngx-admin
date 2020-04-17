@@ -77,7 +77,7 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
 
     });
 
-    this.cityService.getCities().then(cities => {
+    this.cityService.getCitiesAsOptions().then(cities => {
       this.cities = cities;
     });
 

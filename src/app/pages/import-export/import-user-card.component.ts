@@ -47,7 +47,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
   ngOnInit() {
 
     this.zeroForm = this.fb.group({ city: [undefined, [Validators.required]]});
-    this.cityService.getCities().then(cities => {
+    this.cityService.getCitiesAsOptions().then(cities => {
       this.cities = cities;
       this.zeroForm.patchValue({city: this.cities[0].value});
     });

@@ -1,7 +1,8 @@
 import { HttpErrorResponse, HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
-import { throwError } from 'rxjs';
+import { throwError, Observable } from 'rxjs';
 import { Pageable } from './domain/pageable';
 import { NgPrimeGridResponse } from './domain/ngprime-grid-response';
+import { catchError } from 'rxjs/operators';
 
 export abstract class AbstractService {
 
@@ -21,9 +22,25 @@ export abstract class AbstractService {
 
 
   get(url: string, pageable?: Pageable) {
-    return this.http.get<any>(url.concat('?').concat(this.jsonToHttpParams(pageable)),  this.httpOptions)
+    return this.http.get(url.concat('?').concat(this.jsonToHttpParams(pageable)),  this.httpOptions)
       .toPromise()
-      .then(res => <NgPrimeGridResponse>res);
+      .then(res => res);
+  }
+
+  post<T>(url: string, form: any): Observable<T> {
+    return this.http.post<T>(url, form, this.httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  put<T>(url: string, form: any): Observable<T> {
+    return this.http.put<T>(url, form, this.httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  delete<T>(url: string, id: string): Observable<T> {
+    const postUrl = `${url}/${id}`; // DELETE api/heroes/42
+    return this.http.delete<T>(postUrl, this.httpOptions)
+      .pipe(catchError(this.handleError));
   }
 
   jsonToHttpParams(json: any): string {

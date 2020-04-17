@@ -8,6 +8,7 @@ import { MailAccountComponent } from './account-management/mail-account.componen
 import { TemplateComponent } from './import-export/template.component';
 import { ImportUserCardComponent } from './import-export/import-user-card.component';
 import { DeviceComponent } from './device/device.component';
+import { CityComponent } from './city/city.component';
 
 const routes: Routes = [{
   path: '',
@@ -36,6 +37,10 @@ const routes: Routes = [{
     {
       path: 'device',
       component: DeviceComponent,
+    },
+    {
+      path: 'city',
+      component: CityComponent,
     },
     {
       path: '',

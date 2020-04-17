@@ -55,7 +55,7 @@ export class TemplateComponent extends AbstractComponent implements OnInit, Afte
 
     this.loadTemplates();
 
-    this.cityService.getCities().then(cities => {
+    this.cityService.getCitiesAsOptions().then(cities => {
       this.cities = cities;
       this.addTemplateNameForm.patchValue({cityId: this.cities[0].value});
     });

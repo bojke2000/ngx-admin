@@ -110,7 +110,7 @@ import { RouteService } from './service/route.service';
       forms: {},
     }),
   ],
-  providers: [AuthGuard, UserCardService, UserAccountService, MailAccountService,RouteService,
+  providers: [AuthGuard, UserCardService, UserAccountService, MailAccountService, RouteService,
     UserAccountTypesService, CityService, RoleService, TemplateService, ImportUserCardService,
     UserCardColumnService, { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true},
     { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: () => false}],

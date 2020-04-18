@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { LazyLoadEvent } from 'primeng/api/public_api';
@@ -7,10 +7,10 @@ import { of, Subject } from 'rxjs';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 import { AbstractComponent } from '../../AbstractComponent';
-import { Route } from '../../domain/route';
-import { RouteService } from '../../service/route.service';
-import { CityService } from '../../service/city.service';
 import { City } from '../../domain/city';
+import { Route } from '../../domain/route';
+import { CityService } from '../../service/city.service';
+import { RouteService } from '../../service/route.service';
 
 
 @Component({

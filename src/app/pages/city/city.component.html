@@ -2,36 +2,63 @@
   <nb-card style="width: 100%">
     <nb-card-body>
 
-        <ngx-title-header title='Account Management'></ngx-title-header>
+      <ngx-title-header title='City'></ngx-title-header>
 
-        <div style="position: relative; float: right;margin-top: 5px;margin-bottom: 5px;">
-          <div class="ui-inputgroup">
-            <span class="ui-float-label">
-              <input id="float-input" type="text" size="50" [(ngModel)]="citySearch" pInputText
-                onclick="this.setSelectionRange(0, this.value.length)" style="padding-top: 7px; padding-bottom: 7px;">
-              <label for="float-input">{{ 'Search by username or email' | translate }} </label>
-              <button id="search-btn" type="button" icon="pi pi-search" pButton
-                label="{{ translate.get('Search') | async }}" (click)="onCitySearch()"></button>
-            </span>
+      <ngx-table [columns]="cols" [value]="cities$ | async" (lazyLoad)="loadCitiesLazy($event)" [selection]="selectedCity"
+        dataKey="id" [totalRecords]="totalRecords" [loading]="loading" (rowSelect)="onRowSelect($event)"
+        (rowUnselect)="onRowUnselect($event)">
+      </ngx-table>
+
+      <div class="button-positioner">
+        <p-button icon="fa fa-plus" (click)="showDialogToEdit()" label="{{ translate.get('Edit City') | async }}">
+        </p-button>
+      </div>
+
+      <p-dialog header="User Account Details" [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true"
+        showEffect="fade" [modal]="true" height="600" [style]="{width: '500px'}">
+        <div class="ui-g ui-fluid" *ngIf="!city">
+          <i class="pi pi-info"></i>
+          <p>&nbsp;&nbsp; {{"Please select a row for an action."| translate }}</p>
+        </div>
+        <div class="ui-g ui-fluid" *ngIf="city">
+          <form [formGroup]="cityForm" (ngSubmit)="save()">
+            <div class="ui-g-12">
+              <div class="ui-g-4">
+                <label for="account">City:</label>
+              </div>
+              <div class="ui-g-8">
+                <input pInputText type="name" id="name" formControlName="name"
+                  onclick="this.setSelectionRange(0, this.value.length)" autofocus class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f.account.errors }" />
+                <div *ngIf="submitted && f.account.errors" class="invalid-feedback">
+                  <div *ngIf="f.account.errors.required">Name is required</div>
+                </div>
+              </div>
+            </div>
+            <div class="ui-g-12">
+              <div class="ui-g-4">
+                <label for="country">Country:</label>
+              </div>
+              <div class="ui-g-8">
+                <input pInputText id="country" formControlName="country" readonly="true"
+                  onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f.country.errors }" />
+                <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
+                  <div *ngIf="f.country.errors.required">Country is required</div>
+                  <div *ngIf="f.country.errors.minlength">Country must be at least 6 characters</div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <p-footer>
+          <div *ngIf="city">
+            <div class="ui-dialog-buttonpane ui-helper-clearfix">
+              <button type="button" pButton icon="fa fa-check" (click)="save()" label="Save"></button>
+            </div>
           </div>
-        </div>
-
-
-        <ngx-table [columns]="cols" [value]="cities" (lazyLoad)="loadCitiesLazy($event)"
-        [selection]="selectedCity" dataKey="id" [totalRecords]="totalRecords" [loading]="loading"
-        (rowSelect)="onRowSelect($event)" (rowUnselect)="onRowUnselect($event)">
-        </ngx-table>
-
-        <div class="button-positioner">
-          <p-button icon="fa fa-plus" (click)="showDialogToAdd()" label="{{ translate.get('Create Account') | async }}">
-          </p-button>
-        </div>
-        <div class="button-positioner">
-          <p-button icon="fa fa-edit" (click)="showDialogToEdit()" label="{{ translate.get('Edit Account') | async }}">
-          </p-button>
-          <div class="divider"></div>
-        </div>
-
+        </p-footer>
+      </p-dialog>
 
     </nb-card-body>
   </nb-card>

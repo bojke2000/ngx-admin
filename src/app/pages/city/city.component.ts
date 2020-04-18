@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { LazyLoadEvent } from 'primeng/api/public_api';
 import { Table } from 'primeng/table';
 import { of, Subject } from 'rxjs';
-import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { distinctUntilChanged, takeUntil, tap } from 'rxjs/operators';
 
 import { AbstractComponent } from '../../AbstractComponent';
 import { City } from '../../domain/city';
@@ -27,6 +27,7 @@ export class CityComponent extends AbstractComponent implements OnInit, OnDestro
   cols: any[];
   loading: boolean;
   citySearch: string;
+  displayDialog: boolean;
 
   protected destroy$ = new Subject<void>();
   @ViewChild('table', { static: false }) table: Table;
@@ -52,6 +53,7 @@ export class CityComponent extends AbstractComponent implements OnInit, OnDestro
     this.cityForm = this.formBuilder.group({
       id : [''],
       name: ['', Validators.required],
+      country: ['', Validators.required],
     });
 
     const pageable = {page: 1, size: 20, sort: 'id'};
@@ -101,36 +103,9 @@ export class CityComponent extends AbstractComponent implements OnInit, OnDestro
     this.loadCities(event.first, event.rows, sortBy + ',' + sortOrder);
   }
 
-  onCitySearch() {
-    const pageable = {page: 0, size: 20, sort: 'username,asc'};
-    this.loading = true;
-    this.citieservice.search(this.citySearch, pageable).then((cities: City[]) => {
-      this.cities = cities;
-      this.totalRecords = cities.length;
-      this.loading = false;
-    });
-  }
-
-  resetSort() {
-    this.table.sortOrder = 0;
-    this.table.sortField = '';
-    this.table.reset();
-    this.loading = false;
-  }
-
-  showDialogToAdd() {
-    this.newCity = true;
-    this.submitted = false;
-    this.city = {
-      id: undefined,
-      name: undefined,
-      country: undefined,
-    };
-    this.cityForm.patchValue({...this.city});
-  }
-
   save() {
     this.submitted = true;
+    this.displayDialog = false;
 
     // stop here if form is invalid
     if (this.cityForm.invalid) {
@@ -148,8 +123,8 @@ export class CityComponent extends AbstractComponent implements OnInit, OnDestro
     } else {
       this.citieservice.updateCity(this.city)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((ua: City) => {
-        cities[this.cities.indexOf(this.selectedCity)] = ua;
+      .subscribe((city: City) => {
+        cities[0] = city;
       });
     }
 
@@ -182,6 +157,7 @@ export class CityComponent extends AbstractComponent implements OnInit, OnDestro
       this.newCity = false;
       this.submitted = false;
       this.cityForm.patchValue({...this.city});
+      this.displayDialog = true;
     }
 
   }

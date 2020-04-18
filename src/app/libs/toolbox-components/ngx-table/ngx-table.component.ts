@@ -17,6 +17,8 @@ export class NgxTableComponent extends AbstractComponent {
   value: [];
   @Input()
   selection: any;
+  @Output()
+  selectionChange = new EventEmitter();
   @Input()
   totalRecords: number;
   @Input()
@@ -24,11 +26,11 @@ export class NgxTableComponent extends AbstractComponent {
   @Input()
   dataKey: string;
   @Output()
-  lazyLoad: EventEmitter<any> = new EventEmitter();
+  lazyLoad = new EventEmitter();
   @Output()
-  rowSelect: EventEmitter<any> = new EventEmitter();
+  rowSelect = new EventEmitter();
   @Output()
-  rowUnselect: EventEmitter<any> = new EventEmitter();
+  rowUnselect = new EventEmitter();
 
   constructor(translate: TranslateService) {
     super(translate);

@@ -16,6 +16,7 @@
   "Site remarks": "Napomena o mernom mestu",
   "Route Remarks": "Napomena o ruti",
   "Route": "Ruta",
+  "Routes": "Rute",
   "AdoGsm location": "Lokacija AdoGsm uređaja",
   "AdoGsm remarks": "Napomena o AdoGsm uređaju",
   "Create Account": "Napravi nalog",
@@ -83,5 +84,8 @@
   "Select City": "Izaberi grad",
   "User Card": "Potrošačka kartica",
   "Devices": "Uređaji",
-  "Cities": "Gradovi"
+  "Cities": "Gradovi",
+  "Upload Routes": "Uvezi rute",
+  "Edit Route": "Izmeni rutu",
+  "Create Route": "Napravi rutu"
 }

@@ -21,29 +21,29 @@ export abstract class AbstractService {
    }
 
 
-  get(url: string, pageable?: Pageable) {
+  protected get(url: string, pageable?: Pageable) {
     return this.http.get(url.concat('?').concat(this.jsonToHttpParams(pageable)),  this.httpOptions)
       .toPromise()
       .then(res => res);
   }
 
-  post<T>(url: string, form: any): Observable<T> {
+  protected post<T>(url: string, form: any): Observable<T> {
     return this.http.post<T>(url, form, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
 
-  put<T>(url: string, form: any): Observable<T> {
+  protected put<T>(url: string, form: any): Observable<T> {
     return this.http.put<T>(url, form, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
 
-  delete<T>(url: string, id: string): Observable<T> {
+  protected delete<T>(url: string, id: string): Observable<T> {
     const postUrl = `${url}/${id}`; // DELETE api/heroes/42
     return this.http.delete<T>(postUrl, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
 
-  jsonToHttpParams(json: any): string {
+  protected jsonToHttpParams(json: any): string {
     let params = new HttpParams();
     for (const key in json) {
       if (key !== undefined) {
@@ -52,6 +52,14 @@ export abstract class AbstractService {
     }
 
     return params.toString();
+  }
+
+  protected _upload(url: string, formData: FormData) {
+    const myHttpOptions = { headers: new HttpHeaders({})};
+
+    return this.http.post<any>(`${url}/upload`, formData, myHttpOptions)
+      .toPromise()
+      .then(data => data);
   }
 
   handleError(error: HttpErrorResponse) {

@@ -12,11 +12,7 @@ export class ImportUserCardService extends AbstractService {
   constructor(http: HttpClient) { super(http);  }
 
   upload(formData: FormData) {
-    const myHttpOptions = { headers: new HttpHeaders({})};
-
-    return this.http.post<any>(this.url + '/upload', formData, myHttpOptions)
-      .toPromise()
-      .then(data => data);
+   return  super._upload(this.url, formData);
   }
 
   import(importUserCardRespDto: ImportUserCardRespDto) {

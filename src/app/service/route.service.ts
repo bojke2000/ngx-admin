@@ -2,25 +2,24 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { AbstractService } from '../abstract.service';
-import { City } from '../domain/city';
 import { Option } from '../domain/option';
 import { Pageable } from '../domain/pageable';
+import { Route } from '../domain/route';
 
 @Injectable()
-export class CityService extends AbstractService {
+export class RouteService extends AbstractService {
 
-  private url = this.prefix + 'cities';
+  private url = this.prefix + 'routes';
 
   constructor(http: HttpClient) {
     super(http);
   }
 
   getCitiesAsOptions(query?: string) {
-    let url = `${this.url}/options`;
     if (query !== undefined) {
-      url = `${url}?query='${query}`;
+      this.url += '/options?query=' + query;
     }
-    return this.http.get<any>(url)
+    return this.http.get<any>(this.url)
       .toPromise()
       .then(res => <Option[]>res.data)
       .then(data => data);
@@ -34,15 +33,19 @@ export class CityService extends AbstractService {
     return super.get(this.url, pageable);
   }
 
-  createCity(city: City) {
-    return super.post(this.url, city);
+  createRoute(route: Route) {
+    return super.post(this.url, route);
   }
 
-  updateCity(city: City) {
-    return super.put(this.url, city);
+  updateRoute(route: Route) {
+    return super.put(this.url, route);
   }
 
-  deleteCity(city: City) {
-    return super.delete(this.url, `${city.id}`);
+  deleteRoute(route: Route) {
+    return super.delete(this.url, `${route.id}`);
+  }
+
+  upload(formData: FormData) {
+    return super._upload(this.url, formData);
   }
 }

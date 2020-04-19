@@ -7,6 +7,7 @@ import { UserCardService } from '../../service/user-card.service';
 import { of, Observable } from 'rxjs';
 import { UserCardColumnService } from '../../service/user-card-column.service';
 import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
+import { Grid } from '../../domain/grid';
 
 @Component({
   selector: 'ngx-user-card',
@@ -37,7 +38,7 @@ export class UserCardComponent implements OnInit {
       { field: 'id', header: 'ID', width: '50px' },
     ];
 
-    this.userCardColumnService.findAll().then(columns => {
+    this.userCardColumnService.findAll(Grid.USER_CARD).then(columns => {
       this.cols = [...this.cols, ...columns];
     });
 

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SelectItem } from 'primeng/api';
 
 import { UserCardColumnService } from '../../service/user-card-column.service';
+import { Grid } from '../../domain/grid';
 
 @Component({
   selector: 'ngx-import-mapper',
@@ -19,7 +20,7 @@ export class ImportMapperComponent implements OnInit {
   constructor(private cardColumnService: UserCardColumnService) { }
 
   ngOnInit() {
-    this.cardColumnService.findAllOptions().then(data => this.choices = data);
+    this.cardColumnService.findAllOptions(Grid.DEVICE_GSM).then(data => this.choices = data);
   }
 
   onSelectionChange() {

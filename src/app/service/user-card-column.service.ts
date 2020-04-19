@@ -14,15 +14,16 @@ export class UserCardColumnService extends AbstractService {
     super(http);
   }
 
-  findAllOptions() {
-    const url = this.url + '/options';
+  findAllOptions(gridId: number) {
+    const url = `${this.url}/options/${gridId}`;
     return this.http.get<any>(url, this.httpOptions)
       .toPromise()
       .then(res => <Option[]>res);
   }
 
-  findAll() {
-    return this.http.get<any>(this.url, this.httpOptions)
+  findAll(gridId: number) {
+    const url = `${this.url}/${gridId}`;
+    return this.http.get<any>(url, this.httpOptions)
       .toPromise()
       .then(res => <UserCardColumnDto[]>res);
   }

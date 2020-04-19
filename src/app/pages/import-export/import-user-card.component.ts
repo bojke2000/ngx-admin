@@ -109,7 +109,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
 
     this.importUserCardService.import(importUserCardRespDto).then(() => {
       this.loading = false;
-      this.router.navigate(['user-card']);
+      this.router.navigate(['device']);
     });
   }
 

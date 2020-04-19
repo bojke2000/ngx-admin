@@ -9,6 +9,7 @@ import { UserCardColumnService } from '../../service/user-card-column.service';
 import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
 import { Grid } from '../../domain/grid';
 import { DeviceType } from '../../domain/device-type';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-device',
@@ -29,6 +30,7 @@ export class DeviceComponent implements OnInit {
   constructor(
     private userCardService: UserCardService,
     private userCardColumnService: UserCardColumnService,
+    private router: Router,
     translate: TranslateService) {
     translate.setDefaultLang('en');
     translate.use('rs');
@@ -73,6 +75,6 @@ export class DeviceComponent implements OnInit {
    }
 
    onImportClick() {
-      alert('onImportClick');
+    this.router.navigate(['/pages/import-user-card']);
    }
 }

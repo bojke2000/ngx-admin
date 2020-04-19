@@ -22,7 +22,8 @@ export abstract class AbstractService {
 
 
   protected get(url: string, pageable?: Pageable) {
-    return this.http.get(url.concat('?').concat(this.jsonToHttpParams(pageable)),  this.httpOptions)
+    const symbol = url.indexOf('?') > 0 ? '&' : '?';
+    return this.http.get(url.concat(symbol).concat(this.jsonToHttpParams(pageable)),  this.httpOptions)
       .toPromise()
       .then(res => res);
   }

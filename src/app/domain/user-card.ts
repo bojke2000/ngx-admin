@@ -1,3 +1,5 @@
+import { NonNullAssert } from '@angular/compiler';
+
 export interface UserCard {
   id?: number;
   customerId: string;
@@ -31,5 +33,19 @@ export interface UserCard {
   alarms: number;
   mainBattery: number;
   gsmBattery: number;
+
+  variance: number;
+  registera: string;
+  registerb: string;
+  registerc: string;
+  registerd: string;
+  unita: string;
+  unitb: string;
+  unitc: string;
+  unitd: string;
+  multipliera: number;
+  multiplierb: number;
+  multiplierc: number;
+  multiplierd: number;
 }
 

@@ -8,6 +8,7 @@ import { of, Observable } from 'rxjs';
 import { UserCardColumnService } from '../../service/user-card-column.service';
 import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
 import { Grid } from '../../domain/grid';
+import { DeviceType } from '../../domain/device-type';
 
 @Component({
   selector: 'ngx-device',
@@ -51,7 +52,7 @@ export class DeviceComponent implements OnInit {
 
   private loadPage(page: number, size: number, sort?: string) {
     const pageable = { page, size, sort};
-    this.userCardService.findAll(pageable).then((ngresp: NgPrimeGridResponse) => {
+    this.userCardService.findAllByDeviceType(DeviceType.DEVICE_GSM, pageable).then((ngresp: NgPrimeGridResponse) => {
       this.userCards = ngresp.data;
       this.totalRecords = ngresp.data.length * ngresp.totalPages;
       this.loading = false;

@@ -14,4 +14,8 @@ export class UserCardService extends AbstractService {
   findAll(pageable?: Pageable) {
     return this.get(this.url, pageable);
   }
+
+  findAllByDeviceType(deviceType: number, pageable?: Pageable) {
+    return this.get(`${this.url}?deviceType=${deviceType}`, pageable);
+  }
 }

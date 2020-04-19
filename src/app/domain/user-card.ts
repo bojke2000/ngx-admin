@@ -1,5 +1,3 @@
-import { NonNullAssert } from '@angular/compiler';
-
 export interface UserCard {
   id?: number;
   customerId: string;

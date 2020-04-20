@@ -26,8 +26,8 @@
             </ng-template>
             <ng-template pTemplate="output">
               <div style="color: #007ad9">
-                <b>{{ choices === undefined || choices === undefined || choices[rowData[col.field]] === undefined ? rowData[col.field] :  choices[rowData[col.field] -1].label  | translate }}</b>
-              </div>
+            <b>{{  choiceLabel(choices, rowData[col.field]) | translate }}</b>
+            </div>
             </ng-template>
           </p-cellEditor>
         </td>

@@ -27,6 +27,15 @@ export class ImportMapperComponent implements OnInit {
     this.onSelectValue.emit({ mappings: this.getMappings() });
   }
 
+  choiceLabel(choices: SelectItem[], value: string) {
+    if (choices === undefined) {
+      return value === undefined ? '' : value;
+    } else {
+      const selected = choices.filter(item => item.value === value);
+      return (selected.length === 0) ?  value : selected[0].label;
+    }
+  }
+
   private getMappings(): any {
     return this.data[0];
   }

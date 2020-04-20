@@ -8,6 +8,7 @@ import { Observable, of } from 'rxjs';
 import { AbstractComponent } from '../../AbstractComponent';
 import { CityService } from '../../service/city.service';
 import { ImportUserCardService } from '../../service/import-user-card.service';
+import { DeviceType } from '../../domain/device-type';
 
 @Component({
   selector: 'ngx-import-user-card',
@@ -101,15 +102,16 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     this.loading = true;
 
     const importUserCardRespDto = {
-      mappings: this.toSelected(this.mappings),
       cityId: this.zeroForm.value.city,
+      deviceType: DeviceType.DEVICE_GSM,
       fileName: this.fileName,
       fileType: this.firstForm.controls['fileType'].value,
+      mappings: this.toSelected(this.mappings),
     };
 
     this.importUserCardService.import(importUserCardRespDto).then(() => {
       this.loading = false;
-      this.router.navigate(['device']);
+      this.router.navigate(['/pages/device']);
     });
   }
 

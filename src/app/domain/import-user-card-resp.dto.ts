@@ -1,6 +1,7 @@
 export interface ImportUserCardRespDto {
-  mappings: any[];
   cityId: string;
+  deviceType: number;
   fileName: string;
   fileType: string;
+  mappings: any[];
 }

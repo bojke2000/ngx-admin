@@ -1,7 +1,7 @@
 <div class="row">
   <nb-card style="width: 100%">
     <nb-card-body>
-      <ngx-title-header title='Devices'></ngx-title-header>
+      <ngx-title-header title='GSM2 Devices'></ngx-title-header>
 
       <ngx-table [columns]="cols$ | async" [value]="userCards" (lazyLoad)="loadUserCardsLazy($event)"
       [selection]="selectedUserCard" dataKey="customerId" [totalRecords]="totalRecords" [loading]="loading">

@@ -30,7 +30,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
         home: false,
       },
       {
-        title: 'Devices',
+        title: 'GSM2 Devices',
         icon: 'keypad-outline',
         link: '/pages/device',
         home: false,
@@ -45,18 +45,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Routes',
         icon: 'keypad-outline',
         link: '/pages/route',
-        home: false,
-      },
-    ],
-  },
-  {
-    title: 'Import/Export',
-    icon: 'book-open-outline',
-    children: [
-      {
-        title: 'Import Database',
-        icon: 'corner-right-up-outline',
-        link: '/pages/import-user-card',
         home: false,
       },
     ],

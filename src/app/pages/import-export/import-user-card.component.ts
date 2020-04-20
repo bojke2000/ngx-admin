@@ -19,7 +19,9 @@ import { DeviceType } from '../../domain/device-type';
 export class ImportUserCardComponent extends AbstractComponent implements OnInit {
 
   fileTypes: SelectItem[];
+  deviceTypes: SelectItem[];
   zeroForm: FormGroup;
+  deviceForm: FormGroup;
   firstForm: FormGroup;
   secondForm: FormGroup;
   thirdForm: FormGroup;
@@ -52,7 +54,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
       this.cities = cities;
       this.zeroForm.patchValue({city: this.cities[0].value});
     });
-
+    this.deviceForm = this.fb.group({ deviceType: [undefined, [Validators.required]]});
     this.firstForm = this.fb.group({ fileType: [undefined, [Validators.required]]});
     this.secondForm = this.fb.group({ uploadFlag: [undefined, Validators.requiredTrue]});
     this.thirdForm = this.fb.group({ mappings: ['']});
@@ -64,6 +66,12 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
       { label: 'DBF', value: 'DBF' },
     ];
     this.firstForm.patchValue({fileType: 'XML'});
+
+    this.deviceTypes = [
+      { label: 'GMS2 Device', value: DeviceType.DEVICE_GSM },
+      { label: 'WMBUS Device', value: DeviceType.DEVICE_WMBUS },
+    ];
+    this.deviceForm.patchValue({deviceType: DeviceType.DEVICE_GSM});
 
   }
 
@@ -86,6 +94,10 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     this.zeroForm.markAsDirty();
   }
 
+  onDeviceFormSubmit() {
+    this.deviceForm.markAsDirty();
+  }
+
   onFirstSubmit() {
     this.firstForm.markAsDirty();
   }
@@ -103,7 +115,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
 
     const importUserCardRespDto = {
       cityId: this.zeroForm.value.city,
-      deviceType: DeviceType.DEVICE_GSM,
+      deviceType: this.deviceForm.controls['deviceType'].value,
       fileName: this.fileName,
       fileType: this.firstForm.controls['fileType'].value,
       mappings: this.toSelected(this.mappings),

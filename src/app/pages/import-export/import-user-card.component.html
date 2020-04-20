@@ -20,6 +20,22 @@
           </form>
         </nb-step>
 
+        <nb-step [stepControl]="deviceForm" label="{{ 'Select Device Type' | translate }}">
+          <form [formGroup]="deviceForm" (ngSubmit)="onDeviceFormSubmit()" class="step-container">
+            <h4>{{ 'Select Device Type' | translate }}</h4>
+            <br>
+            <div class="input-group">
+              <div class="ui-inputgroup">
+                <p-dropdown formControlName="deviceType" [options]="deviceTypes" name="deviceType"
+                  autoWidth="false" [style]="{'width':'400px'}"></p-dropdown>
+              </div>
+            </div>
+            <button nbButton nbStepperPrevious>prev</button>
+            <div class="divider"></div>
+            <button nbButton status="primary" nbStepperNext>next</button>
+          </form>
+        </nb-step>
+
         <nb-step [stepControl]="firstForm" label="{{ 'Select File Type' | translate }}">
           <form [formGroup]="firstForm" (ngSubmit)="onFirstSubmit()" class="step-container">
             <h4>{{ 'Select File Type' | translate }}</h4>
@@ -30,8 +46,9 @@
                   autoWidth="false" [style]="{'width':'400px'}"></p-dropdown>
               </div>
             </div>
+            <button nbButton nbStepperPrevious>prev</button>
             <div class="divider"></div>
-            <button nbButton nbStepperNext>next</button>
+            <button nbButton status="primary" nbStepperNext>next</button>
           </form>
         </nb-step>
 
@@ -56,7 +73,7 @@
             </div>
             <button nbButton nbStepperPrevious>prev</button>
             <div class="divider"></div>
-            <button nbButton nbStepperNext>next</button>
+            <button nbButton status="primary" nbStepperNext>next</button>
           </form>
         </nb-step>
 
@@ -76,7 +93,7 @@
 
             <button nbButton nbStepperPrevious>prev</button>
             <div class="divider"></div>
-            <button nbButton nbStepperNext>next</button>
+            <button nbButton status="primary" nbStepperNext>next</button>
           </form>
         </nb-step>
 

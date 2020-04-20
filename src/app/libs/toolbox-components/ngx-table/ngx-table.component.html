@@ -7,7 +7,7 @@
 [scrollable]="true"
 [paginator]="true"
 [rows]="20"
-[style]="{width:'100%'}"
+[style]="{'width':'100%'}"
 scrollHeight="58vh"
 selectionMode="single"
 [(selection)]="selection"
@@ -15,6 +15,13 @@ selectionMode="single"
 [totalRecords]="totalRecords"
 (onRowSelect)="onRowSelect($event)"
 (onRowUnselect)="onRowUnselect($event)">
+<ng-template pTemplate="emptymessage"  let-columns>
+  <tr>
+  <td [attr.colspan]="columns.length" style="height: 37vh; text-align: center;" >
+       No records found
+    </td>
+  </tr>
+</ng-template>
 <ng-template pTemplate="colgroup" let-columns>
   <colgroup>
     <col *ngFor="let col of columns "  [style.display]="col.header === 'ID' ? 'none': ''"  [style.width]="col.width" [pSortableColumn]>

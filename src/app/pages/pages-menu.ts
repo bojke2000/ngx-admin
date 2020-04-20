@@ -54,7 +54,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'book-open-outline',
     children: [
       {
-        title: 'Import User Card',
+        title: 'Import Database',
         icon: 'corner-right-up-outline',
         link: '/pages/import-user-card',
         home: false,

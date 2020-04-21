@@ -75,6 +75,26 @@ body .ui-table .ui-sortable-column .ui-sortable-column-icon {
 color: #848484 !important;
 }
 
+body .ui-inputtext {
+    border-top: 0 !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    border-bottom: 1px solid #a9acb1ec !important;
+    border-radius: 0 !important;
+  }
+
+  body .ui-dropdown  {
+    border-top: 0 !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    border-bottom: 1px solid #a9acb1ec !important;
+    border-radius: 0 !important;
+  }
+
+  body .ui-dropdown .ui-inputtext  {
+    border: 0 !important;
+    border-radius: 0 !important;
+  }
 
 .ui-g label {
   font-weight: bold;

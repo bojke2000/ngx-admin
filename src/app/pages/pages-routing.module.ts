@@ -1,15 +1,16 @@
-import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
-import { PagesComponent } from './pages.component';
-import { UserCardComponent } from './user-card/user-card.component';
-import { UserAccountComponent } from './account-management/user-account.component';
 import { MailAccountComponent } from './account-management/mail-account.component';
-import { TemplateComponent } from './import-export/template.component';
-import { ImportUserCardComponent } from './import-export/import-user-card.component';
-import { DeviceComponent } from './device/device.component';
+import { UserAccountComponent } from './account-management/user-account.component';
 import { CityComponent } from './city/city.component';
+import { DeviceComponent } from './device/device.component';
+import { ImportUserCardComponent } from './import-export/import-user-card.component';
+import { TemplateComponent } from './import-export/template.component';
+import { PagesComponent } from './pages.component';
 import { RouteComponent } from './route/route.component';
+import { UserCardComponent } from './user-card/user-card.component';
+import { WmbusDeviceComponent } from './wmbus-device/wmbus-device.component';
 
 const routes: Routes = [{
   path: '',
@@ -38,6 +39,10 @@ const routes: Routes = [{
     {
       path: 'device',
       component: DeviceComponent,
+    },
+    {
+      path: 'wmbus-device',
+      component: WmbusDeviceComponent,
     },
     {
       path: 'city',

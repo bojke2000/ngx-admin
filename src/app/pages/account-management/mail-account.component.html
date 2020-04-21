@@ -6,9 +6,9 @@
         <div style="position: relative; float: right;margin-top: 5px;margin-bottom: 5px;">
             <div class="ui-inputgroup">
               <span class="ui-float-label">
-                <input id="float-input" type="text" size="50" [(ngModel)]="mailAccountSearch" pInputText onclick="this.setSelectionRange(0, this.value.length)" style="padding-top: 7px; padding-bottom: 7px;">
+                <input id="float-input" type="text" size="50" (keyup)="onMailAccountSearch($event)"  [(ngModel)]="mailAccountSearch" pInputText onclick="this.setSelectionRange(0, this.value.length)" style="padding-top: 7px; padding-bottom: 7px;">
                 <label for="float-input">{{ 'Search by account or server' | translate }} </label>
-                <button id="search-btn" type="button" icon="pi pi-search" pButton label="{{ translate.get('Search') | async }}"  (click)="onMailAccountSearch()" ></button>
+               <!-- <button id="search-btn" type="button" icon="pi pi-search" pButton label="{{ translate.get('Search') | async }}"  (click)="onMailAccountSearch()" ></button> -->
             </span>
 
           </div>

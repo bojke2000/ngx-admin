@@ -123,7 +123,9 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
 
     this.importUserCardService.import(importUserCardRespDto).then(() => {
       this.loading = false;
-      this.router.navigate(['/pages/device']);
+      const link =  (this.deviceForm.controls['deviceType'].value === DeviceType.DEVICE_GSM) ?
+                        'device' : 'wmbus-device';
+      this.router.navigate([`/pages/${link}`]);
     });
   }
 

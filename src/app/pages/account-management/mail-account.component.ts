@@ -106,14 +106,16 @@ export class MailAccountComponent extends AbstractComponent implements OnInit, O
     this.loadMailAccounts(event.first, event.rows, sortBy + ',' + sortOrder);
   }
 
-  onMailAccountSearch() {
-    const pageable = {page: 0, size: 20, sort: 'account,asc'};
-    this.loading = true;
-    this.mailAccountService.searchMailAccounts(this.mailAccountSearch, pageable).then(ngresp => {
-      this.mailAccounts = ngresp.data;
-      this.totalRecords = ngresp.totalPages;
-      this.loading = false;
-    });
+  onMailAccountSearch(event: any) {
+    if (event.keyCode === 13) {
+      const pageable = {page: 0, size: 20, sort: 'account,asc'};
+      this.loading = true;
+      this.mailAccountService.searchMailAccounts(this.mailAccountSearch, pageable).then(ngresp => {
+        this.mailAccounts = ngresp.data;
+        this.totalRecords = ngresp.totalPages;
+        this.loading = false;
+      });
+    }
   }
 
   resetSort() {

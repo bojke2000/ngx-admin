@@ -8,10 +8,10 @@
           <div class="ui-inputgroup">
             <span class="ui-float-label">
               <input id="float-input" type="text" size="50" [(ngModel)]="userSearch" pInputText
-                onclick="this.setSelectionRange(0, this.value.length)" style="padding-top: 7px; padding-bottom: 7px;">
+                onclick="this.setSelectionRange(0, this.value.length)" (keyup)="onUserSearch($event)" style="padding-top: 7px; padding-bottom: 7px;">
               <label for="float-input">{{ 'Search by username or email' | translate }} </label>
-              <button id="search-btn" type="button" icon="pi pi-search" pButton
-                label="{{ translate.get('Search') | async }}" (click)="onUserSearch()"></button>
+            <!--  <button id="search-btn" type="button" icon="pi pi-search" pButton
+                label="{{ translate.get('Search') | async }}" (click)="onUserSearch()"></button> -->
             </span>
           </div>
         </div>

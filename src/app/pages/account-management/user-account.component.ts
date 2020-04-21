@@ -126,14 +126,16 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
     this.loadUserAccounts(event.first, event.rows, sortBy + ',' + sortOrder);
   }
 
-  onUserSearch() {
-    const pageable = {page: 0, size: 20, sort: 'username,asc'};
-    this.loading = true;
-    this.userAccountservice.searchUserAccounts(this.userSearch, pageable).then(ngresp => {
-      this.userAccounts = ngresp.data;
-      this.totalRecords = ngresp.totalPages;
-      this.loading = false;
-    });
+  onUserSearch(event: any) {
+    if (event.keyCode === 13) {
+      const pageable = {page: 0, size: 20, sort: 'username,asc'};
+      this.loading = true;
+      this.userAccountservice.searchUserAccounts(this.userSearch, pageable).then(ngresp => {
+        this.userAccounts = ngresp.data;
+        this.totalRecords = ngresp.totalPages;
+        this.loading = false;
+      });
+    }
   }
 
   resetSort() {

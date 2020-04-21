@@ -36,6 +36,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
         home: false,
       },
       {
+        title: 'WMBUS Devices',
+        icon: 'keypad-outline',
+        link: '/pages/wmbus-device',
+        home: false,
+      },
+      {
         title: 'Cities',
         icon: 'keypad-outline',
         link: '/pages/city',

@@ -12,6 +12,7 @@ export interface UserCard {
   gsmId: number;
   wmbusId?: number;
   medium?: string;
+  profile: number;
 
   route: string;
   gsmLongitude: string;

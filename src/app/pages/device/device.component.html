@@ -18,7 +18,7 @@
       </div>
 
       <p-dialog header="User Account Details" [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true"
-        showEffect="fade" [modal]="true" height="600" [style]="{width: '1200px'}">
+        showEffect="fade" [modal]="true" height="800" [style]="{width: '1200px'}">
 
         <div class="ui-g ui-fluid" *ngIf="!device">
           <i class="pi pi-info"></i>
@@ -27,14 +27,18 @@
         <form [formGroup]="deviceForm" (ngSubmit)="save()">
 
           <div class="ui-g ui-fluid" *ngIf="device">
-            <div class="ui-g-6">
 
+        <!-- FIRST COLUMN -->
+
+
+            <div class="ui-g-6">
+              <div class="ui-g-12"><u><b>Customer Info</b></u></div>
               <div class="ui-g-5">
                 <span class="ui-float-label">
                   <input pInputText id="customerId" formControlName="customerId"
                     onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
                     [ngClass]="{ 'is-invalid': submitted && f.customerId.errors }" />
-                  <label for="name">{{ 'Customer ID' | translate }}</label>
+                  <label for="customerId">{{ 'Customer ID' | translate }}</label>
                 </span>
                 <div *ngIf="submitted && f.customerId.errors" class="invalid-feedback">
                   <div *ngIf="f.customerId.errors.required">Field is required.</div>
@@ -46,7 +50,7 @@
                   <input pInputText id="customerName" formControlName="customerName"
                     onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
                     [ngClass]="{ 'is-invalid': submitted && f.customerName.errors }" />
-                  <label for="name">{{ 'Customer name' | translate }}</label>
+                  <label for="customerName">{{ 'Customer name' | translate }}</label>
                 </span>
                 <div *ngIf="submitted && f.customerName.errors" class="invalid-feedback">
                   <div *ngIf="f.customerName.errors.required">Field is required.</div>
@@ -60,52 +64,220 @@
                     [ngClass]="{ 'is-invalid': submitted && f.regNr.errors }" />
                   <label for="regNr">{{ 'Register Nr.' | translate }}</label>
                 </span>
-                <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
-                  <div *ngIf="f.regNr.errors.required">Field is required</div>
-                </div>
               </div>
 
               <div class="ui-g-5">
                 <span class="ui-float-label">
-                  <input pInputText id="password" formControlName="password"
+                  <input pInputText id="regNrSuffix" formControlName="regNrSuffix"
                     onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-                  <label for="name">Name</label>
+                    [ngClass]="{ 'is-invalid': submitted && f.regNrSuffix.errors }" />
+                  <label for="regNrSuffix">{{ 'Reg. Nr. Suffix' | translate }}</label>
                 </span>
-                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                  <div *ngIf="f.password.errors.required">Password is required</div>
-                  <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+              </div>
+
+              <div class="ui-g-5">
+                <span class="ui-float-label">
+                  <input pInputText id="address" formControlName="address"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.address.errors }" />
+                  <label for="address">{{ 'Address' | translate }}</label>
+                </span>
+                <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+                  <div *ngIf="f.address.errors.required">Field is required.</div>
                 </div>
               </div>
+
+              <div class="ui-g-3">
+                <span class="ui-float-label">
+                  <input pInputText id="addressNo" formControlName="addressNo"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.addressNo.errors }" />
+                  <label for="addressNo">{{ 'Address number' | translate }}</label>
+                </span>
+                <div *ngIf="submitted && f.addressNo.errors" class="invalid-feedback">
+                  <div *ngIf="f.addressNo.errors.required">Field is required.</div>
+                </div>
+              </div>
+              <div class="ui-g-2">
+                <span class="ui-float-label">
+                  <input pInputText id="addressNo2" formControlName="addressNo2"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.addressNo2.errors }" />
+                  <label for="addressNo2">{{ 'Address number 2' | translate }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-5">
+                <span class="ui-float-label">
+                  <input pInputText id="route" formControlName="route"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.route.errors }" />
+                  <label for="route">{{ 'Route' | translate }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-5">
+                <span class="ui-float-label">
+                  <input pInputText id="variance" formControlName="variance"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.variance.errors }" />
+                  <label for="variance">{{ 'Variance' | translate }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-12"><u><b>Remarks</b></u></div>
+
+              <div class="ui-g-5">
+                <span class="ui-float-label">
+                  <textarea pInputTextarea id="customerRemarks" formControlName="customerRemarks" class="form-control"></textarea>
+                <label for="customerRemarks">{{ 'Customer remarks' | translate }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-5">
+                <span class="ui-float-label">
+                  <textarea pInputTextarea id="siteRemarks" formControlName="siteRemarks" class="form-control"></textarea>
+                  <label for="siteRemarks">{{ 'Site remarks' | translate }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-5">
+                <span class="ui-float-label">
+                  <textarea pInputTextarea id="routeRemarks" formControlName="routeRemarks" class="form-control"></textarea>
+                <label for="routeRemarks">{{ 'Route Remarks' | translate }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-5">
+                <span class="ui-float-label">
+                  <textarea pInputTextarea id="adogsmRemarks" formControlName="adogsmRemarks" class="form-control"></textarea>
+                  <label for="adogsmRemarks">{{ 'AdoGsm remarks' | translate }}</label>
+                </span>
+              </div>
+
+
+
             </div>
 
+          <!-- END OF FIRST COLUMN -->
+
+          <!-- SECOND COLUMN -->
             <div class="ui-g-6">
+              <div class="ui-g-12"><u><b>Device Info</b></u></div>
               <div class="ui-g-5">
                 <span class="ui-float-label">
-                  <input pInputText id="name" formControlName="name"
+                  <input pInputText id="deviceId" formControlName="deviceId"
                     onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
-                  <label for="name">Name</label>
+                    [ngClass]="{ 'is-invalid': submitted && f.deviceId.errors }" />
+                  <label for="deviceId">{{ 'Device ID' | translate }}</label>
                 </span>
-                <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
-                  <div *ngIf="f.name.errors.required">name is required</div>
-                  <div *ngIf="f.name.errors.minlength">Password must be at least 6 characters</div>
+                <div *ngIf="submitted && f.deviceId.errors" class="invalid-feedback">
+                  <div *ngIf="f.deviceId.errors.required">Field is required.</div>
                 </div>
               </div>
 
               <div class="ui-g-5">
                 <span class="ui-float-label">
-                  <input pInputText id="password" formControlName="password"
+                  <input pInputText id="gsmId" formControlName="gsmId"
                     onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-                  <label for="name">Password</label>
+                    [ngClass]="{ 'is-invalid': submitted && f.gsmId.errors }" />
+                  <label for="gsmId">{{ 'ADOGSM-2 ID' | translate }}</label>
                 </span>
-                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                  <div *ngIf="f.password.errors.required">Password is required</div>
-                  <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
-                </div>
               </div>
+
+              <div class="ui-g-5">
+                <span class="ui-float-label">
+                  <input pInputText id="profile" formControlName="profile"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.profile.errors }" />
+                  <label for="profile">{{ 'Profile' | translate }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-5">
+                <span class="ui-float-label">
+                  <input pInputText id="medium" formControlName="medium"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.medium.errors }" />
+                  <label for="medium">{{ 'Medium' | translate }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-5">
+                <span class="ui-float-label">
+                  <input pInputText id="gsmLongitude" gsmLongitude="gsmLongitude"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.gsmLongitude.errors }" />
+                  <label for="gsmLongitude">{{ 'GSM Longitude' | translate }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-5">
+                <span class="ui-float-label">
+                  <input pInputText id="gsmLatitude" formControlName="gsmLatitude"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.gsmLatitude.errors }" />
+                  <label for="gsmLatitude">{{ 'GSM Latitude' | translate }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-5">
+                <span class="ui-float-label">
+                  <input pInputText id="registera" formControlName="registera"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.registera.errors }" />
+                  <label for="registera">{{ 'Register' | translate }}</label>
+                </span>
+              </div>
+              <div class="ui-g-5">
+                <span class="ui-float-label">
+                  <input pInputText id="registerb" formControlName="registerb"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.registerb.errors }" />
+                  <label for="registerb">{{ 'Reverse Register' | translate }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-5">
+                <span class="ui-float-label">
+                  <input pInputText id="unita" formControlName="unita"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.unita.errors }" />
+                  <label for="unita">{{ 'Unit' | translate }}</label>
+                </span>
+              </div>
+              <div class="ui-g-5">
+                <span class="ui-float-label">
+                  <input pInputText id="unitb" formControlName="unitb"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.unitb.errors }" />
+                  <label for="unitb">{{ 'Unit Reverse' | translate }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-5">
+                <span class="ui-float-label">
+                  <input pInputText id="multipliera" formControlName="multipliera"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.multipliera.errors }" />
+                  <label for="multipliera">{{ 'Multiplier' | translate }}</label>
+                </span>
+              </div>
+              <div class="ui-g-5">
+                <span class="ui-float-label">
+                  <input pInputText id="multiplierb" formControlName="multiplierb"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.multiplierb.errors }" />
+                  <label for="multiplierb">{{ 'Multiplier Reverse' | translate }}</label>
+                </span>
+              </div>
+
+
+
+
             </div>
+          <!-- END OF SECOND COLUMN -->
+
           </div>
 
         </form>

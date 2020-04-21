@@ -4,14 +4,124 @@
       <ngx-title-header title='GSM2 Devices'></ngx-title-header>
 
       <ngx-table [columns]="cols$ | async" [value]="userCards" (lazyLoad)="loadUserCardsLazy($event)"
-      [selection]="selectedUserCard" dataKey="customerId" [totalRecords]="totalRecords" [loading]="loading">
+        [selection]="selectedUserCard" dataKey="customerId" [totalRecords]="totalRecords" [loading]="loading">
       </ngx-table>
 
-      <div style="position: relative; float: right; margin-top: 5px;">
+      <div class="button-positioner">
+        <p-button (click)="showDialogToAdd()" label="{{ translate.get('Create Device') | async }}"></p-button>
+        <div class="divider"></div>
+        <p-button (click)="showDialogToEdit()" label="{{ translate.get('Edit Device') | async }}"></p-button>
+        <div class="divider"></div>
         <p-button label="Export"></p-button>
         <div class="divider"></div>
         <p-button label="Import" (onClick)="onImportClick()"></p-button>
       </div>
+
+      <p-dialog header="User Account Details" [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true"
+        showEffect="fade" [modal]="true" height="600" [style]="{width: '1200px'}">
+
+        <div class="ui-g ui-fluid" *ngIf="!device">
+          <i class="pi pi-info"></i>
+          <p>&nbsp;&nbsp; {{"Please select a row for an action."| translate }}</p>
+        </div>
+        <form [formGroup]="deviceForm" (ngSubmit)="save()">
+
+          <div class="ui-g ui-fluid" *ngIf="device">
+            <div class="ui-g-6">
+
+              <div class="ui-g-5">
+                <span class="ui-float-label">
+                  <input pInputText id="customerId" formControlName="customerId"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.customerId.errors }" />
+                  <label for="name">{{ 'Customer ID' | translate }}</label>
+                </span>
+                <div *ngIf="submitted && f.customerId.errors" class="invalid-feedback">
+                  <div *ngIf="f.customerId.errors.required">Field is required.</div>
+                </div>
+              </div>
+
+              <div class="ui-g-5">
+                <span class="ui-float-label">
+                  <input pInputText id="customerName" formControlName="customerName"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.customerName.errors }" />
+                  <label for="name">{{ 'Customer name' | translate }}</label>
+                </span>
+                <div *ngIf="submitted && f.customerName.errors" class="invalid-feedback">
+                  <div *ngIf="f.customerName.errors.required">Field is required.</div>
+                </div>
+              </div>
+
+              <div class="ui-g-5">
+                <span class="ui-float-label">
+                  <input pInputText id="regNr" formControlName="regNr"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.regNr.errors }" />
+                  <label for="regNr">{{ 'Register Nr.' | translate }}</label>
+                </span>
+                <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                  <div *ngIf="f.regNr.errors.required">Field is required</div>
+                </div>
+              </div>
+
+              <div class="ui-g-5">
+                <span class="ui-float-label">
+                  <input pInputText id="password" formControlName="password"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                  <label for="name">Name</label>
+                </span>
+                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                  <div *ngIf="f.password.errors.required">Password is required</div>
+                  <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ui-g-6">
+              <div class="ui-g-5">
+                <span class="ui-float-label">
+                  <input pInputText id="name" formControlName="name"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                  <label for="name">Name</label>
+                </span>
+                <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                  <div *ngIf="f.name.errors.required">name is required</div>
+                  <div *ngIf="f.name.errors.minlength">Password must be at least 6 characters</div>
+                </div>
+              </div>
+
+              <div class="ui-g-5">
+                <span class="ui-float-label">
+                  <input pInputText id="password" formControlName="password"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                  <label for="name">Password</label>
+                </span>
+                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                  <div *ngIf="f.password.errors.required">Password is required</div>
+                  <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </form>
+
+        <p-footer>
+          <div *ngIf="device">
+            <div class="ui-dialog-buttonpane ui-helper-clearfix">
+              <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
+              <button type="button" pButton icon="fa fa-check" (click)="save()" label="Save"></button>
+            </div>
+          </div>
+        </p-footer>
+      </p-dialog>
+
+
+
     </nb-card-body>
   </nb-card>
 </div>

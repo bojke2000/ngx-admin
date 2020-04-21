@@ -75,7 +75,7 @@ body .ui-table .ui-sortable-column .ui-sortable-column-icon {
   color: #848484 !important;
 }
 
-body .ui-inputtext {
+body .ui-inputtext, textarea {
   border-top: 0 !important;
   border-left: 0 !important;
   border-right: 0 !important;
@@ -94,6 +94,10 @@ body .ui-dropdown {
 body .ui-dropdown .ui-inputtext {
   border: 0 !important;
   border-radius: 0 !important;
+}
+
+.ui-g-1, .ui-g-2, .ui-g-3, .ui-g-4, .ui-g-5, .ui-g-6, .ui-g-7, .ui-g-8, .ui-g-9, .ui-g-10, .ui-g-11, .ui-g-12 {
+  margin-top: 1.1em !important;
 }
 
 .ui-g label {

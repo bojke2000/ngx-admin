@@ -10,6 +10,8 @@ import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
 import { Grid } from '../../domain/grid';
 import { DeviceType } from '../../domain/device-type';
 import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AbstractComponent } from '../../AbstractComponent';
 
 @Component({
   selector: 'ngx-device',
@@ -17,7 +19,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./device.component.css'],
 
 })
-export class DeviceComponent implements OnInit {
+export class DeviceComponent extends AbstractComponent implements OnInit {
+  deviceForm: FormGroup;
+  device = {name: undefined, password: undefined};
+  displayDialog: boolean;
+  submitted = false;
 
   userCards: UserCard[];
   totalRecords: number;
@@ -28,15 +34,44 @@ export class DeviceComponent implements OnInit {
   selectedUserCard: UserCard;
 
   constructor(
+    private formBuilder: FormBuilder,
     private userCardService: UserCardService,
     private userCardColumnService: UserCardColumnService,
     private router: Router,
     translate: TranslateService) {
-    translate.setDefaultLang('en');
-    translate.use('rs');
+      super(translate);
+
   }
 
   ngOnInit(): void {
+
+    this.deviceForm = this.formBuilder.group({
+      customerId: ['', [Validators.required]],
+      customerName: ['', [Validators.required]],
+      address: ['', [Validators.required]],
+      addressNo: ['', [Validators.required]],
+      addressNo2: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+      name: ['', [Validators.required]],
+      deviceId: ['', [Validators.required]],
+      gsmId: ['', [Validators.required]],
+      wmbusId: ['', [Validators.required]],
+      route: ['', [Validators.required]],
+      gsmLongitude: ['', [Validators.required]],
+      gsmLatitude: ['', [Validators.required]],
+      customerRemarks: ['', [Validators.required]],
+      siteRemarks: ['', [Validators.required]],
+      routeRemarks: ['', [Validators.required]],
+      adogsmRemarks: ['', [Validators.required]],
+      variance: ['', [Validators.required]],
+      registera: ['', [Validators.required]],
+      registerb: ['', [Validators.required]],
+      unita: ['', [Validators.required]],
+      unitb: ['', [Validators.required]],
+      multipliera: ['', [Validators.required]],
+      multiplierb: ['', [Validators.required]],
+    });
+
     this.cols = [
       { field: 'id', header: 'ID', width: '50px' },
     ];
@@ -51,6 +86,9 @@ export class DeviceComponent implements OnInit {
   get cols$(): Observable<any[]> {
     return of(this.cols);
   }
+
+  get f() { return this.deviceForm.controls; }
+
 
   private loadPage(page: number, size: number, sort?: string) {
     const pageable = { page, size, sort};
@@ -77,4 +115,21 @@ export class DeviceComponent implements OnInit {
    onImportClick() {
     this.router.navigate(['/pages/import-user-card']);
    }
+
+   showDialogToAdd() {
+      this.device = {name: 'Test', password: 'Password'};
+      this.displayDialog = true;
+  }
+
+  showDialogToEdit() {
+      this.displayDialog = true;
+  }
+
+  save() {
+    this.submitted = true;
+  }
+
+  delete() {
+    alert('Delete FIXME');
+  }
 }

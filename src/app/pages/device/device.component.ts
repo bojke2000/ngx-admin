@@ -21,7 +21,7 @@ import { AbstractComponent } from '../../AbstractComponent';
 })
 export class DeviceComponent extends AbstractComponent implements OnInit {
   deviceForm: FormGroup;
-  device = {name: undefined, password: undefined};
+  device = { name: undefined, password: undefined };
   displayDialog: boolean;
   submitted = false;
 
@@ -30,7 +30,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   cols: any[];
   isResisable: boolean = true;
   loading: boolean;
-  @ViewChild('table', {static: false}) table: Table;
+  @ViewChild('table', { static: false }) table: Table;
   selectedUserCard: UserCard;
 
   constructor(
@@ -39,37 +39,34 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     private userCardColumnService: UserCardColumnService,
     private router: Router,
     translate: TranslateService) {
-      super(translate);
-
+    super(translate);
   }
 
   ngOnInit(): void {
 
     this.deviceForm = this.formBuilder.group({
       customerId: ['', [Validators.required]],
+      regNr: [''],
+      regNr2: [''],
       customerName: ['', [Validators.required]],
       address: ['', [Validators.required]],
       addressNo: ['', [Validators.required]],
-      addressNo2: ['', [Validators.required]],
-      password: ['', [Validators.required]],
-      name: ['', [Validators.required]],
-      deviceId: ['', [Validators.required]],
-      gsmId: ['', [Validators.required]],
-      wmbusId: ['', [Validators.required]],
+      addressNo2: [''],
       route: ['', [Validators.required]],
-      gsmLongitude: ['', [Validators.required]],
-      gsmLatitude: ['', [Validators.required]],
-      customerRemarks: ['', [Validators.required]],
-      siteRemarks: ['', [Validators.required]],
-      routeRemarks: ['', [Validators.required]],
-      adogsmRemarks: ['', [Validators.required]],
+      readingBook: ['', [Validators.required]],
       variance: ['', [Validators.required]],
-      registera: ['', [Validators.required]],
-      registerb: ['', [Validators.required]],
-      unita: ['', [Validators.required]],
-      unitb: ['', [Validators.required]],
-      multipliera: ['', [Validators.required]],
-      multiplierb: ['', [Validators.required]],
+      customerRemarks: [''],
+      siteRemarks: [''],
+      routeRemarks: [''],
+      adogsmRemarks: [''],
+      deviceNo: ['', [Validators.required]],
+      deviceId: ['', [Validators.required]],
+      profile: ['', [Validators.required]],
+      medium: ['', [Validators.required]],
+      gsmLongitude: [''],
+      gsmLatitude: [''],
+      multiplier: ['', [Validators.required]],
+      gsmId: [''],
     });
 
     this.cols = [
@@ -91,7 +88,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
 
   private loadPage(page: number, size: number, sort?: string) {
-    const pageable = { page, size, sort};
+    const pageable = { page, size, sort };
     this.userCardService.findAllByDeviceType(DeviceType.DEVICE_GSM, pageable).then((ngresp: NgPrimeGridResponse) => {
       this.userCards = ngresp.data;
       this.totalRecords = ngresp.data.length * ngresp.totalPages;
@@ -110,23 +107,28 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     this.table.sortOrder = 0;
     this.table.sortField = '';
     this.table.reset();
-   }
+  }
 
-   onImportClick() {
+  onImportClick() {
     this.router.navigate(['/pages/import-user-card']);
-   }
+  }
 
-   showDialogToAdd() {
-      this.device = {name: 'Test', password: 'Password'};
-      this.displayDialog = true;
+  showDialogToAdd() {
+    this.device = { name: 'Test', password: 'Password' };
+    this.displayDialog = true;
   }
 
   showDialogToEdit() {
-      this.displayDialog = true;
+    this.displayDialog = true;
   }
 
   save() {
     this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.deviceForm.invalid) {
+      return;
+    }
   }
 
   delete() {

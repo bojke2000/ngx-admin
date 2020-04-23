@@ -11,8 +11,8 @@
   "Address": "Ulica",
   "Address number": "Broj",
   "Address number 2": "Broj 2",
-  "Device ID": "Broj vodomera",
-  "ADOGSM-2 ID": "ADOGSM-2 ID",
+  "Device ID": "ID broj uređaja",
+  "ADOGSM-2 ID": "ID GSM2 uređaja",
   "Site remarks": "Napomena o mernom mestu",
   "Route Remarks": "Napomena o ruti",
   "Route": "Ruta",
@@ -85,6 +85,7 @@
   "User Card": "Potrošačka kartica",
   "GSM2 Devices": "GSM uređaji",
   "WMBUS Devices": "WMBUS uređaji",
+  "Device": "Uređaj",
   "Cities": "Gradovi",
   "Upload Routes": "Uvezi rute",
   "Edit Route": "Izmeni rutu",
@@ -100,5 +101,13 @@
   "Customer remarks": "Napomena o korisniku",
   "Device Type": "Tip uređaja",
   "Select Device Type": "Izaberi tip uređaja",
-  "Variance": "Odstupanje"
+  "Variance": "Odstupanje",
+  "Profile": "Profil vodomera",
+  "Customer Info": "Podaci o korisniku",
+  "Device Info": "Podaci o uređaju",
+  "Remarks": "Napomene",
+  "Register Nr. 2": "Registarski Br. 2",
+  "Register Nr.": "Registarski Br.",
+  "Reading Book": "Čitacka knjiga",
+  "Device No": "Broj vodomera"
 }

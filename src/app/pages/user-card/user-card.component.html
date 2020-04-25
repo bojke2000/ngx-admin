@@ -3,9 +3,15 @@
     <nb-card-body>
       <ngx-title-header title='User Card'></ngx-title-header>
 
-      <ngx-table [columns]="cols$ | async" [value]="userCards" (lazyLoad)="loadUserCardsLazy($event)"
-      [selection]="selectedUserCard" dataKey="customerId" [totalRecords]="totalRecords" [loading]="loading">
-      </ngx-table>
+      <ngx-table [columns]="cols$ | async"
+        [value]="userCards"
+        (lazyLoad)="loadUserCardsLazy($event)"
+        [selection]="selectedUserCard"
+        dataKey="customerId"
+        dataKey1="customerId"
+        [totalRecords]="totalRecords"
+        [loading]="loading"
+        (clickFunction)="onCustomerNameClick($event)"></ngx-table>
 
       <div style="position: relative; float: right; margin-top: 5px;">
         <p-button label="Export"></p-button>

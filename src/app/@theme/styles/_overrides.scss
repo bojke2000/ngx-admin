@@ -25,6 +25,11 @@
   padding: 1.35rem 2.25rem 0.75rem !important;
 }
 
+.nb-theme-default nb-checkbox.status-basic .custom-checkbox.checked {
+  background-color: #007ad9 !important;
+  border-color: #007ad9 !important;
+}
+
 .ui-datatable thead th {
   white-space:normal !important;
 }

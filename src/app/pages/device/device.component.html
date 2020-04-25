@@ -17,7 +17,7 @@
         <p-button label="Import" (onClick)="onImportClick()"></p-button>
       </div>
 
-      <p-dialog header="{{ 'Device'|translate }}" [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true"
+      <p-dialog header="{{ 'Device'|translate }}" [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true"  dynamic="true"
         showEffect="fade" [modal]="true" height="800" [style]="{width: '1200px'}">
 
         <div class="ui-g ui-fluid" *ngIf="!device">
@@ -28,7 +28,36 @@
 
           <div class="ui-g ui-fluid" *ngIf="device">
 
-        <!-- FIRST COLUMN -->
+            <!-- HEADER ROW -->
+          <div class="ui-g-12">
+            <div class="ui-g-3">
+              <span class="ui-float-label">
+                <input pInputText id="route" formControlName="route"
+                  onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f.route.errors }" />
+                <label for="route">{{ 'Municipality' | translate }}</label>
+              </span>
+            </div>
+            <div class="ui-g-3">
+              <span class="ui-float-label">
+                <input pInputText id="readingBook" formControlName="readingBook"
+                  onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f.readingBook.errors }" />
+                <label for="readingBook">{{ 'Reading Book' | translate }}</label>
+              </span>
+            </div>
+            <div class="ui-g-3">
+              <span class="ui-float-label">
+                <input pInputText id="route" formControlName="route"
+                  onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f.route.errors }" />
+                <label for="route">{{ 'Route' | translate }}</label>
+              </span>
+            </div>
+
+
+          </div>
+          <!-- FIRST COLUMN -->
             <div class="ui-g-6">
               <div class="ui-g-12"><u><b>{{ 'Customer Info' | translate }}</b></u></div>
               <div class="ui-g-5">
@@ -95,108 +124,10 @@
 
               <div class="ui-g-5">
                 <span class="ui-float-label">
-                  <input pInputText id="route" formControlName="route"
-                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.route.errors }" />
-                  <label for="route">{{ 'Route' | translate }}</label>
-                </span>
-              </div>
-
-              <div class="ui-g-5">
-                <span class="ui-float-label">
-                  <input pInputText id="readingBook" formControlName="readingBook"
-                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.readingBook.errors }" />
-                  <label for="readingBook">{{ 'Reading Book' | translate }}</label>
-                </span>
-              </div>
-
-              <div class="ui-g-5">
-                <span class="ui-float-label">
                   <input pInputText id="variance" formControlName="variance"
                     onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
                     [ngClass]="{ 'is-invalid': submitted && f.variance.errors }" />
                   <label for="variance">{{ 'Variance' | translate }}</label>
-                </span>
-              </div>
-
-            </div>
-
-          <!-- END OF FIRST COLUMN -->
-
-          <!-- SECOND COLUMN -->
-            <div class="ui-g-6">
-              <div class="ui-g-12"><u><b>{{ 'Device Info' | translate }}</b></u></div>
-
-              <div class="ui-g-5">
-                <span class="ui-float-label">
-                  <input pInputText id="deviceId" formControlName="deviceId"
-                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.deviceId.errors }" />
-                  <label for="deviceId">{{ 'Device ID' | translate }}</label>
-                </span>
-              </div>
-
-              <div class="ui-g-5">
-                <span class="ui-float-label">
-                  <input pInputText id="deviceNo" formControlName="deviceNo"
-                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.deviceNo.errors }" />
-                  <label for="deviceNo">{{ 'Device No' | translate }}</label>
-                </span>
-              </div>
-
-              <div class="ui-g-5">
-                <span class="ui-float-label">
-                  <input pInputText id="profile" formControlName="profile"
-                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.profile.errors }" />
-                  <label for="profile">{{ 'Profile' | translate }}</label>
-                </span>
-              </div>
-
-              <div class="ui-g-5">
-                <span class="ui-float-label">
-                  <input pInputText id="medium" formControlName="medium"
-                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.medium.errors }" />
-                  <label for="medium">{{ 'Medium' | translate }}</label>
-                </span>
-              </div>
-
-              <div class="ui-g-5">
-                <span class="ui-float-label">
-                  <input pInputText id="gsmLongitude" gsmLongitude="gsmLongitude"
-                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.gsmLongitude.errors }" />
-                  <label for="gsmLongitude">{{ 'GSM Longitude' | translate }}</label>
-                </span>
-              </div>
-
-              <div class="ui-g-5">
-                <span class="ui-float-label">
-                  <input pInputText id="gsmLatitude" formControlName="gsmLatitude"
-                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.gsmLatitude.errors }" />
-                  <label for="gsmLatitude">{{ 'GSM Latitude' | translate }}</label>
-                </span>
-              </div>
-
-              <div class="ui-g-5">
-                <span class="ui-float-label">
-                  <input pInputText id="multiplier" formControlName="multiplier"
-                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.multiplier.errors }" />
-                  <label for="multiplier">{{ 'Multiplier' | translate }}</label>
-                </span>
-              </div>
-
-              <div class="ui-g-5">
-                <span class="ui-float-label">
-                  <input pInputText id="gsmId" formControlName="gsmId"
-                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.gsmId.errors }" />
-                  <label for="gsmId">{{ 'ADOGSM-2 ID' | translate }}</label>
                 </span>
               </div>
 
@@ -229,6 +160,149 @@
                   <label for="gsmRemarks">{{ 'AdoGsm remarks' | translate }}</label>
                 </span>
               </div>
+
+
+            </div>
+
+          <!-- END OF FIRST COLUMN -->
+
+          <!-- SECOND COLUMN -->
+            <div class="ui-g-6">
+              <div class="ui-g-12"><u><b>{{ 'Device Info' | translate }}</b></u></div>
+
+
+              <div class="ui-g-4">
+                <span class="ui-float-label">
+                  <input pInputText id="deviceNo" formControlName="deviceNo"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.deviceNo.errors }" />
+                  <label for="deviceNo">{{ 'Device No' | translate }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-4">
+                <span class="ui-float-label">
+                  <input pInputText id="deviceId" formControlName="deviceId"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.deviceId.errors }" />
+                  <label for="deviceId">{{ 'Device ID' | translate }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-4">
+                <span class="ui-float-label">
+                  <input pInputText id="deviceId" formControlName="deviceId"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.deviceId.errors }" />
+                  <label for="deviceId">{{ 'Mod (A,B, C)' | translate }}</label>
+                </span>
+              </div>
+
+
+              <div class="ui-g-4">
+                <span class="ui-float-label">
+                  <input pInputText id="profile" formControlName="profile"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.profile.errors }" />
+                  <label for="profile">{{ 'Profile' | translate }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-4">
+                <span class="ui-float-label">
+                  <input pInputText id="medium" formControlName="medium"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.medium.errors }" />
+                  <label for="medium">{{ 'Medium' | translate }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-4">
+                <span class="ui-float-label">
+                  <input pInputText id="medium" formControlName="medium"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.medium.errors }" />
+                  <label for="medium">{{ 'Unit' | translate }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-4">
+                <span class="ui-float-label">
+                  <input pInputText id="gsmId" formControlName="gsmId"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.gsmId.errors }" />
+                  <label for="gsmId">{{ 'ADOGSM-2 ID' | translate }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-4">
+                <span class="ui-float-label">
+                  <input pInputText id="gsmLongitude" gsmLongitude="gsmLongitude"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.gsmLongitude.errors }" />
+                  <label for="gsmLongitude">{{ 'GSM Longitude' | translate }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-4">
+                <span class="ui-float-label">
+                  <input pInputText id="gsmLatitude" formControlName="gsmLatitude"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.gsmLatitude.errors }" />
+                  <label for="gsmLatitude">{{ 'GSM Latitude' | translate }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-5">
+                <span class="ui-float-label">
+                  <input pInputText id="multiplier" formControlName="multiplier"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.multiplier.errors }" />
+                  <label for="multiplier">{{ 'Multiplier' | translate }}</label>
+                </span>
+              </div>
+
+
+              <div class="ui-g-12">
+                <div class="ui-g-12"><nb-checkbox (checkedChange)="handleChange($event)"><u><b>{{ 'Zone device' | translate }}</b></u></nb-checkbox></div>
+
+
+                <div class="ui-g-6" [hidden]="!(zoneDevice$ | async)">
+                  <span class="ui-float-label">
+                    <input pInputText id="deviceNo" formControlName="deviceNo"
+                      onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted && f.deviceNo.errors }" />
+                    <label for="deviceNo">{{ 'Index A' | translate }}</label>
+                  </span>
+                </div>
+
+                <div class="ui-g-6" [hidden]="!(zoneDevice$ | async)">
+                  <span class="ui-float-label">
+                    <input pInputText id="deviceId" formControlName="deviceId"
+                      onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted && f.deviceId.errors }" />
+                    <label for="deviceId">{{ 'Index B' | translate }}</label>
+                  </span>
+                </div>
+
+                <div class="ui-g-6" [hidden]="!(zoneDevice$ | async)">
+                  <span class="ui-float-label">
+                    <input pInputText id="deviceId" formControlName="deviceId"
+                      onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted && f.deviceId.errors }" />
+                    <label for="deviceId">{{ 'Index C' | translate }}</label>
+                  </span>
+                </div>
+
+                <div class="ui-g-6" [hidden]="!(zoneDevice$ | async)">
+                  <span class="ui-float-label">
+                    <input pInputText id="profile" formControlName="profile"
+                      onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted && f.profile.errors }" />
+                    <label for="profile">{{ 'Index D' | translate }}</label>
+                  </span>
+                </div>
+            </div>
 
             </div>
           <!-- END OF SECOND COLUMN -->

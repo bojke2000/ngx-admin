@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
-
 import { AbstractComponent } from '../../../AbstractComponent';
+
 
 @Component({
   selector: 'ngx-table',
@@ -31,6 +31,11 @@ export class NgxTableComponent extends AbstractComponent {
   rowSelect = new EventEmitter();
   @Output()
   rowUnselect = new EventEmitter();
+  @Input()
+  dataKey1: string;
+  @Output()
+  clickFunction = new EventEmitter();;
+
 
   constructor(translate: TranslateService) {
     super(translate);
@@ -60,4 +65,11 @@ export class NgxTableComponent extends AbstractComponent {
     this.rowUnselect.emit(event);
   }
 
+  onColumnClick(rowData) {
+    alert(rowData);
+
+    if (this.dataKey1 && this.clickFunction) {
+      this.clickFunction.emit(rowData);
+    }
+  }
 }

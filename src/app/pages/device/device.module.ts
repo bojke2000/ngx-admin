@@ -1,7 +1,7 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NbButtonModule, NbCardModule } from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbToggleModule, NbCheckboxModule } from '@nebular/theme';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -14,6 +14,8 @@ import { MessagesModule } from 'primeng/messages';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
 import {CardModule} from 'primeng/card';
+import {InputSwitchModule} from 'primeng/inputswitch';
+import {CheckboxModule} from 'primeng/checkbox';
 
 import { ThemeModule } from '../../@theme/theme.module';
 import { ToolboxComponentsModule } from '../../libs/toolbox-components/toolbox-components.module';
@@ -29,14 +31,18 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   imports: [
     NbCardModule,
+    NbToggleModule,
+    NbCheckboxModule,
     CardModule,
     FieldsetModule,
     NbButtonModule,
     ButtonModule,
     InputTextModule,
     InputTextareaModule,
+    CheckboxModule,
     DropdownModule,
     AutoCompleteModule,
+    InputSwitchModule,
     PanelModule,
     ThemeModule,
     TableModule,

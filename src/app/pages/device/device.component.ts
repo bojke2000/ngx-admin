@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { LazyLoadEvent } from 'primeng/api/public_api';
@@ -24,6 +24,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   device = { name: undefined, password: undefined };
   displayDialog: boolean;
   submitted = false;
+  zoneDevice  = false;
 
   userCards: UserCard[];
   totalRecords: number;
@@ -67,6 +68,8 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       gsmLatitude: [''],
       multiplier: ['', [Validators.required]],
       gsmId: [''],
+      zoneDevice: [null, Validators.required]
+
     });
 
     this.cols = [
@@ -78,6 +81,10 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     });
 
     this.loading = true;
+  }
+
+  get zoneDevice$() {
+    return of(this.zoneDevice);
   }
 
   get cols$(): Observable<any[]> {
@@ -133,5 +140,9 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
   delete() {
     alert('Delete FIXME');
+  }
+
+  handleChange(event: any) {
+    this.zoneDevice = !this.zoneDevice;
   }
 }

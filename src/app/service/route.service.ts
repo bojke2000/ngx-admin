@@ -16,7 +16,7 @@ export class RouteService extends AbstractService {
   }
 
   getRoutesAsOptions(query?: string) {
-    var url = `${this.url}/options`;
+    let url = `${this.url}/options`;
     if (query !== undefined) {
       url += '?query=' + query;
     }

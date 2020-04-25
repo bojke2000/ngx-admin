@@ -152,9 +152,6 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
   save() {
     this.submitted = true;
-
-    alert(this.deviceForm.controls['route'].value)
-
     // stop here if form is invalid
     if (this.deviceForm.invalid) {
       return;
@@ -170,14 +167,10 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   }
 
   onRouteChange(evt) {
-    console.log(evt);
-    //this.deviceForm.patchValue({route: {label: evt.value, value: evt.value}});
     this.routeStatus.filled = true;
   }
 
   onReadingBookChange(evt) {
-    console.log(evt);
-    //this.deviceForm.patchValue({route: {label: evt.value, value: evt.value}});
     this.readingBookStatus.filled = true;
   }
 

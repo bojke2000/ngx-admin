@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -12,12 +12,14 @@ import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
 import { UserCard } from '../../domain/user-card';
 import { UserCardColumnService } from '../../service/user-card-column.service';
 import { UserCardService } from '../../service/user-card.service';
+import { Option } from './../../domain/option';
+import { RouteService } from './../../service/route.service';
+import { Dropdown } from 'primeng/dropdown';
 
 @Component({
   selector: 'ngx-device',
   templateUrl: './device.component.html',
   styleUrls: ['./device.component.css'],
-
 })
 export class DeviceComponent extends AbstractComponent implements OnInit {
   deviceForm: FormGroup;
@@ -25,6 +27,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   displayDialog: boolean;
   submitted = false;
   zoneDevice  = false;
+  routes: Option[];
 
   userCards: UserCard[];
   totalRecords: number;
@@ -34,10 +37,20 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   @ViewChild('table', { static: false }) table: Table;
   selectedUserCard: UserCard;
 
+  @ViewChild('ddStatus')
+  routeStatus: Dropdown;
+
+  @ViewChild('ddReadingBookStatus')
+  readingBookStatus: Dropdown;
+
+  @ViewChild('ddMunicipalityStatus')
+  ddMunicipalityStatus: Dropdown;
+
   constructor(
     private formBuilder: FormBuilder,
     private userCardService: UserCardService,
     private userCardColumnService: UserCardColumnService,
+    private routeService: RouteService,
     private router: Router,
     translate: TranslateService) {
     super(translate);
@@ -53,6 +66,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       address: ['', [Validators.required]],
       addressNo: ['', [Validators.required]],
       addressNo2: [''],
+      municipality: ['', [Validators.required]],
       route: ['', [Validators.required]],
       readingBook: ['', [Validators.required]],
       variance: ['', [Validators.required]],
@@ -71,6 +85,10 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       zoneDevice: [null, Validators.required],
     });
 
+    this.routeService.getRoutesAsOptions().then(routes => {
+      this.routes = routes;
+    });
+
     this.cols = [
       { field: 'id', header: 'ID', width: '50px' },
     ];
@@ -80,6 +98,10 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     });
 
     this.loading = true;
+  }
+
+  get routes$() {
+    return of(this.routes);
   }
 
   get zoneDevice$() {
@@ -131,6 +153,8 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   save() {
     this.submitted = true;
 
+    alert(this.deviceForm.controls['route'].value)
+
     // stop here if form is invalid
     if (this.deviceForm.invalid) {
       return;
@@ -143,5 +167,21 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
   handleChange(event: any) {
     this.zoneDevice = !this.zoneDevice;
+  }
+
+  onRouteChange(evt) {
+    console.log(evt);
+    //this.deviceForm.patchValue({route: {label: evt.value, value: evt.value}});
+    this.routeStatus.filled = true;
+  }
+
+  onReadingBookChange(evt) {
+    console.log(evt);
+    //this.deviceForm.patchValue({route: {label: evt.value, value: evt.value}});
+    this.readingBookStatus.filled = true;
+  }
+
+  onMunicipalityChange(evt) {
+    this.ddMunicipalityStatus.filled = true;
   }
 }

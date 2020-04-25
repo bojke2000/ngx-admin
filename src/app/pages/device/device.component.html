@@ -32,25 +32,23 @@
           <div class="ui-g-12">
             <div class="ui-g-3">
               <span class="ui-float-label">
-                <input pInputText id="route" formControlName="route"
-                  onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                  [ngClass]="{ 'is-invalid': submitted && f.route.errors }" />
-                <label for="route">{{ 'Municipality' | translate }}</label>
+                <p-dropdown [options]="routes$ | async" name="municipality"
+                        [autoDisplayFirst]="false"   #ddMunicipalityStatus (onChange)="onMunicipalityChange($event)"
+                        formControlName="municipality" optionLabel="label" editable="true"></p-dropdown>
+                <label for="municipality">{{ 'Municipality' | translate }}</label>
               </span>
             </div>
             <div class="ui-g-3">
               <span class="ui-float-label">
-                <input pInputText id="readingBook" formControlName="readingBook"
-                  onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                  [ngClass]="{ 'is-invalid': submitted && f.readingBook.errors }" />
-                <label for="readingBook">{{ 'Reading Book' | translate }}</label>
-              </span>
+                  <p-dropdown [options]="routes$ | async" name="readingBook"
+                        [autoDisplayFirst]="false"   #ddReadingBookStatus (onChange)="onReadingBookChange($event)"
+                        formControlName="readingBook" optionLabel="label" editable="true"></p-dropdown>
+                  <label for="readingBook">{{ 'Reading Book' | translate }}</label>
+                </span>
             </div>
             <div class="ui-g-3">
               <span class="ui-float-label">
-                <input pInputText id="route" formControlName="route"
-                  onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                  [ngClass]="{ 'is-invalid': submitted && f.route.errors }" />
+                <p-dropdown [options]="routes$ | async" name="route"  [autoDisplayFirst]="false"   #ddStatus (onChange)="onRouteChange($event)"  formControlName="route" optionLabel="label" editable="true"></p-dropdown>
                 <label for="route">{{ 'Route' | translate }}</label>
               </span>
             </div>

@@ -15,11 +15,12 @@ export class RouteService extends AbstractService {
     super(http);
   }
 
-  getCitiesAsOptions(query?: string) {
+  getRoutesAsOptions(query?: string) {
+    var url = `${this.url}/options`;
     if (query !== undefined) {
-      this.url += '/options?query=' + query;
+      url += '?query=' + query;
     }
-    return this.http.get<any>(this.url)
+    return this.http.get<any>(url)
       .toPromise()
       .then(res => <Option[]>res.data)
       .then(data => data);

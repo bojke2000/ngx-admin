@@ -1,26 +1,27 @@
+
 export interface UserCard {
   id?: number;
   customerId: string;
+  regNr: number;
+  regNr2: number;
   customerName: string;
-  regNr: string;
-  regNrSuffix: string;
   address: string;
   addressNo: string;
   addressNo2: string;
-
-  deviceId: string;
-  gsmId: number;
-  wmbusId: number;
-  medium: string;
-
-  customerRemarks: string;
-  siteRemarks: string;
-  routeRemarks: string;
   route: string;
-  adogsmLocation: string;
-  adogsmRemarks: string;
+  readingBook: string;
+  variance: number;
 
+  deviceNo: string;
+  deviceId: string;
+  profile: number;
+  medium: string;
   multiplier: number;
+
+  gsmId: number;
+  gsmLongitude: string;
+  gsmLatitude: string;
+
   readTimestamp: string;
   watermeterStatus: number;
   reverseFlowStatus: number;
@@ -28,23 +29,13 @@ export interface UserCard {
   readDayStatus: number;
   magneticSabotageTime: number;
 
-  signalStrength: number;
+  signalLevel: number;
   alarms: number;
   mainBattery: number;
   gsmBattery: number;
 
-  variance: number;
-  registera: string;
-  registerb: string;
-  registerc: string;
-  registerd: string;
-  unita: string;
-  unitb: string;
-  unitc: string;
-  unitd: string;
-  multipliera: number;
-  multiplierb: number;
-  multiplierc: number;
-  multiplierd: number;
+  customerRemarks: string;
+  siteRemarks: string;
+  routeRemarks: string;
+  gsmRemarks: string;
 }
-

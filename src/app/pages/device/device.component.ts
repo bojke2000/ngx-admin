@@ -1,17 +1,17 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { LazyLoadEvent } from 'primeng/api/public_api';
 import { Table } from 'primeng/table';
-import { UserCard } from '../../domain/user-card';
-import { UserCardService } from '../../service/user-card.service';
-import { of, Observable } from 'rxjs';
-import { UserCardColumnService } from '../../service/user-card-column.service';
-import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
-import { Grid } from '../../domain/grid';
-import { DeviceType } from '../../domain/device-type';
-import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Observable, of } from 'rxjs';
 import { AbstractComponent } from '../../AbstractComponent';
+import { DeviceType } from '../../domain/device-type';
+import { Grid } from '../../domain/grid';
+import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
+import { UserCard } from '../../domain/user-card';
+import { UserCardColumnService } from '../../service/user-card-column.service';
+import { UserCardService } from '../../service/user-card.service';
 
 @Component({
   selector: 'ngx-device',
@@ -58,7 +58,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       customerRemarks: [''],
       siteRemarks: [''],
       routeRemarks: [''],
-      adogsmRemarks: [''],
+      gsmRemarks: [''],
       deviceNo: ['', [Validators.required]],
       deviceId: ['', [Validators.required]],
       profile: ['', [Validators.required]],

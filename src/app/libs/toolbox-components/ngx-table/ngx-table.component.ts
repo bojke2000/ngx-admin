@@ -34,8 +34,7 @@ export class NgxTableComponent extends AbstractComponent {
   @Input()
   dataKey1: string;
   @Output()
-  clickFunction = new EventEmitter();;
-
+  clickFunction = new EventEmitter();
 
   constructor(translate: TranslateService) {
     super(translate);
@@ -66,8 +65,6 @@ export class NgxTableComponent extends AbstractComponent {
   }
 
   onColumnClick(rowData) {
-    alert(rowData);
-
     if (this.dataKey1 && this.clickFunction) {
       this.clickFunction.emit(rowData);
     }

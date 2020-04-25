@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { LazyLoadEvent } from 'primeng/api/public_api';
+import { Dropdown } from 'primeng/dropdown';
 import { Table } from 'primeng/table';
 import { Observable, of } from 'rxjs';
 import { AbstractComponent } from '../../AbstractComponent';
@@ -14,7 +15,6 @@ import { UserCardColumnService } from '../../service/user-card-column.service';
 import { UserCardService } from '../../service/user-card.service';
 import { Option } from './../../domain/option';
 import { RouteService } from './../../service/route.service';
-import { Dropdown } from 'primeng/dropdown';
 
 @Component({
   selector: 'ngx-device',

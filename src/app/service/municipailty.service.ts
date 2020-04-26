@@ -33,16 +33,16 @@ export class MunicipalityService extends AbstractService {
     return super.get(this.url, pageable);
   }
 
-  createMunicipality(Municipality: Municipality) {
-    return super.post(this.url, Municipality);
+  createMunicipality(municipality: Municipality) {
+    return super.post(this.url, municipality);
   }
 
-  updateMunicipality(Municipality: Municipality) {
-    return super.put(this.url, Municipality);
+  updateMunicipality(municipality: Municipality) {
+    return super.put(this.url, municipality);
   }
 
-  deleteMunicipality(Municipality: Municipality) {
-    return super.delete(this.url, `${Municipality.id}`);
+  deleteMunicipality(municipality: Municipality) {
+    return super.delete(this.url, `${municipality.id}`);
   }
 
   upload(formData: FormData) {

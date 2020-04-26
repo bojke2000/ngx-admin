@@ -1,4 +1,3 @@
-import { Municipality } from './../../domain/municipality';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -12,12 +11,12 @@ import { DeviceType } from '../../domain/device-type';
 import { Grid } from '../../domain/grid';
 import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
 import { UserCard } from '../../domain/user-card';
+import { MunicipalityService } from '../../service/municipailty.service';
+import { ReadingBookService } from '../../service/reading-book.service';
 import { UserCardColumnService } from '../../service/user-card-column.service';
 import { UserCardService } from '../../service/user-card.service';
 import { Option } from './../../domain/option';
 import { RouteService } from './../../service/route.service';
-import { ReadingBookService } from '../../service/reading-book.service';
-import { MunicipalityService } from '../../service/municipailty.service';
 
 @Component({
   selector: 'ngx-device',

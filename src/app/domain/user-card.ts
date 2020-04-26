@@ -17,6 +17,7 @@ export interface UserCard {
   deviceId: string;
   profile: number;
   medium: string;
+  mode: number;
   multiplier: number;
 
   gsmId: number;
@@ -39,4 +40,10 @@ export interface UserCard {
   siteRemarks: string;
   routeRemarks: string;
   gsmRemarks: string;
+
+  device_type: number;
+  indexa: number;
+  indexb: number;
+  indexc: number;
+  indexd: number;
 }

@@ -30,15 +30,9 @@ export const MENU_ITEMS: NbMenuItem[] = [
         home: false,
       },
       {
-        title: 'GSM2 Devices',
+        title: 'Devices',
         icon: 'keypad-outline',
         link: '/pages/device',
-        home: false,
-      },
-      {
-        title: 'WMBUS Devices',
-        icon: 'keypad-outline',
-        link: '/pages/wmbus-device',
         home: false,
       },
       {

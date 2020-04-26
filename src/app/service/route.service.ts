@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
 import { AbstractService } from '../abstract.service';
 import { Option } from '../domain/option';
 import { Pageable } from '../domain/pageable';
 import { Route } from '../domain/route';
+
 
 @Injectable()
 export class RouteService extends AbstractService {

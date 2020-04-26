@@ -8,6 +8,7 @@ export interface UserCard {
   address: string;
   addressNo: string;
   addressNo2: string;
+  municipality: string;
   route: string;
   readingBook: string;
   variance: number;

@@ -1,7 +1,7 @@
 <div class="row">
   <nb-card style="width: 100%">
     <nb-card-body>
-      <ngx-title-header title='GSM2 Devices'></ngx-title-header>
+      <ngx-title-header title='Devices'></ngx-title-header>
 
       <ngx-table [columns]="cols$ | async" [value]="userCards" (lazyLoad)="loadUserCardsLazy($event)"
         [selection]="selectedUserCard" dataKey="customerId" [totalRecords]="totalRecords" [loading]="loading">
@@ -48,7 +48,7 @@
             </div>
             <div class="ui-g-3">
               <span class="ui-float-label">
-                <p-dropdown [options]="routes$ | async" name="route"  [autoDisplayFirst]="false"   #ddStatus (onChange)="onRouteChange($event)"  formControlName="route" optionLabel="label" editable="true"></p-dropdown>
+                <p-dropdown [options]="routes$ | async" name="route"  [autoDisplayFirst]="false"   #ddStatus (onChange)="onRouteChange($event)"  formControlName="route" editable="true"></p-dropdown>
                 <label for="route">{{ 'Route' | translate }}</label>
               </span>
             </div>

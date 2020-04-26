@@ -1,3 +1,5 @@
+import { MunicipalityService } from './service/municipailty.service';
+import { ReadingBookService } from './service/reading-book.service';
 /**
  * @license
  * Copyright Akveo. All Rights Reserved.
@@ -111,7 +113,7 @@ import { RouteService } from './service/route.service';
     }),
   ],
   providers: [AuthGuard, UserCardService, UserAccountService, MailAccountService, RouteService,
-    UserAccountTypesService, CityService, RoleService, TemplateService, ImportUserCardService,
+    ReadingBookService, MunicipalityService, UserAccountTypesService, CityService, RoleService, TemplateService, ImportUserCardService,
     UserCardColumnService, { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true},
     { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: () => false}],
   bootstrap: [AppComponent],

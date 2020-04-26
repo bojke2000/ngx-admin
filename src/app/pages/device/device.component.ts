@@ -1,3 +1,4 @@
+import { Municipality } from './../../domain/municipality';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -15,6 +16,8 @@ import { UserCardColumnService } from '../../service/user-card-column.service';
 import { UserCardService } from '../../service/user-card.service';
 import { Option } from './../../domain/option';
 import { RouteService } from './../../service/route.service';
+import { ReadingBookService } from '../../service/reading-book.service';
+import { MunicipalityService } from '../../service/municipailty.service';
 
 @Component({
   selector: 'ngx-device',
@@ -23,11 +26,13 @@ import { RouteService } from './../../service/route.service';
 })
 export class DeviceComponent extends AbstractComponent implements OnInit {
   deviceForm: FormGroup;
-  device = { name: undefined, password: undefined };
+  device: UserCard = undefined;
   displayDialog: boolean;
   submitted = false;
   zoneDevice  = false;
   routes: Option[];
+  readingBooks: Option[];
+  municipalities: Option[];
 
   userCards: UserCard[];
   totalRecords: number;
@@ -51,6 +56,8 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     private userCardService: UserCardService,
     private userCardColumnService: UserCardColumnService,
     private routeService: RouteService,
+    private readingBookService: ReadingBookService,
+    private municipalityService: MunicipalityService,
     private router: Router,
     translate: TranslateService) {
     super(translate);
@@ -87,6 +94,14 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
     this.routeService.getRoutesAsOptions().then(routes => {
       this.routes = routes;
+    });
+
+    this.readingBookService.getReadingBooksAsOptions().then(readingBooks => {
+      this.readingBooks = readingBooks;
+    });
+
+    this.municipalityService.getMunicipalitiesAsOptions().then(municipalities => {
+      this.municipalities = municipalities;
     });
 
     this.cols = [
@@ -142,7 +157,54 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   }
 
   showDialogToAdd() {
-    this.device = { name: 'Test', password: 'Password' };
+    this.device = {
+      id : undefined,
+      customerId : undefined,
+      regNr : undefined,
+      regNr2 : undefined,
+      customerName : undefined,
+      address : undefined,
+      addressNo : undefined,
+      addressNo2 : undefined,
+      municipality : undefined,
+      route : undefined,
+      readingBook : undefined,
+      variance : undefined,
+
+      deviceNo : undefined,
+      deviceId : undefined,
+      profile : undefined,
+      medium : undefined,
+      mode : undefined,
+      multiplier : undefined,
+
+      gsmId : undefined,
+      gsmLongitude : undefined,
+      gsmLatitude : undefined,
+
+      readTimestamp : undefined,
+      watermeterStatus : undefined,
+      reverseFlowStatus : undefined,
+      diffLastRead : undefined,
+      readDayStatus : undefined,
+      magneticSabotageTime : undefined,
+
+      signalLevel : undefined,
+      alarms : undefined,
+      mainBattery : undefined,
+      gsmBattery : undefined,
+
+      customerRemarks : undefined,
+      siteRemarks : undefined,
+      routeRemarks : undefined,
+      gsmRemarks : undefined,
+
+      device_type : undefined,
+      indexa : undefined,
+      indexb : undefined,
+      indexc : undefined,
+      indexd : undefined,
+    };
     this.displayDialog = true;
   }
 

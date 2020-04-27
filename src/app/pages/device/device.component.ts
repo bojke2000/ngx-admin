@@ -32,6 +32,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   routes: Option[];
   readingBooks: Option[];
   municipalities: Option[];
+  modes: Option[];
 
   userCards: UserCard[];
   totalRecords: number;
@@ -49,6 +50,9 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
   @ViewChild('ddMunicipalityStatus')
   ddMunicipalityStatus: Dropdown;
+
+  @ViewChild('ddModeStatus')
+  ddModeStatus: Dropdown;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -82,8 +86,10 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       gsmRemarks: [''],
       deviceNo: ['', [Validators.required]],
       deviceId: ['', [Validators.required]],
+      mode: ['', [Validators.required]],
       profile: ['', [Validators.required]],
       medium: ['', [Validators.required]],
+      unit: ['', [Validators.required]],
       gsmLongitude: [''],
       gsmLatitude: [''],
       multiplier: ['', [Validators.required]],
@@ -102,6 +108,12 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     this.municipalityService.getMunicipalitiesAsOptions().then(municipalities => {
       this.municipalities = municipalities;
     });
+
+    this.modes = [
+        {label: 'Mode A', value: '0'},
+        {label: 'Mode B', value: '1'},
+        {label: 'Mode C', value: '2'}
+    ];
 
     this.cols = [
       { field: 'id', header: 'ID', width: '50px' },
@@ -237,5 +249,9 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
   onMunicipalityChange(evt) {
     this.ddMunicipalityStatus.filled = true;
+  }
+
+  onModeChange(evt) {
+    this.ddModeStatus.filled = true;
   }
 }

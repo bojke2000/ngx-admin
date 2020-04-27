@@ -111,6 +111,8 @@
   "Reading Book": "Čitacka knjiga",
   "Device No": "Broj vodomera",
   "Municipality": "Opština",
-  "Zone device": "Zonski merač"
-
+  "Zone device": "Zonski merač",
+  "Mode A": "Mod A",
+  "Mode B": "Mod B",
+  "Mode C": "Mod C"
 }

@@ -114,5 +114,12 @@
   "Zone device": "Zonski merač",
   "Mode A": "Mod A",
   "Mode B": "Mod B",
-  "Mode C": "Mod C"
+  "Mode C": "Mod C",
+  "Cold Water": "Hladna voda",
+  "Hot Water": "Hot Voda",
+  "Gasoline": "Gas",
+  "Direct": "Direktan smer",
+  "Reverse": "Obrnut smer",
+  "Preasure": "Pritisak",
+  "Temperature": "Temperatura"
 }

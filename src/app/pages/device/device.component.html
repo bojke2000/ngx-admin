@@ -129,7 +129,7 @@
                 </span>
               </div>
 
-              <div class="ui-g-12"><u><b>{{ 'Remarks' | translate }}</b></u></div>
+              <div class="ui-g-12" style="padding-top: 24px;"><u><b>{{ 'Remarks' | translate }}</b></u></div>
 
               <div class="ui-g-6">
                 <span class="ui-float-label">
@@ -189,34 +189,34 @@
 
               <div class="ui-g-4">
                 <span class="ui-float-label">
-                  <p-dropdown [options]="modes" name="mode" style="width: 100px;"
-                    [autoDisplayFirst]="false"   editable="true" #ddModeStatus (onChange)="onModeChange($event)"
+                  <p-dropdown [options]="modes" name="mode"
+                    [autoDisplayFirst]="false"
                     formControlName="mode" optionLabel="label" ></p-dropdown>
                     <label for="mode">{{ 'Mod (A,B, C)' | translate }}</label>
                </span>
               </div>
               <div class="ui-g-4">
                 <span class="ui-float-label">
-                  <input pInputText id="profile" formControlName="profile"
-                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.profile.errors }" />
+                  <p-dropdown [options]="profiles" name="profile"
+                  [autoDisplayFirst]="false"
+                  formControlName="profile" optionLabel="label" ></p-dropdown>
                   <label for="profile">{{ 'Profile' | translate }}</label>
                 </span>
               </div>
               <div class="ui-g-4">
                 <span class="ui-float-label">
-                  <input pInputText id="medium" formControlName="medium"
-                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.medium.errors }" />
+                  <p-dropdown [options]="meduiums" name="medium"
+                  [autoDisplayFirst]="false"
+                  formControlName="medium" optionLabel="label" ></p-dropdown>
                   <label for="medium">{{ 'Medium' | translate }}</label>
                 </span>
               </div>
 
               <div class="ui-g-4">
                 <span class="ui-float-label">
-                  <input pInputText id="unit" formControlName="unit"
-                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.medium.errors }" />
+                  <p-dropdown [options]="units" name="unit"
+                  [autoDisplayFirst]="false"
+                  formControlName="unit" optionLabel="label" ></p-dropdown>
                   <label for="unit">{{ 'Unit' | translate }}</label>
                 </span>
               </div>
@@ -250,13 +250,12 @@
 
               <div class="ui-g-5">
                 <span class="ui-float-label">
-                  <input pInputText id="multiplier" formControlName="multiplier"
-                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.multiplier.errors }" />
+                  <p-dropdown [options]="multipliers" name="multiplier"
+                  [autoDisplayFirst]="false"
+                  formControlName="multiplier" optionLabel="label" ></p-dropdown>
                   <label for="multiplier">{{ 'Multiplier' | translate }}</label>
                 </span>
               </div>
-
 
               <div class="ui-g-12">
                 <div class="ui-g-12"><nb-checkbox (checkedChange)="handleChange($event)"><u><b>{{ 'Zone device' | translate }}</b></u></nb-checkbox></div>
@@ -264,37 +263,37 @@
 
                 <div class="ui-g-6" [hidden]="!(zoneDevice$ | async)">
                   <span class="ui-float-label">
-                    <input pInputText id="deviceNo" formControlName="deviceNo"
-                      onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                      [ngClass]="{ 'is-invalid': submitted && f.deviceNo.errors }" />
-                    <label for="deviceNo">{{ 'Index A' | translate }}</label>
+                    <p-dropdown [options]="indexes" name="indexa"
+                      [autoDisplayFirst]="false"
+                      formControlName="indexa" optionLabel="label" ></p-dropdown>
+                  <label for="indexa">{{ 'Index A' | translate }}</label>
                   </span>
                 </div>
 
                 <div class="ui-g-6" [hidden]="!(zoneDevice$ | async)">
                   <span class="ui-float-label">
-                    <input pInputText id="deviceId" formControlName="deviceId"
-                      onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                      [ngClass]="{ 'is-invalid': submitted && f.deviceId.errors }" />
-                    <label for="deviceId">{{ 'Index B' | translate }}</label>
+                    <p-dropdown [options]="indexes" name="indexb"
+                      [autoDisplayFirst]="false"
+                      formControlName="indexb" optionLabel="label" ></p-dropdown>
+                  <label for="indexb">{{ 'Index B' | translate }}</label>
                   </span>
                 </div>
 
                 <div class="ui-g-6" [hidden]="!(zoneDevice$ | async)">
                   <span class="ui-float-label">
-                    <input pInputText id="deviceId" formControlName="deviceId"
-                      onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                      [ngClass]="{ 'is-invalid': submitted && f.deviceId.errors }" />
-                    <label for="deviceId">{{ 'Index C' | translate }}</label>
+                    <p-dropdown [options]="indexes" name="indexc"
+                      [autoDisplayFirst]="false"
+                      formControlName="indexc" optionLabel="label" ></p-dropdown>
+                  <label for="indexc">{{ 'Index C' | translate }}</label>
                   </span>
                 </div>
 
                 <div class="ui-g-6" [hidden]="!(zoneDevice$ | async)">
                   <span class="ui-float-label">
-                    <input pInputText id="profile" formControlName="profile"
-                      onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                      [ngClass]="{ 'is-invalid': submitted && f.profile.errors }" />
-                    <label for="profile">{{ 'Index D' | translate }}</label>
+                    <p-dropdown [options]="indexes" name="indexd"
+                      [autoDisplayFirst]="false"
+                      formControlName="indexd" optionLabel="label" ></p-dropdown>
+                  <label for="indexd">{{ 'Index D' | translate }}</label>
                   </span>
                 </div>
             </div>

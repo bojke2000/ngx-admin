@@ -81,20 +81,24 @@ body .ui-table .ui-sortable-column .ui-sortable-column-icon {
 }
 
 body .ui-inputtext, textarea {
-  border-top: 0 !important;
+ /* border-top: 0 !important;
   border-left: 0 !important;
   border-right: 0 !important;
+  */
+  border-top-color: white !important;
+  border-left-color: white !important;
+  border-right-color: white !important;
   border-bottom: 1px solid #a9acb1ec !important;
   border-radius: 0 !important;
 }
 
 body .ui-dropdown {
-  border-top: 0 !important;
-  border-left: 0 !important;
-  border-right: 0 !important;
+  border-top-color: white !important;
+  border-left-color: white !important;
+  border-right-color: white !important;
   border-bottom: 1px solid #a9acb1ec !important;
   border-radius: 0 !important;
-  margin-top: 5px !important;
+  margin-top: -3px !important;
 }
 
 body .ui-dropdown .ui-inputtext {

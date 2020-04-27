@@ -8,7 +8,7 @@ import { Pageable } from '../domain/pageable';
 @Injectable()
 export class ReadingBookService extends AbstractService {
 
-  private url = this.prefix + 'reading-book';
+  private url = this.prefix + 'reading-books';
 
   constructor(http: HttpClient) {
     super(http);

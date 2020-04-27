@@ -33,6 +33,11 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   readingBooks: Option[];
   municipalities: Option[];
   modes: Option[];
+  profiles: Option[];
+  meduiums: Option[];
+  units: Option[];
+  multipliers: Option[];
+  indexes: Option[];
 
   userCards: UserCard[];
   totalRecords: number;
@@ -95,6 +100,10 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       multiplier: ['', [Validators.required]],
       gsmId: [''],
       zoneDevice: [null, Validators.required],
+      indexa: ['', [Validators.required]],
+      indexb: ['', [Validators.required]],
+      indexc: ['', [Validators.required]],
+      indexd: ['', [Validators.required]],
     });
 
     this.routeService.getRoutesAsOptions().then(routes => {
@@ -113,6 +122,43 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
         {label: 'Mode A', value: '0'},
         {label: 'Mode B', value: '1'},
         {label: 'Mode C', value: '2'}
+    ];
+
+    this.profiles = [
+      {label: 'DN15', value: 'DN15'},
+      {label: 'DN25', value: 'DN25'},
+      {label: 'DN32', value: 'DN32'},
+      {label: 'DN40', value: 'DN40'},
+      {label: 'DN50', value: 'DN50'},
+      {label: 'DN80', value: 'DN80'},
+      {label: 'DN100', value: 'DN100'},
+      {label: 'DN150', value: 'DN150'},
+      {label: 'DN200', value: 'DN200'},
+    ];
+
+
+    this.meduiums = [
+      {label: this.translate.instant('Cold Water'), value: '0'},
+      {label: this.translate.instant('Hot Water'), value: '1'},
+      {label: this.translate.instant('Gasoline'), value: '2'},
+    ];
+
+    this.units = [
+      {label: '㎥ ', value: '0'},
+      {label: 'L ', value: '1'},
+    ];
+
+    this.multipliers = [
+      {label: '0.001 ', value: '0.001'},
+      {label: '0.010', value: '0.010'},
+      {label: '0.100', value: '0.100'},
+    ];
+
+    this.indexes = [
+      {label: this.translate.instant('Direct'), value: '0'},
+      {label: this.translate.instant('Reverse'), value: '1'},
+      {label: this.translate.instant('Preasure'), value: '2'},
+      {label: this.translate.instant('Temperature'), value: '3'},
     ];
 
     this.cols = [

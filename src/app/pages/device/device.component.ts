@@ -309,6 +309,14 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
   }
 
+  delete() {
+     this.userCardService.deleteUserCard(this.device)
+     .pipe(takeUntil(this.destroy$)).subscribe(val => {
+      this.displayDialog = false;
+      this.loadPageable(this.pageable);
+     });
+  }
+
   getValue(value: any): string {
     if (value === undefined) {
       return value;
@@ -317,14 +325,6 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     } else if (value.hasOwnProperty('value')) {
       return value.value;
     }
-  }
-
-  delete() {
-     this.userCardService.deleteUserCard(this.device)
-     .pipe(takeUntil(this.destroy$)).subscribe(val => {
-      this.displayDialog = false;
-      this.loadPageable(this.pageable);
-     });
   }
 
   handleChange(event: any) {

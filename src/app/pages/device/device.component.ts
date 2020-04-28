@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { LazyLoadEvent } from 'primeng/api/public_api';
 import { Dropdown } from 'primeng/dropdown';
 import { Table } from 'primeng/table';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { AbstractComponent } from '../../AbstractComponent';
 import { Grid } from '../../domain/grid';
 import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
@@ -16,6 +16,7 @@ import { UserCardColumnService } from '../../service/user-card-column.service';
 import { UserCardService } from '../../service/user-card.service';
 import { Option } from './../../domain/option';
 import { RouteService } from './../../service/route.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'ngx-device',
@@ -37,6 +38,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   units: Option[];
   multipliers: Option[];
   indexes: Option[];
+  pageable: {};
 
   userCards: UserCard[];
   totalRecords: number;
@@ -60,6 +62,8 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
   @ViewChild('dddMultiplierStatus')
   ddMultiplierStatus: Dropdown;
+
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -189,13 +193,17 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   get f() { return this.deviceForm.controls; }
 
 
-  private loadPage(page: number, size: number, sort?: string) {
-    const pageable = { page, size, sort };
-    this.userCardService.findAll(pageable).then((ngresp: NgPrimeGridResponse) => {
+  private loadPageable(pageable: any) {
+    this.userCardService.findAll(this.pageable).then((ngresp: NgPrimeGridResponse) => {
       this.userCards = ngresp.data;
       this.totalRecords = ngresp.data.length * ngresp.totalPages;
       this.loading = false;
     });
+  }
+
+  private loadPage(page: number, size: number, sort?: string) {
+    this.pageable = { page, size, sort };
+    this.loadPageable(this.pageable);
   }
 
   loadUserCardsLazy(event: LazyLoadEvent) {
@@ -296,7 +304,8 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       this.device.indexd = this.getValue(this.device.indexd);
     }
 
-    this.userCardService.saveUser(this.device);
+    this.userCardService.saveUser(this.device)
+      .pipe(takeUntil(this.destroy$)).subscribe(val => this.loadPageable(this.pageable));
 
   }
 
@@ -311,7 +320,11 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   }
 
   delete() {
-     this.userCardService.deleteUserCard(this.device);
+     this.userCardService.deleteUserCard(this.device)
+     .pipe(takeUntil(this.destroy$)).subscribe(val => {
+      this.displayDialog = false;
+      this.loadPageable(this.pageable);
+     });
   }
 
   handleChange(event: any) {

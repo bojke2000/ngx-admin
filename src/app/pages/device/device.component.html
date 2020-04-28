@@ -198,7 +198,7 @@
               <div class="ui-g-4">
                 <span class="ui-float-label">
                   <p-dropdown [options]="profiles" name="profile"
-                  [autoDisplayFirst]="false"
+                  [autoDisplayFirst]="false" (onChange)="onProfileChange($event)"
                   formControlName="profile" optionLabel="label" ></p-dropdown>
                   <label for="profile">{{ 'Profile' | translate }}</label>
                 </span>
@@ -250,7 +250,7 @@
 
               <div class="ui-g-5">
                 <span class="ui-float-label">
-                  <p-dropdown [options]="multipliers" name="multiplier"
+                  <p-dropdown [options]="multipliers" #ddMultiplierStatus name="multiplier"
                   [autoDisplayFirst]="false"
                   formControlName="multiplier" optionLabel="label" ></p-dropdown>
                   <label for="multiplier">{{ 'Multiplier' | translate }}</label>

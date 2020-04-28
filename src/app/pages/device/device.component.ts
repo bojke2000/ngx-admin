@@ -59,6 +59,9 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   @ViewChild('ddModeStatus')
   ddModeStatus: Dropdown;
 
+  @ViewChild('dddMultiplierStatus')
+  ddMultiplierStatus: Dropdown;
+
   constructor(
     private formBuilder: FormBuilder,
     private userCardService: UserCardService,
@@ -84,7 +87,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       municipality: ['', [Validators.required]],
       route: ['', [Validators.required]],
       readingBook: ['', [Validators.required]],
-      variance: ['', [Validators.required]],
+      variance: ['20', [Validators.required]],
       customerRemarks: [''],
       siteRemarks: [''],
       routeRemarks: [''],
@@ -99,11 +102,11 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       gsmLatitude: [''],
       multiplier: ['', [Validators.required]],
       gsmId: [''],
-      zoneDevice: [null, Validators.required],
-      indexa: ['', [Validators.required]],
-      indexb: ['', [Validators.required]],
-      indexc: ['', [Validators.required]],
-      indexd: ['', [Validators.required]],
+      zoneDevice: [null],
+      indexa: [''],
+      indexb: [''],
+      indexc: [''],
+      indexd: [''],
     });
 
     this.routeService.getRoutesAsOptions().then(routes => {
@@ -121,7 +124,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     this.modes = [
         {label: 'Mode A', value: '0'},
         {label: 'Mode B', value: '1'},
-        {label: 'Mode C', value: '2'}
+        {label: 'Mode C', value: '2'},
     ];
 
     this.profiles = [
@@ -275,6 +278,9 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     if (this.deviceForm.invalid) {
       return;
     }
+
+    this.device = {...this.deviceForm.value};
+    console.log(this.device);
   }
 
   delete() {
@@ -299,5 +305,27 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
   onModeChange(evt) {
     this.ddModeStatus.filled = true;
+  }
+
+  onProfileChange(evt) {
+    switch (evt.value.value) {
+      case 'DN15':
+      case 'DN20':
+      case 'DN25':
+        this.deviceForm.patchValue({multiplier: this.multipliers[0]});
+        break;
+      case 'DN32':
+      case 'DN40':
+        this.deviceForm.patchValue({multiplier: this.multipliers[1]});
+        break;
+      case 'DN50':
+      case 'DN65':
+      case 'DN80':
+      case 'DN100':
+      case 'DN150':
+      case 'DN200':
+        this.deviceForm.patchValue({multiplier: this.multipliers[2]});
+        break;
+    }
   }
 }

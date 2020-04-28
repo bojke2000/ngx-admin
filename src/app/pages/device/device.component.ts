@@ -191,7 +191,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
   private loadPage(page: number, size: number, sort?: string) {
     const pageable = { page, size, sort };
-    this.userCardService.findAllByDeviceType(Grid.USER_CARD, pageable).then((ngresp: NgPrimeGridResponse) => {
+    this.userCardService.findAll(pageable).then((ngresp: NgPrimeGridResponse) => {
       this.userCards = ngresp.data;
       this.totalRecords = ngresp.data.length * ngresp.totalPages;
       this.loading = false;
@@ -311,7 +311,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   }
 
   delete() {
-    alert('Delete FIXME');
+     this.userCardService.deleteUserCard(this.device);
   }
 
   handleChange(event: any) {

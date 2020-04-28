@@ -17,10 +17,6 @@ export class UserCardService extends AbstractService {
     return this.get(this.url, pageable);
   }
 
-  findAllByDeviceType(deviceType: number, pageable?: Pageable) {
-    return this.get(`${this.url}?deviceType=${deviceType}`, pageable);
-  }
-
   saveUser(userCard: UserCard): Observable<UserCard> {
     return this.post(this.url, userCard);
   }

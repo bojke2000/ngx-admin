@@ -1,14 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { LazyLoadEvent } from 'primeng/api/public_api';
 import { Table } from 'primeng/table';
-import { UserCard } from '../../domain/user-card';
-import { UserCardService } from '../../service/user-card.service';
-import { of, Observable } from 'rxjs';
-import { UserCardColumnService } from '../../service/user-card-column.service';
-import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
+import { Observable, of } from 'rxjs';
 import { Grid } from '../../domain/grid';
-import { Router } from '@angular/router';
+import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
+import { UserCard } from '../../domain/user-card';
+import { UserCardColumnService } from '../../service/user-card-column.service';
+import { UserCardService } from '../../service/user-card.service';
 
 @Component({
   selector: 'ngx-device',
@@ -53,7 +53,7 @@ export class WmbusDeviceComponent implements OnInit {
 
   private loadPage(page: number, size: number, sort?: string) {
     const pageable = { page, size, sort};
-    this.userCardService.findAllByDeviceType(Grid.DEVICE_WMBUS, pageable).then((ngresp: NgPrimeGridResponse) => {
+    this.userCardService.findAll(pageable).then((ngresp: NgPrimeGridResponse) => {
       this.userCards = ngresp.data;
       this.totalRecords = ngresp.data.length * ngresp.totalPages;
       this.loading = false;

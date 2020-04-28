@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MessageService, SelectItem } from 'primeng/api';
 import { Observable, of } from 'rxjs';
-
 import { AbstractComponent } from '../../AbstractComponent';
+import { Grid } from '../../domain/grid';
 import { CityService } from '../../service/city.service';
 import { ImportUserCardService } from '../../service/import-user-card.service';
-import { DeviceType } from '../../domain/device-type';
+
 
 @Component({
   selector: 'ngx-import-user-card',
@@ -68,10 +68,9 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     this.firstForm.patchValue({fileType: 'XML'});
 
     this.deviceTypes = [
-      { label: 'GMS2 Device', value: DeviceType.DEVICE_GSM },
-      { label: 'WMBUS Device', value: DeviceType.DEVICE_WMBUS },
+      { label: 'Device', value: Grid.DEVICE },
     ];
-    this.deviceForm.patchValue({deviceType: DeviceType.DEVICE_GSM});
+    this.deviceForm.patchValue({deviceType: Grid.USER_CARD});
 
   }
 
@@ -123,7 +122,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
 
     this.importUserCardService.import(importUserCardRespDto).then(() => {
       this.loading = false;
-      const link =  (this.deviceForm.controls['deviceType'].value === DeviceType.DEVICE_GSM) ?
+      const link =  (this.deviceForm.controls['deviceType'].value === Grid.USER_CARD) ?
                         'device' : 'wmbus-device';
       this.router.navigate([`/pages/${link}`]);
     });

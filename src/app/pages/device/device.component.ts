@@ -7,7 +7,6 @@ import { Dropdown } from 'primeng/dropdown';
 import { Table } from 'primeng/table';
 import { Observable, of } from 'rxjs';
 import { AbstractComponent } from '../../AbstractComponent';
-import { DeviceType } from '../../domain/device-type';
 import { Grid } from '../../domain/grid';
 import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
 import { UserCard } from '../../domain/user-card';
@@ -168,7 +167,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       { field: 'id', header: 'ID', width: '50px' },
     ];
 
-    this.userCardColumnService.findAll(Grid.DEVICE_GSM).then(columns => {
+    this.userCardColumnService.findAll(Grid.USER_CARD).then(columns => {
       this.cols = [...this.cols, ...columns];
     });
 
@@ -192,7 +191,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
   private loadPage(page: number, size: number, sort?: string) {
     const pageable = { page, size, sort };
-    this.userCardService.findAllByDeviceType(DeviceType.DEVICE_GSM, pageable).then((ngresp: NgPrimeGridResponse) => {
+    this.userCardService.findAllByDeviceType(Grid.USER_CARD, pageable).then((ngresp: NgPrimeGridResponse) => {
       this.userCards = ngresp.data;
       this.totalRecords = ngresp.data.length * ngresp.totalPages;
       this.loading = false;
@@ -237,6 +236,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       medium : undefined,
       mode : undefined,
       multiplier : undefined,
+      unit: undefined,
 
       gsmId : undefined,
       gsmLongitude : undefined,
@@ -259,7 +259,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       routeRemarks : undefined,
       gsmRemarks : undefined,
 
-      device_type : undefined,
+      deviceType : undefined,
       indexa : undefined,
       indexb : undefined,
       indexc : undefined,
@@ -280,7 +280,34 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     }
 
     this.device = {...this.deviceForm.value};
-    console.log(this.device);
+
+    this.device.municipality = this.getValue(this.device.municipality);
+    this.device.readingBook = this.getValue(this.device.readingBook);
+    this.device.route = this.getValue(this.device.route);
+    this.device.unit = this.getValue(this.device.unit);
+    this.device.mode = this.getValue(this.device.mode);
+    this.device.multiplier = this.getValue(this.device.multiplier);
+    this.device.profile = this.getValue(this.device.profile);
+    if (this.zoneDevice) {
+      this.device.deviceType = 1;
+      this.device.indexa = this.getValue(this.device.indexa);
+      this.device.indexb = this.getValue(this.device.indexb);
+      this.device.indexc = this.getValue(this.device.indexc);
+      this.device.indexd = this.getValue(this.device.indexd);
+    }
+
+    this.userCardService.saveUser(this.device);
+
+  }
+
+  getValue(value: any): string {
+    if (value === undefined) {
+      return value;
+    } else if (value === 'string' || value instanceof String) {
+      return value;
+    } else if (value.hasOwnProperty('value')) {
+      return value.value;
+    }
   }
 
   delete() {

@@ -41,6 +41,7 @@
             <div class="ui-g-3">
               <span class="ui-float-label">
                   <p-dropdown [options]="readingBooks" name="readingBook"
+                  onclick="this.setSelectionRange(0, this.value.length)"
                         [autoDisplayFirst]="false"   #ddReadingBookStatus (onChange)="onReadingBookChange($event)"
                         formControlName="readingBook" optionLabel="label" editable="true"></p-dropdown>
                   <label for="readingBook">{{ 'Reading Book' | translate }}</label>

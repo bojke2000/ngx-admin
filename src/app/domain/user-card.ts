@@ -15,12 +15,13 @@ export interface UserCard {
 
   deviceNo: string;
   deviceId: string;
-  profile: number;
+  profile: string;
   medium: string;
-  mode: number;
-  multiplier: number;
+  mode: string;
+  multiplier: string;
+  unit: string;
 
-  gsmId: number;
+  gsmId: string;
   gsmLongitude: string;
   gsmLatitude: string;
 
@@ -41,9 +42,9 @@ export interface UserCard {
   routeRemarks: string;
   gsmRemarks: string;
 
-  device_type: number;
-  indexa: number;
-  indexb: number;
-  indexc: number;
-  indexd: number;
+  deviceType: number;
+  indexa: string;
+  indexb: string;
+  indexc: string;
+  indexd: string;
 }

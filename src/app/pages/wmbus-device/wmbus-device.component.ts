@@ -8,7 +8,6 @@ import { of, Observable } from 'rxjs';
 import { UserCardColumnService } from '../../service/user-card-column.service';
 import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
 import { Grid } from '../../domain/grid';
-import { DeviceType } from '../../domain/device-type';
 import { Router } from '@angular/router';
 
 @Component({
@@ -41,7 +40,7 @@ export class WmbusDeviceComponent implements OnInit {
       { field: 'id', header: 'ID', width: '50px' },
     ];
 
-    this.userCardColumnService.findAll(Grid.DEVICE_WMBUS).then(columns => {
+    this.userCardColumnService.findAll(Grid.DEVICE).then(columns => {
       this.cols = [...this.cols, ...columns];
     });
 
@@ -54,7 +53,7 @@ export class WmbusDeviceComponent implements OnInit {
 
   private loadPage(page: number, size: number, sort?: string) {
     const pageable = { page, size, sort};
-    this.userCardService.findAllByDeviceType(DeviceType.DEVICE_WMBUS, pageable).then((ngresp: NgPrimeGridResponse) => {
+    this.userCardService.findAllByDeviceType(Grid.DEVICE_WMBUS, pageable).then((ngresp: NgPrimeGridResponse) => {
       this.userCards = ngresp.data;
       this.totalRecords = ngresp.data.length * ngresp.totalPages;
       this.loading = false;

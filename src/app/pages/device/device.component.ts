@@ -112,17 +112,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       indexd: [''],
     });
 
-    this.routeService.getRoutesAsOptions().then(routes => {
-      this.routes = routes;
-    });
-
-    this.readingBookService.getReadingBooksAsOptions().then(readingBooks => {
-      this.readingBooks = readingBooks;
-    });
-
-    this.municipalityService.getMunicipalitiesAsOptions().then(municipalities => {
-      this.municipalities = municipalities;
-    });
+    this.loadStaticData();
 
     this.modes = [
         {label: 'Mode A', value: '0'},
@@ -305,7 +295,11 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     }
 
     this.userCardService.saveUser(this.device)
-      .pipe(takeUntil(this.destroy$)).subscribe(val => this.loadPageable(this.pageable));
+      .pipe(takeUntil(this.destroy$)).subscribe(val => {
+
+        this.loadPageable(this.pageable);
+        this.loadStaticData();
+      });
 
   }
 
@@ -315,6 +309,20 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       this.displayDialog = false;
       this.loadPageable(this.pageable);
      });
+  }
+
+  loadStaticData() {
+    this.routeService.getRoutesAsOptions().then(routes => {
+      this.routes = routes;
+    });
+
+    this.readingBookService.getReadingBooksAsOptions().then(readingBooks => {
+      this.readingBooks = readingBooks;
+    });
+
+    this.municipalityService.getMunicipalitiesAsOptions().then(municipalities => {
+      this.municipalities = municipalities;
+    });
   }
 
   getValue(value: any): string {

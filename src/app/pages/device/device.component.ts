@@ -172,6 +172,14 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     return of(this.routes);
   }
 
+  get municipalities$() {
+    return of(this.municipalities);
+  }
+
+  get readingBooks$() {
+    return of(this.readingBooks);
+  }
+
   get zoneDevice$() {
     return of(this.zoneDevice);
   }

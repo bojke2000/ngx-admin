@@ -32,7 +32,7 @@
           <div class="ui-g-12">
             <div class="ui-g-3">
               <span class="ui-float-label">
-                <p-dropdown [options]="municipalities" name="municipality"
+                <p-dropdown [options]="municipalities$ |async" name="municipality"
                         [autoDisplayFirst]="false"   #ddMunicipalityStatus (onChange)="onMunicipalityChange($event)"
                         formControlName="municipality" optionLabel="label" editable="true"></p-dropdown>
                 <label for="municipality">{{ 'Municipality' | translate }}</label>
@@ -40,7 +40,7 @@
             </div>
             <div class="ui-g-3">
               <span class="ui-float-label">
-                  <p-dropdown [options]="readingBooks" name="readingBook"
+                  <p-dropdown [options]="readingBooks$ |async" name="readingBook"
                   onclick="this.setSelectionRange(0, this.value.length)"
                         [autoDisplayFirst]="false"   #ddReadingBookStatus (onChange)="onReadingBookChange($event)"
                         formControlName="readingBook" optionLabel="label" editable="true"></p-dropdown>

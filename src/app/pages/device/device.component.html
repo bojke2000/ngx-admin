@@ -4,6 +4,7 @@
       <ngx-title-header title='Devices'></ngx-title-header>
 
       <ngx-table [columns]="cols$ | async" [value]="userCards" (lazyLoad)="loadUserCardsLazy($event)"
+        (rowSelect)="onRowSelect($event)"  (rowUnselect)="onRowUnselect($event)"
         [selection]="selectedUserCard" dataKey="customerId" [totalRecords]="totalRecords" [loading]="loading">
       </ngx-table>
 

@@ -276,7 +276,14 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   }
 
   showDialogToEdit() {
-    this.displayDialog = true;
+      //this.newDevice = false;
+      this.submitted = false;
+      this.deviceForm.patchValue({...this.device});
+      this.readingBookStatus.filled = true;
+      this.ddMunicipalityStatus.filled = true;
+      this.routeStatus.filled = true;
+
+      this.displayDialog = true;
   }
 
   save() {
@@ -396,5 +403,13 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
         this.deviceForm.patchValue({multiplier: this.multipliers[2]});
         break;
     }
+  }
+
+  onRowSelect(event: any) {
+    this.device = {...event.data};
+  }
+
+  onRowUnselect(event: any) {
+    this.device = undefined;
   }
 }

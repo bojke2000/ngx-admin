@@ -271,6 +271,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       indexc : undefined,
       indexd : undefined,
     };
+    this.deviceForm.patchValue({...this.device});
     this.displayDialog = true;
   }
 
@@ -287,13 +288,15 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
     this.device = {...this.deviceForm.value};
 
-    this.device.municipality = this.getValue(this.device.municipality);
-    this.device.readingBook = this.getValue(this.device.readingBook);
-    this.device.route = this.getValue(this.device.route);
+    this.device.municipality = this.getLabel(this.device.municipality);
+    this.device.readingBook = this.getLabel(this.device.readingBook);
+    this.device.route = this.getLabel(this.device.route);
+
     this.device.unit = this.getValue(this.device.unit);
     this.device.mode = this.getValue(this.device.mode);
     this.device.multiplier = this.getValue(this.device.multiplier);
     this.device.profile = this.getValue(this.device.profile);
+    this.device.medium = this.getValue(this.device.medium);
     if (this.zoneDevice) {
       this.device.deviceType = 1;
       this.device.indexa = this.getValue(this.device.indexa);
@@ -333,13 +336,23 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     });
   }
 
-  getValue(value: any): string {
+  getValue(value: any): any {
     if (value === undefined) {
       return value;
-    } else if (value === 'string' || value instanceof String) {
-      return value;
+    } else if (typeof value === 'string' || value instanceof String) {
+        return value;
     } else if (value.hasOwnProperty('value')) {
       return value.value;
+    }
+  }
+
+  getLabel(selection: any): any {
+    if (selection === undefined) {
+      return selection;
+    } else if (typeof selection === 'string' || selection instanceof String) {
+      return selection;
+    } else if (selection.hasOwnProperty('value')) {
+      return selection.label;
     }
   }
 

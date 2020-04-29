@@ -121,15 +121,15 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     ];
 
     this.profiles = [
-      {label: 'DN15', value: 'DN15'},
-      {label: 'DN25', value: 'DN25'},
-      {label: 'DN32', value: 'DN32'},
-      {label: 'DN40', value: 'DN40'},
-      {label: 'DN50', value: 'DN50'},
-      {label: 'DN80', value: 'DN80'},
-      {label: 'DN100', value: 'DN100'},
-      {label: 'DN150', value: 'DN150'},
-      {label: 'DN200', value: 'DN200'},
+      {label: 'DN15', value: '0'},
+      {label: 'DN25', value: '1'},
+      {label: 'DN32', value: '2'},
+      {label: 'DN40', value: '3'},
+      {label: 'DN50', value: '4'},
+      {label: 'DN80', value: '5'},
+      {label: 'DN100', value: '6'},
+      {label: 'DN150', value: '7'},
+      {label: 'DN200', value: '8'},
     ];
 
 
@@ -153,7 +153,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     this.indexes = [
       {label: this.translate.instant('Direct'), value: '0'},
       {label: this.translate.instant('Reverse'), value: '1'},
-      {label: this.translate.instant('Preasure'), value: '2'},
+      {label: this.translate.instant('Pressure'), value: '2'},
       {label: this.translate.instant('Temperature'), value: '3'},
     ];
 
@@ -364,7 +364,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   }
 
   onProfileChange(evt) {
-    switch (evt.value.value) {
+    switch (evt.value.label) {
       case 'DN15':
       case 'DN20':
       case 'DN25':

@@ -310,8 +310,9 @@
         <p-footer>
           <div *ngIf="device">
             <div class="ui-dialog-buttonpane ui-helper-clearfix">
-              <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
-              <button type="button" pButton icon="fa fa-check" (click)="save()" label="Save"></button>
+              <button type="button" *ngIf="device.id" style="float: left;" pButton (click)="delete()" label="Delete"></button>
+              <button type="button" pButton  (click)="close()" label="Close"></button>
+              <button type="button" pButton  (click)="save()" label="Save"></button>
             </div>
           </div>
         </p-footer>

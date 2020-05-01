@@ -212,6 +212,10 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
     this.userAccount = undefined;
   }
 
+  close () {
+    this.displayDialog = false;
+  }
+
   showDialogToEdit() {
     if (this.userAccount !== undefined) {
       this.newUserAccount = false;

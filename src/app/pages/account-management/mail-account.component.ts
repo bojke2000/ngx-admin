@@ -208,6 +208,10 @@ export class MailAccountComponent extends AbstractComponent implements OnInit, O
     this.mailAccount = undefined;
   }
 
+  close () {
+    this.displayDialog = false;
+  }
+
   cloneMailAccount(c: MailAccount): MailAccount {
     const mailAccount = {
       id: undefined,

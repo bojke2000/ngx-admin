@@ -80,6 +80,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   ngOnInit(): void {
 
     this.deviceForm = this.formBuilder.group({
+      id: [''],
       customerId: ['', [Validators.required]],
       regNr: [''],
       regNr2: [''],
@@ -140,7 +141,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     ];
 
     this.units = [
-      {label: '㎥ ', value: '0'},
+      {label: '㎥', value: '0'},
       {label: 'L ', value: '1'},
     ];
 
@@ -161,7 +162,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       { field: 'id', header: 'ID', width: '50px' },
     ];
 
-    this.userCardColumnService.findAll(Grid.USER_CARD).then(columns => {
+    this.userCardColumnService.findAll(Grid.DEVICE).then(columns => {
       this.cols = [...this.cols, ...columns];
     });
 
@@ -222,6 +223,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   }
 
   showDialogToAdd() {
+    this.submitted = false;
     this.device = {
       id : undefined,
       customerId : undefined,
@@ -279,6 +281,36 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       //this.newDevice = false;
       this.submitted = false;
       this.deviceForm.patchValue({...this.device});
+
+      let selected = this.modes.filter(mode => mode.label === this.device.mode.toString());
+      this.deviceForm.patchValue({mode: selected && selected.length > 0 ? selected[0] : undefined});
+      selected = this.meduiums.filter(medium => medium.label === this.device.medium.toString());
+      this.deviceForm.patchValue({medium: selected && selected.length > 0 ? selected[0] : undefined});
+
+      if (this.device.unit) {
+        selected = this.units.filter(unit => unit.label === this.device.unit.toString());
+        this.deviceForm.patchValue({unit: selected && selected.length > 0 ? selected[0] : undefined});
+      }
+      selected = this.profiles.filter(profile => profile.label === this.device.profile.toString());
+      this.deviceForm.patchValue({profile: selected && selected.length > 0 ? selected[0] : undefined});
+
+      selected = this.multipliers.filter(multiplier => multiplier.value === this.device.multiplier.toString());
+      this.deviceForm.patchValue({multiplier: selected && selected.length > 0 ? selected[0] : undefined});
+
+      if (this.device.deviceType && this.device.deviceType > 0) {
+        this.zoneDevice = true;
+      }
+
+      selected = this.indexes.filter(index => index.label === this.device.indexa.toString());
+      this.deviceForm.patchValue({indexa: selected && selected.length > 0 ? selected[0] : undefined});
+      selected = this.indexes.filter(index => index.label === this.device.indexb.toString());
+      this.deviceForm.patchValue({indexb: selected && selected.length > 0 ? selected[0] : undefined});
+
+      selected = this.indexes.filter(index => index.label === this.device.indexc.toString());
+      this.deviceForm.patchValue({indexc: selected && selected.length > 0 ? selected[0] : undefined});
+      selected = this.indexes.filter(index => index.label === this.device.indexd.toString());
+      this.deviceForm.patchValue({indexd: selected && selected.length > 0 ? selected[0] : undefined});
+
       this.readingBookStatus.filled = true;
       this.ddMunicipalityStatus.filled = true;
       this.routeStatus.filled = true;
@@ -306,11 +338,11 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     this.device.medium = this.getValue(this.device.medium);
     if (this.zoneDevice) {
       this.device.deviceType = 1;
-      this.device.indexa = this.getValue(this.device.indexa);
-      this.device.indexb = this.getValue(this.device.indexb);
-      this.device.indexc = this.getValue(this.device.indexc);
-      this.device.indexd = this.getValue(this.device.indexd);
     }
+    this.device.indexa = this.getValue(this.device.indexa);
+    this.device.indexb = this.getValue(this.device.indexb);
+    this.device.indexc = this.getValue(this.device.indexc);
+    this.device.indexd = this.getValue(this.device.indexd);
 
     this.userCardService.saveUser(this.device)
       .pipe(takeUntil(this.destroy$)).subscribe(val => {
@@ -319,6 +351,23 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
         this.loadStaticData();
       });
 
+
+    if (!this.device.id) {
+      this.submitted = false;
+      this.readingBookStatus.filled = true;
+      this.ddMunicipalityStatus.filled = true;
+      this.routeStatus.filled = true;
+    } else {
+      this.displayDialog = false;
+    }
+  }
+
+  get device$() {
+    return of(this.device);
+  }
+
+  close () {
+    this.displayDialog = false;
   }
 
   delete() {

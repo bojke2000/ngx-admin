@@ -296,19 +296,19 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       selected = this.multipliers.filter(multiplier => multiplier.value === this.device.multiplier.toString());
       this.deviceForm.patchValue({multiplier: selected && selected.length > 0 ? selected[0] : undefined});
 
-      if (this.device.deviceType && this.device.deviceType > 0) {
-        this.zoneDevice = true;
+      this.zoneDevice = (this.device.deviceType && this.device.deviceType > 0) ? true : false;
+
+      if (this.device.indexa  && this.device.indexa !== null) {
+        selected = this.indexes.filter(index => index.label === this.device.indexa.toString());
+        this.deviceForm.patchValue({indexa: selected && selected.length > 0 ? selected[0] : undefined});
+        selected = this.indexes.filter(index => index.label === this.device.indexb.toString());
+        this.deviceForm.patchValue({indexb: selected && selected.length > 0 ? selected[0] : undefined});
+
+        selected = this.indexes.filter(index => index.label === this.device.indexc.toString());
+        this.deviceForm.patchValue({indexc: selected && selected.length > 0 ? selected[0] : undefined});
+        selected = this.indexes.filter(index => index.label === this.device.indexd.toString());
+        this.deviceForm.patchValue({indexd: selected && selected.length > 0 ? selected[0] : undefined});
       }
-
-      selected = this.indexes.filter(index => index.label === this.device.indexa.toString());
-      this.deviceForm.patchValue({indexa: selected && selected.length > 0 ? selected[0] : undefined});
-      selected = this.indexes.filter(index => index.label === this.device.indexb.toString());
-      this.deviceForm.patchValue({indexb: selected && selected.length > 0 ? selected[0] : undefined});
-
-      selected = this.indexes.filter(index => index.label === this.device.indexc.toString());
-      this.deviceForm.patchValue({indexc: selected && selected.length > 0 ? selected[0] : undefined});
-      selected = this.indexes.filter(index => index.label === this.device.indexd.toString());
-      this.deviceForm.patchValue({indexd: selected && selected.length > 0 ? selected[0] : undefined});
 
       this.readingBookStatus.filled = true;
       this.ddMunicipalityStatus.filled = true;

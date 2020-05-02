@@ -260,7 +260,7 @@
               </div>
 
               <div class="ui-g-12">
-                <div class="ui-g-12"><nb-checkbox (checkedChange)="handleChange($event)"><u><b>{{ 'Zone device' | translate }}</b></u></nb-checkbox></div>
+                <div class="ui-g-12"><nb-checkbox [value]="(zoneDevice$ | async) ? true : udefined" (checkedChange)="handleChange($event)"><u><b>{{ 'Zone device' | translate }}</b></u></nb-checkbox></div>
 
 
                 <div class="ui-g-6" [hidden]="!(zoneDevice$ | async)">

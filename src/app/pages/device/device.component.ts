@@ -141,7 +141,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     ];
 
     this.units = [
-      {label: '㎥', value: '0'},
+      {label: 'm3', value: '0'},
       {label: 'L ', value: '1'},
     ];
 
@@ -278,7 +278,6 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   }
 
   showDialogToEdit() {
-      //this.newDevice = false;
       this.submitted = false;
       this.deviceForm.patchValue({...this.device});
 

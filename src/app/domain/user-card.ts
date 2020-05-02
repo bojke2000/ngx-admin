@@ -26,10 +26,10 @@ export interface UserCard {
   gsmLatitude: string;
 
   readTimestamp: string;
-  watermeterStatus: number;
-  reverseFlowStatus: number;
+  usageCurrent: number;
+  usageCurrentReverse: number;
+  usageCurrentMonth: number;
   diffLastRead: number;
-  readDayStatus: number;
   magneticSabotageTime: number;
 
   signalLevel: number;

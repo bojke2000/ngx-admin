@@ -251,10 +251,10 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       gsmLatitude : undefined,
 
       readTimestamp : undefined,
-      watermeterStatus : undefined,
-      reverseFlowStatus : undefined,
+      usageCurrent : undefined,
+      usageCurrentReverse : undefined,
       diffLastRead : undefined,
-      readDayStatus : undefined,
+      usageCurrentMonth : undefined,
       magneticSabotageTime : undefined,
 
       signalLevel : undefined,

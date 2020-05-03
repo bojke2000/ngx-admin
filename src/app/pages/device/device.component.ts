@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { LazyLoadEvent } from 'primeng/api/public_api';
+import { LazyLoadEvent, SelectItem } from 'primeng/api/public_api';
 import { Dropdown } from 'primeng/dropdown';
 import { Table } from 'primeng/table';
 import { Observable, of, Subject } from 'rxjs';
@@ -29,9 +29,9 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   displayDialog: boolean;
   submitted = false;
   zoneDevice  = false;
-  routes: Option[];
-  readingBooks: Option[];
-  municipalities: Option[];
+  routes: SelectItem[];
+  readingBooks: SelectItem[];
+  municipalities: SelectItem[];
   modes: Option[];
   profiles: Option[];
   meduiums: Option[];
@@ -335,13 +335,14 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     this.device.multiplier = this.getValue(this.device.multiplier);
     this.device.profile = this.getValue(this.device.profile);
     this.device.medium = this.getValue(this.device.medium);
+
     if (this.zoneDevice) {
       this.device.deviceType = 1;
+      this.device.indexa = this.getValue(this.device.indexa);
+      this.device.indexb = this.getValue(this.device.indexb);
+      this.device.indexc = this.getValue(this.device.indexc);
+      this.device.indexd = this.getValue(this.device.indexd);
     }
-    this.device.indexa = this.getValue(this.device.indexa);
-    this.device.indexb = this.getValue(this.device.indexb);
-    this.device.indexc = this.getValue(this.device.indexc);
-    this.device.indexd = this.getValue(this.device.indexd);
 
     this.userCardService.saveUser(this.device)
       .pipe(takeUntil(this.destroy$)).subscribe(val => {

@@ -50,7 +50,8 @@
             </div>
             <div class="ui-g-3">
               <span class="ui-float-label">
-                <p-dropdown [options]="routes$ | async" name="route"  [autoDisplayFirst]="false"   #ddStatus (onChange)="onRouteChange($event)"  formControlName="route" editable="true"></p-dropdown>
+                <p-dropdown [options]="routes$ | async" name="route" optionLabel="label" [autoDisplayFirst]="false"
+                  #ddStatus (onChange)="onRouteChange($event)" formControlName="route" editable="true"></p-dropdown>
                 <label for="route">{{ 'Route' | translate }}</label>
               </span>
             </div>

@@ -121,5 +121,9 @@
   "Direct": "Direktan smer",
   "Reverse": "Obrnut smer",
   "Pressure": "Pritisak",
-  "Temperature": "Temperatura"
+  "Temperature": "Temperatura",
+  "Create Device": "Kreiraj uređaj",
+  "Edit Device": "Izmeni uređaj",
+  "Import Devices": "Uvezi uređaje"
+
 }

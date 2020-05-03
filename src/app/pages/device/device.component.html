@@ -15,7 +15,7 @@
         <div class="divider"></div>
         <p-button label="Export"></p-button>
         <div class="divider"></div>
-        <p-button label="Import" (onClick)="onImportClick()"></p-button>
+        <p-button label="{{ translate.get('Import Devices') | async }}" (onClick)="onImportClick()"></p-button>
       </div>
 
       <p-dialog header="{{ 'Device'|translate }}" [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true"  dynamic="true"

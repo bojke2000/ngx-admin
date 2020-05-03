@@ -330,18 +330,18 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     this.device.readingBook = this.getLabel(this.device.readingBook);
     this.device.route = this.getLabel(this.device.route);
 
-    this.device.unit = this.getValue(this.device.unit);
-    this.device.mode = this.getValue(this.device.mode);
+    this.device.unit = this.getLabel(this.device.unit);
+    this.device.mode = this.getLabel(this.device.mode);
     this.device.multiplier = this.getValue(this.device.multiplier);
-    this.device.profile = this.getValue(this.device.profile);
-    this.device.medium = this.getValue(this.device.medium);
+    this.device.profile = this.getLabel(this.device.profile);
+    this.device.medium = this.getLabel(this.device.medium);
 
     if (this.zoneDevice) {
       this.device.deviceType = 1;
-      this.device.indexa = this.getValue(this.device.indexa);
-      this.device.indexb = this.getValue(this.device.indexb);
-      this.device.indexc = this.getValue(this.device.indexc);
-      this.device.indexd = this.getValue(this.device.indexd);
+      this.device.indexa = this.getLabel(this.device.indexa);
+      this.device.indexb = this.getLabel(this.device.indexb);
+      this.device.indexc = this.getLabel(this.device.indexc);
+      this.device.indexd = this.getLabel(this.device.indexd);
     }
 
     this.userCardService.saveUser(this.device)

@@ -15,6 +15,10 @@ export class ImportUserCardService extends AbstractService {
    return  super._upload(this.url, formData);
   }
 
+  importAdo(formData: FormData) {
+    return  super._upload(this.url + '/ado', formData);
+   }
+
   import(importUserCardRespDto: ImportUserCardRespDto) {
     return this.http.post<any>(this.url + '/import', importUserCardRespDto, this.httpOptions)
       .toPromise();

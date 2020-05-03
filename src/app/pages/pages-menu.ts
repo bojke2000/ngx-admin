@@ -8,6 +8,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: true,
   },
   {
+    title: 'WMBUS Import',
+    icon: 'cast-outline',
+    link: '/pages/import-ado',
+    home: true,
+  },
+  {
     title: 'Administration',
     icon: 'unlock-outline',
     children: [

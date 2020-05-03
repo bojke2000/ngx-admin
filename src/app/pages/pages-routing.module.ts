@@ -11,6 +11,7 @@ import { PagesComponent } from './pages.component';
 import { RouteComponent } from './route/route.component';
 import { UserCardComponent } from './user-card/user-card.component';
 import { WmbusDeviceComponent } from './wmbus-device/wmbus-device.component';
+import { ImportAdoComponent } from './import-export/import-ado.component';
 
 const routes: Routes = [{
   path: '',
@@ -19,6 +20,10 @@ const routes: Routes = [{
     {
       path: 'user-card',
       component: UserCardComponent,
+    },
+    {
+      path: 'import-ado',
+      component: ImportAdoComponent,
     },
     {
       path: 'user-account',

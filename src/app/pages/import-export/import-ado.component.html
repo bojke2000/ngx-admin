@@ -1,0 +1,25 @@
+<div class="row">
+  <nb-card style="width: 100%" [nbSpinner]="loading" nbSpinnerStatus="danger">
+    <nb-card-body>
+
+      <ngx-title-header title='WMBUS Import'></ngx-title-header>
+
+          <form [formGroup]="secondForm" (ngSubmit)="onSecondSubmit()" class="step-container">
+            <h4>{{ 'Upload File' | translate }}</h4>
+            <br>
+            <div class="input-group">
+              <div class="ui-inputgroup">
+                <p-fileUpload name="importFile[]" customUpload="true" (uploadHandler)="onFileUpload($event)">
+                  <ng-template pTemplate="content">
+                    <ul *ngIf="uploadedFiles.length">
+                      <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                    </ul>
+                  </ng-template>
+                </p-fileUpload>
+              </div>
+            </div>
+          </form>
+
+    </nb-card-body>
+  </nb-card>
+</div>

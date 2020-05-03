@@ -1,3 +1,4 @@
+import { ImportAdoComponent } from './import-ado.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -61,6 +62,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TemplateComponent,
     ImportMapperComponent,
     ImportUserCardComponent,
+    ImportAdoComponent,
   ],
 })
 export class ImportExportModule { }

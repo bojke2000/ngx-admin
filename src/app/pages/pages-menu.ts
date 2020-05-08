@@ -8,6 +8,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: true,
   },
   {
+    title: 'Alarms',
+    icon: 'alert-triangle-outline',
+    link: '/pages/alarm',
+    home: true,
+  },
+  {
     title: 'WMBUS Import',
     icon: 'cast-outline',
     link: '/pages/import-ado',

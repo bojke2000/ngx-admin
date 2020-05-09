@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { LazyLoadEvent } from 'primeng/api/public_api';
-import { Table } from 'primeng/table';
-import { UserCard } from '../../domain/user-card';
-import { UserCardService } from '../../service/user-card.service';
-import { of, Observable } from 'rxjs';
-import { UserCardColumnService } from '../../service/user-card-column.service';
-import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
+import { Observable, of } from 'rxjs';
+
 import { Grid } from '../../domain/grid';
+import { LazyLoadEvent } from 'primeng/api/public_api';
+import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
+import { Table } from 'primeng/table';
+import { TranslateService } from '@ngx-translate/core';
+import { UserCard } from '../../domain/user-card';
+import { UserCardColumnService } from '../../service/user-card-column.service';
+import { UserCardService } from '../../service/user-card.service';
 
 @Component({
   selector: 'ngx-user-card',
@@ -53,7 +54,7 @@ export class UserCardComponent implements OnInit {
     const pageable = { page, size, sort};
     this.userCardService.findAll(pageable).then((ngresp: NgPrimeGridResponse) => {
       this.userCards = ngresp.data;
-      this.totalRecords = ngresp.data.length * ngresp.totalPages;
+      this.totalRecords = ngresp.totalRecords;
       this.loading = false;
     });
   }

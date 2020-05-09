@@ -1,11 +1,11 @@
-import { AbstractService } from "../abstract.service";
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Pageable } from "../domain/pageable";
+import { AbstractService } from '../abstract.service';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Pageable } from '../domain/pageable';
 
 @Injectable()
 export class AlarmService extends AbstractService {
-  private url = this.prefix + "alarms";
+  private url = this.prefix + 'alarms';
 
   constructor(http: HttpClient) {
     super(http);

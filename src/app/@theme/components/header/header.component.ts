@@ -5,7 +5,7 @@ import { Subject, of } from 'rxjs';
 import { User, UserData } from '../../../@core/data/users';
 import { filter, map, takeUntil } from 'rxjs/operators';
 
-import { AlarmService } from './../../../service/alarm.service.';
+import { AlarmService } from '../../../service/alarm.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   userPictureOnly: boolean = false;
   user: User = {name: '', picture: ''};
   alarmCount: number = 0;
-  alarmStatus: string = "basic";
+  alarmStatus: string = 'basic';
 
   themes = [
     {
@@ -106,8 +106,8 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.alarmService.getCount().then((count: number) => {
       this.alarmCount = count;
-      this.alarmStatus = (this.alarmCount > 0 ) ? "danger" : "basic";
-    })
+      this.alarmStatus = (this.alarmCount > 0 ) ? 'danger' : 'basic';
+    });
   }
 
   ngOnDestroy() {
@@ -131,7 +131,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onAlertClick(event) {
-    this.router.navigate(['/pages/import-user-card']);
+    this.router.navigate(['/pages/alarm']);
   }
 
   get alarm$() {

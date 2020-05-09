@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { LazyLoadEvent } from 'primeng/api/public_api';
-import { Table } from 'primeng/table';
 import { Observable, of } from 'rxjs';
+
 import { Grid } from '../../domain/grid';
+import { LazyLoadEvent } from 'primeng/api/public_api';
 import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
+import { Router } from '@angular/router';
+import { Table } from 'primeng/table';
+import { TranslateService } from '@ngx-translate/core';
 import { UserCard } from '../../domain/user-card';
 import { UserCardColumnService } from '../../service/user-card-column.service';
 import { UserCardService } from '../../service/user-card.service';
@@ -55,7 +56,7 @@ export class WmbusDeviceComponent implements OnInit {
     const pageable = { page, size, sort};
     this.userCardService.findAll(pageable).then((ngresp: NgPrimeGridResponse) => {
       this.userCards = ngresp.data;
-      this.totalRecords = ngresp.data.length * ngresp.totalPages;
+      this.totalRecords = ngresp.totalRecords;
       this.loading = false;
     });
   }

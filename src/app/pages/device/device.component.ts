@@ -1,21 +1,22 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { LazyLoadEvent, SelectItem } from 'primeng/api/public_api';
-import { Dropdown } from 'primeng/dropdown';
-import { Table } from 'primeng/table';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, Subject, of } from 'rxjs';
+
 import { AbstractComponent } from '../../AbstractComponent';
+import { Dropdown } from 'primeng/dropdown';
 import { Grid } from '../../domain/grid';
-import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
-import { UserCard } from '../../domain/user-card';
 import { MunicipalityService } from '../../service/municipailty.service';
+import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
+import { Option } from './../../domain/option';
 import { ReadingBookService } from '../../service/reading-book.service';
+import { RouteService } from './../../service/route.service';
+import { Router } from '@angular/router';
+import { Table } from 'primeng/table';
+import { TranslateService } from '@ngx-translate/core';
+import { UserCard } from '../../domain/user-card';
 import { UserCardColumnService } from '../../service/user-card-column.service';
 import { UserCardService } from '../../service/user-card.service';
-import { Option } from './../../domain/option';
-import { RouteService } from './../../service/route.service';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -195,7 +196,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   private loadPageable(pageable: any) {
     this.userCardService.findAll(this.pageable).then((ngresp: NgPrimeGridResponse) => {
       this.userCards = ngresp.data;
-      this.totalRecords = ngresp.data.length * ngresp.totalPages;
+      this.totalRecords = ngresp.totalRecords;
       this.loading = false;
     });
   }

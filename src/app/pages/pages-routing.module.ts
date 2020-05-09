@@ -1,17 +1,18 @@
-import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { MailAccountComponent } from './account-management/mail-account.component';
-import { UserAccountComponent } from './account-management/user-account.component';
+import { AlarmComponent } from './alarm/alarm.component';
 import { CityComponent } from './city/city.component';
 import { DeviceComponent } from './device/device.component';
+import { ImportAdoComponent } from './import-export/import-ado.component';
 import { ImportUserCardComponent } from './import-export/import-user-card.component';
-import { TemplateComponent } from './import-export/template.component';
+import { MailAccountComponent } from './account-management/mail-account.component';
+import { NgModule } from '@angular/core';
 import { PagesComponent } from './pages.component';
 import { RouteComponent } from './route/route.component';
+import { TemplateComponent } from './import-export/template.component';
+import { UserAccountComponent } from './account-management/user-account.component';
 import { UserCardComponent } from './user-card/user-card.component';
 import { WmbusDeviceComponent } from './wmbus-device/wmbus-device.component';
-import { ImportAdoComponent } from './import-export/import-ado.component';
 
 const routes: Routes = [{
   path: '',
@@ -56,6 +57,10 @@ const routes: Routes = [{
     {
       path: 'route',
       component: RouteComponent,
+    },
+    {
+      path: 'alarm',
+      component: AlarmComponent,
     },
     {
       path: '',

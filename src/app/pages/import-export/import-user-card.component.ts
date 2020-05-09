@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { MessageService, SelectItem } from 'primeng/api';
 import { Observable, of } from 'rxjs';
-import { AbstractComponent } from '../../AbstractComponent';
-import { Grid } from '../../domain/grid';
-import { CityService } from '../../service/city.service';
-import { ImportUserCardService } from '../../service/import-user-card.service';
 
+import { AbstractComponent } from '../../AbstractComponent';
+import { CityService } from '../../service/city.service';
+import { Grid } from '../../domain/grid';
+import { ImportUserCardService } from '../../service/import-user-card.service';
+import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'ngx-import-user-card',

@@ -17,7 +17,7 @@ import {
 } from '@nebular/theme';
 import { metaReducers, reducers } from './reducers';
 
-import { AlarmService } from './service/alarm.service.';
+import { AlarmService } from './service/alarm.service';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthGuard } from './auth-guard.service';

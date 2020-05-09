@@ -1,14 +1,9 @@
-import { MunicipalityService } from './service/municipailty.service';
-import { ReadingBookService } from './service/reading-book.service';
 /**
  * @license
  * Copyright Akveo. All Rights Reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NB_AUTH_TOKEN_INTERCEPTOR_FILTER, NbAuthJWTToken, NbAuthModule, NbPasswordAuthStrategy } from '@nebular/auth';
 import {
   NbButtonModule,
@@ -20,25 +15,31 @@ import {
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
-import { StoreModule } from '@ngrx/store';
-
-import { CoreModule } from './@core/core.module';
-import { ThemeModule } from './@theme/theme.module';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { AuthGuard } from './auth-guard.service';
-import { NbAuthJWTInterceptor } from './jwt-interceptor';
 import { metaReducers, reducers } from './reducers';
+
+import { AlarmService } from './service/alarm.service.';
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { AuthGuard } from './auth-guard.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
 import { CityService } from './service/city.service';
+import { CoreModule } from './@core/core.module';
 import { ImportUserCardService } from './service/import-user-card.service';
 import { MailAccountService } from './service/mail-account.service';
+import { MunicipalityService } from './service/municipailty.service';
+import { NbAuthJWTInterceptor } from './jwt-interceptor';
+import { NgModule } from '@angular/core';
+import { ReadingBookService } from './service/reading-book.service';
 import { RoleService } from './service/role.service';
+import { RouteService } from './service/route.service';
+import { StoreModule } from '@ngrx/store';
 import { TemplateService } from './service/template.service';
+import { ThemeModule } from './@theme/theme.module';
 import { UserAccountService } from './service/user-account.service';
+import { UserAccountTypesService } from './service/useraccounttypes.service';
 import { UserCardColumnService } from './service/user-card-column.service';
 import { UserCardService } from './service/user-card.service';
-import { UserAccountTypesService } from './service/useraccounttypes.service';
-import { RouteService } from './service/route.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -114,7 +115,7 @@ import { RouteService } from './service/route.service';
   ],
   providers: [AuthGuard, UserCardService, UserAccountService, MailAccountService, RouteService,
     ReadingBookService, MunicipalityService, UserAccountTypesService, CityService,
-    RoleService, TemplateService, ImportUserCardService,
+    RoleService, TemplateService, ImportUserCardService, AlarmService,
     UserCardColumnService, { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true},
     { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: () => false}],
   bootstrap: [AppComponent],

@@ -1,10 +1,11 @@
-import { Component, OnDestroy, OnInit, AfterViewInit } from '@angular/core';
-import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { NbAuthJWTToken, NbAuthService, NbTokenService } from '@nebular/auth';
+import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
+import { Subject, of } from 'rxjs';
+import { User, UserData } from '../../../@core/data/users';
+import { filter, map, takeUntil } from 'rxjs/operators';
 
-import { UserData, User } from '../../../@core/data/users';
-import { map, takeUntil, filter } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { AlarmService } from './../../../service/alarm.service.';
 import { Router } from '@angular/router';
 
 @Component({
@@ -20,6 +21,8 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
   user: User = {name: '', picture: ''};
+  alarmCount: number = 0;
+  alarmStatus: string = "basic";
 
   themes = [
     {
@@ -52,6 +55,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private nbTokenService: NbTokenService,
     private breakpointService: NbMediaBreakpointsService,
+    private alarmService: AlarmService,
     private authService: NbAuthService) {
 
     this.authService.onTokenChange()
@@ -99,6 +103,11 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
         takeUntil(this.destroy$),
       )
       .subscribe(themeName => this.currentTheme = themeName);
+
+    this.alarmService.getCount().then((count: number) => {
+      this.alarmCount = count;
+      this.alarmStatus = (this.alarmCount > 0 ) ? "danger" : "basic";
+    })
   }
 
   ngOnDestroy() {
@@ -119,5 +128,17 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   navigateHome() {
     this.menuService.navigateHome();
     return false;
+  }
+
+  onAlertClick(event) {
+    this.router.navigate(['/pages/import-user-card']);
+  }
+
+  get alarm$() {
+    return of(this.alarmCount);
+  }
+
+  get status$() {
+    return of(this.alarmStatus);
   }
 }

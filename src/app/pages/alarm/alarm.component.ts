@@ -44,7 +44,7 @@ export class AlarmComponent extends AbstractComponent implements OnInit, OnDestr
       { field: 'batteryLow', header: 'Battery Low', width: '100px' },
       { field: 'flowDirection', header: 'Flow Direction', width: '100px' },
       { field: 'memoryThreshold', header: 'Memory Threshold', width: '100px' },
-      { field: 'residualLeak', header: 'Residua lLeak', width: '100px' },
+      { field: 'residualLeak', header: 'Residual Leak', width: '100px' },
       { field: 'sensor1', header: 'Sensor1', width: '100px' },
       { field: 'sensor2', header: 'Sensor2', width: '100px' },
       { field: 'stateLeap', header: 'State Leap', width: '100px' },

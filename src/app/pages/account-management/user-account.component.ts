@@ -1,19 +1,17 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
-import { SelectItem } from 'primeng/api';
-import { LazyLoadEvent } from 'primeng/api/public_api';
-import { Table } from 'primeng/table';
 import { Subject, of } from 'rxjs';
-import { takeUntil, distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 import { AbstractComponent } from '../../AbstractComponent';
-import { UserAccount } from '../../domain/user-account';
 import { CityService } from '../../service/city.service';
+import { LazyLoadEvent } from 'primeng/api/public_api';
 import { RoleService } from '../../service/role.service';
+import { SelectItem } from 'primeng/api';
+import { Table } from 'primeng/table';
+import { TranslateService } from '@ngx-translate/core';
+import { UserAccount } from '../../domain/user-account';
 import { UserAccountService } from '../../service/user-account.service';
-
-
 
 @Component({
   selector: 'ngx-user-account',
@@ -111,7 +109,7 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
     const pageable = { page, size, sort};
     this.userAccountservice.getUserAccounts(pageable).then(ngresp => {
       this.userAccounts = ngresp.data;
-      this.totalRecords = ngresp.totalPages;
+      this.totalRecords = ngresp.totalRecords;
       this.loading = false;
     });
   }
@@ -132,7 +130,7 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
       this.loading = true;
       this.userAccountservice.searchUserAccounts(this.userSearch, pageable).then(ngresp => {
         this.userAccounts = ngresp.data;
-        this.totalRecords = ngresp.totalPages;
+        this.totalRecords = ngresp.totalRecords;
         this.loading = false;
       });
     }

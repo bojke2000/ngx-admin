@@ -1,7 +1,7 @@
 export interface Alarm {
   id: number;
-  customerName : string;
-  address : string;
+  customerName: string;
+  address: string;
   addressNo: string;
   deviceId: string;
   batteryLow: string;
@@ -16,5 +16,5 @@ export interface Alarm {
   overDimensioned: string;
   disassembly: string;
   freezing: string;
-  updateAt : string;
+  updateAt: string;
 }

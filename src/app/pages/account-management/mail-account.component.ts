@@ -1,15 +1,16 @@
-import { Component, ViewChild, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-import { Table } from 'primeng/table';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { AbstractComponent } from '../../AbstractComponent';
-import { TranslateService } from '@ngx-translate/core';
+import { ChangeDetectorRef } from '@angular/core';
 import { LazyLoadEvent } from 'primeng/api/public_api';
-import {SelectItem} from 'primeng/api';
 import { MailAccount } from '../../domain/mail-account';
 import { MailAccountService } from '../../service/mail-account.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Option } from '../../domain/option';
-import { ChangeDetectorRef } from '@angular/core';
+import {SelectItem} from 'primeng/api';
 import { Subject } from 'rxjs';
+import { Table } from 'primeng/table';
+import { TranslateService } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -86,7 +87,7 @@ export class MailAccountComponent extends AbstractComponent implements OnInit, O
     const pageable = { page, size, sort};
     this.mailAccountService.getMailAccounts(pageable).then(ngresp => {
       this.mailAccounts = ngresp.data;
-      this.totalRecords = ngresp.totalPages;
+      this.totalRecords = ngresp.totalRecords;
       this.loading = false;
     });
   }
@@ -112,7 +113,7 @@ export class MailAccountComponent extends AbstractComponent implements OnInit, O
       this.loading = true;
       this.mailAccountService.searchMailAccounts(this.mailAccountSearch, pageable).then(ngresp => {
         this.mailAccounts = ngresp.data;
-        this.totalRecords = ngresp.totalPages;
+        this.totalRecords = ngresp.totalRecords;
         this.loading = false;
       });
     }

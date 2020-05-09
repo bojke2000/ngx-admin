@@ -5,7 +5,7 @@
       <ngx-title-header title='Alarms'></ngx-title-header>
 
       <ngx-table [columns]="cols" [value]="alarms$ | async" (lazyLoad)="loadAlarmsLazy($event)"
-        dataKey="id" [totalRecords]="totalRecords" [loading]="loading" >
+        dataKey="id" [totalRecords]="totalRecords" [loading]="loading" ngClass="alarm-on" ngCondition="On">
       </ngx-table>
 
     </nb-card-body>

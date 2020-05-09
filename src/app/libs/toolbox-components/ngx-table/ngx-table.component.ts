@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { of } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
-import { AbstractComponent } from '../../../AbstractComponent';
 
+import { AbstractComponent } from '../../../AbstractComponent';
+import { TranslateService } from '@ngx-translate/core';
+import { distinctUntilChanged } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'ngx-table',
@@ -35,6 +35,10 @@ export class NgxTableComponent extends AbstractComponent {
   dataKey1: string;
   @Output()
   clickFunction = new EventEmitter();
+  @Input()
+  ngCondition: string = undefined;
+  @Input()
+  ngClass: string = undefined;
 
   constructor(translate: TranslateService) {
     super(translate);
@@ -68,5 +72,17 @@ export class NgxTableComponent extends AbstractComponent {
     if (this.dataKey1 && this.clickFunction) {
       this.clickFunction.emit(rowData);
     }
+  }
+
+  styleCondition(rowData: any[], index: any) {
+    return this.ngCondition && rowData[index] === this.ngCondition;
+  }
+
+  styleColor(condition: boolean) {
+    return condition ? 'red' : null;
+  }
+
+  fontWeight(condition: boolean) {
+    return condition ? 'bold' : 'normal';
   }
 }

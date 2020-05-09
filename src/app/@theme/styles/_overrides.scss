@@ -50,7 +50,7 @@
 
 .ui-table,
 .ui-table .ui-table-wrapper table {
-  font-size: 12px !important;
+  font-size: 13px !important;
 }
 
 .divider {
@@ -68,12 +68,37 @@
 body .ui-table .ui-table-thead > tr > th {
   color: #007ad9 !important;
   padding: -7.429em 0.857em;
+  border: 0 !important;
+  border-bottom: 1px solid #c8c8c8 !important;
+  background-color: white !important;
+}
+
+body .ui-table .ui-table-tbody > tr > td {
+  background-color: inherit;
+  /* border: 1px solid #c8c8c8; */
+  -webkit-transition: box-shadow 0.2s;
+  transition: box-shadow 0.2s;
+  border: 0 !important;
+  padding: 12px !important;
+}
+
+body .ui-paginator {
+  background-color: white !important;
+  border: 0 !important;
+  padding: 0 !important;
+}
+
+body .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
+  background-color: #dee4ea !important;
+  color: #ffffff !important;
 }
 
 
 body .ui-table .ui-sortable-column.ui-state-highlight {
-  background-color: #f4f4f4 !important;
+  /*background-color: #f4f4f4 !important;*/
+
   color: #007ad9 !important;
+
 }
 
 body .ui-table .ui-sortable-column .ui-sortable-column-icon {

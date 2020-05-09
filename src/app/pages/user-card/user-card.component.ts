@@ -36,7 +36,7 @@ export class UserCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.cols = [
-      { field: 'id', header: 'ID', width: '50px' },
+      { field: 'id', header: '#', width: '50px' },
     ];
 
     this.userCardColumnService.findAll(Grid.USER_CARD).then(columns => {

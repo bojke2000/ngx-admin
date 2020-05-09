@@ -16,7 +16,7 @@ p {
 
   ::ng-deep .ui-table,
   .ui-table .ui-table-wrapper table {
-    font-size: 12px !important;
+    font-size: 13px !important;
   }
 
   .divider{
@@ -34,6 +34,7 @@ p {
 ::ng-deep body .ui-table .ui-table-thead > tr > th {
    /* background-color: #007ad9 !important; */
     color: #007ad9 !important;
+    font-weight: 700 !important;
 }
 
 

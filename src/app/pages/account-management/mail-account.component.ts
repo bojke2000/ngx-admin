@@ -47,16 +47,16 @@ export class MailAccountComponent extends AbstractComponent implements OnInit, O
     this.loadMailAccounts(0, 20, 'id,asc');
 
     this.cols = [
-      { field: 'id', header: 'ID', width: '50px' },
-      { field: 'account', header: 'Account', width: '120px' },
-      { field: 'password', header: 'Password', width: '120px' },
-      { field: 'server', header: 'Server', width: '150px' },
+      { field: 'id', header: '#', width: '50px' },
+      { field: 'account', header: 'Account', width: '200px' },
+      { field: 'password', header: 'Password', width: '150px' },
+      { field: 'server', header: 'Server', width: '200px' },
       { field: 'protocol', header: 'Protocol', width: '150px' },
-      { field: 'port', header: 'Port', width: '70px' },
-      { field: 'active', header: 'Status', width: '120px' },
-      { field: 'sender', header: 'Sender', width: '120px' },
-      { field: 'checkTime', header: 'Check Time', width: '120px' },
-      { field: 'lastCheck', header: 'Last Check', width: '150px' },
+      { field: 'port', header: 'Port', width: '100px' },
+      { field: 'active', header: 'Status', width: '200px' },
+      { field: 'sender', header: 'Sender', width: '200px' },
+      { field: 'checkTime', header: 'Check Time', width: '250px' },
+      { field: 'lastCheck', header: 'Last Check', width: '200px' },
     ];
 
     this.protocols = [

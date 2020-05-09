@@ -3,7 +3,7 @@
       <nb-card-body>
         <ngx-title-header title='GSM2 Management'></ngx-title-header>
 
-        <div style="position: relative; float: right;margin-top: 5px;margin-bottom: 5px;">
+        <div style="position: relative; float: right; margin-top: 5px; margin-bottom: 5px;">
             <div class="ui-inputgroup">
               <span class="ui-float-label">
                 <input id="float-input" type="text" size="50" (keyup)="onMailAccountSearch($event)"  [(ngModel)]="mailAccountSearch" pInputText onclick="this.setSelectionRange(0, this.value.length)" style="padding-top: 7px; padding-bottom: 7px;">
@@ -13,6 +13,7 @@
 
           </div>
         </div>
+        <div style='clear: both; margin-bottom: 5px;'>&nbsp;</div>
 
         <p-table [columns]="cols" [value]="mailAccounts" [lazy]="true" #table (onLazyLoad)="loadMailAccountsLazy($event)"
           [loading]="loading" [scrollable]="true" [paginator]="true" [rows]="20" [style]="{width:'100%'}" scrollHeight="58vh"

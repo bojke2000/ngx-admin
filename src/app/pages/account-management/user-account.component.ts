@@ -51,14 +51,14 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
     this.loadUserAccounts(0, 20, 'id,asc');
 
     this.cols = [
-      { field: 'id', header: 'ID', width: '50px' },
-      { field: 'username', header: 'Name', width: '120px' },
-      { field: 'password', header: 'Password', width: '120px' },
-      { field: 'email', header: 'Email', width: '150px' },
-      { field: 'city', header: 'City', width: '150px' },
-      { field: 'role', header: 'Role', width: '120px' },
-      { field: 'active', header: 'Status', width: '120px' },
-      { field: 'lastLogin', header: 'Last Login', width: '120px' },
+      { field: 'id', header: '#', width: '50px' },
+      { field: 'username', header: 'Name', width: '200px' },
+      { field: 'password', header: 'Password', width: '200px' },
+      { field: 'email', header: 'Email', width: '200px' },
+      { field: 'city', header: 'City', width: '200px' },
+      { field: 'role', header: 'Role', width: '150px' },
+      { field: 'active', header: 'Status', width: '150px' },
+      { field: 'lastLogin', header: 'Last Login', width: '150px' },
     ];
 
     this.statuses = [{label: 'Active', value: 'Active'}, {label: 'Disabled', value: 'Disabled'}];

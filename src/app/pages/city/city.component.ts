@@ -1,15 +1,14 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
-import { LazyLoadEvent } from 'primeng/api/public_api';
-import { Table } from 'primeng/table';
-import { of, Subject } from 'rxjs';
+import { Subject, of } from 'rxjs';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 import { AbstractComponent } from '../../AbstractComponent';
 import { City } from '../../domain/city';
 import { CityService } from '../../service/city.service';
-
+import { LazyLoadEvent } from 'primeng/api/public_api';
+import { Table } from 'primeng/table';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'ngx-city',
@@ -45,7 +44,7 @@ export class CityComponent extends AbstractComponent implements OnInit, OnDestro
     this.loadCities(0, 20, 'id,asc');
 
     this.cols = [
-      { field: 'id', header: 'ID', width: '50px' },
+      { field: 'id', header: '#', width: '50px' },
       { field: 'name', header: 'Name', width: '120px' },
       { field: 'country', header: 'Country', width: '120px' },
     ];

@@ -1,17 +1,16 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
-import { LazyLoadEvent } from 'primeng/api/public_api';
-import { Table } from 'primeng/table';
-import { of, Subject } from 'rxjs';
+import { Subject, of } from 'rxjs';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 import { AbstractComponent } from '../../AbstractComponent';
 import { City } from '../../domain/city';
-import { Route } from '../../domain/route';
 import { CityService } from '../../service/city.service';
+import { LazyLoadEvent } from 'primeng/api/public_api';
+import { Route } from '../../domain/route';
 import { RouteService } from '../../service/route.service';
-
+import { Table } from 'primeng/table';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'ngx-route',
@@ -46,7 +45,7 @@ export class RouteComponent extends AbstractComponent implements OnInit, OnDestr
     this.loadRoutes(0, 20, 'id,asc');
 
     this.cols = [
-      { field: 'id', header: 'ID', width: '50px' },
+      { field: 'id', header: '#', width: '50px' },
       { field: 'name', header: 'Name', width: '120px' },
       { field: 'city', header: 'Route', width: '120px' },
     ];

@@ -2,8 +2,8 @@
 export interface UserCard {
   id: number;
   customerId: string;
-  regNr: number;
-  regNr2: number;
+  regNr: string;
+  regNr2: string;
   customerName: string;
   address: string;
   addressNo: string;

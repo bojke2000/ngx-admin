@@ -2,9 +2,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AbstractComponent } from '../../AbstractComponent';
 import { Component } from '@angular/core';
-import { ExportAdoService } from '../../service/export-ado.service';
 import { MessageService } from 'primeng/api';
-import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -19,8 +17,6 @@ export class ExportAdoComponent extends AbstractComponent {
 
   constructor(
     translate: TranslateService,
-    private router: Router,
-    private exportAdoService: ExportAdoService,
     private fb: FormBuilder) {
     super(translate);
   }

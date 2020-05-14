@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AlarmComponent } from './alarm/alarm.component';
 import { CityComponent } from './city/city.component';
 import { DeviceComponent } from './device/device.component';
+import { ExportAdoComponent } from './import-export/export-ado.component';
 import { ImportAdoComponent } from './import-export/import-ado.component';
 import { ImportUserCardComponent } from './import-export/import-user-card.component';
 import { MailAccountComponent } from './account-management/mail-account.component';
@@ -41,6 +42,10 @@ const routes: Routes = [{
     {
       path: 'import-user-card',
       component: ImportUserCardComponent,
+    },
+    {
+      path: 'export-ado',
+      component: ExportAdoComponent,
     },
     {
       path: 'device',

@@ -20,6 +20,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: true,
   },
   {
+    title: 'WMBUS Export',
+    icon: 'cast-outline',
+    link: '/pages/export-ado',
+    home: true,
+  },
+  {
     title: 'Administration',
     icon: 'unlock-outline',
     children: [

@@ -6,18 +6,20 @@
 
       <nb-stepper #stepper>
 
-        <nb-step [stepControl]="adoForm1" label="{{ 'ADO Size' | translate }}">
+        <nb-step [stepControl]="adoForm1" label="{{ 'ADO Page size' | translate }}">
           <form [formGroup]="adoForm1" (ngSubmit)="onAdoForm1Submit()" class="step-container">
-            <h4>{{ 'ADO Size' | translate }}</h4>
+            <h4>{{ 'ADO Page size' | translate }}</h4>
             <br>
             <div class="input-group">
               <div class="ui-inputgroup">
-                <input pInputText type="number" id="adoSize" formControlName="adoSize"
-                onclick="this.setSelectionRange(0, this.value.length)" autofocus class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.adoSize.errors }" />
+                <span class="ui-float-label">
+                <input pInputText type="number" id="pageSize" formControlName="pageSize" autofocus class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.pageSize.errors }" />
+                <label for="pageSize">{{ 'Page size' | translate }}</label>
+              </span>
               </div>
             </div>
-            <div class="divider"></div>
+            <div style="margin-top: 60px;" class="divider">&nbsp;</div>
             <button nbButton status="primary" nbStepperNext>next</button>
           </form>
         </nb-step>
@@ -25,7 +27,7 @@
         <nb-step [stepControl]="adoForm2" label="Import">
           <div class="step-container">
             <h3>RUN EXPORT!</h3>
-            <button nbButton (click)="onExport()">import</button>
+            <button nbButton status="primary" (click)="onExport()">export</button>
           </div>
         </nb-step>
       </nb-stepper>

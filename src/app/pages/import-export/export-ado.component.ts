@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AbstractComponent } from '../../AbstractComponent';
 import { ExportAdoService } from './../../service/export-ado.service';
 import { MessageService } from 'primeng/api';
+import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -11,18 +12,24 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './export-ado.component.html',
   providers: [MessageService],
 })
-export class ExportAdoComponent extends AbstractComponent implements OnInit {
+export class ExportAdoComponent extends AbstractComponent implements OnInit, OnDestroy {
 
   adoForm1: FormGroup;
   adoForm2: FormGroup;
   loading = false;
   submitted = false;
+  private subscription: Subscription;
 
   constructor(
     translate: TranslateService,
     private exportAdoService: ExportAdoService,
     private fb: FormBuilder) {
     super(translate);
+  }
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   get f() { return this.adoForm1.controls; }
@@ -41,6 +48,15 @@ export class ExportAdoComponent extends AbstractComponent implements OnInit {
   }
 
   onExport(): void {
-    this.exportAdoService.ado(this.adoForm1.controls['pageSize'].value)
+   this.subscription = this.exportAdoService.ado(this.adoForm1.controls['pageSize'].value).subscribe(
+      (data: any) => {
+        this.downloadFile(data);
+      });
+  }
+
+  downloadFile(data: Response) {
+    const blob = new Blob([data], { type: 'application/zip' });
+    const url= window.URL.createObjectURL(blob);
+    window.open(url);
   }
 }

@@ -20,6 +20,12 @@ export abstract class AbstractService {
     this.http = http;
    }
 
+  protected download(url: string, pageable?: Pageable) {
+    const symbol = url.indexOf('?') <= 0 ?  '?' : pageable ? '&' : '';
+    const getUrl = url.concat(symbol).concat(this.jsonToHttpParams(pageable));
+
+    return this.http.get(getUrl,  {responseType:'arraybuffer'});
+  }
 
   protected get(url: string, pageable?: Pageable) {
     const symbol = url.indexOf('?') <= 0 ?  '?' : pageable ? '&' : '';

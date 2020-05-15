@@ -9,6 +9,6 @@ export class ExportAdoService extends AbstractService {
   constructor(http: HttpClient) { super(http);  }
 
   ado(pageSize: string) {
-    return this.get(`${this.url}?pageSize=${pageSize}`);
+    return this.download(`${this.url}?pageSize=${pageSize}`);
    }
 }

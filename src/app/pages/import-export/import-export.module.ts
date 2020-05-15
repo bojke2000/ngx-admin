@@ -64,7 +64,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ImportMapperComponent,
     ImportUserCardComponent,
     ImportAdoComponent,
-    ExportAdoComponent
+    ExportAdoComponent,
   ],
 })
 export class ImportExportModule { }

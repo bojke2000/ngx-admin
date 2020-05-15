@@ -25,10 +25,12 @@
         </nb-step>
 
         <nb-step [stepControl]="adoForm2" label="Import">
+          <form [formGroup]="adoForm2" (ngSubmit)="onAdoForm2Submit()" class="step-container">
           <div class="step-container">
             <h3>RUN EXPORT!</h3>
             <button nbButton status="primary" (click)="onExport()">export</button>
           </div>
+        </form>
         </nb-step>
       </nb-stepper>
 

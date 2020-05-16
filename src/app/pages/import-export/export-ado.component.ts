@@ -6,7 +6,7 @@ import { ExportAdoService } from './../../service/export-ado.service';
 import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import {saveAs as importedSaveAs} from "file-saver";
+import {saveAs as importedSaveAs} from 'file-saver';
 
 @Component({
   selector: 'ngx-export-ado',

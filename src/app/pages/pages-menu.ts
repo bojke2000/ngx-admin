@@ -15,13 +15,13 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'WMBUS Import',
-    icon: 'cast-outline',
+    icon: 'arrowhead-up-outline',
     link: '/pages/import-ado',
     home: true,
   },
   {
     title: 'WMBUS Export',
-    icon: 'cast-outline',
+    icon: 'arrowhead-down-outline',
     link: '/pages/export-ado',
     home: true,
   },

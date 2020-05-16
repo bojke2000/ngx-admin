@@ -24,7 +24,7 @@ export abstract class AbstractService {
     const symbol = url.indexOf('?') <= 0 ?  '?' : pageable ? '&' : '';
     const getUrl = url.concat(symbol).concat(this.jsonToHttpParams(pageable));
 
-    return this.http.get(getUrl,  {responseType:'arraybuffer'});
+    return this.http.get(getUrl,  {responseType : 'arraybuffer'});
   }
 
   protected get(url: string, pageable?: Pageable) {

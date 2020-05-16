@@ -6,6 +6,7 @@ import { ExportAdoService } from './../../service/export-ado.service';
 import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import {saveAs as importedSaveAs} from "file-saver";
 
 @Component({
   selector: 'ngx-export-ado',
@@ -54,9 +55,7 @@ export class ExportAdoComponent extends AbstractComponent implements OnInit, OnD
       });
   }
 
-  downloadFile(data: Response) {
-    const blob = new Blob([data], { type: 'application/zip' });
-    const url= window.URL.createObjectURL(blob);
-    window.open(url);
+  downloadFile(data: any) {
+    importedSaveAs(new Blob([data], { type: 'application/zip' }), 'ADO.zip');
   }
 }

@@ -1,39 +1,60 @@
 <div class="row">
-  <nb-card style="width: 100%" [nbSpinner]="loading" nbSpinnerStatus="danger">
+  <nb-card style="width: 100%;" [nbSpinner]="loading" nbSpinnerStatus="danger">
     <nb-card-body>
-
-      <ngx-title-header title='Export Database'></ngx-title-header>
+      <ngx-title-header title="Export Database"></ngx-title-header>
 
       <nb-stepper #stepper>
-
-        <nb-step [stepControl]="adoForm1" label="{{ 'ADO Page size' | translate }}">
-          <form [formGroup]="adoForm1" (ngSubmit)="onAdoForm1Submit()" class="step-container">
-            <h4>{{ 'ADO Page size' | translate }}</h4>
-            <br>
+        <nb-step
+          [stepControl]="adoForm1"
+          label="{{ 'Page size' | translate }}"
+        >
+          <form
+            [formGroup]="adoForm1"
+            (ngSubmit)="onAdoForm1Submit()"
+            class="step-container"
+          >
+            <h4>{{ "Page size" | translate }}</h4>
+            <br />
             <div class="input-group">
               <div class="ui-inputgroup">
                 <span class="ui-float-label">
-                <input pInputText type="number" id="pageSize" formControlName="pageSize" autofocus class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.pageSize.errors }" />
-                <label for="pageSize">{{ 'Page size' | translate }}</label>
-              </span>
+                  <input
+                    pInputText
+                    type="number"
+                    id="pageSize"
+                    formControlName="pageSize"
+                    autofocus
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.pageSize.errors }"
+                  />
+                  <label for="pageSize">{{ "Page size" | translate }}</label>
+                </span>
               </div>
             </div>
-            <div style="margin-top: 60px;" class="divider">&nbsp;</div>
+            <div class="divider">&nbsp;</div>
             <button nbButton status="primary" nbStepperNext>next</button>
           </form>
         </nb-step>
 
-        <nb-step [stepControl]="adoForm2" label="Import">
-          <form [formGroup]="adoForm2" (ngSubmit)="onAdoForm2Submit()" class="step-container">
-          <div class="step-container">
-            <h3>Download ADO</h3>
-            <button nbButton status="primary" (click)="onExport()">download</button>
-          </div>
-        </form>
+        <nb-step [stepControl]="adoForm2" label="Download">
+          <form
+            [formGroup]="adoForm2"
+            (ngSubmit)="onAdoForm2Submit()"
+            class="step-container"
+          >
+            <div class="step-container">
+              <div class="input-group">
+                <div class="ui-inputgroup">
+                  <h3>Download ADO</h3>
+                </div>
+              </div>
+              <button nbButton status="primary" (click)="onExport()">
+                download
+              </button>
+            </div>
+          </form>
         </nb-step>
       </nb-stepper>
-
     </nb-card-body>
   </nb-card>
 </div>

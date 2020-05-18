@@ -1,0 +1,77 @@
+<div class="row">
+  <nb-card style="width: 100%;" [nbSpinner]="loading" nbSpinnerStatus="danger">
+    <nb-card-body>
+      <ngx-title-header title="Export Database"></ngx-title-header>
+
+      <nb-stepper #stepper>
+        <nb-step
+          [stepControl]="form1"
+          label="{{ 'Select Template' | translate }}"
+        >
+          <form
+            [formGroup]="form1"
+            (ngSubmit)="onForm1Submit()"
+            class="step-container"
+          >
+            <h4>{{ "Select Template" | translate }}</h4>
+            <br />
+            <div class="input-group">
+              <div class="ui-inputgroup">
+                <p-dropdown
+                  formControlName="template"
+                  [options]="templates"
+                  name="template"
+                  autoWidth="false"
+                  [style]="{ width: '400px' }"
+                ></p-dropdown>
+              </div>
+            </div>
+            <div class="divider"></div>
+            <button nbButton status="primary" nbStepperNext>next</button>
+          </form>
+        </nb-step>
+
+        <nb-step
+          [stepControl]="form2"
+          label="{{ 'Select File Type' | translate }}"
+        >
+          <form
+            [formGroup]="form2"
+            (ngSubmit)="onForm2Submit()"
+            class="step-container"
+          >
+            <h4>{{ "Select File Type" | translate }}</h4>
+            <br />
+            <div class="input-group">
+              <div class="ui-inputgroup">
+                <p-dropdown
+                  formControlName="fileType"
+                  [options]="fileTypes"
+                  name="fileType"
+                  autoWidth="false"
+                  [style]="{ width: '400px' }"
+                ></p-dropdown>
+              </div>
+            </div>
+            <button nbButton nbStepperPrevious>prev</button>
+            <div class="divider"></div>
+            <button nbButton status="primary" nbStepperNext>next</button>
+          </form>
+        </nb-step>
+
+        <nb-step [stepControl]="form3" label="Export">
+          <div class="step-container">
+            <div class="input-group">
+              <div class="ui-inputgroup">
+                <h3>DOWNLOAD FILE</h3>
+              </div>
+            </div>
+            <button nbButton (click)="onDownload()" status="primary">
+              download
+            </button>
+          </div>
+        </nb-step>
+      </nb-stepper>
+    </nb-card-body>
+  </nb-card>
+</div>

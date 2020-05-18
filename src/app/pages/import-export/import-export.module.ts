@@ -8,6 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { ExportAdoComponent } from './export-ado.component';
+import { ExportUserCardComponent } from './export-user-card.component';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ImportAdoComponent } from './import-ado.component';
 import { ImportMapperComponent } from './import-mapper.component';
@@ -65,6 +66,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ImportUserCardComponent,
     ImportAdoComponent,
     ExportAdoComponent,
+    ExportUserCardComponent
   ],
 })
 export class ImportExportModule { }

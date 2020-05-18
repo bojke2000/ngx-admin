@@ -17,8 +17,12 @@ export class TemplateService extends AbstractService {
     super(http);
   }
 
-  getTemplates() {
-    return this.http.get<any>(this.url)
+  getTemplates(name?: string) {
+    let url = this.url;
+    if (name) {
+      url = url + '?name=' + name;
+    }
+    return this.http.get<any>(url)
       .toPromise()
       .then(res => <Option[]>res);
   }

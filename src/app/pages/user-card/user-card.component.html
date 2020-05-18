@@ -14,7 +14,7 @@
         (clickFunction)="onCustomerNameClick($event)"></ngx-table>
 
       <div style="position: relative; float: right; margin-top: 5px;">
-        <p-button label="Export"></p-button>
+        <a routerLink="/pages/export-user-card"><p-button label="Export"></p-button></a>
         <div class="divider"></div>
         <p-button label="Import" (onClick)="onImportClick()"></p-button>
       </div>

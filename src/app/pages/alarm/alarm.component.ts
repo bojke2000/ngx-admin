@@ -34,7 +34,7 @@ export class AlarmComponent extends AbstractComponent implements OnInit, OnDestr
 
   ngOnInit(): void {
 
-    this.loadAlarms(0, 20, 'id,asc');
+    // this.loadAlarms(0, 20, 'id,asc');
 
     this.cols = [
       { field: 'id', header: '#', width: '60px' },
@@ -50,10 +50,10 @@ export class AlarmComponent extends AbstractComponent implements OnInit, OnDestr
       { field: 'sensor2', header: 'Sensor2', width: '200px' },
       { field: 'stateLeap', header: 'State Leap', width: '200px' },
       { field: 'noFlow', header: 'No Flow', width: '200px' },
-      { field: 'underDimensioned', header: 'Under Dimensioned', width: '200px' },
-      { field: 'overDimensioned', header: 'Over Dimensioned', width: '200px' },
-      { field: 'disassembly', header: 'Disassembly', width: '200px' },
-      { field: 'freezing', header: 'Freezing', width: '200px' },
+      // { field: 'underDimensioned', header: 'Under Dimensioned', width: '200px' },
+      // { field: 'overDimensioned', header: 'Over Dimensioned', width: '200px' },
+      // { field: 'disassembly', header: 'Disassembly', width: '200px' },
+      // { field: 'freezing', header: 'Freezing', width: '200px' },
       { field: 'updateAt', header: 'Updated At', width: '200px' },
     ];
 
@@ -75,6 +75,10 @@ export class AlarmComponent extends AbstractComponent implements OnInit, OnDestr
     return of(this.alarms).pipe(
       distinctUntilChanged(),
     );
+  }
+
+  get columns$() {
+    return of(this.cols);
   }
 
 

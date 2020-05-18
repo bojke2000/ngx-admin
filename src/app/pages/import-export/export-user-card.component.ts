@@ -16,7 +16,7 @@ export class ExportUserCardComponent extends AbstractComponent implements OnInit
   form2: FormGroup;
   form3: FormGroup;
   loading = false;
-  templates: SelectItem[] =[];
+  templates: SelectItem[] = [];
   fileTypes: SelectItem[];
 
   constructor(

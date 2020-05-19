@@ -56,7 +56,7 @@ export class ExportUserCardComponent extends AbstractComponent implements OnInit
   onDownload(): void {
     const request = {
       template : this.form1.controls['template'].value,
-      fileType : this.form2.controls['fileType'].value
+      fileType : this.form2.controls['fileType'].value,
     };
 
     this.exportUserCardService.downloadUserCard(request)

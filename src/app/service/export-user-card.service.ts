@@ -9,7 +9,7 @@ export class ExportUserCardService extends AbstractService {
   constructor(http: HttpClient) { super(http);  }
 
   downloadUserCard(request: any) {
-    let url = `${this.url}`;
+    const url = `${this.url}`;
     const getUrl = url.concat('?').concat(this.jsonToHttpParams(request));
     return this.download(getUrl);
    }

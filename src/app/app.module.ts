@@ -26,6 +26,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CityService } from './service/city.service';
 import { CoreModule } from './@core/core.module';
 import { ExportAdoService } from './service/export-ado.service';
+import { ExportUserCardService } from './service/export-user-card.service';
 import { ImportUserCardService } from './service/import-user-card.service';
 import { MailAccountService } from './service/mail-account.service';
 import { MunicipalityService } from './service/municipailty.service';
@@ -117,9 +118,9 @@ import { UserCardService } from './service/user-card.service';
   providers: [AuthGuard, UserCardService, UserAccountService, MailAccountService, RouteService,
     ReadingBookService, MunicipalityService, UserAccountTypesService, CityService,
     RoleService, TemplateService, ImportUserCardService, AlarmService, ExportAdoService,
-    UserCardColumnService, { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true},
+    ExportUserCardService, UserCardColumnService, { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true},
     { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: () => false}],
-  bootstrap: [AppComponent],
+    bootstrap: [AppComponent],
 })
 export class AppModule {
 }

@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AbstractComponent } from '../../AbstractComponent';
+import { ExportUserCardService } from './../../service/export-user-card.service';
 import { SelectItem } from 'primeng/api/public_api';
 import { TemplateService } from './../../service/template.service';
 import { TranslateService } from '@ngx-translate/core';
+import {saveAs as importedSaveAs} from 'file-saver';
 
 @Component({
   selector: 'ngx-export-user-card',
@@ -22,6 +24,7 @@ export class ExportUserCardComponent extends AbstractComponent implements OnInit
   constructor(
     translate: TranslateService,
     private templateService: TemplateService,
+    private exportUserCardService: ExportUserCardService,
     private fb: FormBuilder) {
     super(translate);
   }
@@ -51,5 +54,16 @@ export class ExportUserCardComponent extends AbstractComponent implements OnInit
   }
 
   onDownload(): void {
+    const request = {
+      template : this.form1.controls['template'].value,
+      fileType : this.form2.controls['fileType'].value
+    };
+
+    this.exportUserCardService.downloadUserCard(request)
+      .subscribe((data: any) => this.downloadFile(data));
+  }
+
+  downloadFile(data: any) {
+    importedSaveAs(new Blob([data], { type: 'application/zip' }), 'ADO.zip');
   }
 }

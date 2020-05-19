@@ -126,5 +126,6 @@
   "Edit Device": "Izmeni uređaj",
   "Import Devices": "Uvezi uređaje",
   "Manual Entry": "Ručni unos",
-  "Run Import": "Uvezi fajlove"
+  "Run Import": "Uvezi fajlove",
+  "Export Database": "Izvezi bazu podataka"
 }

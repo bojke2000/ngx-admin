@@ -116,7 +116,7 @@ import { UserCardService } from './service/user-card.service';
     }),
   ],
   providers: [AuthGuard, UserCardService, UserAccountService, MailAccountService,
-    RouteService,ReadingBookService, MunicipalityService, UserAccountTypesService,
+    RouteService, ReadingBookService, MunicipalityService, UserAccountTypesService,
     CityService, RoleService, TemplateService, ImportUserCardService, AlarmService,
     ExportAdoService, ExportUserCardService, UserCardColumnService,
     { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true},

@@ -64,6 +64,6 @@ export class ExportUserCardComponent extends AbstractComponent implements OnInit
   }
 
   downloadFile(data: any) {
-    importedSaveAs(new Blob([data], { type: 'application/zip' }), 'ADO.zip');
+    importedSaveAs(new Blob([data], { type: 'text/plain' }), 'usercard.csv');
   }
 }

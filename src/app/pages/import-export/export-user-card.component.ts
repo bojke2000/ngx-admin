@@ -31,17 +31,17 @@ export class ExportUserCardComponent extends AbstractComponent implements OnInit
 
   ngOnInit() {
     this.form1 = this.fb.group({ template: ['Export', Validators.required]});
-    this.form2 = this.fb.group({ fileType: ['CSV', Validators.required]});
+    this.form2 = this.fb.group({ fileType: ['0', Validators.required]});
     this.form3 = this.fb.group({ });
 
     this.templateService.getTemplates('export')
       .then(templates => this.templates = templates);
 
       this.fileTypes = [
-        { label: 'XML', value: 'XML' },
-        { label: 'CSV', value: 'CSV' },
-        { label: 'TAB', value: 'TAB' },
-        { label: 'FIXED TXT', value: 'FIXED TXT' },
+        { label: 'CSV', value: '0' },
+        { label: 'TAB', value: '1' },
+        { label: 'XML', value: '2' },
+        { label: 'FIXED TXT', value: '3' },
       ];
   }
 

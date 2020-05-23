@@ -54,16 +54,30 @@ export class ExportUserCardComponent extends AbstractComponent implements OnInit
   }
 
   onDownload(): void {
+    const fileType: string = this.form2.controls['fileType'].value;
     const request = {
       template : this.form1.controls['template'].value,
-      fileType : this.form2.controls['fileType'].value,
+      fileType,
     };
 
     this.exportUserCardService.downloadUserCard(request)
-      .subscribe((data: any) => this.downloadFile(data));
+      .subscribe((data: any) => this.downloadFile(data, this.getFileName(fileType)));
   }
 
-  downloadFile(data: any) {
-    importedSaveAs(new Blob([data], { type: 'text/plain' }), 'usercard.csv');
+  downloadFile(data: any, fileName) {
+    importedSaveAs(new Blob([data], { type: 'text/plain' }), fileName);
+  }
+
+  getFileName(fileType: string): string {
+    switch (fileType) {
+      case '0':
+      case '1':
+        return  'usercard.csv';
+      case '2':
+        return  'usercard.xml';
+      case '3':
+
+        return  'usercard.txt';
+    }
   }
 }

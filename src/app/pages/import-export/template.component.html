@@ -44,18 +44,18 @@
           </ng-template>
         </p-table>
 
-        <div class="button-positioner">
+     <!--   <div class="button-positioner">
           <p-button icon="fa fa-plus" (click)="showDialogToAdd()" label="{{ translate.get('Add Template') | async }}"></p-button>
           <div class="divider"></div>
-        </div>
+        </div>-->
         <div class="button-positioner">
           <p-button icon="fa fa-save" (click)="save()" label="{{ translate.get('Save Changes') | async }}"></p-button>
           <div class="divider"></div>
         </div>
-        <div class="button-positioner">
+    <!--    <div class="button-positioner">
           <p-button icon="fa fa-trash" (click)="delete()" label="{{ translate.get('Delete Template') | async }}"></p-button>
           <div class="divider"></div>
-        </div>
+        </div> -->
 
       <p-dialog header="Add Template" [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true"
         showEffect="fade" [modal]="true" height="500px" [style]="{width: '600px'}">
@@ -74,7 +74,7 @@
       </form>
       <p-footer>
         <div class="ui-dialog-buttonpane ui-helper-clearfix">
-          <button type="button" pButton icon="fa fa-check" (click)="saveNewTemplate()"
+         <button type="button" pButton icon="fa fa-check" (click)="saveNewTemplate()"
             label="{{ translate.get('Add Template') | async }}"></button>
         </div>
       </p-footer>

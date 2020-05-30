@@ -42,6 +42,7 @@ export class ExportUserCardComponent extends AbstractComponent implements OnInit
         { label: 'TAB', value: '1' },
         { label: 'XML', value: '2' },
         { label: 'FIXED TXT', value: '3' },
+        { label: 'SEMI-COL', value: '4' },
       ];
   }
 
@@ -76,6 +77,7 @@ export class ExportUserCardComponent extends AbstractComponent implements OnInit
       case '2':
         return  'usercard.xml';
       case '3':
+      case '4':
 
         return  'usercard.txt';
     }

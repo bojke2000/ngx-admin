@@ -30,6 +30,7 @@ export interface UserCard {
   usageCurrentReverse: number;
   usageCurrentMonth: number;
   diffLastRead: number;
+  diffLastReadColor?: number;
   magneticSabotageTime: number;
 
   signalLevel: number;

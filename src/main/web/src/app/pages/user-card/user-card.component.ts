@@ -79,4 +79,24 @@ export class UserCardComponent implements OnInit {
    onCustomerNameClick(payload) {
     alert(payload);
   }
+
+  fontWeight(rowData: any[], columnName: string) {
+    if (columnName !== 'diffLastRead') {
+      return 'normal';
+    } else {
+      const status = rowData[`${columnName}Color`];
+
+      return (status > 0) ? 'bold' : 'normal';
+    }
+  }
+
+  styleColor(rowData: any[], columnName: string) {
+    if (columnName !== 'diffLastRead') {
+      return null;
+    } else {
+      const status = rowData[`${columnName}Color`];
+
+      return (status > 0) ? 'red' : null;
+    }
+  }
 }

@@ -5,8 +5,10 @@
       <ngx-title-header title='Alarms'></ngx-title-header>
 
       <ngx-table [columns]="columns$ | async" [value]="alarms$ | async" (lazyLoad)="loadAlarmsLazy($event)"
-        dataKey="id" [totalRecords]="totalRecords" [loading]="loading" ngClass="alarm-on" ngCondition="On">
-      </ngx-table>
+        dataKey="id" [totalRecords]="totalRecords" [loading]="loading$ | async"
+        [fontWeightFunction]="fontWeight"
+        [styleColorFunction]="styleColor">
+        </ngx-table>
 
     </nb-card-body>
   </nb-card>

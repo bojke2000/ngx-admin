@@ -36,7 +36,7 @@ selectionMode="single"
 </ng-template>
 <ng-template pTemplate="body" let-rowData let-columns="columns">
   <tr [pSelectableRow]="rowData">
-    <td *ngFor="let col of columns" [style.font-weight]="fontWeight(styleCondition(rowData, col.field))"  [style.color]="styleColor(styleCondition(rowData, col.field))"  (click)="col.field === 'customerName' && onColumnClick(rowData)" >
+    <td *ngFor="let col of columns" [style.font-weight]="fontWeight && fontWeight(rowData, col.field)"  [style.color]="styleColor && styleColor(rowData, col.field)"  (click)="col.field === 'customerName' && onColumnClick(rowData)" >
       {{rowData[col.field]}}
     </td>
   </tr>

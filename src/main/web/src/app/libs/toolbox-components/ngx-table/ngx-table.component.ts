@@ -39,6 +39,10 @@ export class NgxTableComponent extends AbstractComponent {
   ngCondition: string = undefined;
   @Input()
   ngClass: string = undefined;
+  @Input()
+  fontWeightFunction: Function;
+  @Input()
+  styleColorFunction: Function;
 
   constructor(translate: TranslateService) {
     super(translate);
@@ -48,6 +52,16 @@ export class NgxTableComponent extends AbstractComponent {
     return of(this.loading).pipe(
       distinctUntilChanged(),
     );
+  }
+
+  fontWeight(rowData: any, columnName: string): Function {
+    const {fontWeightFunction, localFontWeight} = this;
+    return fontWeightFunction ? fontWeightFunction.call(null, rowData, columnName) : localFontWeight.call(null, false);
+  }
+
+  styleColor(rowData: any, columnName: string): Function {
+    const {styleColorFunction, localStyleColor} = this;
+    return styleColorFunction ? styleColorFunction.call(null, rowData, columnName) : localStyleColor.call(null, null);
   }
 
   get value$() {
@@ -78,11 +92,11 @@ export class NgxTableComponent extends AbstractComponent {
     return this.ngCondition && rowData[index] === this.ngCondition;
   }
 
-  styleColor(condition: boolean) {
+  localStyleColor(condition: boolean) {
     return condition ? 'red' : null;
   }
 
-  fontWeight(condition: boolean) {
+  localFontWeight(condition: boolean) {
     return condition ? 'bold' : 'normal';
   }
 }

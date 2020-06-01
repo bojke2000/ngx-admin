@@ -6,6 +6,7 @@ import { Alarm } from '../../domain/alarm';
 import { AlarmService } from '../../service/alarm.service';
 import { LazyLoadEvent } from 'primeng/api/public_api';
 import { NgPrimeGridResponse } from './../../domain/ngprime-grid-response';
+import { NgxTableComponent } from './../../libs/toolbox-components/ngx-table/ngx-table.component';
 import { Table } from 'primeng/table';
 import { TranslateService } from '@ngx-translate/core';
 import { distinctUntilChanged } from 'rxjs/operators';
@@ -20,7 +21,7 @@ export class AlarmComponent extends AbstractComponent implements OnInit, OnDestr
   alarm: Alarm;
   totalRecords: number;
   cols: any[];
-  loading: boolean;
+  loading = false;
   alarmSearch: string;
 
   protected destroy$ = new Subject<void>();
@@ -57,12 +58,7 @@ export class AlarmComponent extends AbstractComponent implements OnInit, OnDestr
       { field: 'updateAt', header: 'Updated At', width: '200px' },
     ];
 
-    const pageable = {page: 1, size: 20, sort: 'id'};
-    this.alarmService.getAll(pageable).then((response: NgPrimeGridResponse) => {
-      this.alarms = response.data;
-      this.totalRecords = response.totalRecords;
-      this.loading = false;
-    });
+    this.loading = true;
   }
 
   get loading$() {
@@ -89,6 +85,7 @@ export class AlarmComponent extends AbstractComponent implements OnInit, OnDestr
 
   private loadAlarms(page: number, size: number, sort?: string) {
     const pageable = { page, size, sort};
+    this.loading = true;
     this.alarmService.getAll(pageable).then((response: NgPrimeGridResponse) => {
       this.alarms = response.data;
       this.totalRecords = response.totalRecords;
@@ -97,9 +94,16 @@ export class AlarmComponent extends AbstractComponent implements OnInit, OnDestr
   }
 
   loadAlarmsLazy(event: LazyLoadEvent) {
-    this.loading = true;
     const sortBy = event.sortField === undefined ? 'id' : event.sortField === 'role' ? 'role.name' : event.sortField;
     const sortOrder = event.sortOrder === -1 ? 'desc' : 'asc';
     this.loadAlarms(event.first / event.rows, event.rows, sortBy + ',' + sortOrder);
+  }
+
+  fontWeight(rowData: any[], index: any) {
+    return rowData[index] === 'On' ? 'bold' : 'normal';
+  }
+
+  styleColor(rowData: any[], index: any) {
+    return rowData[index] === 'On' ? 'red' : null;
   }
 }

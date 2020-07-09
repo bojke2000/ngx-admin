@@ -27,6 +27,9 @@ export class UserCardComponent implements OnInit {
   selectedUserCard: UserCard;
 
   customerName: string;
+  route: string;
+  address: string;
+  readingBook: string;
 
   constructor(
     private userCardService: UserCardService,

@@ -1,42 +1,88 @@
 <div class="row">
-  <nb-card style="width: 100%">
+  <nb-card style="width: 100%;">
     <nb-card-body>
-      <ngx-title-header title='User Card'></ngx-title-header>
+      <ngx-title-header title="User Card"></ngx-title-header>
 
-        <div class="ui-g ui-fluid">
-        <div class="ui-g-12">
+      <div class="ui-g ui-fluid">
+        <div class="ui-g-8">
           <div class="ui-g-2">
             <span class="ui-float-label">
-              <input pInputText id="customerName" [(ngModel)]="customerName"
-                onclick="this.setSelectionRange(0, this.value.length)" />
-              <label for="customerName">{{ 'Customer name' | translate }}</label>
+              <input
+                pInputText
+                id="customerName"
+                [(ngModel)]="customerName"
+                onclick="this.setSelectionRange(0, this.value.length)"
+              />
+              <label for="customerName">{{
+                "Customer name" | translate
+              }}</label>
             </span>
+          </div>
+          <div class="ui-g-2">
+            <span class="ui-float-label">
+              <input
+                pInputText
+                id="route"
+                [(ngModel)]="route"
+                onclick="this.setSelectionRange(0, this.value.length)"
+              />
+              <label for="route">{{ "Route" | translate }}</label>
+            </span>
+          </div>
+          <div class="ui-g-2">
+            <span class="ui-float-label">
+              <input
+                pInputText
+                id="address"
+                [(ngModel)]="address"
+                onclick="this.setSelectionRange(0, this.value.length)"
+              />
+              <label for="address">{{ "Address" | translate }}</label>
+            </span>
+          </div>
+
         </div>
-        <div class="ui-g-2">
-          <span class="ui-float-label">
-            <input pInputText id="route" [(ngModel)]="route"
-              onclick="this.setSelectionRange(0, this.value.length)" />
-            <label for="route">{{ 'Route' | translate }}</label>
-          </span>
-      </div>
-      <div class="ui-g-2">
-        <span class="ui-float-label">
-          <input pInputText id="address" [(ngModel)]="address"
-            onclick="this.setSelectionRange(0, this.value.length)" />
-          <label for="address">{{ 'Address' | translate }}</label>
-        </span>
-    </div>
-    <div class="ui-g-2">
-      <span class="ui-float-label">
-        <input pInputText id="readingBook" [(ngModel)]="readingBook"
-          onclick="this.setSelectionRange(0, this.value.length)" />
-        <label for="readingBook">{{ 'Reading Book' | translate }}</label>
-      </span>
-  </div>
-      </div>
+        <div class="ui-g-8">
+          <div class="ui-g-2">
+            <span class="ui-float-label">
+              <input
+                pInputText
+                id="readingBook"
+                [(ngModel)]="readingBook"
+                onclick="this.setSelectionRange(0, this.value.length)"
+              />
+              <label for="readingBook">{{ "Reading Book" | translate }}</label>
+            </span>
+          </div>
+          <div class="ui-g-2">
+            <span class="ui-float-label">
+              <input
+                pInputText
+                id="readingBook"
+                [(ngModel)]="address"
+                onclick="this.setSelectionRange(0, this.value.length)"
+              />
+              <label for="address">{{ "Address" | translate }}</label>
+            </span>
+          </div>
+          <div class="ui-g-2">
+            <span class="ui-float-label">
+              <input
+                pInputText
+                id="municipality"
+                [(ngModel)]="municipality"
+                onclick="this.setSelectionRange(0, this.value.length)"
+              />
+              <label for="municipality">{{ "Municipality" | translate }}</label>
+            </span>
+          </div>
+        </div>
+
+
       </div>
 
-      <ngx-table [columns]="cols$ | async"
+      <ngx-table
+        [columns]="cols$ | async"
         [value]="userCards"
         (lazyLoad)="loadUserCardsLazy($event)"
         [selection]="selectedUserCard"
@@ -46,10 +92,13 @@
         [loading]="loading"
         [fontWeightFunction]="fontWeight"
         [styleColorFunction]="styleColor"
-        (clickFunction)="onCustomerNameClick($event)"></ngx-table>
+        (clickFunction)="onCustomerNameClick($event)"
+      ></ngx-table>
 
       <div style="position: relative; float: right; margin-top: 5px;">
-        <a routerLink="/pages/export-user-card"><p-button label="{{ 'Export' | translate }}"></p-button></a>
+        <a routerLink="/pages/export-user-card"
+          ><p-button label="{{ 'Export' | translate }}"></p-button
+        ></a>
       </div>
     </nb-card-body>
   </nb-card>

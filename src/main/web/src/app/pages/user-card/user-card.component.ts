@@ -30,6 +30,7 @@ export class UserCardComponent implements OnInit {
   route: string;
   address: string;
   readingBook: string;
+  municipality: string;
 
   constructor(
     private userCardService: UserCardService,

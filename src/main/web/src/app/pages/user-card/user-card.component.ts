@@ -26,6 +26,8 @@ export class UserCardComponent implements OnInit {
   @ViewChild('table', {static: false}) table: Table;
   selectedUserCard: UserCard;
 
+  customerName: string;
+
   constructor(
     private userCardService: UserCardService,
     private userCardColumnService: UserCardColumnService,
@@ -98,5 +100,9 @@ export class UserCardComponent implements OnInit {
 
       return (status > 0) ? 'red' : null;
     }
+  }
+
+  search () {
+
   }
 }

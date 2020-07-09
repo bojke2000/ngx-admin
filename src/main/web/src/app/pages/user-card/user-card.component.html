@@ -3,6 +3,18 @@
     <nb-card-body>
       <ngx-title-header title='User Card'></ngx-title-header>
 
+        <div class="ui-g ui-fluid">
+        <div class="ui-g-12">
+          <div class="ui-g-2">
+            <span class="ui-float-label">
+              <input pInputText id="customerName" [(ngModel)]="customerName"
+                onclick="this.setSelectionRange(0, this.value.length)" />
+              <label for="customerName">{{ 'Customer name' | translate }}</label>
+            </span>
+        </div>
+      </div>
+      </div>
+
       <ngx-table [columns]="cols$ | async"
         [value]="userCards"
         (lazyLoad)="loadUserCardsLazy($event)"

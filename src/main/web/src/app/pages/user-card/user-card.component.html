@@ -63,6 +63,9 @@
               <label for="usageCurrentTo">{{ "Usage To" | translate }}</label>
             </span>
           </div>
+          <div class="button-positioner">
+            <p-button icon="fa fa-search" label="{{ 'Search' | translate }}"></p-button>
+          </div>
 
         </div>
         <div class="ui-g-12">
@@ -121,10 +124,15 @@
               <label for="usageReverseTo">{{ "Usage Reverse To" | translate }}</label>
             </span>
           </div>
+          <div class="button-positioner">
+            <p-button icon="fa fa-refresh" label="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ 'Clear' | translate }}"></p-button>
+          </div>
         </div>
 
 
       </div>
+
+      <br/><br/>
 
       <ngx-table
         [columns]="cols$ | async"

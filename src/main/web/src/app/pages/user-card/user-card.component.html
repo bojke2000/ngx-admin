@@ -21,12 +21,12 @@
           <div class="ui-g-2">
             <span class="ui-float-label">
               <input
-                pInputText
-                id="route"
-                [(ngModel)]="route"
-                onclick="this.setSelectionRange(0, this.value.length)"
-              />
-              <label for="route">{{ "Route" | translate }}</label>
+              pInputText
+              id="customerId"
+              [(ngModel)]="customerId"
+              onclick="this.setSelectionRange(0, this.value.length)"
+            />
+              <label for="customerId">{{ "Customer ID" | translate }}</label>
             </span>
           </div>
           <div class="ui-g-2">
@@ -64,41 +64,26 @@
             </span>
           </div>
           <div class="button-positioner">
-            <p-button icon="fa fa-search" label="{{ 'Search' | translate }}"></p-button>
+            <p-button (click)="search()"  icon="fa fa-search" label="{{ 'Search' | translate }}"></p-button>
           </div>
 
         </div>
         <div class="ui-g-12">
           <div class="ui-g-2">
             <span class="ui-float-label">
-              <input
-                pInputText
-                id="readingBook"
-                [(ngModel)]="readingBook"
-                onclick="this.setSelectionRange(0, this.value.length)"
-              />
+              <p-multiSelect [options]="readingBooks" defaultLabel="&nbsp;" [(ngModel)]="readingBook" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"></p-multiSelect>
               <label for="readingBook">{{ "Reading Book" | translate }}</label>
             </span>
           </div>
           <div class="ui-g-2">
             <span class="ui-float-label">
-              <input
-                pInputText
-                id="readingBook"
-                [(ngModel)]="address"
-                onclick="this.setSelectionRange(0, this.value.length)"
-              />
-              <label for="address">{{ "Address" | translate }}</label>
-            </span>
+              <p-multiSelect [options]="routes" defaultLabel="&nbsp;" [(ngModel)]="route" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"></p-multiSelect>
+              <label for="route">{{ "Route" | translate }}</label>
+              </span>
           </div>
           <div class="ui-g-2">
             <span class="ui-float-label">
-              <input
-                pInputText
-                id="municipality"
-                [(ngModel)]="municipality"
-                onclick="this.setSelectionRange(0, this.value.length)"
-              />
+              <p-multiSelect [options]="municipalities" defaultLabel="&nbsp;" [(ngModel)]="municipality" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"></p-multiSelect>
               <label for="municipality">{{ "Municipality" | translate }}</label>
             </span>
           </div>
@@ -125,7 +110,7 @@
             </span>
           </div>
           <div class="button-positioner">
-            <p-button icon="fa fa-refresh" label="&nbsp;&nbsp;{{ 'Clear' | translate }}"></p-button>
+            <p-button (click)="clear()" icon="fa fa-refresh" label="&nbsp;&nbsp;{{ 'Clear' | translate }}"></p-button>
           </div>
         </div>
 

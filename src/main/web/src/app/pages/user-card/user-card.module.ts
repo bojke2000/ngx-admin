@@ -15,6 +15,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
+import {MultiSelectModule} from 'primeng/multiselect';
 import { NgModule } from '@angular/core';
 import { PanelModule } from 'primeng/panel';
 import { RouterModule } from '@angular/router';
@@ -42,6 +43,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     InputTextareaModule,
     CheckboxModule,
     DropdownModule,
+    MultiSelectModule,
     AutoCompleteModule,
     InputSwitchModule,
     PanelModule,

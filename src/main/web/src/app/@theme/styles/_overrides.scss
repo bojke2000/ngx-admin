@@ -126,7 +126,16 @@ body .ui-dropdown {
   margin-top: -3px !important;
 }
 
-body .ui-dropdown .ui-inputtext {
+body .ui-multiselect {
+  border-top-color: white !important;
+  border-left-color: white !important;
+  border-right-color: white !important;
+  border-bottom: 1px solid #a9acb1ec !important;
+  border-radius: 0 !important;
+  margin-top: -3px !important;
+}
+
+body .ui-dropdown .ui-inputtext  .ui-multiselect {
   border-color: white !important;
   border-radius: 0 !important;
 }

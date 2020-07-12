@@ -1,9 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { LazyLoadEvent, SelectItem } from 'primeng/api/public_api';
 import { Observable, of } from 'rxjs';
 
 import { Grid } from '../../domain/grid';
-import { LazyLoadEvent } from 'primeng/api/public_api';
+import { MunicipalityService } from '../../service/municipailty.service';
 import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
+import { ReadingBookService } from '../../service/reading-book.service';
+import { RouteService } from '../../service/route.service';
 import { Table } from 'primeng/table';
 import { TranslateService } from '@ngx-translate/core';
 import { UserCard } from '../../domain/user-card';
@@ -27,10 +30,14 @@ export class UserCardComponent implements OnInit {
   selectedUserCard: UserCard;
 
   customerName: string;
+  customerId; string;
   route: string;
+  routes: SelectItem[];
   address: string;
   readingBook: string;
+  readingBooks: SelectItem[];
   municipality: string;
+  municipalities: SelectItem[];
   usageCurrentFrom: number;
   usageCurrentTo: number;
   usageReverseFrom: number;
@@ -39,6 +46,9 @@ export class UserCardComponent implements OnInit {
   constructor(
     private userCardService: UserCardService,
     private userCardColumnService: UserCardColumnService,
+    private routeService: RouteService,
+    private readingBookService: ReadingBookService,
+    private municipalityService: MunicipalityService,
     translate: TranslateService) {
     translate.setDefaultLang('en');
     translate.use('rs');
@@ -54,6 +64,18 @@ export class UserCardComponent implements OnInit {
     });
 
     this.loading = true;
+
+    this.routeService.getRoutesAsOptions().then(routes => {
+      this.routes = routes;
+    });
+
+    this.readingBookService.getReadingBooksAsOptions().then(readingBooks => {
+      this.readingBooks = readingBooks;
+    });
+
+    this.municipalityService.getMunicipalitiesAsOptions().then(municipalities => {
+      this.municipalities = municipalities;
+    });
   }
 
   get cols$(): Observable<any[]> {
@@ -111,6 +133,29 @@ export class UserCardComponent implements OnInit {
   }
 
   search () {
+    const { customerName,
+            route,
+            address,
+            readingBook,
+            municipality,
+            usageCurrentFrom,
+            usageCurrentTo,
+            usageReverseFrom,
+            usageReverseTo
+          } = this;
 
+    console.log("search: %s, %s, %s, %s, %s, %s, %s, %s, %s", customerName, route, address, readingBook, municipality, usageCurrentFrom, usageCurrentTo, usageReverseFrom, usageReverseTo);
+  }
+
+  clear() {
+    this.customerName = '';
+    this.route = '';
+    this.address = '';
+    this.readingBook = '';
+    this.municipality = '';
+    this.usageCurrentFrom = undefined;
+    this.usageCurrentTo = undefined;
+    this.usageCurrentFrom = undefined;
+    this.usageReverseTo = undefined;
   }
 }

@@ -4,7 +4,7 @@
       <ngx-title-header title="User Card"></ngx-title-header>
 
       <div class="ui-g ui-fluid">
-        <div class="ui-g-8">
+        <div class="ui-g-12">
           <div class="ui-g-2">
             <span class="ui-float-label">
               <input
@@ -41,8 +41,31 @@
             </span>
           </div>
 
+          <div class="ui-g-2">
+            <span class="ui-float-label">
+              <input
+                pInputText
+                id="usageCurrentFrom"
+                [(ngModel)]="usageCurrentFrom"
+                onclick="this.setSelectionRange(0, this.value.length)"
+              />
+              <label for="usageCurrentFrom">{{ "Usage From" | translate }}</label>
+            </span>
+          </div>
+          <div class="ui-g-2">
+            <span class="ui-float-label">
+              <input
+                pInputText
+                id="usageCurrentTo"
+                [(ngModel)]="usageCurrentTo"
+                onclick="this.setSelectionRange(0, this.value.length)"
+              />
+              <label for="usageCurrentTo">{{ "Usage To" | translate }}</label>
+            </span>
+          </div>
+
         </div>
-        <div class="ui-g-8">
+        <div class="ui-g-12">
           <div class="ui-g-2">
             <span class="ui-float-label">
               <input
@@ -74,6 +97,28 @@
                 onclick="this.setSelectionRange(0, this.value.length)"
               />
               <label for="municipality">{{ "Municipality" | translate }}</label>
+            </span>
+          </div>
+          <div class="ui-g-2">
+            <span class="ui-float-label">
+              <input
+                pInputText
+                id="usageReverseFrom"
+                [(ngModel)]="usageReverseFrom"
+                onclick="this.setSelectionRange(0, this.value.length)"
+              />
+              <label for="usageReverseFrom">{{ "Usage Reverse From" | translate }}</label>
+            </span>
+          </div>
+          <div class="ui-g-2">
+            <span class="ui-float-label">
+              <input
+                pInputText
+                id="usageReverseTo"
+                [(ngModel)]="usageReverseTo"
+                onclick="this.setSelectionRange(0, this.value.length)"
+              />
+              <label for="usageReverseTo">{{ "Usage Reverse To" | translate }}</label>
             </span>
           </div>
         </div>

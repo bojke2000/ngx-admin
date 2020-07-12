@@ -128,5 +128,9 @@
   "Manual Entry": "Ručni unos",
   "Run Import": "Uvezi fajlove",
   "Export Database": "Izvezi bazu podataka",
-  "Export": "Izvezi podatke"
+  "Export": "Izvezi podatke",
+  "Usage From": "Potrošnja od",
+  "Usage To": "Potrošnja do",
+  "Usage Reverse From": "Reverzna potrošnja od",
+  "Usage Reverse To": "Reverzna potrošnja do"
 }

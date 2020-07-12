@@ -31,6 +31,10 @@ export class UserCardComponent implements OnInit {
   address: string;
   readingBook: string;
   municipality: string;
+  usageCurrentFrom: number;
+  usageCurrentTo: number;
+  usageReverseFrom: number;
+  usageReverseTo: number;
 
   constructor(
     private userCardService: UserCardService,

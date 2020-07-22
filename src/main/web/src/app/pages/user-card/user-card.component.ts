@@ -31,7 +31,7 @@ export class UserCardComponent implements OnInit {
   @ViewChild('table', {static: false}) table: Table;
   selectedUserCard: UserCard;
 
-  @ViewChild(NgxTableComponent) child:NgxTableComponent;
+  @ViewChild(NgxTableComponent) child: NgxTableComponent;
 
   customerName: string;
   customerId; string;
@@ -145,7 +145,7 @@ export class UserCardComponent implements OnInit {
   }
 
   search () {
-    this.page=0;
+    this.page = 0;
     this.userCardService.findBy(this.getSearchCriteria(), this.getPageable()).then((ngresp: NgPrimeGridResponse) => {
       this.userCards = ngresp.data;
       this.totalRecords = ngresp.totalRecords;
@@ -163,19 +163,8 @@ export class UserCardComponent implements OnInit {
       usageCurrentFrom,
       usageCurrentTo,
       usageReverseFrom,
-      usageReverseTo
+      usageReverseTo,
     } = this;
-
-    console.log("search: %s, %s, %s, %s, %s, %s, %s, %s, %s",
-    customerName,
-    route,
-    address,
-    readingBook,
-    municipality,
-    usageCurrentFrom,
-    usageCurrentTo,
-    usageReverseFrom,
-    usageReverseTo);
 
   return {customerName,
           customerId,
@@ -205,7 +194,7 @@ export class UserCardComponent implements OnInit {
     this.usageReverseFrom = undefined;
     this.sortBy = '';
     this.sortOrder = 'asc';
-    this.page=0;
+    this.page = 0;
     this.child.reset();
 
     this.userCardService.findBy({}, this.getPageable()).then((ngresp: NgPrimeGridResponse) => {

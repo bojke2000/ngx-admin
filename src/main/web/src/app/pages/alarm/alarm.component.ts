@@ -6,7 +6,6 @@ import { Alarm } from '../../domain/alarm';
 import { AlarmService } from '../../service/alarm.service';
 import { LazyLoadEvent } from 'primeng/api/public_api';
 import { NgPrimeGridResponse } from './../../domain/ngprime-grid-response';
-import { NgxTableComponent } from './../../libs/toolbox-components/ngx-table/ngx-table.component';
 import { Table } from 'primeng/table';
 import { TranslateService } from '@ngx-translate/core';
 import { distinctUntilChanged } from 'rxjs/operators';

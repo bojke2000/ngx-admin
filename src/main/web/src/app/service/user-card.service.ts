@@ -21,7 +21,7 @@ export class UserCardService extends AbstractService {
     let separator = '';
 
     if (searchCriteria.customerName) {
-      url = url.concat('customerName==').concat('*').concat(searchCriteria.customerName).concat('*')
+      url = url.concat('customerName==').concat('*').concat(searchCriteria.customerName).concat('*');
       separator = ';';
     }
 

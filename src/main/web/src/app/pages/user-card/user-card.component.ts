@@ -203,6 +203,8 @@ export class UserCardComponent implements OnInit {
     this.usageCurrentFrom = undefined;
     this.usageReverseTo = undefined;
     this.usageReverseFrom = undefined;
+    this.sortBy = '';
+    this.sortOrder = 'asc';
     this.page=0;
     this.child.reset();
 

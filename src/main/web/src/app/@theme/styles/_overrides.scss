@@ -126,6 +126,10 @@ body .ui-dropdown {
   margin-top: -3px !important;
 }
 
+body .ui-dropdown-label-container > .ui-inputtext {
+  border-bottom: 1px solid white !important;
+}
+
 body .ui-multiselect {
   border-top-color: white !important;
   border-left-color: white !important;

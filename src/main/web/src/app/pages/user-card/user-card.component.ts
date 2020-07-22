@@ -156,10 +156,7 @@ export class UserCardComponent implements OnInit {
   getSearchCriteria() {
     const { customerName,
       customerId,
-      route,
       address,
-      readingBook,
-      municipality,
       usageCurrentFrom,
       usageCurrentTo,
       usageReverseFrom,

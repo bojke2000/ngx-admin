@@ -18,7 +18,6 @@ import { MessagesModule } from 'primeng/messages';
 import {MultiSelectModule} from 'primeng/multiselect';
 import { NgModule } from '@angular/core';
 import { PanelModule } from 'primeng/panel';
-import { RouterModule } from '@angular/router';
 import { TableModule } from 'primeng/table';
 import { ThemeModule } from '../../@theme/theme.module';
 import { ToolboxComponentsModule } from '../../libs/toolbox-components/toolbox-components.module';

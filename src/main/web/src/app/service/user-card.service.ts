@@ -18,8 +18,41 @@ export class UserCardService extends AbstractService {
 
   findBy(searchCriteria: any, pageable?: Pageable) {
     let url = this.url.concat('?search=');
+    let separator = '';
+
     if (searchCriteria.customerName) {
       url = url.concat('customerName==').concat('*').concat(searchCriteria.customerName).concat('*')
+      separator = ';';
+    }
+
+    if (searchCriteria.customerId) {
+      url = url.concat(separator).concat('customerId==').concat(searchCriteria.customerId);
+      separator = ';';
+    }
+
+    if (searchCriteria.address) {
+      url = url.concat(separator).concat('address==').concat('*').concat(searchCriteria.address).concat('*');
+      separator = ';';
+    }
+
+    if (searchCriteria.usageCurrentFrom) {
+      url = url.concat(separator).concat('usageCurrent>=').concat(searchCriteria.usageCurrentFrom);
+      separator = ';';
+    }
+
+    if (searchCriteria.usageCurrentTo) {
+      url = url.concat(separator).concat('usageCurrent<=').concat(searchCriteria.usageCurrentTo);
+      separator = ';';
+    }
+
+    if (searchCriteria.usageReverseFrom) {
+      url = url.concat(separator).concat('usageCurrentReverse>=').concat(searchCriteria.usageReverseFrom);
+      separator = ';';
+    }
+
+    if (searchCriteria.usageReverseTo) {
+      url = url.concat(separator).concat('usageCurrentReverse<=').concat(searchCriteria.usageReverseTo);
+      separator = ';';
     }
 
     return this.get(url, pageable);

@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { Grid } from '../../domain/grid';
 import { MunicipalityService } from '../../service/municipailty.service';
 import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
+import { NgxTableComponent } from '../../libs/toolbox-components/ngx-table/ngx-table.component';
 import { Pageable } from './../../domain/pageable';
 import { ReadingBookService } from '../../service/reading-book.service';
 import { RouteService } from '../../service/route.service';
@@ -30,6 +31,8 @@ export class UserCardComponent implements OnInit {
   @ViewChild('table', {static: false}) table: Table;
   selectedUserCard: UserCard;
 
+  @ViewChild(NgxTableComponent) child:NgxTableComponent;
+
   customerName: string;
   customerId; string;
   route: string;
@@ -47,7 +50,7 @@ export class UserCardComponent implements OnInit {
   // state of pagination
   sortBy: string;
   sortOrder: string;
-  first: number;
+  page: number;
   rows: number;
 
   constructor(
@@ -91,7 +94,7 @@ export class UserCardComponent implements OnInit {
 
   private loadPage(page: number, size: number, sort?: string) {
     const pageable = { page, size, sort};
-    this.userCardService.findAll(pageable).then((ngresp: NgPrimeGridResponse) => {
+    this.userCardService.findBy(this.getSearchCriteria(), pageable).then((ngresp: NgPrimeGridResponse) => {
       this.userCards = ngresp.data;
       this.totalRecords = ngresp.totalRecords;
       this.loading = false;
@@ -102,7 +105,7 @@ export class UserCardComponent implements OnInit {
     this.loading = true;
     this.sortBy = event.sortField === undefined ? 'id' : event.sortField === 'city' ? 'cityId' : event.sortField;
     this.sortOrder = event.sortOrder === -1 ? 'desc' : 'asc';
-    this.first = event.first;
+    this.page = event.first / event.rows;
     this.rows = event.rows;
     this.loadPage(event.first / event.rows, event.rows, this.sortBy + ',' + this.sortOrder);
   }
@@ -142,30 +145,17 @@ export class UserCardComponent implements OnInit {
   }
 
   search () {
-    const { customerName,
-            route,
-            address,
-            readingBook,
-            municipality,
-            usageCurrentFrom,
-            usageCurrentTo,
-            usageReverseFrom,
-            usageReverseTo
-          } = this;
-
-    const searchCriteria = {customerName};
-    const pageable = this.getPageable();
-
-    this.userCardService.findBy(searchCriteria, pageable).then((ngresp: NgPrimeGridResponse) => {
+    this.page=0;
+    this.userCardService.findBy(this.getSearchCriteria(), this.getPageable()).then((ngresp: NgPrimeGridResponse) => {
       this.userCards = ngresp.data;
       this.totalRecords = ngresp.totalRecords;
       this.loading = false;
     });
+  }
 
-
-
-    console.log("search: %s, %s, %s, %s, %s, %s, %s, %s, %s",
-      customerName,
+  getSearchCriteria() {
+    const { customerName,
+      customerId,
       route,
       address,
       readingBook,
@@ -173,15 +163,37 @@ export class UserCardComponent implements OnInit {
       usageCurrentFrom,
       usageCurrentTo,
       usageReverseFrom,
-      usageReverseTo);
+      usageReverseTo
+    } = this;
+
+    console.log("search: %s, %s, %s, %s, %s, %s, %s, %s, %s",
+    customerName,
+    route,
+    address,
+    readingBook,
+    municipality,
+    usageCurrentFrom,
+    usageCurrentTo,
+    usageReverseFrom,
+    usageReverseTo);
+
+  return {customerName,
+          customerId,
+          address,
+          usageCurrentFrom,
+          usageCurrentTo,
+          usageReverseFrom,
+          usageReverseTo};
+
   }
 
   getPageable(): Pageable {
-    return {page: this.first, size: this.rows, sort: `${this.sortBy},${this.sortOrder}`};
+    return {page: this.page, size: this.rows, sort: `${this.sortBy},${this.sortOrder}`};
   }
 
   clear() {
     this.customerName = '';
+    this.customerId = undefined;
     this.route = '';
     this.address = '';
     this.readingBook = '';
@@ -190,6 +202,9 @@ export class UserCardComponent implements OnInit {
     this.usageCurrentTo = undefined;
     this.usageCurrentFrom = undefined;
     this.usageReverseTo = undefined;
+    this.usageReverseFrom = undefined;
+    this.page=0;
+    this.child.reset();
 
     this.userCardService.findBy({}, this.getPageable()).then((ngresp: NgPrimeGridResponse) => {
       this.userCards = ngresp.data;

@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 
 import { AbstractComponent } from '../../../AbstractComponent';
+import { Table } from 'primeng/table';
 import { TranslateService } from '@ngx-translate/core';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -43,6 +44,9 @@ export class NgxTableComponent extends AbstractComponent {
   fontWeightFunction: Function;
   @Input()
   styleColorFunction: Function;
+  @ViewChild('dt') table: Table;
+
+  first  = 0;
 
   constructor(translate: TranslateService) {
     super(translate);
@@ -98,5 +102,9 @@ export class NgxTableComponent extends AbstractComponent {
 
   localFontWeight(condition: boolean) {
     return condition ? 'bold' : 'normal';
+  }
+
+  reset(): void {
+    this.first = 0;
   }
 }

@@ -77,10 +77,12 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
 
     this.cityService.getCitiesAsOptions().then(cities => {
       this.cities = cities;
+      this.userAccountForm.patchValue({city: this.cities[0].value});
     });
 
     this.roleService.getRoles().then(roles => {
         this.roles = roles;
+        this.userAccountForm.patchValue({role: this.roles[0].value});
     });
   }
 
@@ -151,8 +153,8 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
       username: undefined,
       password: undefined,
       email: undefined,
-      city: undefined,
-      role: undefined,
+      city: this.cities[0].value,
+      role: this.roles[0].value,
       active: 'Active',
       lastLogin: undefined,
     };

@@ -133,5 +133,8 @@
   "Usage To": "Potrošnja do",
   "Usage Reverse From": "Reverzna potrošnja od",
   "Usage Reverse To": "Reverzna potrošnja do",
-  "Clear": "Pobriši"
+  "Clear": "Pobriši",
+  "Display Type": "Vrsta prikaza",
+  "Current": "Trenutni",
+  "Historical": "Istorijski"
 }

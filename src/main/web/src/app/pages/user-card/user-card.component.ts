@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { LazyLoadEvent, SelectItem } from 'primeng/api/public_api';
 import { Observable, of } from 'rxjs';
 
+import { AbstractComponent } from '../../AbstractComponent';
 import { Grid } from '../../domain/grid';
 import { MunicipalityService } from '../../service/municipailty.service';
 import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
@@ -14,6 +15,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { UserCard } from '../../domain/user-card';
 import { UserCardColumnService } from '../../service/user-card-column.service';
 import { UserCardService } from '../../service/user-card.service';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'ngx-user-card',
@@ -21,7 +23,7 @@ import { UserCardService } from '../../service/user-card.service';
   styleUrls: ['./user-card.component.css'],
 
 })
-export class UserCardComponent implements OnInit {
+export class UserCardComponent extends AbstractComponent implements OnInit {
 
   userCards: UserCard[];
   totalRecords: number;
@@ -46,6 +48,8 @@ export class UserCardComponent implements OnInit {
   usageCurrentTo: number;
   usageReverseFrom: number;
   usageReverseTo: number;
+  displayType: number;
+  displayTypes: SelectItem[];
 
   // state of pagination
   sortBy: string;
@@ -60,11 +64,16 @@ export class UserCardComponent implements OnInit {
     private readingBookService: ReadingBookService,
     private municipalityService: MunicipalityService,
     translate: TranslateService) {
+      super(translate);
     translate.setDefaultLang('en');
     translate.use('rs');
   }
 
   ngOnInit(): void {
+    const {translate} = this;
+
+    translate.use('rs');
+
     this.cols = [
       { field: 'id', header: '#', width: '70px' },
     ];
@@ -85,6 +94,10 @@ export class UserCardComponent implements OnInit {
 
     this.municipalityService.getMunicipalitiesAsOptions().then(municipalities => {
       this.municipalities = municipalities;
+    });
+
+    translate.get('Current').subscribe(value => {
+      this.displayTypes = [{value: 1, label:  translate.instant('Current')}, {value: 2, label: translate.instant('Historical')}];
     });
   }
 

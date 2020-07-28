@@ -213,4 +213,9 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
       this.loading = false;
     });
   }
+
+  onDisplayTypeChange(event) {
+    console.log("VALUE", event.value);
+
+  }
 }

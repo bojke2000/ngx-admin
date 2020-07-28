@@ -7,7 +7,11 @@
         <div class="ui-g-12">
           <div class="ui-g-2">
             <span class="ui-float-label">
-              <p-dropdown [options]="displayTypes" [(ngModel)]="displayType" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"></p-dropdown>
+              <p-dropdown [options]="displayTypes"
+                          [(ngModel)]="displayType"
+                          [showTransitionOptions]="'0ms'"
+                          [hideTransitionOptions]="'0ms'"
+                          (onChange)="onDisplayTypeChange($event)"></p-dropdown>
               <label for="displayType">{{ "Vrsta prikaza" | translate }}</label>
             </span>
           </div>

@@ -136,5 +136,7 @@
   "Clear": "Pobriši",
   "Display Type": "Vrsta prikaza",
   "Current": "Trenutni",
-  "Historical": "Istorijski"
+  "Historical": "Istorijski",
+  "Date From": "Od datuma",
+  "Date To": "Do datuma"
 }

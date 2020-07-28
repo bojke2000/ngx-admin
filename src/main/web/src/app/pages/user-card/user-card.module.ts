@@ -5,6 +5,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
+import {CalendarModule} from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
@@ -55,7 +56,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReactiveFormsModule,
     ToolboxComponentsModule,
     DialogModule,
-
+    CalendarModule,
     TranslateModule.forRoot({
       loader: {
           provide: TranslateLoader,

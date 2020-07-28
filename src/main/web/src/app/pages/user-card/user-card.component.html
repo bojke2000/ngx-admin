@@ -80,7 +80,8 @@
           </div>
 
         </div>
-        <div class="ui-g-12">
+        <div class="ui-g-12" >
+          <ng-container *ngIf="displayType === 1">
           <div class="ui-g-2">
             <span class="ui-float-label">
               <p-multiSelect [options]="readingBooks" defaultLabel="&nbsp;" [(ngModel)]="readingBook" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"></p-multiSelect>
@@ -99,6 +100,32 @@
               <label for="municipality">{{ "Municipality" | translate }}</label>
             </span>
           </div>
+        </ng-container>
+        <ng-container *ngIf="displayType === 2">
+          <div class="ui-g-2">
+            <span class="ui-float-label">
+              <input
+              pInputText
+              id="deviceId"
+              [(ngModel)]="deviceId"
+              onclick="this.setSelectionRange(0, this.value.length)"
+            />
+              <label for="deviceId">{{ "Device ID" | translate }}</label>
+            </span>
+          </div>
+          <div class="ui-g-2">
+            <span class="ui-float-label">
+              <p-calendar [(ngModel)]="dateFrom" dateFormat="dd.mm.yy" showIcon="true"></p-calendar>
+              <label for="dateFrom">{{ "Date From" | translate }}</label>
+              </span>
+          </div>
+          <div class="ui-g-2">
+            <span class="ui-float-label">
+              <p-calendar [(ngModel)]="dateTo" dateFormat="dd.mm.yy" showIcon="true"></p-calendar>
+              <label for="dateTo">{{ "Date To" | translate }}</label>
+            </span>
+          </div>
+        </ng-container>
           <div class="ui-g-2">
             <span class="ui-float-label">
               <input

@@ -48,8 +48,11 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
   usageCurrentTo: number;
   usageReverseFrom: number;
   usageReverseTo: number;
-  displayType: number;
+  displayType: number = 1;
   displayTypes: SelectItem[];
+  deviceId: string;
+  dateFrom: string = undefined;
+  dateTo: string = undefined;
 
   // state of pagination
   sortBy: string;
@@ -202,6 +205,9 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
     this.usageCurrentFrom = undefined;
     this.usageReverseTo = undefined;
     this.usageReverseFrom = undefined;
+    this.deviceId = undefined;
+    this.dateFrom = undefined;
+    this.dateTo = undefined;
     this.sortBy = '';
     this.sortOrder = 'asc';
     this.page = 0;
@@ -216,6 +222,5 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
 
   onDisplayTypeChange(event) {
     console.log("VALUE", event.value);
-
   }
 }

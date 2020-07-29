@@ -15,7 +15,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { UserCard } from '../../domain/user-card';
 import { UserCardColumnService } from '../../service/user-card-column.service';
 import { UserCardService } from '../../service/user-card.service';
-import { distinctUntilChanged } from 'rxjs/operators';
+
+const CURRENT_VIEW = 1;
+const HISTORICAL_VIEW = 2;
 
 @Component({
   selector: 'ngx-user-card',
@@ -59,6 +61,8 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
   sortOrder: string;
   page: number;
   rows: number;
+
+
 
   constructor(
     private userCardService: UserCardService,
@@ -162,30 +166,39 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
 
   search () {
     this.page = 0;
-    this.userCardService.findBy(this.getSearchCriteria(), this.getPageable()).then((ngresp: NgPrimeGridResponse) => {
-      this.userCards = ngresp.data;
-      this.totalRecords = ngresp.totalRecords;
-      this.loading = false;
-    });
+        this.userCardService.findBy(this.getSearchCriteria(), this.getPageable()).then((ngresp: NgPrimeGridResponse) => {
+          this.userCards = ngresp.data;
+          this.totalRecords = ngresp.totalRecords;
+          this.loading = false;
+        });
   }
 
   getSearchCriteria() {
-    const { customerName,
+    const {
+      displayType,
+      customerName,
       customerId,
+      deviceId,
       address,
       usageCurrentFrom,
       usageCurrentTo,
       usageReverseFrom,
       usageReverseTo,
+      dateFrom,
+      dateTo
     } = this;
 
-  return {customerName,
+  return {displayType,
+          customerName,
           customerId,
+          deviceId,
           address,
           usageCurrentFrom,
           usageCurrentTo,
           usageReverseFrom,
-          usageReverseTo};
+          usageReverseTo,
+          dateFrom,
+          dateTo};
 
   }
 

@@ -5,6 +5,12 @@ import { Observable } from 'rxjs';
 import { Pageable } from './../domain/pageable';
 import { UserCard } from '../domain/user-card';
 
+const CURRENT_VIEW = 1;
+const HISTORICAL_VIEW = 2;
+const URL_ALL = 1;
+const URL_PART_ONE = 2;
+const URL_PART_TWO = 3;
+
 @Injectable()
 export class UserCardService extends AbstractService {
 
@@ -16,12 +22,12 @@ export class UserCardService extends AbstractService {
     return this.get(this.url, pageable);
   }
 
-  findBy(searchCriteria: any, pageable?: Pageable) {
-    let url = this.url.concat('?search=');
+  getUrl(baseUrl: string, searchCriteria: any, view: number) {
+    let url = baseUrl;
     let separator = '';
 
     if (searchCriteria.customerName) {
-      url = url.concat('customerName==').concat('*').concat(searchCriteria.customerName).concat('*');
+      url = url.concat('customerName==').concat('*').concat(searchCriteria.customerName).concat('*')
       separator = ';';
     }
 
@@ -30,9 +36,21 @@ export class UserCardService extends AbstractService {
       separator = ';';
     }
 
+    if (searchCriteria.deviceId) {
+      url = url.concat(separator).concat('deviceId==').concat(searchCriteria.deviceId);
+      separator = ';';
+    }
+
     if (searchCriteria.address) {
       url = url.concat(separator).concat('address==').concat('*').concat(searchCriteria.address).concat('*');
       separator = ';';
+    }
+
+    if (view === URL_PART_ONE) {
+      return url;
+    } else if (view === URL_PART_TWO) {
+      url = baseUrl;
+      separator = '';
     }
 
     if (searchCriteria.usageCurrentFrom) {
@@ -55,7 +73,25 @@ export class UserCardService extends AbstractService {
       separator = ';';
     }
 
-    return this.get(url, pageable);
+    if (searchCriteria.dateFrom) {
+      url = url.concat(separator).concat('dateFrom<=').concat(searchCriteria.dateFrom);
+      separator = ';';
+    }
+
+    if (searchCriteria.dateTo) {
+      url = url.concat(separator).concat('dateTo>=').concat(searchCriteria.dateTo);
+      separator = ';';
+    }
+
+    return url;
+  }
+
+  findBy(searchCriteria: any, pageable?: Pageable) {
+    if (searchCriteria.displayType === CURRENT_VIEW) {
+      return this.get(this.getUrl(this.url.concat('?search='), searchCriteria, URL_ALL), pageable);
+    } else if (searchCriteria.displayType === HISTORICAL_VIEW) {
+
+    }
   }
 
   saveUser(userCard: UserCard): Observable<UserCard> {

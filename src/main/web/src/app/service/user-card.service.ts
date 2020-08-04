@@ -90,7 +90,11 @@ export class UserCardService extends AbstractService {
     if (searchCriteria.displayType === CURRENT_VIEW) {
       return this.get(this.getUrl(this.url.concat('?search='), searchCriteria, URL_ALL), pageable);
     } else if (searchCriteria.displayType === HISTORICAL_VIEW) {
+      let url = this.url.concat("/history");
+      url = this.getUrl(url.concat('?search='),searchCriteria, URL_PART_ONE);
+      url = url.concat("&").concat(this.getUrl('historySearch=', searchCriteria, URL_PART_TWO));
 
+      return this.get(url,pageable);
     }
   }
 

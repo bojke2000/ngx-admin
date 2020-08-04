@@ -1,7 +1,10 @@
 <div class="row">
   <nb-card style="width: 100%;">
     <nb-card-body>
-      <ngx-title-header title="User Card"></ngx-title-header>
+
+        <nb-card status="info">
+          <nb-card-header>User Card</nb-card-header>
+          <nb-card-body>
 
       <div class="ui-g ui-fluid">
         <div class="ui-g-12">
@@ -153,10 +156,13 @@
           </div>
         </div>
 
-
       </div>
 
-      <br/><br/>
+    </nb-card-body>
+   </nb-card>
+
+   <nb-card>
+    <nb-card-body style="padding-left: 0; padding-right: 0; padding-top: 0;">
 
       <ngx-table
         [columns]="cols$ | async"
@@ -169,7 +175,7 @@
         [loading]="loading"
         [fontWeightFunction]="fontWeight"
         [styleColorFunction]="styleColor"
-        (clickFunction)="onCustomerNameClick($event)"
+        (clickFunction)="onCustomerNameClick()"
       ></ngx-table>
 
       <div style="position: relative; float: right; margin-top: 5px;">
@@ -177,6 +183,12 @@
           ><p-button label="{{ 'Export' | translate }}"></p-button
         ></a>
       </div>
+
+    </nb-card-body>
+  </nb-card>
+
+
     </nb-card-body>
   </nb-card>
 </div>
+<ngx-user-card-details [(displayDialog)]="displayDialog" (closeFunction)="onUserCardDialogClose($event)" ></ngx-user-card-details>

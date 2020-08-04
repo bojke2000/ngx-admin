@@ -1,3 +1,4 @@
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NbButtonModule, NbCardModule, NbCheckboxModule, NbToggleModule } from '@nebular/theme';
@@ -17,13 +18,13 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
 import {MultiSelectModule} from 'primeng/multiselect';
-import { NgModule } from '@angular/core';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
 import { ThemeModule } from '../../@theme/theme.module';
 import { ToolboxComponentsModule } from '../../libs/toolbox-components/toolbox-components.module';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { UserCardComponent } from './user-card.component';
+import { UserCardDetailsComponent } from './user-card-details.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -65,8 +66,11 @@ export function HttpLoaderFactory(http: HttpClient) {
       },
     }),
   ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ],
   declarations: [
-    UserCardComponent,
+    UserCardComponent,UserCardDetailsComponent
   ],
 })
 export class UserCardModule { }

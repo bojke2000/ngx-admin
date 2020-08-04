@@ -66,11 +66,13 @@
 }
 
 body .ui-table .ui-table-thead > tr > th {
-  color: #007ad9 !important;
+ /* color: #007ad9 !important; */
   padding: -7.429em 0.857em;
   border: 0 !important;
   border-bottom: 1px solid #c8c8c8 !important;
-  background-color: white !important;
+  color: white !important;
+  background-color: #0095ff !important;
+  /*background-color: white !important;*/
 }
 
 body .ui-table .ui-table-tbody > tr > td {

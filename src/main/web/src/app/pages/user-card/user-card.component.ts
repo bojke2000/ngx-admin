@@ -62,6 +62,8 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
   page: number;
   rows: number;
 
+  displayDialog = false;
+
 
 
   constructor(
@@ -140,8 +142,8 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
       alert('onImportClick');
    }
 
-   onCustomerNameClick(payload) {
-    alert(payload);
+   onCustomerNameClick() {
+    this.displayDialog = !this.displayDialog;
   }
 
   fontWeight(rowData: any[], columnName: string) {
@@ -235,5 +237,10 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
 
   onDisplayTypeChange(event) {
     console.log("VALUE", event.value);
+  }
+
+  onUserCardDialogClose(event) {
+    this.displayDialog = event.value;
+
   }
 }

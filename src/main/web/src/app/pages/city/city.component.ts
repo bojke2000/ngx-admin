@@ -28,7 +28,6 @@ export class CityComponent extends AbstractComponent implements OnInit, OnDestro
   citySearch: string;
   displayDialog: boolean;
 
-  protected destroy$ = new Subject<void>();
   @ViewChild('table', { static: false }) table: Table;
 
   constructor(private citieservice: CityService,

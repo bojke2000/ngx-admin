@@ -63,6 +63,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
   rows: number;
 
   displayDialog = false;
+  id: string = undefined;
 
 
 
@@ -114,6 +115,10 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
     return of(this.cols);
   }
 
+  get displayId$() {
+    return of(this.id)  ;
+  }
+
   private loadPage(page: number, size: number, sort?: string) {
     const pageable = { page, size, sort};
     this.userCardService.findBy(this.getSearchCriteria(), pageable).then((ngresp: NgPrimeGridResponse) => {
@@ -142,8 +147,9 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
       alert('onImportClick');
    }
 
-   onCustomerNameClick() {
-    this.displayDialog = !this.displayDialog;
+   onCustomerNameClick(row: any) {
+    this.displayDialog = true;
+    this.id = row.id;
   }
 
   fontWeight(rowData: any[], columnName: string) {

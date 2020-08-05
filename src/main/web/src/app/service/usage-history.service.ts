@@ -18,8 +18,8 @@ export class UsageHistoryService extends AbstractService {
     let url = baseUrl;
     let separator = '';
 
-    if (searchCriteria.customerName) {
-      url = url.concat('userCardId==').concat('*').concat(searchCriteria.customerName).concat('*')
+    if (searchCriteria.userCardId) {
+      url = url.concat('userCardId==').concat(searchCriteria.userCardId);
       separator = ';';
     }
 

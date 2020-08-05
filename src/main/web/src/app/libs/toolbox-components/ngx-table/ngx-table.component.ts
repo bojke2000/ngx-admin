@@ -45,6 +45,8 @@ export class NgxTableComponent extends AbstractComponent {
   @Input()
   styleColorFunction: Function;
   @ViewChild('dt') table: Table;
+  @Input()
+  rows = 20;
 
   first  = 0;
 

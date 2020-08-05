@@ -29,7 +29,6 @@ export class RouteComponent extends AbstractComponent implements OnInit, OnDestr
   routeSearch: string;
   displayDialog: boolean;
 
-  protected destroy$ = new Subject<void>();
   @ViewChild('table', { static: false }) table: Table;
 
   constructor(private routeservice: RouteService,

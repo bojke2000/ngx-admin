@@ -33,7 +33,6 @@ export class MailAccountComponent extends AbstractComponent implements OnInit, O
   statuses: SelectItem[];
   cities: Option[];
   mailAccountSearch: string;
-  protected destroy$ = new Subject<void>();
   @ViewChild('table', { static: false }) table: Table;
 
   constructor(private mailAccountService: MailAccountService,

@@ -34,7 +34,6 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
   cities: SelectItem[];
   userSearch: string;
 
-  protected destroy$ = new Subject<void>();
   @ViewChild('table', { static: false }) table: Table;
 
   constructor(private userAccountservice: UserAccountService,

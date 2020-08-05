@@ -26,6 +26,7 @@ export class UserCardDetailsComponent extends AbstractComponent implements OnIni
   usageCurrentMonth: number = 213.32;
   diffLastRead: number = 12.41;
 
+  @Input()
   userCardId = undefined;
   cols = [];
   usageHistory = [];
@@ -35,6 +36,7 @@ export class UserCardDetailsComponent extends AbstractComponent implements OnIni
   sortOrder = 'desc';
   page = undefined;
   rows = undefined;
+  initialized = false;
 
 
 
@@ -58,13 +60,20 @@ export class UserCardDetailsComponent extends AbstractComponent implements OnIni
 
   ngOnInit(): void {
     this.cols = [
-      { field: 'id', header: '#', width: '70px' },
-      { field: 'usageCurrent', header: 'usageCurrent', width: '70px' },
-      { field: 'usageCurrent', header: 'usageCurrent', width: '70px' },
-      { field: 'usageCurrentReverse', header: 'usageCurrentReverse', width: '70px' },
-      { field: 'usageCurrentMonth', header: 'usageCurrentMonth', width: '70px' },
-      { field: 'readAt', header: 'readAt', width: '70px' },
+      { field: 'usageCurrent', header: 'Watermeter Status', width: '70px' },
+      { field: 'usageCurrentReverse', header: 'Reverse Flow Status', width: '70px' },
+      { field: 'usageCurrentMonth', header: 'Status on day of reading', width: '70px' },
+      { field: 'usageAverage', header: 'Average Usage', width: '70px' },
+      { field: 'readAt', header: 'Read Datetime', width: '70px' },
     ];
+  }
+
+  onShow(event: any) {
+    if (this.initialized) {
+      this.loadPage(0, 10, this.sortBy + ',' + this.sortOrder);
+    } else {
+      this.initialized = true;
+    }
   }
 
   private loadPage(page: number, size: number, sort?: string) {
@@ -79,7 +88,6 @@ export class UserCardDetailsComponent extends AbstractComponent implements OnIni
   loadUsageHistoryLazy(event: LazyLoadEvent) {
     this.loading = true;
     this.sortBy = event.sortField === undefined ? 'id' : event.sortField === 'city' ? 'cityId' : event.sortField;
-    this.sortOrder = event.sortOrder === -1 ? 'desc' : 'asc';
     this.page = event.first / event.rows;
     this.rows = event.rows;
     this.loadPage(event.first / event.rows, event.rows, this.sortBy + ',' + this.sortOrder);

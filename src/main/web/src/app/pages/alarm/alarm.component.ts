@@ -23,7 +23,6 @@ export class AlarmComponent extends AbstractComponent implements OnInit, OnDestr
   loading = false;
   alarmSearch: string;
 
-  protected destroy$ = new Subject<void>();
   @ViewChild('table', { static: false }) table: Table;
 
   constructor(

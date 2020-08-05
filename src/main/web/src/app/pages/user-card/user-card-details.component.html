@@ -1,6 +1,14 @@
-<p-dialog header="{{ 'Device'|translate }}" [(visible)]="displayDialog" (onHide)="onHide()" [focusOnShow]="false" [responsive]="true"  dynamic="true"
-        showEffect="fade" [modal]="true" height="800" [style]="{width: '1200px'}">
+<p-dialog header="{{ 'User Card '|translate }}" [(visible)]="displayDialog"
+          (onShow)="onShow()" (onHide)="onHide()"
+          [focusOnShow]="false" [responsive]="true"  dynamic="true"
+          showEffect="fade" [modal]="true" height="800" [style]="{width: '1400px'}">
+
         <div class="ui-g ui-fluid" >
+
+          <nb-card status="info" style="margin-left: 7px; margin-right: 7px;">
+            <nb-card-header>{{ 'User Card'|translate }}</nb-card-header>
+            <nb-card-body>
+
           <div class="ui-g-6"><u><b>{{ 'Customer Info' | translate }}</b></u></div>
           <div class="ui-g-6"><u><b>{{ 'Status' | translate }}</b></u></div>
 
@@ -96,32 +104,25 @@
 
             </div>
           </div> <!--g-12 -->
+          </nb-card-body>
+          </nb-card>
 
           <div class="ui-g-12">
+            <div class="ui-g-7">
             <nb-card>
               <nb-card-body style="padding-left: 0; padding-right: 0; padding-top: 0;">
-
                 <ngx-table
                   [columns]="cols"
                   [value]="usageHistory"
                   (lazyLoad)="loadUsageHistoryLazy($event)"
                   dataKey="id"
+                  [rows]="6"
                   [totalRecords]="totalRecords"
                   [loading]="loading"
                 ></ngx-table>
-
-                <div style="position: relative; float: right; margin-top: 5px;">
-                  <a routerLink="/pages/export-user-card"
-                    ><p-button label="{{ 'Export' | translate }}"></p-button
-                  ></a>
-                </div>
-
               </nb-card-body>
             </nb-card>
-
           </div>
-
-
-
+          </div>
         </div> <!-- fluid -->
 </p-dialog>

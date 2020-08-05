@@ -38,6 +38,9 @@ export class UserCardDetailsComponent extends AbstractComponent implements OnIni
   rows = undefined;
   initialized = false;
 
+  // chart
+  data = {};
+
 
 
   @Input()
@@ -66,11 +69,29 @@ export class UserCardDetailsComponent extends AbstractComponent implements OnIni
       //{ field: 'usageAverage', header: 'Average Usage', width: '70px' },
       { field: 'readAt', header: 'Read Datetime', width: '70px' },
     ];
+
+    this.data = {
+      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      datasets: [
+          {
+              label: 'My First dataset',
+              backgroundColor: '#42A5F5',
+              borderColor: '#1E88E5',
+              data: [65, 59, 80, 81, 56, 55, 40, 34, 56, 12, 67,43]
+          },
+          {
+              label: 'My Second dataset',
+              backgroundColor: '#9CCC65',
+              borderColor: '#7CB342',
+              data: [28, 48, 40, 19, 86, 27, 90, 34, 56, 41, 55, 67]
+          }
+      ]
+  }
   }
 
   onShow() {
     if (this.initialized) {
-      this.loadPage(0, 10, this.sortBy + ',' + this.sortOrder);
+      this.loadPage(0, 6, this.sortBy + ',' + this.sortOrder);
     } else {
       this.initialized = true;
     }

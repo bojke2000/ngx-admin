@@ -25,6 +25,11 @@
   padding: 1.35rem 2.25rem 0.75rem !important;
 }
 
+.nb-theme-default nb-card.status-info nb-card-header {
+  background-color: #007ad9 !important;
+  border-bottom-color: #007ad9 !important;
+}
+
 .nb-theme-default nb-checkbox.status-basic .custom-checkbox.checked {
   background-color: #007ad9 !important;
   border-color: #007ad9 !important;
@@ -71,7 +76,7 @@ body .ui-table .ui-table-thead > tr > th {
   border: 0 !important;
   border-bottom: 1px solid #c8c8c8 !important;
   color: white !important;
-  background-color: #0095ff !important;
+  background-color: #007ad9 !important
   /*background-color: white !important;*/
 }
 
@@ -82,6 +87,16 @@ body .ui-table .ui-table-tbody > tr > td {
   transition: box-shadow 0.2s;
   border: 0 !important;
   padding: 12px !important;
+}
+
+body .ui-table .ui-table-tbody > tr:nth-child(even).ui-state-highlight {
+  background-color: lightgray !important;
+   color: #ffffff;
+}
+
+body .ui-table .ui-table-tbody > tr.ui-state-highlight {
+  background-color: lightgray !important;;
+  color: #ffffff;
 }
 
 body .ui-paginator {

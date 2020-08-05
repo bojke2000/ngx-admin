@@ -5,6 +5,7 @@ import { LazyLoadEvent } from 'primeng/api';
 import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
 import { TranslateService } from '@ngx-translate/core';
 import { UsageHistoryService } from '../../service/usage-history.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'ngx-user-card-details',
@@ -69,24 +70,6 @@ export class UserCardDetailsComponent extends AbstractComponent implements OnIni
       //{ field: 'usageAverage', header: 'Average Usage', width: '70px' },
       { field: 'readAt', header: 'Read Datetime', width: '70px' },
     ];
-
-    this.data = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-      datasets: [
-          {
-              label: 'My First dataset',
-              backgroundColor: '#42A5F5',
-              borderColor: '#1E88E5',
-              data: [65, 59, 80, 81, 56, 55, 40, 34, 56, 12, 67,43]
-          },
-          {
-              label: 'My Second dataset',
-              backgroundColor: '#9CCC65',
-              borderColor: '#7CB342',
-              data: [28, 48, 40, 19, 86, 27, 90, 34, 56, 41, 55, 67]
-          }
-      ]
-  }
   }
 
   onShow() {
@@ -95,6 +78,27 @@ export class UserCardDetailsComponent extends AbstractComponent implements OnIni
     } else {
       this.initialized = true;
     }
+
+    this.usageHistoryService.getCharData(this.userCardId).then(resp => {
+      var data = [];
+      for (const el of resp as Array<any>) {
+        data.push(el.usageCurrentMonth);
+      }
+
+      const label = this.translate.instant('Monthly Usage') ? this.translate.instant('Monthly Usage') : 'Monthly Usage';
+      this.data = {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        datasets: [
+            {
+              label,
+              backgroundColor: '#9CCC65',
+              borderColor: '#7CB342',
+              data
+            }
+        ]
+      }
+    });
+
   }
 
   private loadPage(page: number, size: number, sort?: string) {

@@ -10,8 +10,9 @@ export class UsageHistoryService extends AbstractService {
 
   constructor(http: HttpClient) { super(http); }
 
-  findAll(pageable?: Pageable) {
-    return this.get(this.url, pageable);
+  getCharData(userCardId?: number) {
+    const url = this.url + "/chart-data" + "?userCardId=" + userCardId;
+    return this.get(url);
   }
 
   getUrl(baseUrl: string, searchCriteria: any) {

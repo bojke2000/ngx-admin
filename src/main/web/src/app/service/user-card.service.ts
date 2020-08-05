@@ -98,6 +98,10 @@ export class UserCardService extends AbstractService {
     }
   }
 
+  getById(id: any) {
+    return super.getById(this.url, id);
+  }
+
   saveUser(userCard: UserCard): Observable<UserCard> {
     return this.post(this.url, userCard);
   }

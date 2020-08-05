@@ -5,6 +5,8 @@ import { LazyLoadEvent } from 'primeng/api';
 import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
 import { TranslateService } from '@ngx-translate/core';
 import { UsageHistoryService } from '../../service/usage-history.service';
+import { UserCard } from '../../domain/user-card';
+import { UserCardService } from './../../service/user-card.service';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -15,17 +17,17 @@ import { map } from 'rxjs/operators';
 })
 export class UserCardDetailsComponent extends AbstractComponent implements OnInit {
 
-  customerId = '12345';
-  customerName = 'Petar Petrovic';
-  address = 'Zike Zikica';
-  addressNo = '2';
-  deviceId = '1243423';
-  gsmId = '21414';
-  readTimestamp = '23.07.2020 12:23';
-  usageCurrent: number = 123.12;
-  usageCurrentReverse: number = 321.21;
-  usageCurrentMonth: number = 213.32;
-  diffLastRead: number = 12.41;
+  customerId = undefined;
+  customerName = undefined;
+  address = undefined;
+  addressNo = undefined;
+  deviceId = undefined;
+  gsmId = undefined;
+  readTimestamp = undefined;
+  usageCurrent: number = undefined;
+  usageCurrentReverse: number = undefined;
+  usageCurrentMonth: number = undefined;
+  diffLastRead: number = undefined;
 
   @Input()
   userCardId = undefined;
@@ -50,6 +52,7 @@ export class UserCardDetailsComponent extends AbstractComponent implements OnIni
   closeFunction = new EventEmitter();
 
   constructor (translate: TranslateService,
+    private readonly userCardService: UserCardService,
     private readonly usageHistoryService: UsageHistoryService) {
    super(translate);
   }
@@ -78,6 +81,20 @@ export class UserCardDetailsComponent extends AbstractComponent implements OnIni
     } else {
       this.initialized = true;
     }
+
+    this.userCardService.getById(this.userCardId).then((dto: UserCard) => {
+      this.customerId = dto.customerId;
+      this.address = dto.address;
+      this.addressNo = dto.addressNo;
+      this.customerName = dto.customerName;
+      this.deviceId = dto.deviceId;
+      this.gsmId = dto.gsmId;
+      this.usageCurrent = dto.usageCurrent;
+      this.usageCurrentReverse = dto.usageCurrentReverse;
+      this.usageCurrentMonth = dto.usageCurrentMonth;
+      this.readTimestamp = dto.readTimestamp;
+      this.diffLastRead = dto.diffLastRead;
+    });
 
     this.usageHistoryService.getCharData(this.userCardId).then(resp => {
       var data = [];

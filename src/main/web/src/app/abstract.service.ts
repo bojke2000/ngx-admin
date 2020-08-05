@@ -36,6 +36,14 @@ export abstract class AbstractService {
       .then(res => res);
   }
 
+  protected getById(url: string, id: any) {
+    const getUrl = url.concat('/').concat(id);
+
+    return this.http.get(getUrl,  this.httpOptions)
+      .toPromise()
+      .then(res => res);
+  }
+
   protected post<T>(url: string, form: any): Observable<T> {
     return this.http.post<T>(url, form, this.httpOptions)
       .pipe(catchError(this.handleError));

@@ -41,6 +41,11 @@ export class UserCardService extends AbstractService {
       separator = ';';
     }
 
+    if (searchCriteria.gsmId) {
+      url = url.concat(separator).concat('gsmId==').concat(searchCriteria.gsmId);
+      separator = ';';
+    }
+
     if (searchCriteria.address) {
       url = url.concat(separator).concat('address==').concat('*').concat(searchCriteria.address).concat('*');
       separator = ';';

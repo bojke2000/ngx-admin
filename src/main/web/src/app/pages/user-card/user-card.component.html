@@ -7,7 +7,7 @@
           <nb-card-body>
 
       <div class="ui-g ui-fluid">
-        <div class="ui-g-10">
+        <div class="ui-g-12">
           <div class="ui-g-2">
             <span class="ui-float-label">
               <p-dropdown [options]="displayTypes"
@@ -19,7 +19,8 @@
             </span>
           </div>
         </div>
-        <div class="ui-g-10">
+        <div class="ui-g-12">
+          <div class="ui-g-11">
           <div class="ui-g-2">
             <span class="ui-float-label">
               <input
@@ -59,6 +60,18 @@
           <div class="ui-g-2">
             <span class="ui-float-label">
               <input
+              pInputText
+              id="deviceId"
+              [(ngModel)]="deviceId"
+              onclick="this.setSelectionRange(0, this.value.length)"
+            />
+              <label for="deviceId">{{ "Device ID" | translate }}</label>
+            </span>
+          </div>
+
+          <div class="ui-g-2">
+            <span class="ui-float-label">
+              <input
                 pInputText
                 id="usageCurrentFrom"
                 [(ngModel)]="usageCurrentFrom"
@@ -78,12 +91,14 @@
               <label for="usageCurrentTo">{{ "Usage To" | translate }}</label>
             </span>
           </div>
-          <div class="button-positioner">
+        </div>
+          <div class="ui-g-1">
             <p-button (click)="search()"  icon="fa fa-search" label="{{ 'Search' | translate }}"></p-button>
           </div>
 
         </div>
-        <div class="ui-g-10" >
+        <div class="ui-g-12" >
+          <div class="ui-g-11">
           <ng-container *ngIf="displayType === 1">
           <div class="ui-g-2">
             <span class="ui-float-label">
@@ -103,19 +118,23 @@
               <label for="municipality">{{ "Municipality" | translate }}</label>
             </span>
           </div>
-        </ng-container>
-        <ng-container *ngIf="displayType === 2">
+
           <div class="ui-g-2">
             <span class="ui-float-label">
               <input
               pInputText
-              id="deviceId"
-              [(ngModel)]="deviceId"
+              id="gsmId"
+              [(ngModel)]="gsmId"
               onclick="this.setSelectionRange(0, this.value.length)"
             />
-              <label for="deviceId">{{ "Device ID" | translate }}</label>
+              <label for="gsmId">{{ "ADOGSM-2 ID" | translate }}</label>
             </span>
           </div>
+
+        </ng-container>
+        <ng-container *ngIf="displayType === 2">
+
+
           <div class="ui-g-2">
             <span class="ui-float-label">
               <p-calendar [(ngModel)]="dateFrom" dateFormat="dd.mm.yy" showIcon="true"></p-calendar>
@@ -126,6 +145,17 @@
             <span class="ui-float-label">
               <p-calendar [(ngModel)]="dateTo" dateFormat="dd.mm.yy" showIcon="true"></p-calendar>
               <label for="dateTo">{{ "Date To" | translate }}</label>
+            </span>
+          </div>
+          <div class="ui-g-2">
+            <span class="ui-float-label">
+              <input
+              pInputText
+              id="gsmId"
+              [(ngModel)]="gsmId"
+              onclick="this.setSelectionRange(0, this.value.length)"
+            />
+              <label for="gsmId">{{ "ADOGSM-2 ID" | translate }}</label>
             </span>
           </div>
         </ng-container>
@@ -151,7 +181,8 @@
               <label for="usageReverseTo">{{ "Usage Reverse To" | translate }}</label>
             </span>
           </div>
-          <div class="button-positioner">
+          </div>
+          <div class="ui-g-1">
             <p-button (click)="clear()" icon="fa fa-refresh" label="&nbsp;&nbsp;{{ 'Clear' | translate }}"></p-button>
           </div>
         </div>

@@ -53,6 +53,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
   displayType: number = 1;
   displayTypes: SelectItem[];
   deviceId: string;
+  gsmId: string;
   dateFrom: string = undefined;
   dateTo: string = undefined;
 
@@ -187,6 +188,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
       customerName,
       customerId,
       deviceId,
+      gsmId,
       address,
       usageCurrentFrom,
       usageCurrentTo,
@@ -200,6 +202,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
           customerName,
           customerId,
           deviceId,
+          gsmId,
           address,
           usageCurrentFrom,
           usageCurrentTo,
@@ -234,7 +237,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
     this.page = 0;
     this.child.reset();
 
-    this.userCardService.findBy({}, this.getPageable()).then((ngresp: NgPrimeGridResponse) => {
+    this.userCardService.findBy({displayType: CURRENT_VIEW}, this.getPageable()).then((ngresp: NgPrimeGridResponse) => {
       this.userCards = ngresp.data;
       this.totalRecords = ngresp.totalRecords;
       this.loading = false;

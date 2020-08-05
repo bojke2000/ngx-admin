@@ -74,7 +74,7 @@ export class UserCardDetailsComponent extends AbstractComponent implements OnIni
 
   onShow() {
     if (this.initialized) {
-      this.loadPage(0, 6, this.sortBy + ',' + this.sortOrder);
+      this.loadPage(0, 7, this.sortBy + ',' + this.sortOrder);
     } else {
       this.initialized = true;
     }

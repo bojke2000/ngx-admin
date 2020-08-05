@@ -80,6 +80,10 @@ body .ui-table .ui-table-thead > tr > th {
   /*background-color: white !important;*/
 }
 
+body .ui-table .ui-table-tbody > tr {
+  line-height: 0.98 !important;
+}
+
 body .ui-table .ui-table-tbody > tr > td {
   background-color: inherit;
   /* border: 1px solid #c8c8c8; */
@@ -122,6 +126,18 @@ body .ui-table .ui-sortable-column .ui-sortable-column-icon {
   color: #848484 !important;
 }
 
+body label {
+  font-size: 13px !important;
+}
+
+body .ui-widget {
+  font-size: 13px !important;
+}
+
+body .ui-inputtext {
+  font-size: 13px !important;
+}
+
 body .ui-inputtext, textarea {
  /* border-top: 0 !important;
   border-left: 0 !important;
@@ -132,6 +148,7 @@ body .ui-inputtext, textarea {
   border-right-color: white !important;
   border-bottom: 1px solid #a9acb1ec !important;
   border-radius: 0 !important;
+  font-size: 13px !important;
 }
 
 body .ui-dropdown {
@@ -141,6 +158,7 @@ body .ui-dropdown {
   border-bottom: 1px solid #a9acb1ec !important;
   border-radius: 0 !important;
   margin-top: -3px !important;
+  font-size: 13px !important;
 }
 
 body .ui-dropdown-label-container > .ui-inputtext {
@@ -154,6 +172,7 @@ body .ui-multiselect {
   border-bottom: 1px solid #a9acb1ec !important;
   border-radius: 0 !important;
   margin-top: -3px !important;
+  font-size: 13px !important;
 }
 
 body .ui-dropdown .ui-inputtext  .ui-multiselect {

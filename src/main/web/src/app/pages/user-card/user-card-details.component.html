@@ -13,7 +13,7 @@
           <div class="ui-g-6"><u><b>{{ 'Status' | translate }}</b></u></div>
 
           <div class="ui-g-12">
-            <div class="ui-g-6">
+            <div class="ui-g-5">
 
               <div class="ui-g-4">
                 <span class="ui-float-label">
@@ -35,10 +35,9 @@
                   <label for="address">{{ 'Address' | translate }}</label>
                 </span>
               </div>
-
-
             </div> <!-- g-6 -->
-            <div class="ui-g-6">
+            <div class="ui-g-1">&nbsp;</div>
+            <div class="ui-g-5">
 
               <div class="ui-g-4">
                 <span class="ui-float-label">
@@ -62,11 +61,12 @@
               </div>
 
             </div> <!-- g-6 -->
+            <div class="ui-g-1">&nbsp;</div>
 
           </div> <!--g-12 -->
 
           <div class="ui-g-12">
-            <div class="ui-g-6">
+            <div class="ui-g-5">
 
               <div class="ui-g-4">
                 <span class="ui-float-label">
@@ -85,8 +85,10 @@
 
 
             </div>
+            <div class="ui-g-1">&nbsp;</div>
 
-            <div class="ui-g-6">
+
+            <div class="ui-g-5">
 
               <div class="ui-g-4">
                 <span class="ui-float-label">
@@ -103,6 +105,7 @@
               </div>
 
             </div>
+            <div class="ui-g-1">&nbsp;</div>
           </div> <!--g-12 -->
           </nb-card-body>
           </nb-card>
@@ -116,7 +119,7 @@
                   [value]="usageHistory"
                   (lazyLoad)="loadUsageHistoryLazy($event)"
                   dataKey="id"
-                  [rows]="6"
+                  [rows]="7"
                   [totalRecords]="totalRecords"
                   [loading]="loading"
                 ></ngx-table>

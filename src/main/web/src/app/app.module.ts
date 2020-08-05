@@ -38,6 +38,7 @@ import { RouteService } from './service/route.service';
 import { StoreModule } from '@ngrx/store';
 import { TemplateService } from './service/template.service';
 import { ThemeModule } from './@theme/theme.module';
+import { UsageHistoryService } from './service/usage-history.service';
 import { UserAccountService } from './service/user-account.service';
 import { UserAccountTypesService } from './service/useraccounttypes.service';
 import { UserCardColumnService } from './service/user-card-column.service';
@@ -118,7 +119,7 @@ import { UserCardService } from './service/user-card.service';
   providers: [AuthGuard, UserCardService, UserAccountService, MailAccountService,
     RouteService, ReadingBookService, MunicipalityService, UserAccountTypesService,
     CityService, RoleService, TemplateService, ImportUserCardService, AlarmService,
-    ExportAdoService, ExportUserCardService, UserCardColumnService,
+    ExportAdoService, ExportUserCardService, UserCardColumnService,UsageHistoryService,
     { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true},
     { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: () => false}],
     bootstrap: [AppComponent],

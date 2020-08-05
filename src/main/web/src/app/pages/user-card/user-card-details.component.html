@@ -97,6 +97,31 @@
             </div>
           </div> <!--g-12 -->
 
+          <div class="ui-g-12">
+            <nb-card>
+              <nb-card-body style="padding-left: 0; padding-right: 0; padding-top: 0;">
+
+                <ngx-table
+                  [columns]="cols"
+                  [value]="usageHistory"
+                  (lazyLoad)="loadUsageHistoryLazy($event)"
+                  dataKey="id"
+                  [totalRecords]="totalRecords"
+                  [loading]="loading"
+                ></ngx-table>
+
+                <div style="position: relative; float: right; margin-top: 5px;">
+                  <a routerLink="/pages/export-user-card"
+                    ><p-button label="{{ 'Export' | translate }}"></p-button
+                  ></a>
+                </div>
+
+              </nb-card-body>
+            </nb-card>
+
+          </div>
+
+
 
         </div> <!-- fluid -->
 </p-dialog>

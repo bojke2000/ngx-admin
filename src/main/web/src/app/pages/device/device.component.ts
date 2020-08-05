@@ -64,8 +64,6 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   @ViewChild('dddMultiplierStatus')
   ddMultiplierStatus: Dropdown;
 
-  private destroy$: Subject<void> = new Subject<void>();
-
   constructor(
     private formBuilder: FormBuilder,
     private userCardService: UserCardService,

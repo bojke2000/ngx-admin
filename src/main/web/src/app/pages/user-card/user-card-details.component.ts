@@ -63,12 +63,12 @@ export class UserCardDetailsComponent extends AbstractComponent implements OnIni
       { field: 'usageCurrent', header: 'Watermeter Status', width: '70px' },
       { field: 'usageCurrentReverse', header: 'Reverse Flow Status', width: '70px' },
       { field: 'usageCurrentMonth', header: 'Status on day of reading', width: '70px' },
-      { field: 'usageAverage', header: 'Average Usage', width: '70px' },
+      //{ field: 'usageAverage', header: 'Average Usage', width: '70px' },
       { field: 'readAt', header: 'Read Datetime', width: '70px' },
     ];
   }
 
-  onShow(event: any) {
+  onShow() {
     if (this.initialized) {
       this.loadPage(0, 10, this.sortBy + ',' + this.sortOrder);
     } else {

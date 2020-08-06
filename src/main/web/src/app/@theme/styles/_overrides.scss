@@ -80,9 +80,12 @@ body .ui-table .ui-table-thead > tr > th {
   border: 0 !important;
   border-bottom: 1px solid #c8c8c8 !important;
   color: white !important;
-  background-color: #0072C6 !important
+  background-color: #0072C6 !important;
   /*background-color: white !important;*/
+  font-weight: 700 !important;
+   height: 54px !important;
 }
+
 
 body .ui-table .ui-table-tbody > tr {
   line-height: 0.98 !important;
@@ -182,6 +185,15 @@ body .ui-multiselect {
 body .ui-dropdown .ui-inputtext  .ui-multiselect {
   border-color: white !important;
   border-radius: 0 !important;
+}
+
+body .ui-dialog .ui-dialog-titlebar {
+  color: white !important;
+  background-color: #0072C6 !important;
+}
+
+body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon {
+  color: white !important;
 }
 
 .ui-g-1, .ui-g-2, .ui-g-3, .ui-g-4, .ui-g-5, .ui-g-6, .ui-g-7, .ui-g-8, .ui-g-9, .ui-g-10, .ui-g-11, .ui-g-12 {

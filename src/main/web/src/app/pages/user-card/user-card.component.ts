@@ -230,6 +230,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
     this.usageReverseTo = undefined;
     this.usageReverseFrom = undefined;
     this.deviceId = undefined;
+    this.gsmId = undefined;
     this.dateFrom = undefined;
     this.dateTo = undefined;
     this.sortBy = '';

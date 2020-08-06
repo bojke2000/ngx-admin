@@ -4,112 +4,96 @@
           showEffect="fade" [modal]="true" position="center" [style]="{width: '90%', height: '820px', 'margin-top': '25px'}">
 
         <div class="ui-g ui-fluid" >
-
-          <nb-card status="info" style="margin-left: 7px; margin-right: 7px;">
-            <nb-card-header>{{ 'User Card'|translate }}</nb-card-header>
-            <nb-card-body>
-
-          <div class="ui-g-6"><u><b>{{ 'Customer Info' | translate }}</b></u></div>
-          <div class="ui-g-6"><u><b>{{ 'Status' | translate }}</b></u></div>
-
           <div class="ui-g-12">
-            <div class="ui-g-5">
+            <div class="ui-g-6">
+              <nb-card status="info" style="margin-left: 7px; margin-right: 7px;">
+                 <nb-card-body>
+                  <div class="ui-g-12"><u><b>{{ 'Customer Info' | translate }}</b></u></div>
+                  <div class="ui-g-12">
+                      <div class="ui-g-4">
+                        <span class="ui-float-label">
+                          <input pInputText id="customerId" [(ngModel)]="customerId" disabled />
+                          <label for="customerId">{{ 'Customer ID' | translate }}</label>
+                        </span>
+                      </div>
 
-              <div class="ui-g-4">
-                <span class="ui-float-label">
-                  <input pInputText id="customerId" [(ngModel)]="customerId" disabled />
-                  <label for="customerId">{{ 'Customer ID' | translate }}</label>
-                </span>
-              </div>
+                      <div class="ui-g-4">
+                        <span class="ui-float-label">
+                          <input pInputText id="customerName" [(ngModel)]="customerName" disabled />
+                          <label for="customerName">{{ 'Customer Name' | translate }}</label>
+                        </span>
+                      </div>
 
-              <div class="ui-g-4">
-                <span class="ui-float-label">
-                  <input pInputText id="customerName" [(ngModel)]="customerName" disabled />
-                  <label for="customerName">{{ 'Customer Name' | translate }}</label>
-                </span>
-              </div>
+                      <div class="ui-g-4">
+                        <span class="ui-float-label">
+                          <input pInputText id="adress" [(ngModel)]="address" disabled />
+                          <label for="address">{{ 'Address' | translate }}</label>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="ui-g-12">
+                      <div class="ui-g-4">
+                        <span class="ui-float-label">
+                          <input pInputText id="deviceId" [(ngModel)]="deviceId" disabled />
+                          <label for="deviceId">{{ 'Device ID' | translate }}</label>
+                        </span>
+                      </div>
 
-              <div class="ui-g-4">
-                <span class="ui-float-label">
-                  <input pInputText id="adress" [(ngModel)]="address" disabled />
-                  <label for="address">{{ 'Address' | translate }}</label>
-                </span>
-              </div>
-            </div> <!-- g-6 -->
-            <div class="ui-g-1">&nbsp;</div>
-            <div class="ui-g-5">
-
-              <div class="ui-g-4">
-                <span class="ui-float-label">
-                  <input pInputText id="usageCurrent" [(ngModel)]="usageCurrent" disabled />
-                  <label for="usageCurrent">{{ 'Watermeter Status' | translate }}</label>
-                </span>
-              </div>
-
-              <div class="ui-g-4">
-                <span class="ui-float-label">
-                  <input pInputText id="usageCurrentReverse" [(ngModel)]="usageCurrentReverse" disabled />
-                  <label for="usageCurrentReverse">{{ 'Reverse Flow Status' | translate }}</label>
-                </span>
-              </div>
-
-              <div class="ui-g-4">
-                <span class="ui-float-label">
-                  <input pInputText id="readTimestamp" [(ngModel)]="readTimestamp" disabled />
-                  <label for="readTimestamp">{{ 'Read Datetime' | translate }}</label>
-                </span>
-              </div>
-
-            </div> <!-- g-6 -->
-            <div class="ui-g-1">&nbsp;</div>
-
-          </div> <!--g-12 -->
-
-          <div class="ui-g-12">
-            <div class="ui-g-5">
-
-              <div class="ui-g-4">
-                <span class="ui-float-label">
-                  <input pInputText id="deviceId" [(ngModel)]="deviceId" disabled />
-                  <label for="deviceId">{{ 'Device ID' | translate }}</label>
-                </span>
-              </div>
-
-              <div class="ui-g-4">
-                <span class="ui-float-label">
-                  <input pInputText id="gsmId" [(ngModel)]="gsmId" disabled />
-                  <label for="gsmId">{{ 'GSM-2 ID/Index' | translate }}</label>
-                </span>
-              </div>
-
-
-
+                      <div class="ui-g-4">
+                        <span class="ui-float-label">
+                          <input pInputText id="gsmId" [(ngModel)]="gsmId" disabled />
+                          <label for="gsmId">{{ 'GSM-2 ID/Index' | translate }}</label>
+                        </span>
+                      </div>
+                    </div>
+                </nb-card-body>
+              </nb-card>
             </div>
-            <div class="ui-g-1">&nbsp;</div>
+            <div class="ui-g-6">
+              <nb-card status="info" style="margin-left: 7px; margin-right: 7px;">
+                <nb-card-body>
+                  <div class="ui-g-12"><u><b>{{ 'Status' | translate }}</b></u></div>
+                  <div class="ui-g-12">
+                    <div class="ui-g-4">
+                      <span class="ui-float-label">
+                        <input pInputText id="usageCurrent" [(ngModel)]="usageCurrent" disabled />
+                        <label for="usageCurrent">{{ 'Watermeter Status' | translate }}</label>
+                      </span>
+                    </div>
 
+                    <div class="ui-g-4">
+                      <span class="ui-float-label">
+                        <input pInputText id="usageCurrentReverse" [(ngModel)]="usageCurrentReverse" disabled />
+                        <label for="usageCurrentReverse">{{ 'Reverse Flow Status' | translate }}</label>
+                      </span>
+                    </div>
 
-            <div class="ui-g-5">
+                    <div class="ui-g-4">
+                      <span class="ui-float-label">
+                        <input pInputText id="readTimestamp" [(ngModel)]="readTimestamp" disabled />
+                        <label for="readTimestamp">{{ 'Read Datetime' | translate }}</label>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="ui-g-12">
+                    <div class="ui-g-4">
+                      <span class="ui-float-label">
+                        <input pInputText id="usageCurrentMonth" [(ngModel)]="usageCurrentMonth" disabled />
+                        <label for="usageCurrentMonth">{{ 'Status on day of reading' | translate }}</label>
+                      </span>
+                    </div>
 
-              <div class="ui-g-4">
-                <span class="ui-float-label">
-                  <input pInputText id="usageCurrentMonth" [(ngModel)]="usageCurrentMonth" disabled />
-                  <label for="usageCurrentMonth">{{ 'Status on day of reading' | translate }}</label>
-                </span>
-              </div>
-
-              <div class="ui-g-4">
-                <span class="ui-float-label">
-                  <input pInputText id="diffLastRead" [(ngModel)]="diffLastRead" disabled />
-                  <label for="diffLastRead">{{ 'Difference from last reading' | translate }}</label>
-                </span>
-              </div>
-
+                    <div class="ui-g-4">
+                      <span class="ui-float-label">
+                        <input pInputText id="diffLastRead" [(ngModel)]="diffLastRead" disabled />
+                        <label for="diffLastRead">{{ 'Difference from last reading' | translate }}</label>
+                      </span>
+                    </div>
+                  </div>
+               </nb-card-body>
+             </nb-card>
             </div>
-            <div class="ui-g-1">&nbsp;</div>
-          </div> <!--g-12 -->
-          </nb-card-body>
-          </nb-card>
-
+          </div>
           <div class="ui-g-12">
             <div class="ui-g-6">
             <nb-card>

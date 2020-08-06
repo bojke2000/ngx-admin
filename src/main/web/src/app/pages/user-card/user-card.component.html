@@ -102,19 +102,19 @@
           <ng-container *ngIf="displayType === 1">
           <div class="ui-g-2">
             <span class="ui-float-label">
-              <p-multiSelect [options]="readingBooks" defaultLabel="&nbsp;" [(ngModel)]="readingBook" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"></p-multiSelect>
+              <p-multiSelect appendTo="body" [options]="readingBooks" defaultLabel="&nbsp;" [(ngModel)]="readingBook" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"></p-multiSelect>
               <label for="readingBook">{{ "Reading Book" | translate }}</label>
             </span>
           </div>
           <div class="ui-g-2">
             <span class="ui-float-label">
-              <p-multiSelect [options]="routes" defaultLabel="&nbsp;" [(ngModel)]="route" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"></p-multiSelect>
+              <p-multiSelect appendTo="body" [options]="routes" defaultLabel="&nbsp;" [(ngModel)]="route" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"></p-multiSelect>
               <label for="route">{{ "Route" | translate }}</label>
               </span>
           </div>
           <div class="ui-g-2">
             <span class="ui-float-label">
-              <p-multiSelect [options]="municipalities" defaultLabel="&nbsp;" [(ngModel)]="municipality" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"></p-multiSelect>
+              <p-multiSelect appendTo="body" [options]="municipalities" defaultLabel="&nbsp;" [(ngModel)]="municipality" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"></p-multiSelect>
               <label for="municipality">{{ "Municipality" | translate }}</label>
             </span>
           </div>

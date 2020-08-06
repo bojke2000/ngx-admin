@@ -1,6 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject, of } from 'rxjs';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 import { AbstractComponent } from '../../AbstractComponent';
@@ -12,6 +11,7 @@ import { Table } from 'primeng/table';
 import { TranslateService } from '@ngx-translate/core';
 import { UserAccount } from '../../domain/user-account';
 import { UserAccountService } from '../../service/user-account.service';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'ngx-user-account',
@@ -32,6 +32,7 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
   statuses: SelectItem[];
   roles: SelectItem[];
   cities: SelectItem[];
+  accessLevels: SelectItem[];
   userSearch: string;
 
   @ViewChild('table', { static: false }) table: Table;
@@ -56,6 +57,7 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
       { field: 'email', header: 'Email', width: '200px' },
       { field: 'city', header: 'City', width: '200px' },
       { field: 'role', header: 'Role', width: '150px' },
+      { field: 'accessLevel', header: 'Access Level', width: '150px' },
       { field: 'active', header: 'Status', width: '150px' },
       { field: 'lastLogin', header: 'Last Login', width: '150px' },
     ];
@@ -70,6 +72,7 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
         Validators.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
       city: [undefined, Validators.required],
       role: [undefined, Validators.required],
+      accessLevel: [undefined, Validators.required],
       active: ['Active', Validators.required],
 
     });
@@ -83,6 +86,12 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
         this.roles = roles;
         this.userAccountForm.patchValue({role: this.roles[0].value});
     });
+
+    this.accessLevels = [
+      {label: 'All', value: "All"},
+      {label: 'Manual', value: "Manual"},
+      {label: 'GSM2', value: "GSM2"},
+    ];
   }
 
   get loading$() {
@@ -154,6 +163,7 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
       email: undefined,
       city: this.cities[0].value,
       role: this.roles[0].value,
+      accessLevel: this.accessLevels[0].value,
       active: 'Active',
       lastLogin: undefined,
     };
@@ -241,6 +251,7 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
       email: undefined,
       city: undefined,
       role: undefined,
+      accessLevel: undefined,
       active: undefined,
       lastLogin: undefined,
     };

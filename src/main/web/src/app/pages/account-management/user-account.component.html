@@ -42,7 +42,7 @@
           <form [formGroup]="userAccountForm" (ngSubmit)="save()">
             <div class="ui-g-12">
               <div class="ui-g-4">
-                <label for="username">Name:</label>
+                <label for="username">{{'Name' | translate}}:</label>
               </div>
               <div class="ui-g-8">
                 <input pInputText id="username" formControlName="username"
@@ -83,7 +83,7 @@
             </div>
             <div class="ui-g-12">
               <div class="ui-g-4">
-                <label for="city">Role:</label>
+                <label for="role">{{'Role' | translate}}:</label>
               </div>
               <div class="ui-g-8">
                 <p-dropdown formControlName="role" [options]="roles"></p-dropdown>
@@ -91,7 +91,15 @@
             </div>
             <div class="ui-g-12">
               <div class="ui-g-4">
-                <label for="city">City:</label>
+                <label for="accessLevel">{{'Access Level' | translate}}:</label>
+              </div>
+              <div class="ui-g-8">
+                <p-dropdown formControlName="accessLevel" [options]="accessLevels"></p-dropdown>
+              </div>
+            </div>
+            <div class="ui-g-12">
+              <div class="ui-g-4">
+                <label for="city">{{'City' | translate}}:</label>
               </div>
               <div class="ui-g-8">
                 <p-dropdown formControlName="city" [options]="cities"></p-dropdown>
@@ -99,7 +107,7 @@
             </div>
             <div class="ui-g-12">
               <div class="ui-g-4">
-                <label for="active">Active:</label>
+                <label for="active">{{'Active' | translate}}:</label>
               </div>
               <div class="ui-g-8">
                 <p-dropdown [options]="statuses" formControlName="active"></p-dropdown>

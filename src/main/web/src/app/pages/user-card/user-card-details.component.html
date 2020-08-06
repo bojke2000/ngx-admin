@@ -89,7 +89,14 @@
                         <label for="diffLastRead">{{ 'Difference from last reading' | translate }}</label>
                       </span>
                     </div>
-                  </div>
+
+                    <div class="ui-g-4">
+                      <span class="ui-float-label">
+                        <input pInputText id="magneticSabotageTime" [(ngModel)]="magneticSabotageTime" disabled />
+                        <label for="magneticSabotageTime">{{ 'Magnetic sabotage time' | translate }}</label>
+                      </span>
+                    </div>
+                </div>
                </nb-card-body>
              </nb-card>
             </div>

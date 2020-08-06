@@ -140,5 +140,7 @@
   "Date From": "Od datuma",
   "Date To": "Do datuma",
   "Data": "Podaci",
-  "Monthly Usage": "Mesečna potrosnja"
+  "Monthly Usage": "Mesečna potrosnja",
+  "Access Level": "Nivo pristupa",
+  "Active": "Aktivan"
 }

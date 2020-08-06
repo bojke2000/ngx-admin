@@ -75,6 +75,7 @@ export class MailAccountComponent extends AbstractComponent implements OnInit, O
       port: ['', Validators.required],
       active: ['Active', Validators.required],
       sender: ['', Validators.required],
+      lastCheck: ['']
     });
   }
 

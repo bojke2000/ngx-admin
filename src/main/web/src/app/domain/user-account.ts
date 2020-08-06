@@ -4,6 +4,7 @@ export interface UserAccount {
   password: string;
   email: string;
   role: string;
+  accessLevel: string;
   city: string;
   active: string;
   lastLogin: string;

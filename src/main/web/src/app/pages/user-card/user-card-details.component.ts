@@ -28,6 +28,7 @@ export class UserCardDetailsComponent extends AbstractComponent implements OnIni
   usageCurrentReverse: number = undefined;
   usageCurrentMonth: number = undefined;
   diffLastRead: number = undefined;
+  magneticSabotageTime: string = undefined;
 
   @Input()
   userCardId = undefined;
@@ -84,7 +85,7 @@ export class UserCardDetailsComponent extends AbstractComponent implements OnIni
 
     this.userCardService.getById(this.userCardId).then((dto: UserCard) => {
       this.customerId = dto.customerId;
-      this.address = dto.address;
+      this.address = dto.address + ' ' + dto.addressNo;
       this.addressNo = dto.addressNo;
       this.customerName = dto.customerName;
       this.deviceId = dto.deviceId;
@@ -94,6 +95,7 @@ export class UserCardDetailsComponent extends AbstractComponent implements OnIni
       this.usageCurrentMonth = dto.usageCurrentMonth;
       this.readTimestamp = dto.readTimestamp;
       this.diffLastRead = dto.diffLastRead;
+      this.magneticSabotageTime = dto.magneticSabotageTime;
     });
 
     this.usageHistoryService.getCharData(this.userCardId).then(resp => {

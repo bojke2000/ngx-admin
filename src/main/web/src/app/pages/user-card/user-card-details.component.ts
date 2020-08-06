@@ -28,7 +28,7 @@ export class UserCardDetailsComponent extends AbstractComponent implements OnIni
   usageCurrentReverse: number = undefined;
   usageCurrentMonth: number = undefined;
   diffLastRead: number = undefined;
-  magneticSabotageTime: string = undefined;
+  magneticSabotageTime: number = undefined;
 
   @Input()
   userCardId = undefined;

@@ -16,6 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { UserCard } from '../../domain/user-card';
 import { UserCardColumnService } from '../../service/user-card-column.service';
 import { UserCardService } from '../../service/user-card.service';
+import { UserCardUsage } from './../../domain/user-card-usage';
 
 const CURRENT_VIEW = 1;
 
@@ -66,7 +67,15 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
   displayDialog = false;
   id: string = undefined;
 
+  // Summary
+  sumUsageCurrent: number;
+  sumUsageCurrentReverse: number;
+  sumUsageCurrentMonth: number;
+  sumUsageAverage: number;
+  sumDiffLastRead: number;
 
+  // chart
+  data = {};
 
   constructor(
     private userCardService: UserCardService,
@@ -110,14 +119,91 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
     translate.get('Current').subscribe(value => {
       this.displayTypes = [{value: 1, label:  translate.instant('Current')}, {value: 2, label: translate.instant('Historical')}];
     });
+
+    this.data = {
+      labels: ['Usage'],
+      datasets: [
+          {
+            label: 'Monthly Usage',
+            backgroundColor: '#9CCC65',
+            borderColor: '#7CB342',
+            data: [],
+            width: '200px',
+            height: '50px'
+          }
+      ]}
   }
 
   get cols$(): Observable<any[]> {
     return of(this.cols);
   }
 
+  get sumUsageCurrent$(){
+    return of(this.sumUsageCurrent);
+  }
+
+  get sumUsageCurrentReverse$(){
+    return of(this.sumUsageCurrentReverse);
+  }
+
+  get sumUsageCurrentMonth$(){
+    return of(this.sumUsageCurrentMonth);
+  }
+
+  get sumUsageAverage$(){
+    return of(this.sumUsageAverage);
+  }
+
+  get sumDiffLastRead$(){
+    return of(this.sumDiffLastRead);
+  }
+
   get displayId$() {
     return of(this.id)  ;
+  }
+
+  private getSummaryData() {
+    if (this.page === 0) {
+      this.userCardService.findSumBy(this.getSearchCriteria()).then((dto: UserCardUsage) => {
+        this.sumUsageCurrent = dto.usageCurrent;
+        this.sumUsageCurrentReverse = dto.usageCurrentReverse;
+        this.sumUsageCurrentMonth = dto.usageCurrentMonth;
+        this.sumUsageAverage = dto.usageAverage;
+        this.sumDiffLastRead = dto.diffLastRead;
+
+        this.data = {
+          labels: ['Usage'],
+          datasets: [
+              {
+                label: 'Potrosnja',
+                backgroundColor: '#9CCC65',
+                borderColor: '#7CB342',
+                data: [this.sumUsageCurrent],
+                width: '200px',
+                height: '50px'
+              },
+              {
+                label: 'Mesecna',
+                backgroundColor: '#42A5F5',
+                borderColor: '#1E88E5',
+                data: [this.sumUsageCurrentMonth]
+            },
+            {
+              label: 'Prosek',
+              backgroundColor: '#ffc77d',
+              borderColor: '#AFFFFF',
+              data: [this.sumUsageAverage]
+          },
+          {
+            label: 'Mesec',
+            backgroundColor: '#03DAC5',
+            borderColor: '#1E88E5',
+            data: [this.sumDiffLastRead]
+          }
+          ]}
+
+      });
+    }
   }
 
   private loadPage(page: number, size: number, sort?: string) {
@@ -127,6 +213,8 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
       this.totalRecords = ngresp.totalRecords;
       this.loading = false;
     });
+
+    this.getSummaryData();
   }
 
   loadUserCardsLazy(event: LazyLoadEvent) {
@@ -175,11 +263,13 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
 
   search () {
     this.page = 0;
-        this.userCardService.findBy(this.getSearchCriteria(), this.getPageable()).then((ngresp: NgPrimeGridResponse) => {
-          this.userCards = ngresp.data;
-          this.totalRecords = ngresp.totalRecords;
-          this.loading = false;
-        });
+    this.userCardService.findBy(this.getSearchCriteria(), this.getPageable()).then((ngresp: NgPrimeGridResponse) => {
+      this.userCards = ngresp.data;
+      this.totalRecords = ngresp.totalRecords;
+      this.loading = false;
+    });
+
+    this.getSummaryData();
   }
 
   getSearchCriteria() {

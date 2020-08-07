@@ -118,6 +118,12 @@ export class UserCardService extends AbstractService {
     }
   }
 
+  findSumBy(searchCriteria: any) {
+    if (searchCriteria.displayType === CURRENT_VIEW) {
+      return this.get(this.getUrl(this.url.concat('/summary?search='), searchCriteria, URL_ALL));
+    }
+  }
+
   getById(id: any) {
     return super.getById(this.url, id);
   }

@@ -29,6 +29,7 @@ export interface UserCard {
   usageCurrent: number;
   usageCurrentReverse: number;
   usageCurrentMonth: number;
+  usageAverage: number;
   diffLastRead: number;
   diffLastReadColor?: number;
   magneticSabotageTime: number;

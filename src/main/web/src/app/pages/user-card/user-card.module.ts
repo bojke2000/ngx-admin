@@ -20,6 +20,7 @@ import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
 import {MultiSelectModule} from 'primeng/multiselect';
 import { PanelModule } from 'primeng/panel';
+import {TabViewModule} from 'primeng/tabview';
 import { TableModule } from 'primeng/table';
 import { ThemeModule } from '../../@theme/theme.module';
 import { ToolboxComponentsModule } from '../../libs/toolbox-components/toolbox-components.module';
@@ -60,6 +61,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ToolboxComponentsModule,
     DialogModule,
     CalendarModule,
+    TabViewModule,
     TranslateModule.forRoot({
       loader: {
           provide: TranslateLoader,

@@ -8,6 +8,8 @@
 
       <div class="ui-g ui-fluid">
         <div class="ui-g-12">
+
+          <!--
           <div class="ui-g-2">
             <span class="ui-float-label">
               <p-dropdown [options]="displayTypes"
@@ -17,7 +19,49 @@
                           (onChange)="onDisplayTypeChange($event)"></p-dropdown>
               <label for="displayType">{{ "Vrsta prikaza" | translate }}</label>
             </span>
+          </div> -->
+          <div class="ui-g-7">
+          <div class="ui-g-4">
+            <div class="ui-float-label">
+              <label>{{ "Usage Current Per Criteria" | translate }}: </label>
+            </div>
+            <div style="padding-top: 15px;"><b>{{ sumUsageCurrent$ | async}}</b> m3
+            </div>
           </div>
+          <div class="ui-g-4">
+            <div class="ui-float-label">
+              <label>{{ "Usage Reverse Per Criteria" | translate }}: </label>
+            </div>
+            <div style="padding-top: 15px;"><b>{{ sumUsageCurrentReverse$ | async}}</b> m3
+            </div>
+          </div>
+          <div class="ui-g-4">
+            <div class="ui-float-label">
+              <label>{{ "Monthly Usage Per Criteria" | translate }}: </label>
+            </div>
+            <div style="padding-top: 15px;"><b>{{ sumUsageCurrentMonth$ | async}}</b> m3
+            </div>
+          </div>
+          <div class="ui-g-4">
+            <div class="ui-float-label">
+              <label>{{ "Usage Average" | translate }}: </label>
+            </div>
+            <div style="padding-top: 15px;"><b>{{ sumUsageAverage$ | async}}</b> m3
+            </div>
+          </div>
+          <div class="ui-g-4">
+            <div class="ui-float-label">
+              <label>{{ "Monthly Usage" | translate }}: </label>
+            </div>
+            <div style="padding-top: 15px;"><b>{{ sumDiffLastRead$ | async}}</b> m3
+            </div>
+          </div>
+          </div>
+          <div class="ui-g-5">
+            <p-chart type="bar" [height]="100" [data]="data"></p-chart>
+          </div>
+
+
         </div>
         <div class="ui-g-12">
           <div class="ui-g-11">

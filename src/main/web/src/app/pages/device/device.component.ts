@@ -252,6 +252,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       readTimestamp : undefined,
       usageCurrent : undefined,
       usageCurrentReverse : undefined,
+      usageAverage: undefined,
       diffLastRead : undefined,
       usageCurrentMonth : undefined,
       magneticSabotageTime : undefined,

@@ -8,6 +8,7 @@ import { MunicipalityService } from '../../service/municipailty.service';
 import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
 import { NgxTableComponent } from '../../libs/toolbox-components/ngx-table/ngx-table.component';
 import { Pageable } from './../../domain/pageable';
+import { ReadingBook } from './../../domain/reading-book';
 import { ReadingBookService } from '../../service/reading-book.service';
 import { RouteService } from '../../service/route.service';
 import { Table } from 'primeng/table';
@@ -17,7 +18,6 @@ import { UserCardColumnService } from '../../service/user-card-column.service';
 import { UserCardService } from '../../service/user-card.service';
 
 const CURRENT_VIEW = 1;
-const HISTORICAL_VIEW = 2;
 
 @Component({
   selector: 'ngx-user-card',
@@ -190,6 +190,9 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
       deviceId,
       gsmId,
       address,
+      route,
+      municipality,
+      readingBook,
       usageCurrentFrom,
       usageCurrentTo,
       usageReverseFrom,
@@ -204,6 +207,9 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
           deviceId,
           gsmId,
           address,
+          route: route ? route.toString() : undefined,
+          municipality: municipality ? municipality.toString() : undefined,
+          readingBook: readingBook ? readingBook.toString() : undefined,
           usageCurrentFrom,
           usageCurrentTo,
           usageReverseFrom,

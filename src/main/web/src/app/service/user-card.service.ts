@@ -32,22 +32,37 @@ export class UserCardService extends AbstractService {
     }
 
     if (searchCriteria.customerId) {
-      url = url.concat(separator).concat('customerId==').concat(searchCriteria.customerId);
+      url = url.concat(separator).concat('customerId=in=(').concat(searchCriteria.customerId).concat(')');
       separator = ';';
     }
 
     if (searchCriteria.deviceId) {
-      url = url.concat(separator).concat('deviceId==').concat(searchCriteria.deviceId);
+      url = url.concat(separator).concat('deviceId=in=(').concat(searchCriteria.deviceId).concat(')');
       separator = ';';
     }
 
     if (searchCriteria.gsmId) {
-      url = url.concat(separator).concat('gsmId==').concat(searchCriteria.gsmId);
+      url = url.concat(separator).concat('gsmId=in=(').concat(searchCriteria.gsmId).concat(')');
       separator = ';';
     }
 
     if (searchCriteria.address) {
       url = url.concat(separator).concat('address==').concat('*').concat(searchCriteria.address).concat('*');
+      separator = ';';
+    }
+
+    if (searchCriteria.readingBook) {
+      url = url.concat(separator).concat('readingBook=in=(').concat(searchCriteria.readingBook).concat(')');
+      separator = ';';
+    }
+
+    if (searchCriteria.municipality) {
+      url = url.concat(separator).concat('municipality=in=(').concat(searchCriteria.municipality).concat(')');
+      separator = ';';
+    }
+
+    if (searchCriteria.route) {
+      url = url.concat(separator).concat('route=in=(').concat(searchCriteria.route).concat(')');
       separator = ';';
     }
 

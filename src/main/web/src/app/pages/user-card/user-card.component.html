@@ -21,37 +21,37 @@
             </span>
           </div> -->
           <div class="ui-g-7">
-          <div class="ui-g-4">
+          <div class="ui-g-2">
             <div class="ui-float-label">
-              <label>{{ "Usage Current Per Criteria" | translate }}: </label>
+              <label>{{ "Usage Current" | translate }}: </label>
             </div>
             <div style="padding-top: 15px;"><b>{{ sumUsageCurrent$ | async}}</b> m3
             </div>
           </div>
-          <div class="ui-g-4">
+          <div class="ui-g-2">
             <div class="ui-float-label">
-              <label>{{ "Usage Reverse Per Criteria" | translate }}: </label>
+              <label>{{ "Usage Reverse" | translate }}: </label>
             </div>
             <div style="padding-top: 15px;"><b>{{ sumUsageCurrentReverse$ | async}}</b> m3
             </div>
           </div>
-          <div class="ui-g-4">
+          <div class="ui-g-2">
             <div class="ui-float-label">
-              <label>{{ "Monthly Usage Per Criteria" | translate }}: </label>
+              <label>{{ "Monthly Usage" | translate }}: </label>
             </div>
             <div style="padding-top: 15px;"><b>{{ sumUsageCurrentMonth$ | async}}</b> m3
             </div>
           </div>
-          <div class="ui-g-4">
+          <div class="ui-g-2">
             <div class="ui-float-label">
               <label>{{ "Usage Average" | translate }}: </label>
             </div>
             <div style="padding-top: 15px;"><b>{{ sumUsageAverage$ | async}}</b> m3
             </div>
           </div>
-          <div class="ui-g-4">
+          <div class="ui-g-2">
             <div class="ui-float-label">
-              <label>{{ "Monthly Usage" | translate }}: </label>
+              <label>{{ "State" | translate }}: </label>
             </div>
             <div style="padding-top: 15px;"><b>{{ sumDiffLastRead$ | async}}</b> m3
             </div>
@@ -233,7 +233,7 @@
     </nb-card-body>
    </nb-card>
 
-   <nb-card>
+   <nb-card style="margin-top: -25px;">
     <nb-card-body style="padding-left: 0; padding-right: 0; padding-top: 0;">
 
       <ngx-table
@@ -248,10 +248,10 @@
         [fontWeightFunction]="fontWeight"
         [styleColorFunction]="styleColor"
         (clickFunction)="onCustomerNameClick($event)"
-        rows="10"
+        rows="9"
       ></ngx-table>
 
-      <div style="position: relative; float: right; margin-top: 5px;">
+      <div style="position: relative; float: right; margin-right: 15px !important;">
         <a routerLink="/pages/export-user-card"
           ><p-button label="{{ 'Export' | translate }}"></p-button
         ></a>

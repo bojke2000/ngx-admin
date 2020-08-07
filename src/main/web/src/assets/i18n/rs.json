@@ -143,8 +143,8 @@
   "Monthly Usage": "Mesečna potrošnja",
   "Access Level": "Nivo pristupa",
   "Active": "Aktivan",
-  "Usage Current Per Criteria": "Ukupna potrošnja po kriterijumu",
-  "Usage Reverse Per Criteria": "Ukupna reverzna potrošnja po kriterijumu",
-  "Usage Monthly Per Criteria": "Ukupna mesečna potrošnja po kriterijumu",
-  "Usage Average": "Ukupna prosečna potrošnja po kriterijumu"
+  "Usage Current": "Ukupna potrošnja",
+  "Usage Reverse": "Reverzna potrošnja",
+  "State": "Stanje",
+  "Usage Average": "Prosečna potrošnja"
 }

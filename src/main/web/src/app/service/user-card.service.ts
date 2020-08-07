@@ -27,7 +27,8 @@ export class UserCardService extends AbstractService {
     let separator = '';
 
     if (searchCriteria.customerName) {
-      url = url.concat('customerName==').concat('*').concat(searchCriteria.customerName).concat('*')
+      const customerName = searchCriteria.customerName.trim().replace(' ', "*");
+      url = url.concat('customerName==').concat('*').concat(customerName).concat('*')
       separator = ';';
     }
 
@@ -47,7 +48,8 @@ export class UserCardService extends AbstractService {
     }
 
     if (searchCriteria.address) {
-      url = url.concat(separator).concat('address==').concat('*').concat(searchCriteria.address).concat('*');
+      const address = searchCriteria.address.trim().replace(' ', "*");
+      url = url.concat(separator).concat('address==').concat('*').concat(address).concat('*');
       separator = ';';
     }
 

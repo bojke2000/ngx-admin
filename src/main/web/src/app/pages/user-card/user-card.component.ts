@@ -195,7 +195,13 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
               data: [this.sumUsageAverage]
           },
           {
-            label: 'Mesec',
+            label: 'Reverzna',
+            backgroundColor: '#eaed87',
+            borderColor: '#AFFFFF',
+            data: [this.sumUsageCurrentReverse]
+        },
+          {
+            label: 'Stanje',
             backgroundColor: '#03DAC5',
             borderColor: '#1E88E5',
             data: [this.sumDiffLastRead]
@@ -339,6 +345,8 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
       this.totalRecords = ngresp.totalRecords;
       this.loading = false;
     });
+
+    this.getSummaryData();
   }
 
   onDisplayTypeChange(event) {

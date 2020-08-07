@@ -242,9 +242,16 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
       alert('onImportClick');
    }
 
-   onCustomerNameClick(row: any) {
-    this.displayDialog = true;
-    this.id = row.id;
+   onCustomerNameClick(data: any) {
+     if (data.column === 'customerName') {
+      this.displayDialog = true;
+      this.id = data.row.id;
+     } else if (data.column === 'address') {
+       this.address = data.row.address;
+     } else if (data.column === 'gsmId') {
+      this.gsmId = data.row.gsmId;
+     }
+
   }
 
   fontWeight(rowData: any[], columnName: string) {

@@ -88,9 +88,9 @@ export class NgxTableComponent extends AbstractComponent {
     this.rowUnselect.emit(event);
   }
 
-  onColumnClick(rowData) {
+  onColumnClick(column, row) {
     if (this.dataKey1 && this.clickFunction) {
-      this.clickFunction.emit(rowData);
+        this.clickFunction.emit({column, row});
     }
   }
 

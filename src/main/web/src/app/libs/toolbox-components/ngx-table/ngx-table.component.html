@@ -40,7 +40,7 @@ selectionMode="single"
     <td *ngFor="let col of columns"
         [style.font-weight]="fontWeight && fontWeight(rowData, col.field)"
         [style.color]="styleColor && styleColor(rowData, col.field)"
-        (click)="col.field === 'customerName' && onColumnClick(rowData)" >
+        (click)="onColumnClick && onColumnClick(col.field, rowData)" >
       {{rowData[col.field]}}
     </td>
   </tr>

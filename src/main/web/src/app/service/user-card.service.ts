@@ -68,6 +68,11 @@ export class UserCardService extends AbstractService {
       separator = ';';
     }
 
+    if (searchCriteria.deviceType !== undefined) {
+      url = url.concat(separator).concat('deviceType==').concat(searchCriteria.deviceType);
+      separator = ';';
+    }
+
     if (view === URL_PART_ONE) {
       return url;
     } else if (view === URL_PART_TWO) {

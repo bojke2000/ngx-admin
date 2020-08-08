@@ -49,12 +49,16 @@
             <div style="padding-top: 25px;"><b style="color: #61030C">{{ sumUsageAverage$ | async}}</b> m3
             </div>
           </div>
-          <div class="ui-g-2">
+          <div class="ui-g-3">
             <div class="ui-float-label">
               <label>{{ "State" | translate }}: </label>
             </div>
             <div style="padding-top: 25px;"><b style="color: #266104">{{ sumDiffLastRead$ | async}}</b> m3
             </div>
+          </div>
+          <div class="ui-g-2">
+            <p-toggleButton onLabel='Devices' offLabel="Zone Devices"
+            onIcon="pi pi-check" offIcon="pi pi-times" [(ngModel)]="deviceType"></p-toggleButton>
           </div>
           </div>
           <div class="ui-g-5">

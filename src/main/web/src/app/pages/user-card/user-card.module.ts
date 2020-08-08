@@ -20,9 +20,11 @@ import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
 import {MultiSelectModule} from 'primeng/multiselect';
 import { PanelModule } from 'primeng/panel';
+import {SelectButtonModule} from 'primeng/selectbutton';
 import {TabViewModule} from 'primeng/tabview';
 import { TableModule } from 'primeng/table';
 import { ThemeModule } from '../../@theme/theme.module';
+import {ToggleButtonModule} from 'primeng/togglebutton';
 import { ToolboxComponentsModule } from '../../libs/toolbox-components/toolbox-components.module';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { UserCardComponent } from './user-card.component';
@@ -62,6 +64,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DialogModule,
     CalendarModule,
     TabViewModule,
+    ToggleButtonModule,
+    SelectButtonModule,
     TranslateModule.forRoot({
       loader: {
           provide: TranslateLoader,

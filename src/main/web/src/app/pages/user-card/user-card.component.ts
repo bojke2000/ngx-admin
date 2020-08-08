@@ -57,6 +57,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
   gsmId: string;
   dateFrom: string = undefined;
   dateTo: string = undefined;
+  deviceType = true;
 
   // state of pagination
   sortBy: string;
@@ -301,7 +302,8 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
       usageReverseFrom,
       usageReverseTo,
       dateFrom,
-      dateTo
+      dateTo,
+      deviceType
     } = this;
 
   return {displayType,
@@ -318,6 +320,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
           usageReverseFrom,
           usageReverseTo,
           dateFrom,
+          deviceType: deviceType ? 0 : 1,
           dateTo};
 
   }

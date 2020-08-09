@@ -131,7 +131,8 @@ export class UserCardDetailsComponent extends AbstractComponent implements OnIni
 
   loadUsageHistoryLazy(event: LazyLoadEvent) {
     this.loading = true;
-    this.sortBy = event.sortField === undefined ? 'id' : event.sortField === 'city' ? 'cityId' : event.sortField;
+    this.sortBy = 'readAt';
+    this.sortOrder = 'desc';
     this.page = event.first / event.rows;
     this.rows = event.rows;
     this.loadPage(event.first / event.rows, event.rows, this.sortBy + ',' + this.sortOrder);

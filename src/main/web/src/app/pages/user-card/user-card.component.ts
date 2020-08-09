@@ -264,7 +264,13 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
       this.displayDialog = true;
       this.id = data.row.id;
      } else if (data.column === 'address') {
-       this.address = data.row.address;
+       this.addresses.forEach(add => {
+         if (add.label === data.row.address) {
+          this.address = add.value;
+          return;
+         }
+       })
+
      } else if (data.column === 'gsmId') {
       this.gsmId = data.row.gsmId;
      }

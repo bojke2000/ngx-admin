@@ -3,12 +3,12 @@ import { LazyLoadEvent, SelectItem } from 'primeng/api/public_api';
 import { Observable, of } from 'rxjs';
 
 import { AbstractComponent } from '../../AbstractComponent';
+import { AddressService } from '../../service/address.service';
 import { Grid } from '../../domain/grid';
 import { MunicipalityService } from '../../service/municipailty.service';
 import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
 import { NgxTableComponent } from '../../libs/toolbox-components/ngx-table/ngx-table.component';
 import { Pageable } from './../../domain/pageable';
-import { ReadingBook } from './../../domain/reading-book';
 import { ReadingBookService } from '../../service/reading-book.service';
 import { RouteService } from '../../service/route.service';
 import { Table } from 'primeng/table';
@@ -43,6 +43,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
   route: string;
   routes: SelectItem[];
   address: string;
+  addresses: SelectItem[];
   readingBook: string;
   readingBooks: SelectItem[];
   municipality: string;
@@ -51,13 +52,13 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
   usageCurrentTo: number;
   usageReverseFrom: number;
   usageReverseTo: number;
-  displayType: number = 1;
-  displayTypes: SelectItem[];
   deviceId: string;
   gsmId: string;
   dateFrom: string = undefined;
   dateTo: string = undefined;
-  deviceType = true;
+  zoneDevice = false;
+  displayType: number = 1;
+  displayTypes: SelectItem[];
 
   // state of pagination
   sortBy: string;
@@ -82,6 +83,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
     private userCardService: UserCardService,
     private userCardColumnService: UserCardColumnService,
     private routeService: RouteService,
+    private addressService: AddressService,
     private readingBookService: ReadingBookService,
     private municipalityService: MunicipalityService,
     translate: TranslateService) {
@@ -109,6 +111,10 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
       this.routes = routes;
     });
 
+    this.addressService.getAddresssAsOptions().then(addresses => {
+      this.addresses = addresses;
+    });
+
     this.readingBookService.getReadingBooksAsOptions().then(readingBooks => {
       this.readingBooks = readingBooks;
     });
@@ -117,9 +123,11 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
       this.municipalities = municipalities;
     });
 
+
     translate.get('Current').subscribe(value => {
       this.displayTypes = [{value: 1, label:  translate.instant('Current')}, {value: 2, label: translate.instant('Historical')}];
     });
+
 
     this.data = {
       labels: ['Usage'],
@@ -133,6 +141,14 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
             height: '50px'
           }
       ]}
+  }
+
+  get zoneDevice$() {
+    return of(this.zoneDevice);
+  }
+
+  handleZoneDeviceChange(event: any) {
+    this.zoneDevice = !this.zoneDevice;
   }
 
   get cols$(): Observable<any[]> {
@@ -175,15 +191,15 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
         this.data = {
           labels: ['Usage'],
           datasets: [
-              {
-                label: 'Potrosnja',
+            {
+                label: 'Ukupna',
                 backgroundColor: '#9CCC65',
                 borderColor: '#7CB342',
                 data: [this.sumUsageCurrent],
                 width: '200px',
                 height: '50px'
-              },
-              {
+            },
+            {
                 label: 'Mesecna',
                 backgroundColor: '#42A5F5',
                 borderColor: '#1E88E5',
@@ -194,19 +210,19 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
               backgroundColor: '#ffc77d',
               borderColor: '#AFFFFF',
               data: [this.sumUsageAverage]
-          },
-          {
-            label: 'Reverzna',
-            backgroundColor: '#eaed87',
-            borderColor: '#AFFFFF',
-            data: [this.sumUsageCurrentReverse]
-        },
-          {
+            },
+            {
             label: 'Stanje',
             backgroundColor: '#03DAC5',
             borderColor: '#1E88E5',
             data: [this.sumDiffLastRead]
-          }
+            },
+            {
+              label: 'Reverzna',
+              backgroundColor: '#eaed87',
+              borderColor: '#AFFFFF',
+              data: [this.sumUsageCurrentReverse]
+            }
           ]}
 
       });
@@ -303,7 +319,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
       usageReverseTo,
       dateFrom,
       dateTo,
-      deviceType
+      zoneDevice
     } = this;
 
   return {displayType,
@@ -311,7 +327,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
           customerId,
           deviceId,
           gsmId,
-          address,
+          address: address ? address.toString() : undefined,
           route: route ? route.toString() : undefined,
           municipality: municipality ? municipality.toString() : undefined,
           readingBook: readingBook ? readingBook.toString() : undefined,
@@ -320,7 +336,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
           usageReverseFrom,
           usageReverseTo,
           dateFrom,
-          deviceType: deviceType ? 0 : 1,
+          deviceType: zoneDevice ? 1 : 0,
           dateTo};
 
   }
@@ -348,6 +364,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
     this.sortBy = '';
     this.sortOrder = 'asc';
     this.page = 0;
+    this.zoneDevice = false;
     this.child.reset();
 
     this.userCardService.findBy({displayType: CURRENT_VIEW}, this.getPageable()).then((ngresp: NgPrimeGridResponse) => {

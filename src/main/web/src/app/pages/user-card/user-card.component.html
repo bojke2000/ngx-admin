@@ -49,22 +49,24 @@
             <div style="padding-top: 25px;"><b style="color: #61030C">{{ sumUsageAverage$ | async}}</b> m3
             </div>
           </div>
-          <div class="ui-g-3">
+          <div class="ui-g-2">
             <div class="ui-float-label">
               <label>{{ "State" | translate }}: </label>
             </div>
             <div style="padding-top: 25px;"><b style="color: #266104">{{ sumDiffLastRead$ | async}}</b> m3
             </div>
           </div>
-          <div class="ui-g-2">
-            <p-toggleButton onLabel='Devices' offLabel="Zone Devices"
-            onIcon="pi pi-check" offIcon="pi pi-times" [(ngModel)]="deviceType"></p-toggleButton>
+          <div class="ui-g-2" >
+            <div class="ui-float-label">
+              <label>{{ "Zone devices" | translate }}: </label>
+            </div>
+            <nb-checkbox [value]="(zoneDevice$ | async) ? true : undefined"
+            (checkedChange)="handleZoneDeviceChange($event)"></nb-checkbox>
           </div>
           </div>
           <div class="ui-g-5">
             <p-chart type="bar" [height]="100" [data]="data"></p-chart>
           </div>
-
 
         </div>
         <div class="ui-g-12">
@@ -94,12 +96,7 @@
           </div>
           <div class="ui-g-2">
             <span class="ui-float-label">
-              <input
-                pInputText
-                id="address"
-                [(ngModel)]="address"
-                onclick="this.setSelectionRange(0, this.value.length)"
-              />
+              <p-multiSelect appendTo="body" [options]="addresses" defaultLabel="&nbsp;" [(ngModel)]="address" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"></p-multiSelect>
               <label for="address">{{ "Address" | translate }}</label>
             </span>
           </div>
@@ -137,6 +134,7 @@
               <label for="usageCurrentTo">{{ "Usage To" | translate }}</label>
             </span>
           </div>
+
         </div>
           <div class="ui-g-1">
             <p-button (click)="search()"  icon="fa fa-search" label="{{ 'Search' | translate }}"></p-button>

@@ -97,13 +97,11 @@
 
               <div class="ui-g-6">
                 <span class="ui-float-label">
-                  <input pInputText id="address" formControlName="address"
-                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.address.errors }" />
+                  <p-dropdown id="address" [options]="addresses$ | async" name="address" optionLabel="label" [autoDisplayFirst]="false"
+                    #ddAddressStatus (onChange)="onAddressChange($event)" formControlName="address" editable="true"></p-dropdown>
                   <label for="address">{{ 'Address' | translate }}</label>
                 </span>
               </div>
-
               <div class="ui-g-3">
                 <span class="ui-float-label">
                   <input pInputText id="addressNo" formControlName="addressNo"

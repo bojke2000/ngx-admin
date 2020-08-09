@@ -4,6 +4,7 @@ import { LazyLoadEvent, SelectItem } from 'primeng/api/public_api';
 import { Observable, Subject, of } from 'rxjs';
 
 import { AbstractComponent } from '../../AbstractComponent';
+import { AddressService } from '../../service/address.service';
 import { Dropdown } from 'primeng/dropdown';
 import { Grid } from '../../domain/grid';
 import { MunicipalityService } from '../../service/municipailty.service';
@@ -31,6 +32,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   submitted = false;
   zoneDevice  = false;
   routes: SelectItem[];
+  addresses: SelectItem[];
   readingBooks: SelectItem[];
   municipalities: SelectItem[];
   modes: Option[];
@@ -52,6 +54,9 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   @ViewChild('ddStatus')
   routeStatus: Dropdown;
 
+  @ViewChild('ddAddressStatus')
+  addressStatus: Dropdown;
+
   @ViewChild('ddReadingBookStatus')
   readingBookStatus: Dropdown;
 
@@ -69,6 +74,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     private userCardService: UserCardService,
     private userCardColumnService: UserCardColumnService,
     private routeService: RouteService,
+    private addressService: AddressService,
     private readingBookService: ReadingBookService,
     private municipalityService: MunicipalityService,
     private router: Router,
@@ -170,6 +176,10 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
   get routes$() {
     return of(this.routes);
+  }
+
+  get addresses$() {
+    return of(this.addresses);
   }
 
   get municipalities$() {
@@ -313,6 +323,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       this.readingBookStatus.filled = true;
       this.ddMunicipalityStatus.filled = true;
       this.routeStatus.filled = true;
+      this.addressStatus.filled = true;
 
       this.displayDialog = true;
   }
@@ -329,6 +340,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     this.device.municipality = this.getLabel(this.device.municipality);
     this.device.readingBook = this.getLabel(this.device.readingBook);
     this.device.route = this.getLabel(this.device.route);
+    this.device.address = this.getLabel(this.device.address);
 
     this.device.unit = this.getLabel(this.device.unit);
     this.device.mode = this.getLabel(this.device.mode);
@@ -357,6 +369,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       this.readingBookStatus.filled = true;
       this.ddMunicipalityStatus.filled = true;
       this.routeStatus.filled = true;
+      this.addressStatus.filled = true;
     } else {
       this.displayDialog = false;
     }
@@ -381,6 +394,10 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   loadStaticData() {
     this.routeService.getRoutesAsOptions().then(routes => {
       this.routes = routes;
+    });
+
+    this.addressService.getAddresssAsOptions().then(addresses => {
+      this.addresses = addresses;
     });
 
     this.readingBookService.getReadingBooksAsOptions().then(readingBooks => {
@@ -418,6 +435,10 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
   onRouteChange(evt) {
     this.routeStatus.filled = true;
+  }
+
+  onAddressChange(evt) {
+    this.addressStatus.filled = true;
   }
 
   onReadingBookChange(evt) {

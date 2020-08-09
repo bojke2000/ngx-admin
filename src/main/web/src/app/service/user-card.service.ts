@@ -48,8 +48,9 @@ export class UserCardService extends AbstractService {
     }
 
     if (searchCriteria.address) {
-      const address = searchCriteria.address.trim().replace(' ', "*");
-      url = url.concat(separator).concat('address==').concat('*').concat(address).concat('*');
+      let re = / /gi;
+      const address = searchCriteria.address.trim().replace(re, "*");
+      url = url.concat(separator).concat('address=in=(').concat(address).concat(')');
       separator = ';';
     }
 

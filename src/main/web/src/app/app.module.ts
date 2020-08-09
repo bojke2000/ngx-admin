@@ -17,6 +17,7 @@ import {
 } from '@nebular/theme';
 import { metaReducers, reducers } from './reducers';
 
+import { AddressService } from './service/address.service';
 import { AlarmService } from './service/alarm.service';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -117,7 +118,7 @@ import { UserCardService } from './service/user-card.service';
     }),
   ],
   providers: [AuthGuard, UserCardService, UserAccountService, MailAccountService,
-    RouteService, ReadingBookService, MunicipalityService, UserAccountTypesService,
+    RouteService, AddressService, ReadingBookService, MunicipalityService, UserAccountTypesService,
     CityService, RoleService, TemplateService, ImportUserCardService, AlarmService,
     ExportAdoService, ExportUserCardService, UserCardColumnService,UsageHistoryService,
     { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true},

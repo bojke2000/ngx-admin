@@ -373,7 +373,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
     this.zoneDevice = false;
     this.child.reset();
 
-    this.userCardService.findBy({displayType: CURRENT_VIEW}, this.getPageable()).then((ngresp: NgPrimeGridResponse) => {
+    this.userCardService.findBy({displayType: CURRENT_VIEW, deviceType: 0}, this.getPageable()).then((ngresp: NgPrimeGridResponse) => {
       this.userCards = ngresp.data;
       this.totalRecords = ngresp.totalRecords;
       this.loading = false;

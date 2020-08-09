@@ -137,7 +137,7 @@ export class UserCardService extends AbstractService {
   }
 
   saveUser(userCard: UserCard): Observable<UserCard> {
-    return this.post(this.url, userCard);
+    return userCard.id ? this.updateUser(userCard) : this.post(this.url, userCard);
   }
 
   updateUser(userCard: UserCard): Observable<UserCard> {

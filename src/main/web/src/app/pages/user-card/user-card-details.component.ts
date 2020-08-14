@@ -32,7 +32,13 @@ export class UserCardDetailsComponent extends AbstractComponent implements OnIni
 
   @Input()
   userCardId = undefined;
-  cols = [];
+  cols = [
+    { field: 'usageCurrent', header: 'Watermeter Status', width: '70px' },
+    { field: 'usageCurrentReverse', header: 'Reverse Flow Status', width: '70px' },
+    { field: 'usageCurrentMonth', header: 'Status on day of reading', width: '70px' },
+    //{ field: 'usageAverage', header: 'Average Usage', width: '70px' },
+    { field: 'readAt', header: 'Read Datetime', width: '70px' },
+  ];
   usageHistory = [];
   totalRecords = 0;
   loading = false;
@@ -66,15 +72,7 @@ export class UserCardDetailsComponent extends AbstractComponent implements OnIni
     }
   }
 
-  ngOnInit(): void {
-    this.cols = [
-      { field: 'usageCurrent', header: 'Watermeter Status', width: '70px' },
-      { field: 'usageCurrentReverse', header: 'Reverse Flow Status', width: '70px' },
-      { field: 'usageCurrentMonth', header: 'Status on day of reading', width: '70px' },
-      //{ field: 'usageAverage', header: 'Average Usage', width: '70px' },
-      { field: 'readAt', header: 'Read Datetime', width: '70px' },
-    ];
-  }
+  ngOnInit(): void {}
 
   onShow() {
     if (this.initialized) {

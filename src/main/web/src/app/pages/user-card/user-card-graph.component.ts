@@ -56,12 +56,12 @@ export class UserCardGraphComponent extends AbstractComponent implements OnInit 
 
   ngOnInit(): void {
     this.cols = [
-      { field: 'customerName', header: 'Customer name', width: '140px' },
-      { field: 'usageCurrent', header: 'Trenutna', width: '70px' },
-      { field: 'usageCurrentReverse', header: 'Reverza', width: '70px' },
-      { field: 'usageCurrentMonth', header: 'Mesecna', width: '70px' },
-      { field: 'usageAverage', header: 'Srednja', width: '70px' },
-      { field: 'diffLastRead', header: 'Stanje', width: '70px' },
+      { field: 'customerName', header: 'Customer name', width: '120px' },
+      { field: 'usageCurrent', header: 'Trenutna', width: '80px' },
+      { field: 'usageCurrentReverse', header: 'Reverza', width: '80px' },
+      { field: 'usageCurrentMonth', header: 'Mesecna', width: '80px' },
+      { field: 'usageAverage', header: 'Srednja', width: '80px' },
+      { field: 'diffLastRead', header: 'Stanje', width: '80px' },
       { field: 'readTimestamp', header: 'Read Datetime', width: '140px' },
     ];
   }

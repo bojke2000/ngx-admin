@@ -100,9 +100,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
 
     translate.use('rs');
 
-    this.cols = [
-      { field: 'id', header: '#', width: '70px' },
-    ];
+    this.cols = [];
 
     this.userCardColumnService.findAll(Grid.USER_CARD).then(columns => {
       this.cols = [...this.cols, ...columns];
@@ -287,17 +285,19 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
     if (columnName !== 'diffLastRead') {
       return 'normal';
     } else {
-      const status = rowData[`${columnName}Color`];
+      const status = rowData[`diffLastReadColor`];
 
       return (status > 0) ? 'bold' : 'normal';
     }
   }
 
   styleColor(rowData: any[], columnName: string) {
-    if (columnName !== 'diffLastRead') {
+    if (columnName === 'customerId') {
+      return '#263238';
+    } else if (columnName !== 'diffLastRead' && columnName != 'customerName') {
       return null;
     } else {
-      const status = rowData[`${columnName}Color`];
+      const status = rowData[`diffLastReadColor`];
 
       return (status > 0) ? 'red' : null;
     }

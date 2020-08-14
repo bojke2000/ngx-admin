@@ -47,6 +47,8 @@ export class NgxTableComponent extends AbstractComponent {
   @ViewChild('dt') table: Table;
   @Input()
   rows = 20;
+  @Input()
+  sortable = false;
 
   first  = 0;
 

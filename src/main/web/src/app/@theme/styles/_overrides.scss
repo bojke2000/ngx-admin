@@ -70,6 +70,14 @@
   margin-top: 10px;
 }
 
+body label {
+  font-size: 13px !important;
+}
+
+body .ui-widget {
+  font-size: 13px !important;
+}
+
 body .ui-button {
   background-color: #0072C6 !important;
 }
@@ -118,21 +126,13 @@ body .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
   color: #ffffff !important;
 }
 
-
 body .ui-table .ui-sortable-column.ui-state-highlight {
-  color: #0072C6 !important;
+  background-color: #0072C6 !important;
+  color: white !important;
 }
 
 body .ui-table .ui-sortable-column .ui-sortable-column-icon {
-  color: #848484 !important;
-}
-
-body label {
-  font-size: 13px !important;
-}
-
-body .ui-widget {
-  font-size: 13px !important;
+  color: white !important;
 }
 
 body .ui-inputtext {

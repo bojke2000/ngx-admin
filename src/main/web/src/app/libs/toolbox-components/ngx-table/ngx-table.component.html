@@ -31,7 +31,7 @@ selectionMode="single"
 <ng-template pTemplate="header" let-columns>
   <tr>
     <th *ngFor="let col of columns " [pSortableColumn]="col.field">
-      {{col.header | translate}}
+      {{col.header | translate}}<p-sortIcon *ngIf="sortable === true" [field]="col.field"></p-sortIcon>
     </th>
   </tr>
 </ng-template>
@@ -40,8 +40,12 @@ selectionMode="single"
     <td *ngFor="let col of columns"
         [style.font-weight]="fontWeight && fontWeight(rowData, col.field)"
         [style.color]="styleColor && styleColor(rowData, col.field)"
-        (click)="onColumnClick && onColumnClick(col.field, rowData)" >
-      {{rowData[col.field]}}
+        (click)="onColumnClick && onColumnClick(col.field, rowData)"
+        >
+        <ng-container [ngSwitch]="col.field">
+          <i *ngSwitchCase="'medium'" class="pi pi-chart-bar"></i>
+          <ng-container *ngSwitchDefault>{{rowData[col.field]}}</ng-container>
+      </ng-container>
     </td>
   </tr>
 </ng-template>

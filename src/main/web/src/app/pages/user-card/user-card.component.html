@@ -261,9 +261,7 @@
       ></ngx-table>
 
       <div class="button-positioner">
-        <a routerLink="/pages/export-user-card"
-          ><p-button label="{{ 'Export' | translate }}"></p-button
-        ></a>
+          <p-button (onClick)="onExportButtonClick()" label="{{ 'Export' | translate }}"></p-button>
       </div>
       <div class="button-positioner">
         <p-button (onClick)="onGraphButtonClick()" label="{{ 'Graph' | translate }}"></p-button>

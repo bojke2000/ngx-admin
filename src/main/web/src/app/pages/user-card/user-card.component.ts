@@ -11,6 +11,7 @@ import { NgxTableComponent } from '../../libs/toolbox-components/ngx-table/ngx-t
 import { Pageable } from './../../domain/pageable';
 import { ReadingBookService } from '../../service/reading-book.service';
 import { RouteService } from '../../service/route.service';
+import { Router } from '@angular/router';
 import { Table } from 'primeng/table';
 import { TranslateService } from '@ngx-translate/core';
 import { UserCard } from '../../domain/user-card';
@@ -89,6 +90,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
     private addressService: AddressService,
     private readingBookService: ReadingBookService,
     private municipalityService: MunicipalityService,
+    private router: Router,
     translate: TranslateService) {
       super(translate);
     translate.setDefaultLang('en');
@@ -402,5 +404,9 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
 
   onGraphButtonClick() {
     this.displayGraph = true;
+  }
+
+  onExportButtonClick() {
+    this.router.navigate(['/pages/export-user-card']);
   }
 }

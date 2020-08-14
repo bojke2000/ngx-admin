@@ -57,6 +57,7 @@
             </div>
           </div>
           <div class="ui-g-2" >
+
             <div class="ui-float-label">
               <label>{{ "Zone devices" | translate }}: </label>
             </div>
@@ -68,8 +69,11 @@
             <p-chart type="bar" [height]="120" [data]="data"></p-chart>
           </div>
 
+
         </div>
         <div class="ui-g-12">
+
+
           <div class="ui-g-11">
           <div class="ui-g-2">
             <span class="ui-float-label">
@@ -230,6 +234,8 @@
           </div>
         </div>
 
+
+
       </div>
 
     </nb-card-body>
@@ -253,12 +259,15 @@
         rows="9"
       ></ngx-table>
 
-      <div style="position: relative; float: right; margin-right: 15px !important;">
+      <div class="button-positioner">
         <a routerLink="/pages/export-user-card"
           ><p-button label="{{ 'Export' | translate }}"></p-button
         ></a>
       </div>
-
+      <div class="button-positioner">
+        <p-button (onClick)="onGraphButtonClick()" label="{{ 'Graph' | translate }}"></p-button>
+        <div class="divider"></div>
+      </div>
     </nb-card-body>
   </nb-card>
 
@@ -268,4 +277,8 @@
 </div>
 <ng-container *ngIf="displayId$ | async">
   <ngx-user-card-details [(displayDialog)]="displayDialog" [(userCardId)]="id" (closeFunction)="onUserCardDialogClose($event)" ></ngx-user-card-details>
+</ng-container>
+
+<ng-container *ngIf="displayGraph$ | async">
+  <ngx-user-card-graph [(displayGraph)]="displayGraph" [criteria]="getSearchCriteria()" (closeFunction)="onUserCardGraphClose($event)" ></ngx-user-card-graph>
 </ng-container>

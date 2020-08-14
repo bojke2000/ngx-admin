@@ -29,6 +29,7 @@ import { ToolboxComponentsModule } from '../../libs/toolbox-components/toolbox-c
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { UserCardComponent } from './user-card.component';
 import { UserCardDetailsComponent } from './user-card-details.component';
+import { UserCardGraphComponent } from './user-card-graph.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -78,7 +79,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     CUSTOM_ELEMENTS_SCHEMA
   ],
   declarations: [
-    UserCardComponent,UserCardDetailsComponent
+    UserCardComponent,UserCardDetailsComponent,UserCardGraphComponent
   ],
 })
 export class UserCardModule { }

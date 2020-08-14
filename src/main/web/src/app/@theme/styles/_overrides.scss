@@ -75,14 +75,12 @@ body .ui-button {
 }
 
 body .ui-table .ui-table-thead > tr > th {
- /* color: #0072C6 !important; */
   padding: -7.429em 0.857em;
   border: 0 !important;
   border-bottom: 1px solid #c8c8c8 !important;
   color: white !important;
   background-color: #0072C6 !important;
-  /*background-color: white !important;*/
-  font-weight: 700 !important;
+  font-weight: 500 !important;
    height: 54px !important;
 }
 
@@ -93,7 +91,6 @@ body .ui-table .ui-table-tbody > tr {
 
 body .ui-table .ui-table-tbody > tr > td {
   background-color: inherit;
-  /* border: 1px solid #c8c8c8; */
   -webkit-transition: box-shadow 0.2s;
   transition: box-shadow 0.2s;
   border: 0 !important;
@@ -123,10 +120,7 @@ body .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
 
 
 body .ui-table .ui-sortable-column.ui-state-highlight {
-  /*background-color: #f4f4f4 !important;*/
-
   color: #0072C6 !important;
-
 }
 
 body .ui-table .ui-sortable-column .ui-sortable-column-icon {
@@ -146,10 +140,6 @@ body .ui-inputtext {
 }
 
 body .ui-inputtext, textarea {
- /* border-top: 0 !important;
-  border-left: 0 !important;
-  border-right: 0 !important;
-  */
   border-top-color: white !important;
   border-left-color: white !important;
   border-right-color: white !important;
@@ -190,6 +180,8 @@ body .ui-dropdown .ui-inputtext  .ui-multiselect {
 body .ui-dialog .ui-dialog-titlebar {
   color: white !important;
   background-color: #0072C6 !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
 }
 
 body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon {
@@ -212,5 +204,10 @@ body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon {
 
 .nb-theme-default [nbButton].appearance-filled.size-medium {
   padding: 0.6875rem 1.125rem;
+}
+
+.nb-theme-default nb-card-header {
+  font-size: 13px !important;
+  font-weight: 500 !important;
 }
 

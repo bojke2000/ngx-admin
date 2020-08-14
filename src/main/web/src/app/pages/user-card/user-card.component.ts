@@ -76,6 +76,9 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
   sumUsageAverage: number;
   sumDiffLastRead: number;
 
+  // graph
+  displayGraph = false;
+
   // chart
   data = {};
 
@@ -179,6 +182,10 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
     return of(this.id)  ;
   }
 
+  get displayGraph$() {
+    return of(this.displayGraph);
+  }
+
   private getSummaryData() {
     if (this.page === 0) {
       this.userCardService.findSumBy(this.getSearchCriteria()).then((dto: UserCardUsage) => {
@@ -274,7 +281,6 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
      } else if (data.column === 'gsmId') {
       this.gsmId = data.row.gsmId;
      }
-
   }
 
   fontWeight(rowData: any[], columnName: string) {
@@ -388,6 +394,13 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
 
   onUserCardDialogClose(event) {
     this.displayDialog = event.value;
+  }
 
+  onUserCardGraphClose(event) {
+    this.displayGraph = event.value;
+  }
+
+  onGraphButtonClick() {
+    this.displayGraph = true;
   }
 }

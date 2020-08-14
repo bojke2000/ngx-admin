@@ -1,0 +1,28 @@
+<p-dialog header="{{ 'User Card '|translate }}" [(visible)]="displayGraph"
+          (onShow)="onShow()" (onHide)="onHide()"
+          [focusOnShow]="false" [responsive]="true"  dynamic="true"
+          showEffect="fade" [modal]="true" position="center" [style]="{width: '90%', height: '820px', 'margin-top': '45px'}">
+
+        <div class="ui-g ui-fluid" >
+          <div class="ui-g-12">
+            <div class="ui-g-6">
+            <nb-card>
+              <nb-card-body style="padding-left: 0; padding-right: 0; padding-top: 0;">
+                <ngx-table
+                  [columns]="cols"
+                  [value]="userCards"
+                  (lazyLoad)="loadUsageLazy($event)"
+                  dataKey="id"
+                  [rows]="8"
+                  [totalRecords]="totalRecords"
+                  [loading]="loading"
+                ></ngx-table>
+              </nb-card-body>
+            </nb-card>
+          </div>
+          <div class="ui-g-6">
+            <p-chart type="bar" [data]="data"></p-chart>
+          </div>
+          </div>
+        </div> <!-- fluid -->
+</p-dialog>

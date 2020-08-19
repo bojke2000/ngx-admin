@@ -19,7 +19,16 @@ export class UserCardGraphComponent extends AbstractComponent implements OnInit 
   @Input()
   criteria = undefined;
 
-  cols = [];
+  cols = [
+    { field: 'customerName', header: 'Customer name', width: '120px' },
+    { field: 'usageCurrent', header: 'Trenutna', width: '80px' },
+    { field: 'usageCurrentReverse', header: 'Reverza', width: '80px' },
+    { field: 'usageCurrentMonth', header: 'Mesecna', width: '80px' },
+    { field: 'usageAverage', header: 'Srednja', width: '80px' },
+    { field: 'diffLastRead', header: 'Stanje', width: '80px' },
+    { field: 'readTimestamp', header: 'Read Datetime', width: '140px' },
+  ];
+
   userCards: UserCard[];
   totalRecords = 0;
   loading = false;
@@ -54,17 +63,7 @@ export class UserCardGraphComponent extends AbstractComponent implements OnInit 
     return of(this.data);
   }
 
-  ngOnInit(): void {
-    this.cols = [
-      { field: 'customerName', header: 'Customer name', width: '120px' },
-      { field: 'usageCurrent', header: 'Trenutna', width: '80px' },
-      { field: 'usageCurrentReverse', header: 'Reverza', width: '80px' },
-      { field: 'usageCurrentMonth', header: 'Mesecna', width: '80px' },
-      { field: 'usageAverage', header: 'Srednja', width: '80px' },
-      { field: 'diffLastRead', header: 'Stanje', width: '80px' },
-      { field: 'readTimestamp', header: 'Read Datetime', width: '140px' },
-    ];
-  }
+  ngOnInit(): void {}
 
   onShow() {
     if (this.initialized) {

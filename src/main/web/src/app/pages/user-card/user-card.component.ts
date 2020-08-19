@@ -406,6 +406,10 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
     this.displayGraph = true;
   }
 
+  onReportButtonClick() {
+    this.userCardService.reportBy(this.getSearchCriteria());
+  }
+
   onExportButtonClick() {
     this.router.navigate(['/pages/export-user-card']);
   }

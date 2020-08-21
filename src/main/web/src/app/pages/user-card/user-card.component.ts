@@ -18,6 +18,7 @@ import { UserCard } from '../../domain/user-card';
 import { UserCardColumnService } from '../../service/user-card-column.service';
 import { UserCardService } from '../../service/user-card.service';
 import { UserCardUsage } from './../../domain/user-card-usage';
+import {saveAs as importedSaveAs} from 'file-saver';
 
 const CURRENT_VIEW = 1;
 
@@ -407,7 +408,12 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
   }
 
   onReportButtonClick() {
-    this.userCardService.reportBy(this.getSearchCriteria());
+    this.userCardService.reportBy(this.getSearchCriteria())
+    .subscribe((data: any) => this.downloadFile(data, "report.pdf"));
+  }
+
+  downloadFile(data: any, fileName) {
+    importedSaveAs(new Blob([data], { type: 'application/pdf' }), fileName);
   }
 
   onExportButtonClick() {

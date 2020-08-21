@@ -134,7 +134,7 @@ export class UserCardService extends AbstractService {
 
   reportBy(searchCriteria: any) {
     if (searchCriteria.displayType === CURRENT_VIEW) {
-      return this.get(this.getUrl(this.url.concat('/report?search='), searchCriteria, URL_ALL));
+      return this.download(this.getUrl(this.url.concat('/report?search='), searchCriteria, URL_ALL));
     }
   }
 

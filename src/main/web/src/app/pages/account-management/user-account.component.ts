@@ -144,9 +144,6 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
   }
 
   resetSort() {
-    this.table.sortOrder = 0;
-    this.table.sortField = '';
-    this.table.reset();
     this.loading = false;
   }
 

@@ -21,9 +21,8 @@ import { of } from 'rxjs';
 export class UserAccountComponent extends AbstractComponent implements OnInit, OnDestroy, AfterViewInit {
   userAccountForm: FormGroup;
   submitted = false;
-  userAccounts: UserAccount[];
-  userAccount: UserAccount;
-  selectedUserAccount: UserAccount;
+  userAccounts: UserAccount[ ]= [];
+  userAccount: UserAccount = undefined;
   newUserAccount: boolean;
   displayDialog: boolean;
   totalRecords: number;
@@ -34,8 +33,6 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
   cities: SelectItem[];
   accessLevels: SelectItem[];
   userSearch: string;
-
-  @ViewChild('table', { static: false }) table: Table;
 
   constructor(private userAccountservice: UserAccountService,
     private cityService: CityService,
@@ -191,7 +188,8 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
       this.userAccountservice.updateUserAccount(this.userAccount)
       .pipe(takeUntil(this.destroy$))
       .subscribe(ua => {
-        userAccounts[this.userAccounts.indexOf(this.selectedUserAccount)] = ua;
+        const idx = this.userAccounts.map( el => el.id ).indexOf(ua.id);
+        userAccounts[idx] = ua;
       });
     }
 
@@ -201,7 +199,7 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
   }
 
   delete() {
-    const index = this.userAccounts.indexOf(this.selectedUserAccount);
+    const index = this.userAccounts.map( el => el.id ).indexOf(this.userAccount.id);
     if (index !== 0) {
       this.userAccountservice.deleteUserAccount(this.userAccount)
       .pipe(takeUntil(this.destroy$))

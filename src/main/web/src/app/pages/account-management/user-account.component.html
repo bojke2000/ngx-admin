@@ -18,7 +18,7 @@
         <div style='clear: both; margin-bottom: 5px;'>&nbsp;</div>
 
         <ngx-table [columns]="cols" [value]="userAccounts" (lazyLoad)="loadUserAccountsLazy($event)"
-        [selection]="selectedUserAccount" dataKey="id" [totalRecords]="totalRecords" [loading]="loading"
+        dataKey="id" [totalRecords]="totalRecords" [loading]="loading"
         (rowSelect)="onRowSelect($event)" (rowUnselect)="onRowUnselect($event)">
         </ngx-table>
 

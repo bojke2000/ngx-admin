@@ -132,6 +132,12 @@ export class UserCardService extends AbstractService {
     }
   }
 
+  findSummaries(searchCriteria: any, pageable?: Pageable) {
+    if (searchCriteria.displayType === CURRENT_VIEW) {
+      return this.get(this.getUrl(this.url.concat('/summaries?search='), searchCriteria, URL_ALL), pageable);
+    }
+  }
+
   reportBy(searchCriteria: any) {
     if (searchCriteria.displayType === CURRENT_VIEW) {
       return this.download(this.getUrl(this.url.concat('/report?search='), searchCriteria, URL_ALL));

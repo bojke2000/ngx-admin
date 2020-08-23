@@ -80,6 +80,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
 
   // graph
   displayGraph = false;
+  displaySummaries = false;
 
   // chart
   data = {};
@@ -404,6 +405,12 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
   }
 
   onGraphButtonClick() {
+    this.displaySummaries = false;
+    this.displayGraph = true;
+  }
+
+  onSummariesButtonClick() {
+    this.displaySummaries = true;
     this.displayGraph = true;
   }
 

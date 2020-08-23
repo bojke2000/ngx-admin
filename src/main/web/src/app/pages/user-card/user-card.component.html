@@ -268,6 +268,10 @@
         <div class="divider"></div>
       </div>
       <div class="button-positioner">
+        <p-button (onClick)="onSummariesButtonClick()" label="{{ 'Summary Graph' | translate }}"></p-button>
+        <div class="divider"></div>
+      </div>
+      <div class="button-positioner">
         <p-button (onClick)="onReportButtonClick()" label="{{ 'Generate Report' | translate }}"></p-button>
         <div class="divider"></div>
       </div>
@@ -283,5 +287,6 @@
 </ng-container>
 
 <ng-container *ngIf="displayGraph$ | async">
-  <ngx-user-card-graph [(displayGraph)]="displayGraph" [criteria]="getSearchCriteria()" (closeFunction)="onUserCardGraphClose($event)" ></ngx-user-card-graph>
+  <ngx-user-card-graph [(displayGraph)]="displayGraph" [isSummaries]="displaySummaries"
+                      [criteria]="getSearchCriteria()" (closeFunction)="onUserCardGraphClose($event)" ></ngx-user-card-graph>
 </ng-container>

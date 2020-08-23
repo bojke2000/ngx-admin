@@ -149,5 +149,6 @@
   "State": "Stanje",
   "Usage Average": "Prosečna potrošnja",
   "Graph": "Grafikon potrošnje",
-  "Generate Report": "Generiši izveštaj"
+  "Generate Report": "Generiši izveštaj",
+  "Summary Graph": "Zbirni grafikon"
 }

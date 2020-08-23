@@ -18,9 +18,11 @@ export class UserCardGraphComponent extends AbstractComponent implements OnInit 
 
   @Input()
   criteria = undefined;
+  @Input()
+  isSummaries = false;
 
   cols = [
-    { field: 'customerName', header: 'Customer name', width: '120px' },
+    { field: 'customerName', header: 'Name', width: '120px' },
     { field: 'usageCurrent', header: 'Trenutna', width: '80px' },
     { field: 'usageCurrentReverse', header: 'Reverza', width: '80px' },
     { field: 'usageCurrentMonth', header: 'Mesecna', width: '80px' },
@@ -73,10 +75,8 @@ export class UserCardGraphComponent extends AbstractComponent implements OnInit 
     }
   }
 
-  private loadPage(page: number, size: number, sort?: string) {
-    const pageable = { page, size, sort};
-    this.userCardService.findBy(this.criteria, pageable).then((ngresp: NgPrimeGridResponse) => {
-      this.userCards = ngresp.data;
+  private onLoad(ngresp: NgPrimeGridResponse) {
+    this.userCards = ngresp.data;
       this.totalRecords = ngresp.totalRecords;
       this.loading = false;
 
@@ -128,8 +128,20 @@ export class UserCardGraphComponent extends AbstractComponent implements OnInit 
             borderColor: '#AFFFFF',
             data: usageCurrentReverse
           }
-        ]}
-    });
+        ]};
+  }
+
+  private loadPage(page: number, size: number, sort?: string) {
+    const pageable = { page, size, sort};
+    if (this.isSummaries) {
+      this.userCardService.findSummaries(this.criteria, pageable).then((ngresp: NgPrimeGridResponse) => {
+        this.onLoad(ngresp);
+      });
+    } else {
+      this.userCardService.findBy(this.criteria, pageable).then((ngresp: NgPrimeGridResponse) => {
+        this.onLoad(ngresp);
+      });
+    }
   }
 
   loadUsageLazy(event: LazyLoadEvent) {

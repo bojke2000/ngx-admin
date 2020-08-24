@@ -1,5 +1,4 @@
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
-import { NgModule } from '@angular/core';
 import {
   NbAuthComponent,
   NbLoginComponent,
@@ -8,7 +7,9 @@ import {
   NbRequestPasswordComponent,
   NbResetPasswordComponent,
 } from '@nebular/auth';
+
 import { AuthGuard } from './auth-guard.service';
+import { NgModule } from '@angular/core';
 
 const routes: Routes = [
   {
@@ -52,7 +53,8 @@ const routes: Routes = [
 ];
 
 const config: ExtraOptions = {
-  useHash: false,
+  useHash: true,
+  //paramsInheritanceStrategy: 'always'
 };
 
 @NgModule({

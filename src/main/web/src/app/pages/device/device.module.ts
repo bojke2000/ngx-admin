@@ -1,27 +1,28 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NbButtonModule, NbCardModule, NbToggleModule, NbCheckboxModule } from '@nebular/theme';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { NbButtonModule, NbCardModule, NbCheckboxModule, NbToggleModule } from '@nebular/theme';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
+import {CardModule} from 'primeng/card';
+import {CheckboxModule} from 'primeng/checkbox';
+import { DeviceComponent } from './device.component';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
+import {FieldsetModule} from 'primeng/fieldset';
+import {InputSwitchModule} from 'primeng/inputswitch';
 import { InputTextModule } from 'primeng/inputtext';
+import {InputTextareaModule} from 'primeng/inputtextarea';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { NgModule } from '@angular/core';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
-import {CardModule} from 'primeng/card';
-import {InputSwitchModule} from 'primeng/inputswitch';
-import {CheckboxModule} from 'primeng/checkbox';
-
 import { ThemeModule } from '../../@theme/theme.module';
 import { ToolboxComponentsModule } from '../../libs/toolbox-components/toolbox-components.module';
-import { DeviceComponent } from './device.component';
-import {FieldsetModule} from 'primeng/fieldset';
-import {InputTextareaModule} from 'primeng/inputtextarea';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -41,6 +42,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     InputTextareaModule,
     CheckboxModule,
     DropdownModule,
+    MultiSelectModule,
     AutoCompleteModule,
     InputSwitchModule,
     PanelModule,

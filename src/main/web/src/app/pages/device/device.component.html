@@ -3,8 +3,64 @@
     <nb-card-body>
       <ngx-title-header title='Devices'></ngx-title-header>
 
+      <div class="ui-g ui-fluid">
+        <div class="ui-g-10">
+          <div class="ui-g-2">
+            <span class="ui-float-label">
+              <input
+                pInputText
+                id="customerName"
+                [(ngModel)]="customerName"
+                onclick="this.setSelectionRange(0, this.value.length)"
+              />
+              <label for="customerName">{{
+                "Customer name" | translate
+              }}</label>
+            </span>
+          </div>
+          <div class="ui-g-2">
+            <span class="ui-float-label">
+              <p-multiSelect appendTo="body" [options]="addresses" defaultLabel="&nbsp;" [(ngModel)]="address" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"></p-multiSelect>
+              <label for="address">{{ "Address" | translate }}</label>
+            </span>
+          </div>
+
+          <div class="ui-g-2">
+            <span class="ui-float-label">
+              <input
+              pInputText
+              id="gsmId"
+              [(ngModel)]="gsmId"
+            />
+              <label for="gsmId">{{ "ADOGSM-2 ID" | translate }}</label>
+            </span>
+          </div>
+          <div class="ui-g-2">
+            <span class="ui-float-label">
+              <input
+              pInputText
+              id="deviceId"
+              [(ngModel)]="deviceId"
+            />
+              <label for="deviceId">{{ "Device ID" | translate }}</label>
+            </span>
+          </div>
+        </div>
+          <div class="ui-g-2">
+            <div class="ui-g-6">
+              <p-button (click)="search()"  icon="fa fa-search" label="{{ 'Search' | translate }}"></p-button>
+            </div>
+            <div class="ui-g-6">
+              <p-button (click)="clear()" icon="fa fa-refresh" label="&nbsp;&nbsp;{{ 'Clear' | translate }}"></p-button>
+            </div>
+        </div>
+        </div>
+
+
       <ngx-table [columns]="cols$ | async" [value]="userCards" (lazyLoad)="loadUserCardsLazy($event)"
-        (rowSelect)="onRowSelect($event)"  (rowUnselect)="onRowUnselect($event)"
+        dataKey1="customerId"
+        (rowSelect)="onRowSelect($event)"  (rowUnselect)="onRowUnselect($event)" [sortable]="true" rows="8"
+        (clickFunction)="onCustomerNameClick($event)"
         [selection]="selectedUserCard" dataKey="customerId" [totalRecords]="totalRecords" [loading]="loading">
       </ngx-table>
 

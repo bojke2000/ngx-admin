@@ -9,7 +9,9 @@ import { Dropdown } from 'primeng/dropdown';
 import { Grid } from '../../domain/grid';
 import { MunicipalityService } from '../../service/municipailty.service';
 import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
+import { NgxTableComponent } from '../../libs/toolbox-components/ngx-table/ngx-table.component';
 import { Option } from './../../domain/option';
+import { Pageable } from '../../domain/pageable';
 import { ReadingBookService } from '../../service/reading-book.service';
 import { RouteService } from './../../service/route.service';
 import { Router } from '@angular/router';
@@ -19,6 +21,8 @@ import { UserCard } from '../../domain/user-card';
 import { UserCardColumnService } from '../../service/user-card-column.service';
 import { UserCardService } from '../../service/user-card.service';
 import { takeUntil } from 'rxjs/operators';
+
+const CURRENT_VIEW = 1;
 
 @Component({
   selector: 'ngx-device',
@@ -42,6 +46,21 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   multipliers: Option[];
   indexes: Option[];
   pageable: {};
+
+  // search
+  customerName: string;
+  address: string;
+  deviceId: string;
+  gsmId: string;
+  displayType: number = 1;
+  // search end
+
+   // state of pagination
+   sortBy: string;
+   sortOrder: string;
+   page: number;
+   rows: number;
+   // state of pagination end
 
   userCards: UserCard[];
   totalRecords: number;
@@ -68,6 +87,9 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
   @ViewChild('dddMultiplierStatus')
   ddMultiplierStatus: Dropdown;
+
+  @ViewChild(NgxTableComponent)
+  child: NgxTableComponent;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -200,18 +222,22 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
   get f() { return this.deviceForm.controls; }
 
-
-  private loadPageable(pageable: any) {
-    this.userCardService.findAll(this.pageable).then((ngresp: NgPrimeGridResponse) => {
+  private loadPageable() {
+    this.userCardService.findBy(this.getSearchCriteria(), this.pageable).then((ngresp: NgPrimeGridResponse) => {
       this.userCards = ngresp.data;
       this.totalRecords = ngresp.totalRecords;
       this.loading = false;
     });
   }
 
-  private loadPage(page: number, size: number, sort?: string) {
-    this.pageable = { page, size, sort };
-    this.loadPageable(this.pageable);
+   private loadPage(page: number, size: number, sort?: string) {
+    this.pageable = { page, size, sort};
+    this.userCardService.findBy(this.getSearchCriteria(), this.pageable).then((ngresp: NgPrimeGridResponse) => {
+      this.userCards = ngresp.data;
+      this.totalRecords = ngresp.totalRecords;
+      this.loading = false;
+    });
+
   }
 
   loadUserCardsLazy(event: LazyLoadEvent) {
@@ -359,7 +385,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     this.userCardService.saveUser(this.device)
       .pipe(takeUntil(this.destroy$)).subscribe(val => {
 
-        this.loadPageable(this.pageable);
+        this.loadPageable();
         this.loadStaticData();
       });
 
@@ -387,7 +413,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
      this.userCardService.deleteUserCard(this.device)
      .pipe(takeUntil(this.destroy$)).subscribe(val => {
       this.displayDialog = false;
-      this.loadPageable(this.pageable);
+      this.loadPageable();
      });
   }
 
@@ -482,4 +508,66 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   onRowUnselect(event: any) {
     this.device = undefined;
   }
+
+  getSearchCriteria() {
+    const {
+      displayType,
+      customerName,
+      deviceId,
+      gsmId,
+      address,
+      } = this;
+
+  return {displayType,
+          customerName,
+          deviceId,
+          gsmId,
+          address: address ? address.toString() : undefined,
+          };
+
+  }
+
+  clear() {
+    this.customerName = '';
+    this.address = '';
+    this.deviceId = undefined;
+    this.gsmId = undefined;
+    this.sortBy = '';
+    this.sortOrder = 'asc';
+    this.page = 0;
+    this.child.reset();
+
+    this.userCardService.findBy({displayType: CURRENT_VIEW, deviceType: 0}, this.pageable).then((ngresp: NgPrimeGridResponse) => {
+      this.userCards = ngresp.data;
+      this.totalRecords = ngresp.totalRecords;
+      this.loading = false;
+    });
+  }
+
+  search () {
+    this.page = 0;
+    this.userCardService.findBy(this.getSearchCriteria(), this.pageable).then((ngresp: NgPrimeGridResponse) => {
+      this.userCards = ngresp.data;
+      this.totalRecords = ngresp.totalRecords;
+      this.loading = false;
+    });
+  }
+
+  onCustomerNameClick(data: any) {
+    if (data.column === 'customerName') {
+     this.customerName = data.row.customerName;
+    } else if (data.column === 'address') {
+      this.addresses.forEach(add => {
+        if (add.label === data.row.address) {
+         this.address = add.value;
+         return;
+        }
+      })
+    } else if (data.column === 'gsmId') {
+     this.gsmId = data.row.gsmId;
+    } else if (data.column === 'deviceId') {
+      this.deviceId = data.row.deviceId;
+     }
+ }
+
 }

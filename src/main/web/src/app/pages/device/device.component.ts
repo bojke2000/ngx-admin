@@ -185,9 +185,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       {label: this.translate.instant('Temperature'), value: '3'},
     ];
 
-    this.cols = [
-      { field: 'id', header: 'ID', width: '50px' },
-    ];
+    this.cols = [];
 
     this.userCardColumnService.findAll(Grid.DEVICE).then(columns => {
       this.cols = [...this.cols, ...columns];

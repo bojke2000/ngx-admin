@@ -7,6 +7,7 @@ import { catchError } from 'rxjs/operators';
 export abstract class AbstractService {
 
   prefix = 'http://localhost:8081/';
+  //prefix = '';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -27,8 +28,15 @@ export abstract class AbstractService {
     return this.http.get(getUrl,  {responseType : 'arraybuffer'});
   }
 
-  protected get(url: string, pageable?: Pageable) {
-    const symbol = url.indexOf('?') <= 0 ?  '?' : pageable ? '&' : '';
+  protected downloadText(url: string) {
+    const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8').set('Range', 'bytes=-100023');
+
+    return this.http.get(url,  {headers, responseType : 'text'});
+  }
+
+  protected get(url: string, pageable?: Pageable, isNoSearch?: boolean) {
+    const searchSymbol = isNoSearch ? '' : '?';
+    const symbol = url.indexOf('?') <= 0 ?  searchSymbol : pageable ? '&' : '';
     const getUrl = url.concat(symbol).concat(this.jsonToHttpParams(pageable));
 
     return this.http.get(getUrl,  this.httpOptions)

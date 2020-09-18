@@ -65,6 +65,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/route',
         home: false,
       },
+      {
+        title: 'Activity Log',
+        icon: 'keypad-outline',
+        link: '/pages/logfile',
+        home: false,
+      },
     ],
   },
 ];

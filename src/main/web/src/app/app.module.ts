@@ -29,6 +29,7 @@ import { CoreModule } from './@core/core.module';
 import { ExportAdoService } from './service/export-ado.service';
 import { ExportUserCardService } from './service/export-user-card.service';
 import { ImportUserCardService } from './service/import-user-card.service';
+import { LogfileService } from './service/logfile.service';
 import { MailAccountService } from './service/mail-account.service';
 import { MunicipalityService } from './service/municipailty.service';
 import { NbAuthJWTInterceptor } from './jwt-interceptor';
@@ -119,7 +120,7 @@ import { UserCardService } from './service/user-card.service';
   ],
   providers: [AuthGuard, UserCardService, UserAccountService, MailAccountService,
     RouteService, AddressService, ReadingBookService, MunicipalityService, UserAccountTypesService,
-    CityService, RoleService, TemplateService, ImportUserCardService, AlarmService,
+    CityService, RoleService, TemplateService, ImportUserCardService, AlarmService,LogfileService,
     ExportAdoService, ExportUserCardService, UserCardColumnService,UsageHistoryService,
     { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true},
     { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: () => false}],

@@ -1,0 +1,9 @@
+.ui-g label {
+  font-weight: bold;
+  margin-top: .25em;
+  display: block;
+}
+
+.alarm-on {
+  color: #910808 !important;
+}

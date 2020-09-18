@@ -7,6 +7,7 @@ import { ExportAdoComponent } from './import-export/export-ado.component';
 import { ExportUserCardComponent } from './import-export/export-user-card.component';
 import { ImportAdoComponent } from './import-export/import-ado.component';
 import { ImportUserCardComponent } from './import-export/import-user-card.component';
+import { LogfileComponent } from './logfile/logfile.component';
 import { MailAccountComponent } from './account-management/mail-account.component';
 import { NgModule } from '@angular/core';
 import { PagesComponent } from './pages.component';
@@ -71,6 +72,10 @@ const routes: Routes = [{
     {
       path: 'alarm',
       component: AlarmComponent,
+    },
+    {
+      path: 'logfile',
+      component: LogfileComponent,
     },
     {
       path: '',

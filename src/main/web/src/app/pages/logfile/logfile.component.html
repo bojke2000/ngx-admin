@@ -1,9 +1,23 @@
 <div class="row">
   <nb-card style="width: 100%">
     <nb-card-body >
-      <ngx-title-header title='Activity Log'></ngx-title-header>
+      <ngx-title-header title="{{ 'Activity Log' | translate }}" ></ngx-title-header>
+      <div style="position: relative; float: right; margin-top: 5px; margin-bottom: 5px;">
+        <div class="ui-inputgroup">
+          <span class="ui-float-label">
+            <input id="float-input" type="text" size="50" (keyup)="onActivitySearch($event)"
+              [(ngModel)]="activitySearch" pInputText (blur)="onActivitySearchBlur()"
+                       onclick="this.setSelectionRange(0, this.value.length)"
+              style="padding-top: 7px; padding-bottom: 7px;">
+            <label for="float-input">{{ 'Search Activity' | translate }} </label>
+        </span>
+
+      </div>
+    </div>
+    <div style='clear: both; margin-bottom: 5px;'>&nbsp;</div>
+
       <div style="overflow-y: scroll; height:70vh;">
-        <p *ngFor="let line of logfile">{{line}}</p>
+        <p *ngFor="let line of activity$ | async">{{line}}</p>
         </div>
     </nb-card-body>
   </nb-card>

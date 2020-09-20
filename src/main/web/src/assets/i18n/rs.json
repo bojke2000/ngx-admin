@@ -150,5 +150,7 @@
   "Usage Average": "Prosečna potrošnja",
   "Graph": "Grafikon potrošnje",
   "Generate Report": "Generiši izveštaj",
-  "Summary Graph": "Zbirni grafikon"
+  "Summary Graph": "Zbirni grafikon",
+  "Search Activity": "Pretraga loga aktivnosti",
+  "Activity Log": "Log Aktivnosti"
 }

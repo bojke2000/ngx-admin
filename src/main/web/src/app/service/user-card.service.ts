@@ -18,6 +18,18 @@ export class UserCardService extends AbstractService {
 
   constructor(http: HttpClient) { super(http); }
 
+  private toDate(date: Date, endDay: boolean = false): string {
+    var dd = date.getDate();
+    var mm = date.getMonth() + 1;
+
+    return [(dd>9 ? '' : '0') + dd,
+          '.',
+          (mm>9 ? '' : '0') + mm,
+          '.',
+          date.getFullYear()
+         ].join('');
+  }
+
   findAll(pageable?: Pageable) {
     return this.get(this.url, pageable);
   }
@@ -102,12 +114,12 @@ export class UserCardService extends AbstractService {
     }
 
     if (searchCriteria.dateFrom) {
-      url = url.concat(separator).concat('dateFrom<=').concat(searchCriteria.dateFrom);
+      url = url.concat(separator).concat('readTimestamp>=').concat(this.toDate(searchCriteria.dateFrom));
       separator = ';';
     }
 
     if (searchCriteria.dateTo) {
-      url = url.concat(separator).concat('dateTo>=').concat(searchCriteria.dateTo);
+      url = url.concat(separator).concat('readTimestamp<=').concat(this.toDate(searchCriteria.dateTo, true));
       separator = ';';
     }
 

@@ -27,7 +27,7 @@ export class LogfileComponent extends AbstractComponent implements OnInit {
 
   ngOnInit(): void {
     this.logfileService.getLogfile().subscribe(logfile => {
-      let tempbuf: string[] = (logfile as string).split('\n');
+      const tempbuf: string[] = (logfile as string).split('\n');
       this.logfile = tempbuf.length <= 2000 ? tempbuf.reverse() : tempbuf.slice(tempbuf.length - 2000).reverse();
       this.activity = this.logfile;
     });

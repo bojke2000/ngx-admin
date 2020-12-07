@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output
+} from '@angular/core';
 
 import { AbstractComponent } from '../../AbstractComponent';
 import { LazyLoadEvent } from 'primeng/api';
@@ -7,16 +13,15 @@ import { TranslateService } from '@ngx-translate/core';
 import { UsageHistoryService } from '../../service/usage-history.service';
 import { UserCard } from '../../domain/user-card';
 import { UserCardService } from './../../service/user-card.service';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'ngx-user-card-details',
   templateUrl: './user-card-details.component.html',
   styleUrls: ['./user-card-details.component.css'],
-
 })
-export class UserCardDetailsComponent extends AbstractComponent implements OnInit {
-
+export class UserCardDetailsComponent
+  extends AbstractComponent
+  implements OnInit {
   customerId = undefined;
   customerName = undefined;
   address = undefined;
@@ -34,8 +39,16 @@ export class UserCardDetailsComponent extends AbstractComponent implements OnIni
   userCardId = undefined;
   cols = [
     { field: 'usageCurrent', header: 'Watermeter Status', width: '70px' },
-    { field: 'usageCurrentReverse', header: 'Reverse Flow Status', width: '70px' },
-    { field: 'usageCurrentMonth', header: 'Status on day of reading', width: '70px' },
+    {
+      field: 'usageCurrentReverse',
+      header: 'Reverse Flow Status',
+      width: '70px',
+    },
+    {
+      field: 'usageCurrentMonth',
+      header: 'Status on day of reading',
+      width: '70px',
+    },
     //{ field: 'usageAverage', header: 'Average Usage', width: '70px' },
     { field: 'readAt', header: 'Read Datetime', width: '70px' },
   ];
@@ -51,21 +64,21 @@ export class UserCardDetailsComponent extends AbstractComponent implements OnIni
   // chart
   data = {};
 
-
-
   @Input()
   displayDialog = false;
   @Output()
   closeFunction = new EventEmitter();
 
-  constructor (translate: TranslateService,
+  constructor(
+    translate: TranslateService,
     private readonly userCardService: UserCardService,
-    private readonly usageHistoryService: UsageHistoryService) {
-   super(translate);
+    private readonly usageHistoryService: UsageHistoryService
+  ) {
+    super(translate);
   }
 
   onHide(): void {
-    const {displayDialog} = this;
+    const { displayDialog } = this;
 
     if (this.closeFunction) {
       this.closeFunction.emit(displayDialog);
@@ -96,35 +109,51 @@ export class UserCardDetailsComponent extends AbstractComponent implements OnIni
       this.magneticSabotageTime = dto.magneticSabotageTime;
     });
 
-    this.usageHistoryService.getCharData(this.userCardId).then(resp => {
+    this.usageHistoryService.getCharData(this.userCardId).then((resp) => {
       var data = [];
       for (const el of resp as Array<any>) {
         data.push(el.usageCurrentMonth);
       }
 
-      const label = this.translate.instant('Monthly Usage') ? this.translate.instant('Monthly Usage') : 'Monthly Usage';
+      const label = this.translate.instant('Monthly Usage')
+        ? this.translate.instant('Monthly Usage')
+        : 'Monthly Usage';
       this.data = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        labels: [
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December',
+        ],
         datasets: [
-            {
-              label,
-              backgroundColor: '#9CCC65',
-              borderColor: '#7CB342',
-              data
-            }
-        ]
-      }
+          {
+            label,
+            backgroundColor: '#9CCC65',
+            borderColor: '#7CB342',
+            data,
+          },
+        ],
+      };
     });
-
   }
 
   private loadPage(page: number, size: number, sort?: string) {
-    const pageable = { page, size, sort};
-    this.usageHistoryService.findBy(this.getSearchCriteria(), pageable).then((ngresp: NgPrimeGridResponse) => {
-      this.usageHistory = ngresp.data;
-      this.totalRecords = ngresp.totalRecords;
-      this.loading = false;
-    });
+    const pageable = { page, size, sort };
+    this.usageHistoryService
+      .findBy(this.getSearchCriteria(), pageable)
+      .then((ngresp: NgPrimeGridResponse) => {
+        this.usageHistory = ngresp.data;
+        this.totalRecords = ngresp.totalRecords;
+        this.loading = false;
+      });
   }
 
   loadUsageHistoryLazy(event: LazyLoadEvent) {
@@ -133,14 +162,16 @@ export class UserCardDetailsComponent extends AbstractComponent implements OnIni
     this.sortOrder = 'desc';
     this.page = event.first / event.rows;
     this.rows = event.rows;
-    this.loadPage(event.first / event.rows, event.rows, this.sortBy + ',' + this.sortOrder);
+    this.loadPage(
+      event.first / event.rows,
+      event.rows,
+      this.sortBy + ',' + this.sortOrder
+    );
   }
 
   getSearchCriteria() {
-    const {
-      userCardId
-    } = this;
+    const { userCardId } = this;
 
-    return {userCardId};
+    return { userCardId };
   }
 }

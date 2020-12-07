@@ -12,10 +12,10 @@ import { of } from 'rxjs';
   selector: 'ngx-user-card-graph',
   templateUrl: './user-card-graph.component.html',
   styleUrls: ['./user-card-graph.component.css'],
-
 })
-export class UserCardGraphComponent extends AbstractComponent implements OnInit {
-
+export class UserCardGraphComponent
+  extends AbstractComponent
+  implements OnInit {
   @Input()
   criteria = undefined;
   @Input()
@@ -48,13 +48,15 @@ export class UserCardGraphComponent extends AbstractComponent implements OnInit 
   @Output()
   closeFunction = new EventEmitter();
 
-  constructor (translate: TranslateService,
-    private readonly userCardService: UserCardService) {
-   super(translate);
+  constructor(
+    translate: TranslateService,
+    private readonly userCardService: UserCardService
+  ) {
+    super(translate);
   }
 
   onHide(): void {
-    const {displayGraph: displayDialog} = this;
+    const { displayGraph: displayDialog } = this;
 
     if (this.closeFunction) {
       this.closeFunction.emit(displayDialog);
@@ -77,70 +79,75 @@ export class UserCardGraphComponent extends AbstractComponent implements OnInit 
 
   private onLoad(ngresp: NgPrimeGridResponse) {
     this.userCards = ngresp.data;
-      this.totalRecords = ngresp.totalRecords;
-      this.loading = false;
+    this.totalRecords = ngresp.totalRecords;
+    this.loading = false;
 
-      const labels = [];
-      const usageCurrent = [];
-      const usageCurrentMonth = [];
-      const usageAverage = [];
-      const diffLastRead = [];
-      const usageCurrentReverse = [];
-      this.userCards.forEach(uc => {
-        labels.push(uc.customerName.substr(0,14));
-        usageCurrent.push(uc.usageCurrent);
-        usageCurrentMonth.push(uc.usageCurrentMonth);
-        usageAverage.push(uc.usageAverage);
-        diffLastRead.push(uc.diffLastRead);
-        usageCurrentReverse.push(uc.usageCurrentReverse);
-      });
+    const labels = [];
+    const usageCurrent = [];
+    const usageCurrentMonth = [];
+    const usageAverage = [];
+    const diffLastRead = [];
+    const usageCurrentReverse = [];
+    this.userCards.forEach((uc) => {
+      labels.push(uc.customerName.substr(0, 14));
+      usageCurrent.push(uc.usageCurrent);
+      usageCurrentMonth.push(uc.usageCurrentMonth);
+      usageAverage.push(uc.usageAverage);
+      diffLastRead.push(uc.diffLastRead);
+      usageCurrentReverse.push(uc.usageCurrentReverse);
+    });
 
-      this.data = {
-        labels,
-        datasets: [
-          {
-            label: 'Ukupna',
-            backgroundColor: '#9CCC65',
-            borderColor: '#7CB342',
-            data: usageCurrent,
-          },
-          {
-              label: 'Mesecna',
-              backgroundColor: '#42A5F5',
-              borderColor: '#1E88E5',
-              data: usageCurrentMonth,
-          },
-          {
-            label: 'Prosek',
-            backgroundColor: '#ffc77d',
-            borderColor: '#AFFFFF',
-            data: usageAverage
-          },
-          {
+    this.data = {
+      labels,
+      datasets: [
+        {
+          label: 'Ukupna',
+          backgroundColor: '#9CCC65',
+          borderColor: '#7CB342',
+          data: usageCurrent,
+        },
+        {
+          label: 'Mesecna',
+          backgroundColor: '#42A5F5',
+          borderColor: '#1E88E5',
+          data: usageCurrentMonth,
+        },
+        {
+          label: 'Prosek',
+          backgroundColor: '#ffc77d',
+          borderColor: '#AFFFFF',
+          data: usageAverage,
+        },
+        {
           label: 'Stanje',
           backgroundColor: '#03DAC5',
           borderColor: '#1E88E5',
-          data: diffLastRead
-          },
-          {
-            label: 'Reverzna',
-            backgroundColor: '#eaed87',
-            borderColor: '#AFFFFF',
-            data: usageCurrentReverse
-          }
-        ]};
+          data: diffLastRead,
+        },
+        {
+          label: 'Reverzna',
+          backgroundColor: '#eaed87',
+          borderColor: '#AFFFFF',
+          data: usageCurrentReverse,
+        },
+      ],
+    };
   }
 
   private loadPage(page: number, size: number, sort?: string) {
-    const pageable = { page, size, sort};
+    const pageable = { page, size, sort };
     if (this.isSummaries) {
-      this.userCardService.findSummaries(this.criteria, pageable).then((ngresp: NgPrimeGridResponse) => {
-        this.onLoad(ngresp);
-      });
+      this.userCardService
+        .findSummaries(this.criteria, pageable)
+        .then((ngresp: NgPrimeGridResponse) => {
+          this.onLoad(ngresp);
+        });
     } else {
-      this.userCardService.findBy(this.criteria, pageable).then((ngresp: NgPrimeGridResponse) => {
-        this.onLoad(ngresp);
-      });
+      this.userCardService
+        .findBy(this.criteria, pageable)
+        .then((ngresp: NgPrimeGridResponse) => {
+          this.onLoad(ngresp);
+        });
     }
   }
 
@@ -150,6 +157,10 @@ export class UserCardGraphComponent extends AbstractComponent implements OnInit 
     this.sortOrder = event.sortOrder === 1 ? 'desc' : 'asc';
     this.page = event.first / event.rows;
     this.rows = event.rows;
-    this.loadPage(event.first / event.rows, event.rows, this.sortBy + ',' + this.sortOrder);
+    this.loadPage(
+      event.first / event.rows,
+      event.rows,
+      this.sortBy + ',' + this.sortOrder
+    );
   }
 }

@@ -54,7 +54,6 @@ const routes: Routes = [
 
 const config: ExtraOptions = {
   useHash: true,
-  //paramsInheritanceStrategy: 'always'
 };
 
 @NgModule({

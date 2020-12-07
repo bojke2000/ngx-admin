@@ -145,7 +145,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
             width: '200px',
             height: '50px',
           },
-      ]}
+      ]};
   }
 
   get zoneDevice$() {
@@ -232,7 +232,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
               borderColor: '#AFFFFF',
               data: [this.sumUsageCurrentReverse],
             },
-          ]}
+          ]};
       });
     }
   }
@@ -277,8 +277,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
           this.address = add.value;
           return;
          }
-       })
-
+       });
      } else if (data.column === 'gsmId') {
       this.gsmId = data.row.gsmId;
      }
@@ -297,7 +296,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
   styleColor(rowData: any[], columnName: string) {
     if (columnName === 'customerId') {
       return '#263238';
-    } else if (columnName !== 'diffLastRead' && columnName != 'customerName') {
+    } else if (columnName !== 'diffLastRead' && columnName !== 'customerName') {
       return null;
     } else {
       const status = rowData[`diffLastReadColor`];
@@ -334,7 +333,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
       usageReverseTo,
       dateFrom,
       dateTo,
-      zoneDevice
+      zoneDevice,
     } = this;
 
   return {displayType,
@@ -392,7 +391,6 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
   }
 
   onDisplayTypeChange(event) {
-    console.log("VALUE", event.value);
   }
 
   onUserCardDialogClose(event) {
@@ -415,7 +413,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
 
   onReportButtonClick() {
     this.userCardService.reportBy(this.getSearchCriteria())
-    .subscribe((data: any) => this.downloadFile(data, "report.pdf"));
+    .subscribe((data: any) => this.downloadFile(data, 'report.pdf'));
   }
 
   downloadFile(data: any, fileName) {

@@ -75,6 +75,7 @@ export class MailAccountComponent extends AbstractComponent implements OnInit, O
       port: ['', Validators.required],
       active: ['Active', Validators.required],
       sender: ['', Validators.required],
+      checkTime: [''],
       lastCheck: ['']
     });
   }
@@ -138,6 +139,7 @@ export class MailAccountComponent extends AbstractComponent implements OnInit, O
       port: undefined,
       active: 'Active',
       sender: undefined,
+      checkTime: '00:00',
       lastCheck: undefined,
     };
     this.mailAccountForm.patchValue({...this.mailAccount});
@@ -223,6 +225,7 @@ export class MailAccountComponent extends AbstractComponent implements OnInit, O
       port: undefined,
       active: undefined,
       sender: undefined,
+      checkTime: undefined,
       lastCeck: undefined,
     };
 

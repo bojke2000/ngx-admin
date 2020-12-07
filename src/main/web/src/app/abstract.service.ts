@@ -6,8 +6,8 @@ import { catchError } from 'rxjs/operators';
 
 export abstract class AbstractService {
 
-  prefix = 'http://localhost:8081/';
-  //prefix = '';
+  //prefix = 'http://localhost:8081/';
+  prefix = '';
 
   httpOptions = {
     headers: new HttpHeaders({

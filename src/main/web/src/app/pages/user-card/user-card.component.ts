@@ -143,8 +143,8 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
             borderColor: '#7CB342',
             data: [],
             width: '200px',
-            height: '50px'
-          }
+            height: '50px',
+          },
       ]}
   }
 
@@ -206,34 +206,33 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
                 borderColor: '#7CB342',
                 data: [this.sumUsageCurrent],
                 width: '200px',
-                height: '50px'
+                height: '50px',
             },
             {
                 label: 'Mesecna',
                 backgroundColor: '#42A5F5',
                 borderColor: '#1E88E5',
-                data: [this.sumUsageCurrentMonth]
+                data: [this.sumUsageCurrentMonth],
             },
             {
               label: 'Prosek',
               backgroundColor: '#ffc77d',
               borderColor: '#AFFFFF',
-              data: [this.sumUsageAverage]
+              data: [this.sumUsageAverage],
             },
             {
             label: 'Stanje',
             backgroundColor: '#03DAC5',
             borderColor: '#1E88E5',
-            data: [this.sumDiffLastRead]
+            data: [this.sumDiffLastRead],
             },
             {
               label: 'Reverzna',
               backgroundColor: '#eaed87',
               borderColor: '#AFFFFF',
-              data: [this.sumUsageCurrentReverse]
-            }
+              data: [this.sumUsageCurrentReverse],
+            },
           ]}
-
       });
     }
   }

@@ -6,9 +6,9 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
-import {CalendarModule} from 'primeng/calendar';
+import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
-import {ChartModule} from 'primeng/chart';
+import { ChartModule } from 'primeng/chart';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
@@ -18,13 +18,13 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
-import {MultiSelectModule} from 'primeng/multiselect';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { PanelModule } from 'primeng/panel';
-import {SelectButtonModule} from 'primeng/selectbutton';
-import {TabViewModule} from 'primeng/tabview';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { TabViewModule } from 'primeng/tabview';
 import { TableModule } from 'primeng/table';
 import { ThemeModule } from '../../@theme/theme.module';
-import {ToggleButtonModule} from 'primeng/togglebutton';
+import { ToggleButtonModule } from 'primeng/togglebutton';
 import { ToolboxComponentsModule } from '../../libs/toolbox-components/toolbox-components.module';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { UserCardComponent } from './user-card.component';
@@ -76,10 +76,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
   ],
   schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
+    CUSTOM_ELEMENTS_SCHEMA,
   ],
   declarations: [
-    UserCardComponent,UserCardDetailsComponent,UserCardGraphComponent
+    UserCardComponent,UserCardDetailsComponent,UserCardGraphComponent,
   ],
 })
 export class UserCardModule { }

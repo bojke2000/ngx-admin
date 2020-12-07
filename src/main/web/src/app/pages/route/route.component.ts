@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject, of } from 'rxjs';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 import { AbstractComponent } from '../../AbstractComponent';
@@ -11,6 +10,7 @@ import { Route } from '../../domain/route';
 import { RouteService } from '../../service/route.service';
 import { Table } from 'primeng/table';
 import { TranslateService } from '@ngx-translate/core';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'ngx-route',

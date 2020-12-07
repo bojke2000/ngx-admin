@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
@@ -7,7 +7,6 @@ import { CityService } from '../../service/city.service';
 import { LazyLoadEvent } from 'primeng/api/public_api';
 import { RoleService } from '../../service/role.service';
 import { SelectItem } from 'primeng/api';
-import { Table } from 'primeng/table';
 import { TranslateService } from '@ngx-translate/core';
 import { UserAccount } from '../../domain/user-account';
 import { UserAccountService } from '../../service/user-account.service';
@@ -85,9 +84,9 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
     });
 
     this.accessLevels = [
-      {label: 'All', value: "All"},
-      {label: 'Manual', value: "Manual"},
-      {label: 'GSM2', value: "GSM2"},
+      {label: 'All', value: 'All'},
+      {label: 'Manual', value: 'Manual'},
+      {label: 'GSM2', value: 'GSM2'},
     ];
   }
 

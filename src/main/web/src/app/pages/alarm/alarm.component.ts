@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Subject, of } from 'rxjs';
 
 import { AbstractComponent } from '../../AbstractComponent';
 import { Alarm } from '../../domain/alarm';
@@ -9,6 +8,7 @@ import { NgPrimeGridResponse } from './../../domain/ngprime-grid-response';
 import { Table } from 'primeng/table';
 import { TranslateService } from '@ngx-translate/core';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'ngx-alarm',

@@ -1,14 +1,12 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AbstractComponent } from '../../AbstractComponent';
-import { ChangeDetectorRef } from '@angular/core';
 import { LazyLoadEvent } from 'primeng/api/public_api';
 import { MailAccount } from '../../domain/mail-account';
 import { MailAccountService } from '../../service/mail-account.service';
 import { Option } from '../../domain/option';
-import {SelectItem} from 'primeng/api';
-import { Subject } from 'rxjs';
+import { SelectItem } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { TranslateService } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
@@ -76,7 +74,7 @@ export class MailAccountComponent extends AbstractComponent implements OnInit, O
       active: ['Active', Validators.required],
       sender: ['', Validators.required],
       checkTime: [''],
-      lastCheck: ['']
+      lastCheck: [''],
     });
   }
 

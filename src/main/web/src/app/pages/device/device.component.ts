@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LazyLoadEvent, SelectItem } from 'primeng/api/public_api';
-import { Observable, Subject, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { AbstractComponent } from '../../AbstractComponent';
 import { AddressService } from '../../service/address.service';
@@ -11,7 +11,6 @@ import { MunicipalityService } from '../../service/municipailty.service';
 import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
 import { NgxTableComponent } from '../../libs/toolbox-components/ngx-table/ngx-table.component';
 import { Option } from './../../domain/option';
-import { Pageable } from '../../domain/pageable';
 import { ReadingBookService } from '../../service/reading-book.service';
 import { RouteService } from './../../service/route.service';
 import { Router } from '@angular/router';

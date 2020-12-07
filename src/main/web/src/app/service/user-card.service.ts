@@ -19,14 +19,14 @@ export class UserCardService extends AbstractService {
   constructor(http: HttpClient) { super(http); }
 
   private toDate(date: Date, endDay: boolean = false): string {
-    var dd = date.getDate();
-    var mm = date.getMonth() + 1;
+    const dd = date.getDate();
+    const mm = date.getMonth() + 1;
 
-    return [(dd>9 ? '' : '0') + dd,
+    return [(dd > 9 ? '' : '0') + dd,
           '.',
-          (mm>9 ? '' : '0') + mm,
+          (mm > 9 ? '' : '0') + mm,
           '.',
-          date.getFullYear()
+          date.getFullYear(),
          ].join('');
   }
 
@@ -39,8 +39,8 @@ export class UserCardService extends AbstractService {
     let separator = '';
 
     if (searchCriteria.customerName) {
-      const customerName = searchCriteria.customerName.trim().replace(' ', "*");
-      url = url.concat('customerName==').concat('*').concat(customerName).concat('*')
+      const customerName = searchCriteria.customerName.trim().replace(' ', '*');
+      url = url.concat('customerName==').concat('*').concat(customerName).concat('*');
       separator = ';';
     }
 
@@ -60,8 +60,8 @@ export class UserCardService extends AbstractService {
     }
 
     if (searchCriteria.address) {
-      let re = / /gi;
-      const address = searchCriteria.address.trim().replace(re, "*");
+      const re = / /gi;
+      const address = searchCriteria.address.trim().replace(re, '*');
       url = url.concat(separator).concat('address=in=(').concat(address).concat(')');
       separator = ';';
     }
@@ -130,9 +130,9 @@ export class UserCardService extends AbstractService {
     if (searchCriteria.displayType === CURRENT_VIEW) {
       return this.get(this.getUrl(this.url.concat('?search='), searchCriteria, URL_ALL), pageable);
     } else if (searchCriteria.displayType === HISTORICAL_VIEW) {
-      let url = this.url.concat("/history");
+      let url = this.url.concat('/history');
       url = this.getUrl(url.concat('?search='),searchCriteria, URL_PART_ONE);
-      url = url.concat("&").concat(this.getUrl('historySearch=', searchCriteria, URL_PART_TWO));
+      url = url.concat('&').concat(this.getUrl('historySearch=', searchCriteria, URL_PART_TWO));
 
       return this.get(url,pageable);
     }

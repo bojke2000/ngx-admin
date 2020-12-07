@@ -1,6 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject, of } from 'rxjs';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 import { AbstractComponent } from '../../AbstractComponent';
@@ -9,6 +8,7 @@ import { CityService } from '../../service/city.service';
 import { LazyLoadEvent } from 'primeng/api/public_api';
 import { Table } from 'primeng/table';
 import { TranslateService } from '@ngx-translate/core';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'ngx-city',

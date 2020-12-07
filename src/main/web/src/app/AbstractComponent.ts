@@ -1,5 +1,4 @@
-import { BehaviorSubject, Subject } from 'rxjs';
-
+import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
 export abstract class AbstractComponent {

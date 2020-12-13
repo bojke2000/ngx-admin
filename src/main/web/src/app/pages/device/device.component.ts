@@ -1,3 +1,5 @@
+import * as _ from "lodash";
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LazyLoadEvent, SelectItem } from 'primeng/api/public_api';
@@ -168,16 +170,18 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
     this.units = [
       {label: 'm3', value: '0'},
-      {label: 'L ', value: '1'},
+      {label: 'Litre', value: '1'},
     ];
 
     this.multipliers = [
-      {label: '0.001 ', value: '0.001'},
+      {label: '0.01', value: '0.01'},
+      {label: '0.001', value: '0.001'},
       {label: '0.010', value: '0.010'},
       {label: '0.100', value: '0.100'},
     ];
 
     this.indexes = [
+      {label: '', value: undefined},
       {label: this.translate.instant('Direct'), value: '0'},
       {label: this.translate.instant('Reverse'), value: '1'},
       {label: this.translate.instant('Pressure'), value: '2'},
@@ -326,20 +330,28 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       selected = this.profiles.filter(profile => profile.label === this.device.profile.toString());
       this.deviceForm.patchValue({profile: selected && selected.length > 0 ? selected[0] : undefined});
 
-      selected = this.multipliers.filter(multiplier => multiplier.value === this.device.multiplier.toString());
+      selected = this.multipliers.filter(multiplier => parseInt(multiplier.value) === parseInt(this.device.multiplier.toString()));
       this.deviceForm.patchValue({multiplier: selected && selected.length > 0 ? selected[0] : undefined});
 
       this.zoneDevice = (this.device.deviceType && this.device.deviceType > 0) ? true : false;
 
-      if (this.device.indexa  && this.device.indexa !== null) {
-        selected = this.indexes.filter(index => index.label === this.device.indexa.toString());
+      if (!_.isNil(this.device.indexa)) {
+        selected = this.indexes.filter(index => index.label === this.device.indexa);
         this.deviceForm.patchValue({indexa: selected && selected.length > 0 ? selected[0] : undefined});
-        selected = this.indexes.filter(index => index.label === this.device.indexb.toString());
-        this.deviceForm.patchValue({indexb: selected && selected.length > 0 ? selected[0] : undefined});
+      }
 
-        selected = this.indexes.filter(index => index.label === this.device.indexc.toString());
+      if (!_.isNil(this.device.indexb)) {
+        selected = this.indexes.filter(index => index.label === this.device.indexb);
+        this.deviceForm.patchValue({indexb: selected && selected.length > 0 ? selected[0] : undefined});
+      }
+
+      if (!_.isNil(this.device.indexc)) {
+        selected = this.indexes.filter(index => index.label === this.device.indexc);
         this.deviceForm.patchValue({indexc: selected && selected.length > 0 ? selected[0] : undefined});
-        selected = this.indexes.filter(index => index.label === this.device.indexd.toString());
+      }
+
+      if (!_.isNil(this.device.indexd)) {
+        selected = this.indexes.filter(index => index.label === this.device.indexd);
         this.deviceForm.patchValue({indexd: selected && selected.length > 0 ? selected[0] : undefined});
       }
 
@@ -373,10 +385,10 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
     if (this.zoneDevice) {
       this.device.deviceType = 1;
-      this.device.indexa = this.getLabel(this.device.indexa);
-      this.device.indexb = this.getLabel(this.device.indexb);
-      this.device.indexc = this.getLabel(this.device.indexc);
-      this.device.indexd = this.getLabel(this.device.indexd);
+      this.device.indexa = _.isNil(this.device.indexa) ? undefined : this.getLabel(this.device.indexa);
+      this.device.indexb = _.isNil(this.device.indexb) ? undefined : this.getLabel(this.device.indexb);
+      this.device.indexc = _.isNil(this.device.indexc) ? undefined : this.getLabel(this.device.indexc);
+      this.device.indexd = _.isNil(this.device.indexd) ? undefined : this.getLabel(this.device.indexd);
     }
 
     this.userCardService.saveUser(this.device)

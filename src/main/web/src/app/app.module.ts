@@ -81,8 +81,8 @@ import { UserCardService } from "./service/user-card.service";
       strategies: [
         NbPasswordAuthStrategy.setup({
           name: "email",
-          // baseEndpoint: 'http://localhost:8081/',
-          baseEndpoint: "",
+           baseEndpoint: 'http://localhost:8081/',
+          //baseEndpoint: "",
           requestPass: false,
           logout: {
             endpoint: "auth/logout",

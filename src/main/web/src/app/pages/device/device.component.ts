@@ -43,6 +43,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   modes: Option[];
   profiles: Option[];
   meduiums: Option[];
+  mediumsLocalized: Option[];
   units: Option[];
   multipliers: Option[];
   indexes: Option[];
@@ -162,10 +163,16 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     ];
 
 
-    this.meduiums = [
+    this.mediumsLocalized = [
       {label: this.translate.instant('Cold Water'), value: '0'},
       {label: this.translate.instant('Hot Water'), value: '1'},
       {label: this.translate.instant('Gasoline'), value: '2'},
+    ];
+
+    this.meduiums = [
+      {label: 'Cold Water', value: '0'},
+      {label: 'Hot Water', value: '1'},
+      {label: 'Gasoline', value: '2'},
     ];
 
     this.units = [
@@ -174,6 +181,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     ];
 
     this.multipliers = [
+      {label: '0.1', value: '0.1'},
       {label: '0.01', value: '0.01'},
       {label: '0.001', value: '0.001'},
       {label: '0.010', value: '0.010'},

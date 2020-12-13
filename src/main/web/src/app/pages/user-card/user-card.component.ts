@@ -95,7 +95,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
     private router: Router,
     translate: TranslateService) {
       super(translate);
-    translate.setDefaultLang('en');
+    translate.setDefaultLang('rs');
     translate.use('rs');
   }
 

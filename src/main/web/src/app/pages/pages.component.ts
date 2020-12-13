@@ -1,8 +1,8 @@
-import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 
 import { MENU_ITEMS } from './pages-menu';
-import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'ngx-pages',
@@ -19,7 +19,7 @@ export class PagesComponent implements OnInit, OnDestroy  {
   menu = [];
 
   constructor(private translate: TranslateService, private cdr: ChangeDetectorRef) {
-    translate.setDefaultLang('en');
+    translate.setDefaultLang('rs');
     translate.use('rs');
   }
 

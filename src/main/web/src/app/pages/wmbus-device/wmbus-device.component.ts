@@ -32,7 +32,7 @@ export class WmbusDeviceComponent implements OnInit {
     private userCardColumnService: UserCardColumnService,
     private router: Router,
     translate: TranslateService) {
-    translate.setDefaultLang('en');
+    translate.setDefaultLang('rs');
     translate.use('rs');
   }
 

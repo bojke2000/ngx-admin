@@ -307,6 +307,7 @@
                 <span class="ui-float-label">
                   <p-dropdown [options]="multipliers" #ddMultiplierStatus name="multiplier"
                   [autoDisplayFirst]="false"
+                  (onChange)="onMultiplierChange($event)"
                   formControlName="multiplier" optionLabel="label" ></p-dropdown>
                   <label for="multiplier">{{ 'Multiplier' | translate }}</label>
                 </span>

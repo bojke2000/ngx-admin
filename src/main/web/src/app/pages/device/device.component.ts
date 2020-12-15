@@ -184,8 +184,8 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       {label: '0.1', value: '0.1'},
       {label: '0.01', value: '0.01'},
       {label: '0.001', value: '0.001'},
-      {label: '0.010', value: '0.010'},
-      {label: '0.100', value: '0.100'},
+      // {label: '0.010', value: '0.010'},
+      // {label: '0.100', value: '0.100'},
     ];
 
     this.indexes = [
@@ -494,6 +494,20 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
   onModeChange(evt) {
     this.ddModeStatus.filled = true;
+  }
+
+  onMultiplierChange(evt) {
+    switch (evt.value.label) {
+      case '0.1':
+        this.deviceForm.patchValue({profile: this.profiles[7]});
+        break;
+      case '0.01':
+        this.deviceForm.patchValue({profile: this.profiles[3]});
+        break;
+      case '0.001':
+        this.deviceForm.patchValue({profile: this.profiles[0]});
+        break;
+    }
   }
 
   onProfileChange(evt) {

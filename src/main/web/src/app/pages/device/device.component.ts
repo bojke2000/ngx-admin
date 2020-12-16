@@ -43,7 +43,6 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   modes: Option[];
   profiles: Option[];
   meduiums: Option[];
-  mediumsLocalized: Option[];
   units: Option[];
   multipliers: Option[];
   indexes: Option[];
@@ -162,13 +161,6 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       {label: 'DN200', value: '8'},
     ];
 
-
-    this.mediumsLocalized = [
-      {label: this.translate.instant('Cold Water'), value: '0'},
-      {label: this.translate.instant('Hot Water'), value: '1'},
-      {label: this.translate.instant('Gasoline'), value: '2'},
-    ];
-
     this.meduiums = [
       {label: 'Cold Water', value: '0'},
       {label: 'Hot Water', value: '1'},
@@ -190,10 +182,10 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
     this.indexes = [
       {label: '', value: undefined},
-      {label: this.translate.instant('Direct'), value: '0'},
-      {label: this.translate.instant('Reverse'), value: '1'},
-      {label: this.translate.instant('Pressure'), value: '2'},
-      {label: this.translate.instant('Temperature'), value: '3'},
+      {label: 'Direct', value: '0'},
+      {label: 'Reverse', value: '1'},
+      {label: 'Pressure', value: '2'},
+      {label: 'Temperature', value: '3'},
     ];
 
     this.cols = [];

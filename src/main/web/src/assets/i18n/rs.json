@@ -38,7 +38,7 @@
   "Last Check": "Vreme zadnje provere",
   "Mail check time is required and must in time format like e.g. '23:02'": "Unesite vreme promene u formatu 'sati:minuta', na primer '23:02'",
   "Edit Account": "Izmeni nalog",
-  "Fetch data from server": "Dohvati podatke sa servera",
+  "Fetch data from server": "Preuzmi podatke sa servera",
   "Please select a row for an action.": "Selektujte red za željenju akciju.",
   "Template Management": "Template menadžment",
   "Field": "Polje",
@@ -53,7 +53,7 @@
   "Consumer remarks": "Napomena o korisniku",
   "Measuring point remarks": "Napomena o mernom mestu",
   "Rute remarks": "Napomena o ruti",
-  "GSM-2 ID/Index": "GSM-2 ID/Index",
+  "GSM-2 ID/Index": "Broj ADOGSM2 uređaja",
   "AdoGsm userCard location": "Lokacija AdoGsm uređaja",
   "AdoGsm userCard remarks": "Napomena o AdoGsm uređaju",
   "Medium": "Medijum",
@@ -154,5 +154,6 @@
   "Search Activity": "Pretraga loga aktivnosti",
   "Activity Log": "Log Aktivnosti",
   "Average Usage": "Prosečna potrošnja",
-  "Unit": "Merna jedinica"
+  "Unit": "Merna jedinica",
+  "Page size": "Broj stranica"
 }

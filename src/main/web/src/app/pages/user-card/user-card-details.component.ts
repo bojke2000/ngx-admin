@@ -120,18 +120,18 @@ export class UserCardDetailsComponent
         : 'Monthly Usage';
       this.data = {
         labels: [
-          'January',
-          'February',
-          'March',
+          'Januar',
+          'Februar',
+          'Mart',
           'April',
-          'May',
-          'June',
-          'July',
+          'Maj',
+          'Jun',
+          'Juli',
           'August',
-          'September',
-          'October',
-          'November',
-          'December',
+          'Septembar',
+          'Oktobar',
+          'Novembar',
+          'Decembar',
         ],
         datasets: [
           {

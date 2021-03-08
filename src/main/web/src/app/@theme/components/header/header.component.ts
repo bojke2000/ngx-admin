@@ -7,6 +7,7 @@ import { filter, map, takeUntil } from 'rxjs/operators';
 
 import { AlarmService } from '../../../service/alarm.service';
 import { Router } from '@angular/router';
+import { UserAccountService } from './../../../service/user-account.service';
 
 @Component({
   selector: 'ngx-header',
@@ -56,6 +57,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     private nbTokenService: NbTokenService,
     private breakpointService: NbMediaBreakpointsService,
     private alarmService: AlarmService,
+    private userAccountService: UserAccountService,
     private authService: NbAuthService) {
 
     this.authService.onTokenChange()
@@ -67,6 +69,13 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
           // here we receive a payload from the token
           // and assigns it to our `user` variable
           this.user.name = payload.sub;
+
+          const pageable = {page: 0, size: 20, sort: 'username,asc'};
+          userAccountService.searchUserAccounts(this.user.name, pageable)
+          .then(result => {
+            const user = result && result.totalRecords > 0 && result.data && result.data.length > 0 ? result.data[0] : undefined;
+            this.userMenu[0].title = `${user.role} Profile`;
+          });
         }
 
       });

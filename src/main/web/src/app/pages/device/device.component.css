@@ -2,3 +2,9 @@
 ::ng-deep  body #address > .ui-dropdown {
   margin-top: 6px !important;
 }
+
+::ng-deep  body #deviceDialog {
+  z-index: 2500 i !important;
+}
+
+

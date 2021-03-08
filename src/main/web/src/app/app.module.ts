@@ -3,6 +3,7 @@
  * Copyright Akveo. All Rights Reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
+
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import {
   NB_AUTH_TOKEN_INTERCEPTOR_FILTER,
@@ -81,8 +82,8 @@ import { UserCardService } from "./service/user-card.service";
       strategies: [
         NbPasswordAuthStrategy.setup({
           name: "email",
-          // baseEndpoint: 'http://localhost:8081/',
-          baseEndpoint: "",
+          baseEndpoint: 'http://localhost:8081/',
+          // baseEndpoint: "",
           requestPass: false,
           logout: {
             endpoint: "auth/logout",

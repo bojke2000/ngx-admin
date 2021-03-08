@@ -72,8 +72,8 @@
         <p-button label="{{ translate.get('Import Devices') | async }}" (onClick)="onImportClick()"></p-button>
       </div>
 
-      <p-dialog header="{{ 'Device'|translate }}" [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true"  dynamic="true"
-        showEffect="fade" [modal]="true" height="800" [style]="{width: '1200px'}">
+      <p-dialog id="deviceDialog" header="{{ 'Device'|translate }}" [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true"  dynamic="true"
+        showEffect="fade" [modal]="true" height="800" [style]="{width: '1200px','z-index': '2500 !important'}">
 
         <div class="ui-g ui-fluid" *ngIf="!device">
           <i class="pi pi-info"></i>

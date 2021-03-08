@@ -10,9 +10,6 @@
 <div class="header-container">
   <nb-actions size="small">
 
-    <nb-action class="control-item">
-      <nb-search type="rotate-layout"></nb-search>
-    </nb-action>
     <nb-action class="control-item"  (click)="onAlertClick($event);" [badgeText]="alarm$ |  async" [badgeStatus]="status$ | async" icon="bell-outline"></nb-action>
     <nb-action class="user-action" *nbIsGranted="['view', 'user']" >
       <nb-user [nbContextMenu]="userMenu"

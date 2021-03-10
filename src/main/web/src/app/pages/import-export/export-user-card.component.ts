@@ -40,7 +40,7 @@ export class ExportUserCardComponent extends AbstractComponent implements OnInit
       this.fileTypes = [
         { label: 'CSV', value: '0' },
         { label: 'TAB', value: '1' },
-        { label: 'ADO', value: '2' },
+        { label: 'XML', value: '2' },
         { label: 'FIXED TXT', value: '3' },
         { label: 'SEMI-COL', value: '4' },
       ];
@@ -75,7 +75,7 @@ export class ExportUserCardComponent extends AbstractComponent implements OnInit
       case '1':
         return  'usercard.csv';
       case '2':
-        return  'usercard.ado';
+        return  'usercard.xml';
       case '3':
       case '4':
 

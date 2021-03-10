@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AbstractComponent } from '../../AbstractComponent';
+import { ActivatedRoute } from '@angular/router';
 import { ExportUserCardService } from './../../service/export-user-card.service';
 import { SelectItem } from 'primeng/api/public_api';
 import { TemplateService } from './../../service/template.service';
@@ -20,16 +21,22 @@ export class ExportUserCardComponent extends AbstractComponent implements OnInit
   loading = false;
   templates: SelectItem[] = [];
   fileTypes: SelectItem[];
+  private search: string;
 
   constructor(
     translate: TranslateService,
     private templateService: TemplateService,
     private exportUserCardService: ExportUserCardService,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private route: ActivatedRoute) {
     super(translate);
   }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.search = params.search.toString();
+    });
+
     this.form1 = this.fb.group({ template: ['Export', Validators.required]});
     this.form2 = this.fb.group({ fileType: ['0', Validators.required]});
     this.form3 = this.fb.group({ });
@@ -55,10 +62,13 @@ export class ExportUserCardComponent extends AbstractComponent implements OnInit
   }
 
   onDownload(): void {
+    const { search } = this;
+
     const fileType: string = this.form2.controls['fileType'].value;
     const request = {
       template : this.form1.controls['template'].value,
       fileType,
+      search
     };
 
     this.exportUserCardService.downloadUserCard(request)

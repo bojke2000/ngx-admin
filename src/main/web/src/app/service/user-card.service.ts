@@ -6,13 +6,15 @@ import { Pageable } from './../domain/pageable';
 import { UserCard } from '../domain/user-card';
 
 const CURRENT_VIEW = 1;
-const HISTORICAL_VIEW = 2;
 const URL_ALL = 1;
+const HISTORICAL_VIEW = 2;
 const URL_PART_ONE = 2;
 const URL_PART_TWO = 3;
 
 @Injectable()
 export class UserCardService extends AbstractService {
+  public static URL_ALL = 1;
+
 
   private url = this.prefix + 'user-cards';
 
@@ -34,7 +36,7 @@ export class UserCardService extends AbstractService {
     return this.get(this.url, pageable);
   }
 
-  getUrl(baseUrl: string, searchCriteria: any, view: number) {
+  getUrl(baseUrl: string, searchCriteria: any, view: number): string {
     let url = baseUrl;
     let separator = '';
 

@@ -129,10 +129,10 @@ export class UserCardService extends AbstractService {
   }
 
   findBy(searchCriteria: any, pageable?: Pageable) {
-    if (searchCriteria.displayType === CURRENT_VIEW) {
+    if (!searchCriteria.dateTo && !searchCriteria.dateFrom) {
       return this.get(this.getUrl(this.url.concat('?search='), searchCriteria, URL_ALL), pageable);
-    } else if (searchCriteria.displayType === HISTORICAL_VIEW) {
-      let url = this.url.concat('/history');
+    } else {
+      let url = this.url.concat('/user-card/history');
       url = this.getUrl(url.concat('?search='), searchCriteria, URL_PART_ONE);
       url = url.concat('&').concat(this.getUrl('historySearch=', searchCriteria, URL_PART_TWO));
 

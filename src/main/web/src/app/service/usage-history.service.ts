@@ -11,7 +11,7 @@ export class UsageHistoryService extends AbstractService {
   constructor(http: HttpClient) { super(http); }
 
   getCharData(userCardId?: number) {
-    const url = this.url + '/chart-data' + '?userCardId=' + userCardId;
+    const url = this.url + '/chart-data' + '?userCard=' + userCardId;
     return this.get(url);
   }
 
@@ -20,7 +20,7 @@ export class UsageHistoryService extends AbstractService {
     let separator = '';
 
     if (searchCriteria.userCardId) {
-      url = url.concat('userCardId==').concat(searchCriteria.userCardId);
+      url = url.concat('userCard==').concat(searchCriteria.userCardId);
       separator = ';';
     }
 

@@ -50,7 +50,7 @@ export class UserCardDetailsComponent
       width: '70px',
     },
     //{ field: 'usageAverage', header: 'Average Usage', width: '70px' },
-    { field: 'readAt', header: 'Read Datetime', width: '70px' },
+    { field: 'readTimestamp', header: 'Read Datetime', width: '70px' },
   ];
   usageHistory = [];
   totalRecords = 0;
@@ -158,7 +158,7 @@ export class UserCardDetailsComponent
 
   loadUsageHistoryLazy(event: LazyLoadEvent) {
     this.loading = true;
-    this.sortBy = 'readAt';
+    this.sortBy = 'readTimestamp';
     this.sortOrder = 'desc';
     this.page = event.first / event.rows;
     this.rows = event.rows;

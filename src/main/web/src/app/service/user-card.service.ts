@@ -129,15 +129,17 @@ export class UserCardService extends AbstractService {
   }
 
   findBy(searchCriteria: any, pageable?: Pageable) {
+    let url: string;
     if (!searchCriteria.dateTo && !searchCriteria.dateFrom) {
-      return this.get(this.getUrl(this.url.concat('?search='), searchCriteria, URL_ALL), pageable);
+      url = this.getUrl(this.url.concat('?search='), searchCriteria, URL_ALL);
     } else {
-      let url = this.url.concat('/user-card/history');
+      url = this.url.concat('/user-card/history');
       url = this.getUrl(url.concat('?search='), searchCriteria, URL_PART_ONE);
       url = url.concat('&').concat(this.getUrl('historySearch=', searchCriteria, URL_PART_TWO));
-
-      return this.get(url, pageable);
     }
+
+    return this.get(url, pageable);
+
   }
 
   findSumBy(searchCriteria: any) {
@@ -153,9 +155,15 @@ export class UserCardService extends AbstractService {
   }
 
   reportBy(searchCriteria: any) {
-    if (searchCriteria.displayType === CURRENT_VIEW) {
-      return this.download(this.getUrl(this.url.concat('/report?search='), searchCriteria, URL_ALL));
+    let url = this.url.concat('/report');;
+    if (!searchCriteria.dateTo && !searchCriteria.dateFrom) {
+      url = this.getUrl(this.url.concat('?search='), searchCriteria, URL_ALL);
+    } else {
+      url = this.getUrl(url.concat('?search='), searchCriteria, URL_PART_ONE);
+      url = url.concat('&').concat(this.getUrl('historySearch=', searchCriteria, URL_PART_TWO));
     }
+
+    return this.download(url);
   }
 
   getById(id: any) {

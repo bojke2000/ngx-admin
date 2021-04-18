@@ -1,19 +1,18 @@
-import { AbstractService } from '../abstract.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Pageable } from './../domain/pageable';
+import { AbstractService } from '../abstract.service';
 import { UserCard } from '../domain/user-card';
+import { Pageable } from './../domain/pageable';
 
 const CURRENT_VIEW = 1;
 const URL_ALL = 1;
-const HISTORICAL_VIEW = 2;
-const URL_PART_ONE = 2;
-const URL_PART_TWO = 3;
 
 @Injectable()
 export class UserCardService extends AbstractService {
   public static URL_ALL = 1;
+  public static URL_PART_ONE = 2;
+  public static URL_PART_TWO = 3;
 
 
   private url = this.prefix + 'user-cards';
@@ -88,9 +87,9 @@ export class UserCardService extends AbstractService {
       separator = ';';
     }
 
-    if (view === URL_PART_ONE) {
+    if (view === UserCardService.URL_PART_ONE) {
       return url;
-    } else if (view === URL_PART_TWO) {
+    } else if (view === UserCardService.URL_PART_TWO) {
       url = baseUrl;
       separator = '';
     }
@@ -134,8 +133,8 @@ export class UserCardService extends AbstractService {
       url = this.getUrl(this.url.concat('?search='), searchCriteria, URL_ALL);
     } else {
       url = this.url.concat('/user-card/history');
-      url = this.getUrl(url.concat('?search='), searchCriteria, URL_PART_ONE);
-      url = url.concat('&').concat(this.getUrl('historySearch=', searchCriteria, URL_PART_TWO));
+      url = this.getUrl(url.concat('?search='), searchCriteria, UserCardService.URL_PART_ONE);
+      url = url.concat('&').concat(this.getUrl('historySearch=', searchCriteria, UserCardService.URL_PART_TWO));
     }
 
     return this.get(url, pageable);
@@ -159,8 +158,8 @@ export class UserCardService extends AbstractService {
     if (!searchCriteria.dateTo && !searchCriteria.dateFrom) {
       url = this.getUrl(this.url.concat('?search='), searchCriteria, URL_ALL);
     } else {
-      url = this.getUrl(url.concat('?search='), searchCriteria, URL_PART_ONE);
-      url = url.concat('&').concat(this.getUrl('historySearch=', searchCriteria, URL_PART_TWO));
+      url = this.getUrl(url.concat('?search='), searchCriteria, UserCardService.URL_PART_ONE);
+      url = url.concat('&').concat(this.getUrl('historySearch=', searchCriteria, UserCardService.URL_PART_TWO));
     }
 
     return this.download(url);

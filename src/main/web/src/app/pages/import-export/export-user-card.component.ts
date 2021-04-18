@@ -22,6 +22,7 @@ export class ExportUserCardComponent extends AbstractComponent implements OnInit
   templates: SelectItem[] = [];
   fileTypes: SelectItem[];
   private search: string;
+  private historySearch: string;
 
   constructor(
     translate: TranslateService,
@@ -35,6 +36,7 @@ export class ExportUserCardComponent extends AbstractComponent implements OnInit
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.search = params.search.toString();
+      this.historySearch = params.historySearch.toString();
     });
 
     this.form1 = this.fb.group({ template: ['Export', Validators.required]});
@@ -62,13 +64,14 @@ export class ExportUserCardComponent extends AbstractComponent implements OnInit
   }
 
   onDownload(): void {
-    const { search } = this;
+    const { search, historySearch } = this;
 
     const fileType: string = this.form2.controls['fileType'].value;
     const request = {
       template : this.form1.controls['template'].value,
       fileType,
-      search
+      search,
+      historySearch
     };
 
     this.exportUserCardService.downloadUserCard(request)

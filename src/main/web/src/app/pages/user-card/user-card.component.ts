@@ -448,11 +448,30 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
   }
 
   onExportButtonClick() {
+    const searchCriteria = this.getSearchCriteria();
+
     this.router.navigate(["/pages/export-user-card"], {
-      queryParams: {search: this.userCardService.getUrl('',
-        this.getSearchCriteria(),
-        UserCardService.URL_ALL
-      )
-    }});
+      queryParams:
+        !searchCriteria.dateTo && !searchCriteria.dateFrom
+          ? {
+              search: this.userCardService.getUrl(
+                "",
+                this.getSearchCriteria(),
+                UserCardService.URL_ALL
+              ),
+            }
+          : {
+              search: this.userCardService.getUrl(
+                "",
+                this.getSearchCriteria(),
+                UserCardService.URL_PART_ONE
+              ),
+              historySearch: this.userCardService.getUrl(
+                "",
+                this.getSearchCriteria(),
+                UserCardService.URL_PART_TWO
+              ),
+            },
+    });
   }
 }

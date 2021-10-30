@@ -22,6 +22,7 @@ export interface UserCard {
   unit: string;
 
   gsmId: string;
+  applicationKey: string;
   gsmLongitude: string;
   gsmLatitude: string;
 

@@ -31,18 +31,22 @@ const CURRENT_VIEW = 1;
   styleUrls: ['./device.component.css'],
 })
 export class DeviceComponent extends AbstractComponent implements OnInit {
+  public static DEVICE_GSM = 0;
+  public static DEVICE_ZOME_DEVICE = 1;
+  public static DEVICE_LORA_DEVICE = 2;
   deviceForm: FormGroup;
   device: UserCard = undefined;
   displayDialog: boolean;
   submitted = false;
   zoneDevice  = false;
+  loraDevice  = false;
   routes: SelectItem[];
   addresses: SelectItem[];
   readingBooks: SelectItem[];
   municipalities: SelectItem[];
   modes: Option[];
   profiles: Option[];
-  meduiums: Option[];
+  mediums: Option[];
   units: Option[];
   multipliers: Option[];
   indexes: Option[];
@@ -134,7 +138,9 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       gsmLatitude: [''],
       multiplier: ['', [Validators.required]],
       gsmId: [''],
+      applicationKey: [''],
       zoneDevice: [null],
+      loraDevice: [null],
       indexa: [''],
       indexb: [''],
       indexc: [''],
@@ -161,10 +167,10 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       {label: 'DN200', value: '8'},
     ];
 
-    this.meduiums = [
-      {label: 'Cold Water', value: '0'},
-      {label: 'Hot Water', value: '1'},
-      {label: 'Gasoline', value: '2'},
+    this.mediums = [
+      {label: this.translate.instant('Cold Water'), value: '0'},
+      {label: this.translate.instant('Hot Water'), value: '1'},
+      {label: this.translate.instant('Gasoline'), value: '2'},
     ];
 
     this.units = [
@@ -195,6 +201,31 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     });
 
     this.loading = true;
+
+
+    this.translate.onLangChange.subscribe(
+      () => {
+        this.mediums = [
+          {label: this.translate.instant('Cold Water'), value: '0'},
+          {label: this.translate.instant('Hot Water'), value: '1'},
+          {label: this.translate.instant('Gasoline'), value: '2'},
+        ];
+
+        this.units = [
+          {label: 'm3', value: '0'},
+          {label: this.translate.instant('Litre'), value: '1'},
+        ];
+
+        this.indexes = [
+          {label: '', value: undefined},
+          {label: this.translate.instant('Direct'), value: '0'},
+          {label: this.translate.instant('Reverse'), value: '1'},
+          {label: this.translate.instant('Pressure'), value: '2'},
+          {label: this.translate.instant('Temperature'), value: '3'},
+        ];
+      }
+     );
+
   }
 
   get routes$() {
@@ -215,6 +246,10 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
   get zoneDevice$() {
     return of(this.zoneDevice);
+  }
+
+  get loraDevice$() {
+    return of(this.loraDevice);
   }
 
   get cols$(): Observable<any[]> {
@@ -283,6 +318,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       unit: undefined,
 
       gsmId : undefined,
+      applicationKey : undefined,
       gsmLongitude : undefined,
       gsmLatitude : undefined,
 
@@ -320,7 +356,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
       let selected = this.modes.filter(mode => mode.label === this.device.mode.toString());
       this.deviceForm.patchValue({mode: selected && selected.length > 0 ? selected[0] : undefined});
-      selected = this.meduiums.filter(medium => medium.label === this.device.medium.toString());
+      selected = this.mediums.filter(medium => medium.label === this.device.medium.toString());
       this.deviceForm.patchValue({medium: selected && selected.length > 0 ? selected[0] : undefined});
 
       if (this.device.unit) {
@@ -333,7 +369,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       selected = this.multipliers.filter(multiplier => parseInt(multiplier.value) === parseInt(this.device.multiplier.toString()));
       this.deviceForm.patchValue({multiplier: selected && selected.length > 0 ? selected[0] : undefined});
 
-      this.zoneDevice = (this.device.deviceType && this.device.deviceType > 0) ? true : false;
+      this.zoneDevice = (this.device.deviceType && this.device.deviceType === 1) ? true : false;
 
       if (!_.isNil(this.device.indexa)) {
         selected = this.indexes.filter(index => index.label === this.device.indexa);
@@ -384,11 +420,15 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     this.device.medium = this.getLabel(this.device.medium);
 
     if (this.zoneDevice) {
-      this.device.deviceType = 1;
+      this.device.deviceType = DeviceComponent.DEVICE_ZOME_DEVICE;;
       this.device.indexa = _.isNil(this.device.indexa) ? undefined : this.getLabel(this.device.indexa);
       this.device.indexb = _.isNil(this.device.indexb) ? undefined : this.getLabel(this.device.indexb);
       this.device.indexc = _.isNil(this.device.indexc) ? undefined : this.getLabel(this.device.indexc);
       this.device.indexd = _.isNil(this.device.indexd) ? undefined : this.getLabel(this.device.indexd);
+    }
+
+    if (this.loraDevice) {
+      this.device.deviceType = DeviceComponent.DEVICE_LORA_DEVICE;
     }
 
     this.userCardService.saveUser(this.device)
@@ -466,6 +506,10 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
   handleChange(event: any) {
     this.zoneDevice = !this.zoneDevice;
+  }
+
+  handleLoraDeviceChange(event: any) {
+    this.loraDevice = !this.loraDevice;
   }
 
   onRouteChange(evt) {

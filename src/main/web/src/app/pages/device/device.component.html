@@ -277,11 +277,17 @@
               </div>
 
               <div class="ui-g-4">
-                <span class="ui-float-label">
+                <span class="ui-float-label" *ngIf="!loraDevice">
                   <input pInputText id="gsmId" formControlName="gsmId"
                     onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
                     [ngClass]="{ 'is-invalid': submitted && f.gsmId.errors }" />
                   <label for="gsmId">{{ 'ADOGSM-2 ID' | translate }}</label>
+                </span>
+                <span class="ui-float-label" *ngIf="loraDevice">
+                  <input pInputText id="applicationKey" formControlName="applicationKey"
+                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.gsmId.errors }" />
+                  <label for="applicationKey">{{ 'Application Key' | translate }}</label>
                 </span>
               </div>
 
@@ -314,7 +320,8 @@
               </div>
 
               <div class="ui-g-12" style="margin-top: 0px !important">
-                <div class="ui-g-12"><nb-checkbox [value]="(zoneDevice$ | async) ? true : undefined" (checkedChange)="handleChange($event)"><u><b>{{ 'Zone device' | translate }}</b></u></nb-checkbox></div>
+                <div class="ui-g-12"><div class="ui-g-4"><nb-checkbox [value]="(zoneDevice$ | async) ? true : undefined" (checkedChange)="handleChange($event)"><u><b>{{ 'Zone device' | translate }}</b></u></nb-checkbox></div>
+                <div class="ui-g-4"><nb-checkbox [value]="(loraDevice$ | async) ? true : undefined" (checkedChange)="handleLoraDeviceChange($event)"><u><b>{{ 'Lora device' | translate }}</b></u></nb-checkbox></div></div>
 
 
                 <div class="ui-g-6" [hidden]="!(zoneDevice$ | async)">

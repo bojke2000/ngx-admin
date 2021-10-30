@@ -156,7 +156,7 @@ export class UserCardService extends AbstractService {
   reportBy(searchCriteria: any) {
     let url = this.url.concat('/report');;
     if (!searchCriteria.dateTo && !searchCriteria.dateFrom) {
-      url = this.getUrl(this.url.concat('?search='), searchCriteria, URL_ALL);
+      url = this.getUrl(url.concat('?search='), searchCriteria, URL_ALL);
     } else {
       url = this.getUrl(url.concat('?search='), searchCriteria, UserCardService.URL_PART_ONE);
       url = url.concat('&').concat(this.getUrl('historySearch=', searchCriteria, UserCardService.URL_PART_TWO));

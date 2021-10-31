@@ -51,6 +51,7 @@ import { UserAccountService } from "./service/user-account.service";
 import { UserAccountTypesService } from "./service/useraccounttypes.service";
 import { UserCardColumnService } from "./service/user-card-column.service";
 import { UserCardService } from "./service/user-card.service";
+import { LoraConfigService } from "./service/lora-config.service";
 
 @NgModule({
   declarations: [AppComponent],
@@ -134,6 +135,7 @@ import { UserCardService } from "./service/user-card.service";
     MunicipalityService,
     UserAccountTypesService,
     CityService,
+    LoraConfigService,
     RoleService,
     TemplateService,
     ImportUserCardService,

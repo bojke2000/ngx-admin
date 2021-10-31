@@ -157,5 +157,9 @@
   "Unit": "Merna jedinica",
   "Page size": "Broj stranica",
   "Litre": "Litar",
-  "Lora device": "Lora uređaj"
+  "Lora device": "Lora uređaj",
+  "Lora Config": "Lora Konfiguracija",
+  "Lora Configuration": "Lora Konfiguracija",
+  "Organization": "Organizacija",
+  "Edit Lora Config": "Izmeni Lora Konfiguraciju"
 }

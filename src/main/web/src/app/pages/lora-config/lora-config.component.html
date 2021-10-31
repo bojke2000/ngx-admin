@@ -1,0 +1,158 @@
+<div class="row">
+  <nb-card style="width: 100%">
+    <nb-card-body>
+      <ngx-title-header title="Lora Configuration"></ngx-title-header>
+
+      <ngx-table
+        [columns]="cols"
+        [value]="loraConfigs$ | async"
+        (lazyLoad)="loadLoraConfigsLazy($event)"
+        [selection]="selectedLoraConfig"
+        dataKey="id"
+        [totalRecords]="totalRecords"
+        [loading]="loading"
+        (rowSelect)="onRowSelect($event)"
+        (rowUnselect)="onRowUnselect($event)"
+      >
+      </ngx-table>
+
+      <div class="button-positioner">
+        <p-button
+          icon="fa fa-plus"
+          (click)="showDialogToEdit()"
+          label="{{ translate.get('Edit Lora Config') | async }}"
+        >
+        </p-button>
+      </div>
+
+      <p-dialog
+        header="Lora Configuration"
+        [(visible)]="displayDialog"
+        [focusOnShow]="false"
+        [responsive]="true"
+        showEffect="fade"
+        [modal]="true"
+        height="600"
+        [style]="{ width: '500px' }"
+      >
+        <div class="ui-g ui-fluid" *ngIf="!loraConfig">
+          <i class="pi pi-info"></i>
+          <p>
+            &nbsp;&nbsp; {{ "Please select a row for an action." | translate }}
+          </p>
+        </div>
+        <div class="ui-g ui-fluid" *ngIf="loraConfig">
+          <form [formGroup]="loraConfigForm" (ngSubmit)="save()">
+            <div class="ui-g-12">
+              <div class="ui-g-4">
+                <label for="loraOn">Lora On:</label>
+              </div>
+              <div class="ui-g-8">
+                <input
+                  pInputText
+                  type="text"
+                  id="loraOn"
+                  formControlName="loraOn"
+                  autofocus
+                  class="form-control"
+                />
+              </div>
+            </div>
+
+            <div class="ui-g-12">
+              <div class="ui-g-4">
+                <label for="email">Email:</label>
+              </div>
+              <div class="ui-g-8">
+                <input
+                  pInputText
+                  type="text"
+                  id="email"
+                  formControlName="email"
+                  autofocus
+                  class="form-control"
+                />
+              </div>
+            </div>
+
+            <div class="ui-g-12">
+              <div class="ui-g-4">
+                <label for="password">Password:</label>
+              </div>
+              <div class="ui-g-8">
+                <input
+                  pInputText
+                  type="password"
+                  id="password"
+                  formControlName="password"
+                  autofocus
+                  class="form-control"
+                />
+              </div>
+            </div>
+
+            <div class="ui-g-12">
+              <div class="ui-g-4">
+                <label for="organization">Organization:</label>
+              </div>
+              <div class="ui-g-8">
+                <input
+                  pInputText
+                  type="text"
+                  id="organization"
+                  formControlName="organization"
+                  autofocus
+                  class="form-control"
+                />
+              </div>
+            </div>
+
+            <div class="ui-g-12">
+              <div class="ui-g-4">
+                <label for="restUrl">Rest URL:</label>
+              </div>
+              <div class="ui-g-8">
+                <input
+                  pInputText
+                  type="text"
+                  id="restUrl"
+                  formControlName="restUrl"
+                  autofocus
+                  class="form-control"
+                />
+              </div>
+            </div>
+            <div class="ui-g-12">
+              <div class="ui-g-4">
+                <label for="mqttUrl">MQTT URL:</label>
+              </div>
+              <div class="ui-g-8">
+                <input
+                  pInputText
+                  type="text"
+                  id="mqttUrl"
+                  formControlName="mqttUrl"
+                  autofocus
+                  class="form-control"
+                />
+              </div>
+            </div>
+          </form>
+        </div>
+        <p-footer>
+          <div *ngIf="loraConfig">
+            <div class="ui-dialog-buttonpane ui-helper-clearfix">
+              <button
+                type="button"
+                pButton
+                icon="fa fa-check"
+                (click)="save()"
+                label="Save"
+              ></button>
+            </div>
+          </div>
+        </p-footer>
+      </p-dialog>
+    </nb-card-body>
+  </nb-card>
+</div>

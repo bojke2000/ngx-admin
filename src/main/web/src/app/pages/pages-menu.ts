@@ -54,6 +54,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
         home: false,
       },
       {
+        title: 'Lora Config',
+        icon: 'keypad-outline',
+        link: '/pages/lora-config',
+        home: false,
+      },
+      {
         title: 'Cities',
         icon: 'keypad-outline',
         link: '/pages/city',

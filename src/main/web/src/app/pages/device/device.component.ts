@@ -22,6 +22,8 @@ import { UserCard } from '../../domain/user-card';
 import { UserCardColumnService } from '../../service/user-card-column.service';
 import { UserCardService } from '../../service/user-card.service';
 import { takeUntil } from 'rxjs/operators';
+import { LoraConfigService } from "../../service/lora-config.service";
+import { LoraConfig } from "../../domain/lora-config";
 
 const CURRENT_VIEW = 1;
 
@@ -95,6 +97,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
   @ViewChild(NgxTableComponent)
   child: NgxTableComponent;
+  loraOn: number;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -104,6 +107,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     private addressService: AddressService,
     private readingBookService: ReadingBookService,
     private municipalityService: MunicipalityService,
+    private loraConfigService: LoraConfigService,
     private router: Router,
     translate: TranslateService) {
     super(translate);
@@ -225,6 +229,12 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
         ];
       }
      );
+
+     const pageable = { page: 1, size: 20, sort: "id" };
+     this.loraConfigService.getAll(pageable).then(results => {
+      const loraConfig: LoraConfig = results[0];
+      this.loraOn = loraConfig.loraOn;
+     })
 
   }
 

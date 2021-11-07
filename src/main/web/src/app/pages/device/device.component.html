@@ -321,7 +321,7 @@
 
               <div class="ui-g-12" style="margin-top: 0px !important">
                 <div class="ui-g-12"><div class="ui-g-4"><nb-checkbox [value]="(zoneDevice$ | async) ? true : undefined" (checkedChange)="handleChange($event)"><u><b>{{ 'Zone device' | translate }}</b></u></nb-checkbox></div>
-                <div class="ui-g-4"><nb-checkbox [value]="(loraDevice$ | async) ? true : undefined" (checkedChange)="handleLoraDeviceChange($event)"><u><b>{{ 'Lora device' | translate }}</b></u></nb-checkbox></div></div>
+                <div class="ui-g-4" *ngIf="loraOn"><nb-checkbox [value]="(loraDevice$ | async) ? true : undefined" (checkedChange)="handleLoraDeviceChange($event)"><u><b>{{ 'Lora device' | translate }}</b></u></nb-checkbox></div></div>
 
 
                 <div class="ui-g-6" [hidden]="!(zoneDevice$ | async)">

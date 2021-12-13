@@ -1,47 +1,49 @@
 import * as _ from "lodash";
 
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LazyLoadEvent, SelectItem } from 'primeng/api/public_api';
-import { Observable, of } from 'rxjs';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { LazyLoadEvent, SelectItem } from "primeng/api/public_api";
+import { Observable, of } from "rxjs";
 
-import { AbstractComponent } from '../../AbstractComponent';
-import { AddressService } from '../../service/address.service';
-import { Dropdown } from 'primeng/dropdown';
-import { Grid } from '../../domain/grid';
-import { MunicipalityService } from '../../service/municipailty.service';
-import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
-import { NgxTableComponent } from '../../libs/toolbox-components/ngx-table/ngx-table.component';
-import { Option } from './../../domain/option';
-import { ReadingBookService } from '../../service/reading-book.service';
-import { RouteService } from './../../service/route.service';
-import { Router } from '@angular/router';
-import { Table } from 'primeng/table';
-import { TranslateService } from '@ngx-translate/core';
-import { UserCard } from '../../domain/user-card';
-import { UserCardColumnService } from '../../service/user-card-column.service';
-import { UserCardService } from '../../service/user-card.service';
-import { takeUntil } from 'rxjs/operators';
+import { AbstractComponent } from "../../AbstractComponent";
+import { AddressService } from "../../service/address.service";
+import { Dropdown } from "primeng/dropdown";
+import { Grid } from "../../domain/grid";
+import { MunicipalityService } from "../../service/municipailty.service";
+import { NgPrimeGridResponse } from "../../domain/ngprime-grid-response";
+import { NgxTableComponent } from "../../libs/toolbox-components/ngx-table/ngx-table.component";
+import { Option } from "./../../domain/option";
+import { ReadingBookService } from "../../service/reading-book.service";
+import { RouteService } from "./../../service/route.service";
+import { Router } from "@angular/router";
+import { Table } from "primeng/table";
+import { TranslateService } from "@ngx-translate/core";
+import { UserCard } from "../../domain/user-card";
+import { UserCardColumnService } from "../../service/user-card-column.service";
+import { UserCardService } from "../../service/user-card.service";
+import { takeUntil } from "rxjs/operators";
 import { LoraConfigService } from "../../service/lora-config.service";
 import { LoraConfig } from "../../domain/lora-config";
+import { DeviceTypeService } from "../../service/device-type.service";
 
 const CURRENT_VIEW = 1;
 
 @Component({
-  selector: 'ngx-device',
-  templateUrl: './device.component.html',
-  styleUrls: ['./device.component.css'],
+  selector: "ngx-device",
+  templateUrl: "./device.component.html",
+  styleUrls: ["./device.component.css"],
 })
 export class DeviceComponent extends AbstractComponent implements OnInit {
-  public static DEVICE_GSM = 0;
-  public static DEVICE_ZOME_DEVICE = 1;
-  public static DEVICE_LORA_DEVICE = 2;
+  public static DEVICE_WMBUS = "0";
+  public static DEVICE_ZOME_DEVICE = "1";
+  public static DEVICE_LORA_DEVICE = "2";
+  public static DEVICE_LORA_VALVE_DEVICE = "3";
   deviceForm: FormGroup;
   device: UserCard = undefined;
   displayDialog: boolean;
   submitted = false;
-  zoneDevice  = false;
-  loraDevice  = false;
+  zoneDevice = false;
+  loraDevice = false;
   routes: SelectItem[];
   addresses: SelectItem[];
   readingBooks: SelectItem[];
@@ -53,6 +55,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   multipliers: Option[];
   indexes: Option[];
   pageable: {};
+  deviceTypes: Option[];
 
   // search
   customerName: string;
@@ -62,38 +65,41 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   displayType: number = 1;
   // search end
 
-   // state of pagination
-   sortBy: string;
-   sortOrder: string;
-   page: number;
-   rows: number;
-   // state of pagination end
+  // state of pagination
+  sortBy: string;
+  sortOrder: string;
+  page: number;
+  rows: number;
+  // state of pagination end
 
   userCards: UserCard[];
   totalRecords: number;
   cols: any[];
   isResisable: boolean = true;
   loading: boolean;
-  @ViewChild('table', { static: false }) table: Table;
+  @ViewChild("table", { static: false }) table: Table;
   selectedUserCard: UserCard;
 
-  @ViewChild('ddStatus')
+  @ViewChild("ddStatus")
   routeStatus: Dropdown;
 
-  @ViewChild('ddAddressStatus')
+  @ViewChild("ddAddressStatus")
   addressStatus: Dropdown;
 
-  @ViewChild('ddReadingBookStatus')
+  @ViewChild("ddReadingBookStatus")
   readingBookStatus: Dropdown;
 
-  @ViewChild('ddMunicipalityStatus')
+  @ViewChild("ddMunicipalityStatus")
   ddMunicipalityStatus: Dropdown;
 
-  @ViewChild('ddModeStatus')
+  @ViewChild("ddModeStatus")
   ddModeStatus: Dropdown;
 
-  @ViewChild('dddMultiplierStatus')
+  @ViewChild("ddMultiplierStatus")
   ddMultiplierStatus: Dropdown;
+
+  @ViewChild("ddDeviceTypeStatus")
+  ddDeviceTypeStatus: Dropdown;
 
   @ViewChild(NgxTableComponent)
   child: NgxTableComponent;
@@ -108,134 +114,131 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     private readingBookService: ReadingBookService,
     private municipalityService: MunicipalityService,
     private loraConfigService: LoraConfigService,
+    private deviceTypeService: DeviceTypeService,
     private router: Router,
-    translate: TranslateService) {
+    translate: TranslateService
+  ) {
     super(translate);
   }
 
   ngOnInit(): void {
-
     this.deviceForm = this.formBuilder.group({
-      id: [''],
-      customerId: ['', [Validators.required]],
-      regNr: [''],
-      regNr2: [''],
-      customerName: ['', [Validators.required]],
-      address: ['', [Validators.required]],
-      addressNo: [''],
-      addressNo2: [''],
-      municipality: [''],
-      route: [''],
-      readingBook: [''],
-      variance: ['20', [Validators.required]],
-      customerRemarks: [''],
-      siteRemarks: [''],
-      routeRemarks: [''],
-      gsmRemarks: [''],
-      deviceNo: ['', [Validators.required]],
-      deviceId: ['', [Validators.required]],
-      mode: ['', [Validators.required]],
-      profile: ['', [Validators.required]],
-      medium: ['', [Validators.required]],
-      unit: ['', [Validators.required]],
-      gsmLongitude: [''],
-      gsmLatitude: [''],
-      multiplier: ['', [Validators.required]],
-      gsmId: [''],
-      applicationKey: [''],
+      id: [""],
+      customerId: ["", [Validators.required]],
+      regNr: [""],
+      regNr2: [""],
+      customerName: ["", [Validators.required]],
+      address: ["", [Validators.required]],
+      addressNo: [""],
+      addressNo2: [""],
+      municipality: [""],
+      route: [""],
+      readingBook: [""],
+      variance: ["20", [Validators.required]],
+      customerRemarks: [""],
+      siteRemarks: [""],
+      routeRemarks: [""],
+      gsmRemarks: [""],
+      deviceNo: ["", [Validators.required]],
+      deviceId: ["", [Validators.required]],
+      mode: ["", [Validators.required]],
+      profile: ["", [Validators.required]],
+      medium: ["", [Validators.required]],
+      unit: ["", [Validators.required]],
+      gsmLongitude: [""],
+      gsmLatitude: [""],
+      multiplier: ["", [Validators.required]],
+      deviceType: ["", [Validators.required]],
+      gsmId: [""],
+      applicationKey: [""],
       zoneDevice: [null],
-      loraDevice: [null],
-      indexa: [''],
-      indexb: [''],
-      indexc: [''],
-      indexd: [''],
+      indexa: [""],
+      indexb: [""],
+      indexc: [""],
+      indexd: [""],
     });
 
     this.loadStaticData();
 
     this.modes = [
-        {label: 'Mode A', value: '0'},
-        {label: 'Mode B', value: '1'},
-        {label: 'Mode C', value: '2'},
+      { label: "Mode A", value: "0" },
+      { label: "Mode B", value: "1" },
+      { label: "Mode C", value: "2" },
     ];
 
     this.profiles = [
-      {label: 'DN15', value: '0'},
-      {label: 'DN25', value: '1'},
-      {label: 'DN32', value: '2'},
-      {label: 'DN40', value: '3'},
-      {label: 'DN50', value: '4'},
-      {label: 'DN80', value: '5'},
-      {label: 'DN100', value: '6'},
-      {label: 'DN150', value: '7'},
-      {label: 'DN200', value: '8'},
+      { label: "DN15", value: "0" },
+      { label: "DN25", value: "1" },
+      { label: "DN32", value: "2" },
+      { label: "DN40", value: "3" },
+      { label: "DN50", value: "4" },
+      { label: "DN80", value: "5" },
+      { label: "DN100", value: "6" },
+      { label: "DN150", value: "7" },
+      { label: "DN200", value: "8" },
     ];
 
     this.mediums = [
-      {label: this.translate.instant('Cold Water'), value: '0'},
-      {label: this.translate.instant('Hot Water'), value: '1'},
-      {label: this.translate.instant('Gasoline'), value: '2'},
+      { label: this.translate.instant("Cold Water"), value: "0" },
+      { label: this.translate.instant("Hot Water"), value: "1" },
+      { label: this.translate.instant("Gasoline"), value: "2" },
     ];
 
     this.units = [
-      {label: 'm3', value: '0'},
-      {label: 'Litre', value: '1'},
+      { label: "m3", value: "0" },
+      { label: "Litre", value: "1" },
     ];
 
     this.multipliers = [
-      {label: '0.1', value: '0.1'},
-      {label: '0.01', value: '0.01'},
-      {label: '0.001', value: '0.001'},
+      { label: "0.1", value: "0.1" },
+      { label: "0.01", value: "0.01" },
+      { label: "0.001", value: "0.001" },
       // {label: '0.010', value: '0.010'},
       // {label: '0.100', value: '0.100'},
     ];
 
     this.indexes = [
-      {label: '', value: undefined},
-      {label: 'Direct', value: '0'},
-      {label: 'Reverse', value: '1'},
-      {label: 'Pressure', value: '2'},
-      {label: 'Temperature', value: '3'},
+      { label: "", value: undefined },
+      { label: "Direct", value: "0" },
+      { label: "Reverse", value: "1" },
+      { label: "Pressure", value: "2" },
+      { label: "Temperature", value: "3" },
     ];
 
     this.cols = [];
 
-    this.userCardColumnService.findAll(Grid.DEVICE).then(columns => {
+    this.userCardColumnService.findAll(Grid.DEVICE).then((columns) => {
       this.cols = [...this.cols, ...columns];
     });
 
     this.loading = true;
 
+    this.translate.onLangChange.subscribe(() => {
+      this.mediums = [
+        { label: this.translate.instant("Cold Water"), value: "0" },
+        { label: this.translate.instant("Hot Water"), value: "1" },
+        { label: this.translate.instant("Gasoline"), value: "2" },
+      ];
 
-    this.translate.onLangChange.subscribe(
-      () => {
-        this.mediums = [
-          {label: this.translate.instant('Cold Water'), value: '0'},
-          {label: this.translate.instant('Hot Water'), value: '1'},
-          {label: this.translate.instant('Gasoline'), value: '2'},
-        ];
+      this.units = [
+        { label: "m3", value: "0" },
+        { label: this.translate.instant("Litre"), value: "1" },
+      ];
 
-        this.units = [
-          {label: 'm3', value: '0'},
-          {label: this.translate.instant('Litre'), value: '1'},
-        ];
+      this.indexes = [
+        { label: "", value: undefined },
+        { label: this.translate.instant("Direct"), value: "0" },
+        { label: this.translate.instant("Reverse"), value: "1" },
+        { label: this.translate.instant("Pressure"), value: "2" },
+        { label: this.translate.instant("Temperature"), value: "3" },
+      ];
+    });
 
-        this.indexes = [
-          {label: '', value: undefined},
-          {label: this.translate.instant('Direct'), value: '0'},
-          {label: this.translate.instant('Reverse'), value: '1'},
-          {label: this.translate.instant('Pressure'), value: '2'},
-          {label: this.translate.instant('Temperature'), value: '3'},
-        ];
-      }
-     );
-
-     const pageable = { page: 1, size: 20, sort: "id" };
-     this.loraConfigService.getAll(pageable).then(results => {
+    const pageable = { page: 1, size: 20, sort: "id" };
+    this.loraConfigService.getAll(pageable).then((results) => {
       const loraConfig: LoraConfig = results[0];
       this.loraOn = loraConfig.loraOn;
-     })
-
+    });
   }
 
   get routes$() {
@@ -254,159 +257,214 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     return of(this.readingBooks);
   }
 
-  get zoneDevice$() {
-    return of(this.zoneDevice);
-  }
-
-  get loraDevice$() {
-    return of(this.loraDevice);
-  }
-
   get cols$(): Observable<any[]> {
     return of(this.cols);
   }
 
-  get f() { return this.deviceForm.controls; }
-
-  private loadPageable() {
-    this.userCardService.findBy(this.getSearchCriteria(), this.pageable).then((ngresp: NgPrimeGridResponse) => {
-      this.userCards = ngresp.data;
-      this.totalRecords = ngresp.totalRecords;
-      this.loading = false;
-    });
+  get f() {
+    return this.deviceForm.controls;
   }
 
-   private loadPage(page: number, size: number, sort?: string) {
-    this.pageable = { page, size, sort};
-    this.userCardService.findBy(this.getSearchCriteria(), this.pageable).then((ngresp: NgPrimeGridResponse) => {
-      this.userCards = ngresp.data;
-      this.totalRecords = ngresp.totalRecords;
-      this.loading = false;
-    });
+  private loadPageable() {
+    this.userCardService
+      .findBy(this.getSearchCriteria(), this.pageable)
+      .then((ngresp: NgPrimeGridResponse) => {
+        this.userCards = ngresp.data;
+        this.totalRecords = ngresp.totalRecords;
+        this.loading = false;
+      });
+  }
 
+  private loadPage(page: number, size: number, sort?: string) {
+    this.pageable = { page, size, sort };
+    this.userCardService
+      .findBy(this.getSearchCriteria(), this.pageable)
+      .then((ngresp: NgPrimeGridResponse) => {
+        this.userCards = ngresp.data;
+        this.totalRecords = ngresp.totalRecords;
+        this.loading = false;
+      });
   }
 
   loadUserCardsLazy(event: LazyLoadEvent) {
     this.loading = true;
-    const sortBy = event.sortField === undefined ? 'id' : event.sortField === 'city' ? 'cityId' : event.sortField;
-    const sortOrder = event.sortOrder === -1 ? 'desc' : 'asc';
-    this.loadPage(event.first / event.rows, event.rows, sortBy + ',' + sortOrder);
+    const sortBy =
+      event.sortField === undefined
+        ? "id"
+        : event.sortField === "city"
+        ? "cityId"
+        : event.sortField;
+    const sortOrder = event.sortOrder === -1 ? "desc" : "asc";
+    this.loadPage(
+      event.first / event.rows,
+      event.rows,
+      sortBy + "," + sortOrder
+    );
   }
 
   resetSort() {
     this.table.sortOrder = 0;
-    this.table.sortField = '';
+    this.table.sortField = "";
     this.table.reset();
   }
 
   onImportClick() {
-    this.router.navigate(['/pages/import-user-card']);
+    this.router.navigate(["/pages/import-user-card"]);
   }
 
   showDialogToAdd() {
     this.submitted = false;
     this.device = {
-      id : undefined,
-      customerId : undefined,
-      regNr : undefined,
-      regNr2 : undefined,
-      customerName : undefined,
-      address : undefined,
-      addressNo : undefined,
-      addressNo2 : undefined,
-      municipality : undefined,
-      route : undefined,
-      readingBook : undefined,
-      variance : undefined,
+      id: undefined,
+      customerId: undefined,
+      regNr: undefined,
+      regNr2: undefined,
+      customerName: undefined,
+      address: undefined,
+      addressNo: undefined,
+      addressNo2: undefined,
+      municipality: undefined,
+      route: undefined,
+      readingBook: undefined,
+      variance: undefined,
 
-      deviceNo : undefined,
-      deviceId : undefined,
-      profile : undefined,
-      medium : undefined,
-      mode : undefined,
-      multiplier : undefined,
+      deviceNo: undefined,
+      deviceId: undefined,
+      profile: undefined,
+      medium: undefined,
+      mode: undefined,
+      multiplier: undefined,
       unit: undefined,
 
-      gsmId : undefined,
-      applicationKey : undefined,
-      gsmLongitude : undefined,
-      gsmLatitude : undefined,
+      gsmId: undefined,
+      applicationKey: undefined,
+      gsmLongitude: undefined,
+      gsmLatitude: undefined,
 
-      readTimestamp : undefined,
-      usageCurrent : undefined,
-      usageCurrentReverse : undefined,
+      readTimestamp: undefined,
+      usageCurrent: undefined,
+      usageCurrentReverse: undefined,
       usageAverage: undefined,
-      diffLastRead : undefined,
-      usageCurrentMonth : undefined,
-      magneticSabotageTime : undefined,
+      diffLastRead: undefined,
+      usageCurrentMonth: undefined,
+      magneticSabotageTime: undefined,
 
-      signalLevel : undefined,
-      alarms : undefined,
-      mainBattery : undefined,
-      gsmBattery : undefined,
+      signalLevel: undefined,
+      alarms: undefined,
+      mainBattery: undefined,
+      gsmBattery: undefined,
 
-      customerRemarks : undefined,
-      siteRemarks : undefined,
-      routeRemarks : undefined,
-      gsmRemarks : undefined,
+      customerRemarks: undefined,
+      siteRemarks: undefined,
+      routeRemarks: undefined,
+      gsmRemarks: undefined,
 
-      deviceType : undefined,
-      indexa : undefined,
-      indexb : undefined,
-      indexc : undefined,
-      indexd : undefined,
+      deviceType: undefined,
+      indexa: undefined,
+      indexb: undefined,
+      indexc: undefined,
+      indexd: undefined,
     };
-    this.deviceForm.patchValue({...this.device});
+    this.deviceForm.patchValue({ ...this.device });
     this.displayDialog = true;
   }
 
   showDialogToEdit() {
-      this.submitted = false;
-      this.deviceForm.patchValue({...this.device});
+    this.submitted = false;
+    this.deviceForm.patchValue({ ...this.device });
+    let selected;
+    if (this.device.mode) {
+      selected = this.modes.filter(
+        (mode) => mode.label === this.device.mode.toString()
+      );
+      this.deviceForm.patchValue({
+        mode: selected && selected.length > 0 ? selected[0] : undefined,
+      });
+    }
+    selected = this.mediums.filter(
+      (medium) => medium.label === this.device.medium.toString()
+    );
+    this.deviceForm.patchValue({
+      medium: selected && selected.length > 0 ? selected[0] : undefined,
+    });
 
-      let selected = this.modes.filter(mode => mode.label === this.device.mode.toString());
-      this.deviceForm.patchValue({mode: selected && selected.length > 0 ? selected[0] : undefined});
-      selected = this.mediums.filter(medium => medium.label === this.device.medium.toString());
-      this.deviceForm.patchValue({medium: selected && selected.length > 0 ? selected[0] : undefined});
+    if (this.device.unit) {
+      selected = this.units.filter(
+        (unit) => unit.label === this.device.unit.toString()
+      );
+      this.deviceForm.patchValue({
+        unit: selected && selected.length > 0 ? selected[0] : undefined,
+      });
+    }
+    selected = this.profiles.filter(
+      (profile) => profile.label === this.device.profile.toString()
+    );
+    this.deviceForm.patchValue({
+      profile: selected && selected.length > 0 ? selected[0] : undefined,
+    });
+    if (this.device.deviceType !== undefined) {
+      selected = this.deviceTypes.filter(
+        (deviceType) => deviceType.value === this.device.deviceType.toString()
+      );
+      this.deviceForm.patchValue({
+        deviceType: selected && selected.length > 0 ? selected[0] : undefined,
+      });
+    }
 
-      if (this.device.unit) {
-        selected = this.units.filter(unit => unit.label === this.device.unit.toString());
-        this.deviceForm.patchValue({unit: selected && selected.length > 0 ? selected[0] : undefined});
-      }
-      selected = this.profiles.filter(profile => profile.label === this.device.profile.toString());
-      this.deviceForm.patchValue({profile: selected && selected.length > 0 ? selected[0] : undefined});
+    selected = this.multipliers.filter(
+      (multiplier) =>
+        parseInt(multiplier.value) ===
+        parseInt(this.device.multiplier.toString())
+    );
+    this.deviceForm.patchValue({
+      multiplier: selected && selected.length > 0 ? selected[0] : undefined,
+    });
 
-      selected = this.multipliers.filter(multiplier => parseInt(multiplier.value) === parseInt(this.device.multiplier.toString()));
-      this.deviceForm.patchValue({multiplier: selected && selected.length > 0 ? selected[0] : undefined});
+    this.zoneDevice =
+      this.device.deviceType && this.device.deviceType === 1 ? true : false;
 
-      this.zoneDevice = (this.device.deviceType && this.device.deviceType === 1) ? true : false;
+    if (!_.isNil(this.device.indexa)) {
+      selected = this.indexes.filter(
+        (index) => index.label === this.device.indexa
+      );
+      this.deviceForm.patchValue({
+        indexa: selected && selected.length > 0 ? selected[0] : undefined,
+      });
+    }
 
-      if (!_.isNil(this.device.indexa)) {
-        selected = this.indexes.filter(index => index.label === this.device.indexa);
-        this.deviceForm.patchValue({indexa: selected && selected.length > 0 ? selected[0] : undefined});
-      }
+    if (!_.isNil(this.device.indexb)) {
+      selected = this.indexes.filter(
+        (index) => index.label === this.device.indexb
+      );
+      this.deviceForm.patchValue({
+        indexb: selected && selected.length > 0 ? selected[0] : undefined,
+      });
+    }
 
-      if (!_.isNil(this.device.indexb)) {
-        selected = this.indexes.filter(index => index.label === this.device.indexb);
-        this.deviceForm.patchValue({indexb: selected && selected.length > 0 ? selected[0] : undefined});
-      }
+    if (!_.isNil(this.device.indexc)) {
+      selected = this.indexes.filter(
+        (index) => index.label === this.device.indexc
+      );
+      this.deviceForm.patchValue({
+        indexc: selected && selected.length > 0 ? selected[0] : undefined,
+      });
+    }
 
-      if (!_.isNil(this.device.indexc)) {
-        selected = this.indexes.filter(index => index.label === this.device.indexc);
-        this.deviceForm.patchValue({indexc: selected && selected.length > 0 ? selected[0] : undefined});
-      }
+    if (!_.isNil(this.device.indexd)) {
+      selected = this.indexes.filter(
+        (index) => index.label === this.device.indexd
+      );
+      this.deviceForm.patchValue({
+        indexd: selected && selected.length > 0 ? selected[0] : undefined,
+      });
+    }
 
-      if (!_.isNil(this.device.indexd)) {
-        selected = this.indexes.filter(index => index.label === this.device.indexd);
-        this.deviceForm.patchValue({indexd: selected && selected.length > 0 ? selected[0] : undefined});
-      }
+    this.readingBookStatus.filled = true;
+    this.ddMunicipalityStatus.filled = true;
+    this.routeStatus.filled = true;
+    this.addressStatus.filled = true;
 
-      this.readingBookStatus.filled = true;
-      this.ddMunicipalityStatus.filled = true;
-      this.routeStatus.filled = true;
-      this.addressStatus.filled = true;
-
-      this.displayDialog = true;
+    this.displayDialog = true;
   }
 
   save() {
@@ -416,7 +474,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       return;
     }
 
-    this.device = {...this.deviceForm.value};
+    this.device = { ...this.deviceForm.value };
 
     this.device.municipality = this.getLabel(this.device.municipality);
     this.device.readingBook = this.getLabel(this.device.readingBook);
@@ -428,26 +486,28 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     this.device.multiplier = this.getValue(this.device.multiplier);
     this.device.profile = this.getLabel(this.device.profile);
     this.device.medium = this.getLabel(this.device.medium);
+    this.device.deviceType = parseInt(this.getValue(this.device.deviceType));
 
-    if (this.zoneDevice) {
-      this.device.deviceType = DeviceComponent.DEVICE_ZOME_DEVICE;;
-      this.device.indexa = _.isNil(this.device.indexa) ? undefined : this.getLabel(this.device.indexa);
-      this.device.indexb = _.isNil(this.device.indexb) ? undefined : this.getLabel(this.device.indexb);
-      this.device.indexc = _.isNil(this.device.indexc) ? undefined : this.getLabel(this.device.indexc);
-      this.device.indexd = _.isNil(this.device.indexd) ? undefined : this.getLabel(this.device.indexd);
-    }
+    this.device.indexa = _.isNil(this.device.indexa)
+      ? undefined
+      : this.getLabel(this.device.indexa);
+    this.device.indexb = _.isNil(this.device.indexb)
+      ? undefined
+      : this.getLabel(this.device.indexb);
+    this.device.indexc = _.isNil(this.device.indexc)
+      ? undefined
+      : this.getLabel(this.device.indexc);
+    this.device.indexd = _.isNil(this.device.indexd)
+      ? undefined
+      : this.getLabel(this.device.indexd);
 
-    if (this.loraDevice) {
-      this.device.deviceType = DeviceComponent.DEVICE_LORA_DEVICE;
-    }
-
-    this.userCardService.saveUser(this.device)
-      .pipe(takeUntil(this.destroy$)).subscribe(val => {
-
+    this.userCardService
+      .saveUser(this.device)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((val) => {
         this.loadPageable();
         this.loadStaticData();
       });
-
 
     if (!this.device.id) {
       this.submitted = false;
@@ -464,42 +524,50 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     return of(this.device);
   }
 
-  close () {
+  close() {
     this.displayDialog = false;
   }
 
   delete() {
-     this.userCardService.deleteUserCard(this.device)
-     .pipe(takeUntil(this.destroy$)).subscribe(val => {
-      this.displayDialog = false;
-      this.loadPageable();
-     });
+    this.userCardService
+      .deleteUserCard(this.device)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((val) => {
+        this.displayDialog = false;
+        this.loadPageable();
+      });
   }
 
   loadStaticData() {
-    this.routeService.getRoutesAsOptions().then(routes => {
+    this.routeService.getRoutesAsOptions().then((routes) => {
       this.routes = routes;
     });
 
-    this.addressService.getAddresssAsOptions().then(addresses => {
+    this.addressService.getAddresssAsOptions().then((addresses) => {
       this.addresses = addresses;
     });
 
-    this.readingBookService.getReadingBooksAsOptions().then(readingBooks => {
+    this.readingBookService.getReadingBooksAsOptions().then((readingBooks) => {
       this.readingBooks = readingBooks;
     });
 
-    this.municipalityService.getMunicipalitiesAsOptions().then(municipalities => {
-      this.municipalities = municipalities;
+    this.municipalityService
+      .getMunicipalitiesAsOptions()
+      .then((municipalities) => {
+        this.municipalities = municipalities;
+      });
+
+    this.deviceTypeService.getDeviceTypesAsOptions().then((deviceTypes) => {
+      this.deviceTypes = deviceTypes;
     });
   }
 
   getValue(value: any): any {
     if (value === undefined) {
       return value;
-    } else if (typeof value === 'string' || value instanceof String) {
-        return value;
-    } else if (value.hasOwnProperty('value')) {
+    } else if (typeof value === "string" || value instanceof String) {
+      return value;
+    } else if (value.hasOwnProperty("value")) {
       return value.value;
     }
   }
@@ -507,19 +575,15 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   getLabel(selection: any): any {
     if (selection === undefined) {
       return selection;
-    } else if (typeof selection === 'string' || selection instanceof String) {
+    } else if (typeof selection === "string" || selection instanceof String) {
       return selection;
-    } else if (selection.hasOwnProperty('value')) {
+    } else if (selection.hasOwnProperty("value")) {
       return selection.label;
     }
   }
 
   handleChange(event: any) {
     this.zoneDevice = !this.zoneDevice;
-  }
-
-  handleLoraDeviceChange(event: any) {
-    this.loraDevice = !this.loraDevice;
   }
 
   onRouteChange(evt) {
@@ -538,48 +602,62 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     this.ddMunicipalityStatus.filled = true;
   }
 
+  onDeviceTypeChange(evt) {
+    this.ddDeviceTypeStatus.filled = true;
+    this.zoneDevice = false;
+    this.loraDevice = false;
+    if (evt.value.value === DeviceComponent.DEVICE_ZOME_DEVICE) {
+      this.zoneDevice = true;
+    } else if (
+      evt.value.value === DeviceComponent.DEVICE_LORA_DEVICE ||
+      evt.value.value === DeviceComponent.DEVICE_LORA_VALVE_DEVICE
+    ) {
+      this.loraDevice = true;
+    }
+  }
+
   onModeChange(evt) {
     this.ddModeStatus.filled = true;
   }
 
   onMultiplierChange(evt) {
     switch (evt.value.label) {
-      case '0.1':
-        this.deviceForm.patchValue({profile: this.profiles[7]});
+      case "0.1":
+        this.deviceForm.patchValue({ profile: this.profiles[7] });
         break;
-      case '0.01':
-        this.deviceForm.patchValue({profile: this.profiles[3]});
+      case "0.01":
+        this.deviceForm.patchValue({ profile: this.profiles[3] });
         break;
-      case '0.001':
-        this.deviceForm.patchValue({profile: this.profiles[0]});
+      case "0.001":
+        this.deviceForm.patchValue({ profile: this.profiles[0] });
         break;
     }
   }
 
   onProfileChange(evt) {
     switch (evt.value.label) {
-      case 'DN15':
-      case 'DN20':
-      case 'DN25':
-        this.deviceForm.patchValue({multiplier: this.multipliers[0]});
+      case "DN15":
+      case "DN20":
+      case "DN25":
+        this.deviceForm.patchValue({ multiplier: this.multipliers[0] });
         break;
-      case 'DN32':
-      case 'DN40':
-        this.deviceForm.patchValue({multiplier: this.multipliers[1]});
+      case "DN32":
+      case "DN40":
+        this.deviceForm.patchValue({ multiplier: this.multipliers[1] });
         break;
-      case 'DN50':
-      case 'DN65':
-      case 'DN80':
-      case 'DN100':
-      case 'DN150':
-      case 'DN200':
-        this.deviceForm.patchValue({multiplier: this.multipliers[2]});
+      case "DN50":
+      case "DN65":
+      case "DN80":
+      case "DN100":
+      case "DN150":
+      case "DN200":
+        this.deviceForm.patchValue({ multiplier: this.multipliers[2] });
         break;
     }
   }
 
   onRowSelect(event: any) {
-    this.device = {...event.data};
+    this.device = { ...event.data };
   }
 
   onRowUnselect(event: any) {
@@ -587,64 +665,61 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   }
 
   getSearchCriteria() {
-    const {
+    const { displayType, customerName, deviceId, gsmId, address } = this;
+
+    return {
       displayType,
       customerName,
       deviceId,
       gsmId,
-      address,
-      } = this;
-
-  return {displayType,
-          customerName,
-          deviceId,
-          gsmId,
-          address: address ? address.toString() : undefined,
-          };
-
+      address: address ? address.toString() : undefined,
+    };
   }
 
   clear() {
-    this.customerName = '';
-    this.address = '';
+    this.customerName = "";
+    this.address = "";
     this.deviceId = undefined;
     this.gsmId = undefined;
-    this.sortBy = '';
-    this.sortOrder = 'asc';
+    this.sortBy = "";
+    this.sortOrder = "asc";
     this.page = 0;
     this.child.reset();
 
-    this.userCardService.findBy({displayType: CURRENT_VIEW, deviceType: 0}, this.pageable).then((ngresp: NgPrimeGridResponse) => {
-      this.userCards = ngresp.data;
-      this.totalRecords = ngresp.totalRecords;
-      this.loading = false;
-    });
+    this.userCardService
+      .findBy({ displayType: CURRENT_VIEW, deviceType: 0 }, this.pageable)
+      .then((ngresp: NgPrimeGridResponse) => {
+        this.userCards = ngresp.data;
+        this.totalRecords = ngresp.totalRecords;
+        this.loading = false;
+      });
   }
 
-  search () {
+  search() {
     this.page = 0;
-    this.userCardService.findBy(this.getSearchCriteria(), this.pageable).then((ngresp: NgPrimeGridResponse) => {
-      this.userCards = ngresp.data;
-      this.totalRecords = ngresp.totalRecords;
-      this.loading = false;
-    });
+    this.userCardService
+      .findBy(this.getSearchCriteria(), this.pageable)
+      .then((ngresp: NgPrimeGridResponse) => {
+        this.userCards = ngresp.data;
+        this.totalRecords = ngresp.totalRecords;
+        this.loading = false;
+      });
   }
 
   onCustomerNameClick(data: any) {
-    if (data.column === 'customerName') {
-     this.customerName = data.row.customerName;
-    } else if (data.column === 'address') {
-      this.addresses.forEach(add => {
+    if (data.column === "customerName") {
+      this.customerName = data.row.customerName;
+    } else if (data.column === "address") {
+      this.addresses.forEach((add) => {
         if (add.label === data.row.address) {
-         this.address = add.value;
-         return;
+          this.address = add.value;
+          return;
         }
-      })
-    } else if (data.column === 'gsmId') {
-     this.gsmId = data.row.gsmId;
-    } else if (data.column === 'deviceId') {
+      });
+    } else if (data.column === "gsmId") {
+      this.gsmId = data.row.gsmId;
+    } else if (data.column === "deviceId") {
       this.deviceId = data.row.deviceId;
-     }
- }
-
+    }
+  }
 }

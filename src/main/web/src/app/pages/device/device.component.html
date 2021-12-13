@@ -309,7 +309,7 @@
                 </span>
               </div>
 
-              <div class="ui-g-5">
+              <div class="ui-g-4">
                 <span class="ui-float-label">
                   <p-dropdown [options]="multipliers" #ddMultiplierStatus name="multiplier"
                   [autoDisplayFirst]="false"
@@ -319,12 +319,31 @@
                 </span>
               </div>
 
+              <div class="ui-g-4">
+                <span class="ui-float-label">
+                  <p-dropdown [options]="deviceTypes" #ddDeviceTypeStatus name="deviceType"
+                  [autoDisplayFirst]="false"
+                  (onChange)="onDeviceTypeChange($event)"
+                  formControlName="deviceType" optionLabel="label" ></p-dropdown>
+                  <label for="deviceType">{{ 'Device Type' | translate }}</label>
+                </span>
+              </div>
+
               <div class="ui-g-12" style="margin-top: 0px !important">
-                <div class="ui-g-12"><div class="ui-g-4"><nb-checkbox [value]="(zoneDevice$ | async) ? true : undefined" (checkedChange)="handleChange($event)"><u><b>{{ 'Zone device' | translate }}</b></u></nb-checkbox></div>
-                <div class="ui-g-4" *ngIf="loraOn"><nb-checkbox [value]="(loraDevice$ | async) ? true : undefined" (checkedChange)="handleLoraDeviceChange($event)"><u><b>{{ 'Lora device' | translate }}</b></u></nb-checkbox></div></div>
-
-
-                <div class="ui-g-6" [hidden]="!(zoneDevice$ | async)">
+                <!-- <div class="ui-g-12"><div class="ui-g-4"><nb-checkbox [value]="(zoneDevice$ | async) ? true : undefined" (checkedChange)="handleChange($event)"><u><b>{{ 'Zone device' | translate }}</b></u></nb-checkbox></div>
+                <div class="ui-g-4" *ngIf="loraOn"><nb-checkbox [value]="(loraDevice$ | async) ? true : undefined" (checkedChange)="handleLoraDeviceChange($event)"><u><b>{{ 'Lora device' | translate }}</b></u></nb-checkbox></div>
+                <div class="ui-g-4">
+                  <span class="ui-float-label">
+                    <p-dropdown [options]="deviceTypes" #ddDeviceTypeStatus name="deviceType"
+                    [autoDisplayFirst]="false"
+                    (onChange)="onDeviceTypeChange($event)"
+                    formControlName="deviceType" optionLabel="label" ></p-dropdown>
+                    <label for="deviceType">{{ 'Device Type' | translate }}</label>
+                  </span>
+                </div>
+              </div> -->
+                
+                <div class="ui-g-6" [hidden]="!zoneDevice">
                   <span class="ui-float-label">
                     <p-dropdown [options]="indexes" name="indexa"
                       [autoDisplayFirst]="false"
@@ -333,7 +352,7 @@
                   </span>
                 </div>
 
-                <div class="ui-g-6" [hidden]="!(zoneDevice$ | async)">
+                <div class="ui-g-6" [hidden]="!zoneDevice">
                   <span class="ui-float-label">
                     <p-dropdown [options]="indexes" name="indexb"
                       [autoDisplayFirst]="false"
@@ -342,7 +361,7 @@
                   </span>
                 </div>
 
-                <div class="ui-g-6" [hidden]="!(zoneDevice$ | async)">
+                <div class="ui-g-6" [hidden]="!zoneDevice">
                   <span class="ui-float-label">
                     <p-dropdown [options]="indexes" name="indexc"
                       [autoDisplayFirst]="false"
@@ -351,7 +370,7 @@
                   </span>
                 </div>
 
-                <div class="ui-g-6" [hidden]="!(zoneDevice$ | async)">
+                <div class="ui-g-6" [hidden]="!zoneDevice">
                   <span class="ui-float-label">
                     <p-dropdown [options]="indexes" name="indexd"
                       [autoDisplayFirst]="false"

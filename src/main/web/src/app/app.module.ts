@@ -53,6 +53,13 @@ import { UserCardColumnService } from "./service/user-card-column.service";
 import { UserCardService } from "./service/user-card.service";
 import { LoraConfigService } from "./service/lora-config.service";
 import { DeviceTypeService } from "./service/device-type.service";
+import { HttpClient } from '@angular/common/http';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/');
+}
 
 @NgModule({
   declarations: [AppComponent],
@@ -61,6 +68,13 @@ import { DeviceTypeService } from "./service/device-type.service";
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
+    TranslateModule.forRoot({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient],
+      },
+    }),
     NbButtonModule,
     ThemeModule.forRoot(),
     NbSidebarModule.forRoot(),
@@ -84,8 +98,8 @@ import { DeviceTypeService } from "./service/device-type.service";
       strategies: [
         NbPasswordAuthStrategy.setup({
           name: "email",
-          baseEndpoint: 'http://localhost:8081/',
-          // baseEndpoint: "",
+          // baseEndpoint: 'http://localhost:8081/',
+          baseEndpoint: "",
           requestPass: false,
           logout: {
             endpoint: "auth/logout",

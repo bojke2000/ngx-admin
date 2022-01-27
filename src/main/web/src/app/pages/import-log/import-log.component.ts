@@ -43,8 +43,8 @@ export class ImportLogComponent
 
     this.cols = [
       { field: "id", header: "#", width: "50px" },
-      { field: "importedAt", header: "Imported At", width: "120px" },
       { field: "type", header: "Type", width: "120px" },
+      { field: "importedAt", header: "Imported At", width: "120px" },
       { field: "status", header: "Status", width: "120px" },
       { field: "count", header: "Count", width: "120px" },
       { field: "message", header: "Message", width: "120px" },

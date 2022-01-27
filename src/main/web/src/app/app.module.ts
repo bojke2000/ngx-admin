@@ -56,6 +56,7 @@ import { DeviceTypeService } from "./service/device-type.service";
 import { HttpClient } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ImportLogService } from "./service/import-log.service";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/');
@@ -98,8 +99,8 @@ export function HttpLoaderFactory(http: HttpClient) {
       strategies: [
         NbPasswordAuthStrategy.setup({
           name: "email",
-          // baseEndpoint: 'http://localhost:8081/',
-          baseEndpoint: "",
+          baseEndpoint: 'http://localhost:8081/',
+          // baseEndpoint: "",
           requestPass: false,
           logout: {
             endpoint: "auth/logout",
@@ -161,6 +162,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ExportUserCardService,
     UserCardColumnService,
     UsageHistoryService,
+    ImportLogService,
     { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true },
     { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: () => false },
   ],

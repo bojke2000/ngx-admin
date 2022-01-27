@@ -10,6 +10,7 @@ import { ExportUserCardComponent } from "./import-export/export-user-card.compon
 import { ImportAdoComponent } from "./import-export/import-ado.component";
 import { ImportUserCardComponent } from "./import-export/import-user-card.component";
 import { TemplateComponent } from "./import-export/template.component";
+import { ImportLogComponent } from "./import-log/import-log.component";
 import { LogfileComponent } from "./logfile/logfile.component";
 import { LoraConfigComponent } from "./lora-config/lora-config.component";
 import { PagesComponent } from "./pages.component";
@@ -82,6 +83,10 @@ const routes: Routes = [
       {
         path: "logfile",
         component: LogfileComponent,
+      },
+      {
+        path: "import-log",
+        component: ImportLogComponent,
       },
       {
         path: "",

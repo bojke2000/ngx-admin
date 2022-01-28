@@ -4,10 +4,10 @@ import {
   Component,
   OnDestroy,
   OnInit,
-  ViewChild
+  ViewChild,
 } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
-import { LazyLoadEvent } from "primeng/api/public_api";
+import { LazyLoadEvent, SelectItem } from "primeng/api/public_api";
 import { Table } from "primeng/table";
 import { AbstractComponent } from "../../AbstractComponent";
 import { ImportLog } from "../../domain/import-log";
@@ -27,6 +27,12 @@ export class ImportLogComponent
   cols: any[];
   loading: boolean;
   importLogSearch: string;
+  from: string = undefined;
+  to: string = undefined;
+  type: SelectItem;
+  types: SelectItem[] = [];
+  status: SelectItem;
+  statuses: SelectItem[] = [];
 
   @ViewChild("table", { static: false }) table: Table;
 
@@ -50,11 +56,19 @@ export class ImportLogComponent
       { field: "message", header: "Message", width: "120px" },
     ];
 
-    // const pageable = { page: 0, size: 20, sort: "id" };
-    // this.importLogService.getAll(pageable).then((importlogs: ImportLog[]) => {
-    //   this.importLogs = importlogs;
-    //   this.totalRecords = importlogs.length / 20;
-    // });
+    this.types = [
+      { label: "WMBus Email", value: "WMBus Email" },
+      { label: "Lora", value: "Lora" },
+      { label: "ADO Import", value: "ADO Import" },
+      { label: "ADO Reader", value: "ADO Reader" },
+      { label: "Device Import", value: "Device Import" },
+      { label: "Upload Import", value: "Upload Import" },
+    ];
+
+    this.statuses = [
+      { label: "OK", value: 0 },
+      { label: "Error", value: 1 },
+    ];
   }
 
   ngAfterViewInit() {
@@ -68,7 +82,7 @@ export class ImportLogComponent
 
   private loadImportLogs(page: number, size: number, sort?: string) {
     const pageable = { page, size, sort };
-    this.importLogService.getAll(pageable).then(ngresp => {
+    this.importLogService.getAll(pageable).then((ngresp) => {
       this.importLogs = ngresp.data;
       this.totalRecords = ngresp.totalRecords;
       this.loading = false;
@@ -88,4 +102,8 @@ export class ImportLogComponent
   }
 
   delete() {}
+
+  search() {}
+
+  clear() {}
 }

@@ -6,6 +6,7 @@ import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { AutoCompleteModule } from "primeng/autocomplete";
 import { ButtonModule } from "primeng/button";
+import { CalendarModule } from "primeng/calendar";
 import { DialogModule } from "primeng/dialog";
 import { DropdownModule } from "primeng/dropdown";
 import { InputTextModule } from "primeng/inputtext";
@@ -16,6 +17,7 @@ import { TableModule } from "primeng/table";
 import { ThemeModule } from "../../@theme/theme.module";
 import { ToolboxComponentsModule } from "../../libs/toolbox-components/toolbox-components.module";
 import { ImportLogComponent } from "./import-log.component";
+import { MultiSelectModule } from 'primeng/multiselect';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -40,6 +42,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReactiveFormsModule,
     ToolboxComponentsModule,
     DialogModule,
+    CalendarModule,
+    MultiSelectModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

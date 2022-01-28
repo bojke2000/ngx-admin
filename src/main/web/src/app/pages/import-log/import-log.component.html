@@ -1,11 +1,91 @@
 <div class="row">
   <nb-card style="width: 100%">
     <nb-card-body>
+      <ngx-title-header title="Import Logs"></ngx-title-header>
 
-      <ngx-title-header title='Import Logs'></ngx-title-header>
-
-      <ngx-table [columns]="cols" [value]="importLogs" (lazyLoad)="loadImportLogsLazy($event)"
-        dataKey="id" [totalRecords]="totalRecords" [loading]="loading">
+      <div class="ui-g ui-fluid">
+        <div class="ui-g-2">&nbsp;</div>
+        <div class="ui-g-8">
+          <div class="ui-g-3">
+            <span class="ui-float-label">
+              <p-multiSelect
+                appendTo="body"
+                [options]="types"
+                defaultLabel="&nbsp;"
+                [(ngModel)]="type"
+                [showTransitionOptions]="'0ms'"
+                [hideTransitionOptions]="'0ms'"
+              ></p-multiSelect>
+              <label for="type">{{ "Type" | translate }}</label>
+            </span>
+          </div>
+          <div class="ui-g-3">
+            <span class="ui-float-label">
+              <p-multiSelect
+                appendTo="body"
+                [options]="statuses"
+                defaultLabel="&nbsp;"
+                [(ngModel)]="status"
+                [showTransitionOptions]="'0ms'"
+                [hideTransitionOptions]="'0ms'"
+              ></p-multiSelect>
+              <label for="status">{{ "Status" | translate }}</label>
+            </span>
+          </div>
+          <div class="ui-g-3">
+            <span class="ui-float-label">
+              <p-calendar
+                [(ngModel)]="from"
+                appendTo="body"
+                [yearNavigator]="true"
+                [monthNavigator]="true"
+                yearRange="2000:2030"
+                dateFormat="dd.mm.yy"
+                showIcon="true"
+              ></p-calendar>
+              <label for="from">{{ "From" | translate }}</label>
+            </span>
+          </div>
+          <div class="ui-g-3">
+            <span class="ui-float-label">
+              <p-calendar
+                [(ngModel)]="to"
+                appendTo="body"
+                [yearNavigator]="true"
+                [monthNavigator]="true"
+                yearRange="2000:2030"
+                dateFormat="dd.mm.yy"
+                showIcon="true"
+              ></p-calendar>
+              <label for="to">{{ "To" | translate }}</label>
+            </span>
+          </div>
+        </div>
+        <div class="ui-g-2">
+          <div class="ui-g-6">
+            <p-button
+              (click)="search()"
+              icon="fa fa-search"
+              label="{{ 'Search' | translate }}"
+            ></p-button>
+          </div>
+          <div class="ui-g-6">
+            <p-button
+              (click)="clear()"
+              icon="fa fa-refresh"
+              label="&nbsp;&nbsp;{{ 'Clear' | translate }}"
+            ></p-button>
+          </div>
+        </div>
+      </div>
+      <ngx-table
+        [columns]="cols"
+        [value]="importLogs"
+        (lazyLoad)="loadImportLogsLazy($event)"
+        dataKey="id"
+        [totalRecords]="totalRecords"
+        [loading]="loading"
+      >
       </ngx-table>
     </nb-card-body>
   </nb-card>

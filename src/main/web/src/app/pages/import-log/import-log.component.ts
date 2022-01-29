@@ -11,6 +11,8 @@ import { LazyLoadEvent, SelectItem } from "primeng/api/public_api";
 import { Table } from "primeng/table";
 import { AbstractComponent } from "../../AbstractComponent";
 import { ImportLog } from "../../domain/import-log";
+import { NgPrimeGridResponse } from "../../domain/ngprime-grid-response";
+import { Pageable } from "../../domain/pageable";
 import { ImportLogService } from "../../service/import-log.service";
 
 @Component({
@@ -29,10 +31,15 @@ export class ImportLogComponent
   importLogSearch: string;
   from: string = undefined;
   to: string = undefined;
-  type: SelectItem;
+  type: string;
   types: SelectItem[] = [];
-  status: SelectItem;
+  status: string;
   statuses: SelectItem[] = [];
+  // state of pagination
+  sortBy: string;
+  sortOrder: string;
+  page: number;
+  rows: number;
 
   @ViewChild("table", { static: false }) table: Table;
 
@@ -80,6 +87,24 @@ export class ImportLogComponent
     this.destroy$.complete();
   }
 
+  loadImportLogsLazy(event: LazyLoadEvent) {
+    this.loading = true;
+    this.sortBy =
+      event.sortField === undefined
+        ? "id"
+        : event.sortField === "city"
+        ? "cityId"
+        : event.sortField;
+    this.sortOrder = event.sortOrder === -1 ? "desc" : "asc";
+    this.page = event.first / event.rows;
+    this.rows = event.rows;
+    this.loadImportLogs(
+      event.first / event.rows,
+      event.rows,
+      this.sortBy + "," + this.sortOrder
+    );
+  }
+
   private loadImportLogs(page: number, size: number, sort?: string) {
     const pageable = { page, size, sort };
     this.importLogService.getAll(pageable).then((ngresp) => {
@@ -89,21 +114,46 @@ export class ImportLogComponent
     });
   }
 
-  loadImportLogsLazy(event: LazyLoadEvent) {
-    this.loading = true;
-    const sortBy =
-      event.sortField === undefined
-        ? "id"
-        : event.sortField === "role"
-        ? "role.name"
-        : event.sortField;
-    const sortOrder = event.sortOrder === -1 ? "desc" : "asc";
-    this.loadImportLogs(event.first, event.rows, sortBy + "," + sortOrder);
-  }
-
   delete() {}
 
-  search() {}
+  getSearchCriteria() {
+    const { status, type, from, to } = this;
+    return {
+      status: status ? status.toString() : undefined,
+      type,
+      from,
+      to,
+    };
+  }
 
-  clear() {}
+  getPageable(): Pageable {
+    return {
+      page: this.page,
+      size: this.rows,
+      sort: `${this.sortBy},${this.sortOrder}`,
+    };
+  }
+
+  search() {
+    try {
+      this.page = 0;
+      this.importLogService
+        .search(this.getSearchCriteria(), this.getPageable())
+        .then((ngresp: NgPrimeGridResponse) => {
+          this.importLogs = ngresp.data;
+          this.totalRecords = ngresp.totalRecords;
+          this.loading = false;
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  clear() {
+    this.from = undefined;
+    this.to = undefined;
+    this.status = undefined;
+    this.type = undefined;
+    this.search();
+  }
 }

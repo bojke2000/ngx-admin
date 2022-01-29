@@ -10,8 +10,8 @@ import { Pageable } from "./domain/pageable";
 import { catchError } from "rxjs/operators";
 
 export abstract class AbstractService {
-  prefix = 'http://localhost:8081/';
-  // prefix = "";
+  // prefix = "http://localhost:8081/";
+  prefix = "";
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -112,5 +112,18 @@ export abstract class AbstractService {
     }
     // return an observable with a user-facing error message
     return throwError("Something bad happened; please try again later.");
+  }
+
+  protected toDate(date: Date, endDay: boolean = false): string {
+    const dd = date.getDate();
+    const mm = date.getMonth() + 1;
+
+    return [
+      (dd > 9 ? "" : "0") + dd,
+      ".",
+      (mm > 9 ? "" : "0") + mm,
+      ".",
+      date.getFullYear(),
+    ].join("");
   }
 }

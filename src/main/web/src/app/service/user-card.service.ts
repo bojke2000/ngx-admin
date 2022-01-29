@@ -19,18 +19,6 @@ export class UserCardService extends AbstractService {
 
   constructor(http: HttpClient) { super(http); }
 
-  private toDate(date: Date, endDay: boolean = false): string {
-    const dd = date.getDate();
-    const mm = date.getMonth() + 1;
-
-    return [(dd > 9 ? '' : '0') + dd,
-          '.',
-          (mm > 9 ? '' : '0') + mm,
-          '.',
-          date.getFullYear(),
-         ].join('');
-  }
-
   findAll(pageable?: Pageable) {
     return this.get(this.url, pageable);
   }

@@ -5,4 +5,6 @@
  */
 export const environment = {
   production: true,
+  endpoint: '',
+  language: 'en'
 };

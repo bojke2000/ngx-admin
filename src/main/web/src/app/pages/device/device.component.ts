@@ -143,7 +143,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       deviceId: ["", [Validators.required]],
       mode: ["", [Validators.required]],
       profile: ["", [Validators.required]],
-      medium: ["", [Validators.required]],
+      medium: [""],
       unit: ["", [Validators.required]],
       gsmLongitude: [""],
       gsmLatitude: [""],
@@ -507,6 +507,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       .subscribe((val) => {
         this.loadPageable();
         this.loadStaticData();
+        this.displayDialog = false;
       });
 
     if (!this.device.id) {

@@ -5,13 +5,15 @@ import {
   HttpParams,
 } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
+import { environment } from '../environments/environment';
 
 import { Pageable } from "./domain/pageable";
 import { catchError } from "rxjs/operators";
 
 export abstract class AbstractService {
   // prefix = "http://localhost:8081/";
-  prefix = "";
+  // prefix = "";
+  prefix = environment.endpoint;
 
   httpOptions = {
     headers: new HttpHeaders({

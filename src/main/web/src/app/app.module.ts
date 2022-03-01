@@ -57,6 +57,7 @@ import { HttpClient } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ImportLogService } from "./service/import-log.service";
+import { environment } from '../environments/environment';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/');
@@ -100,7 +101,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         NbPasswordAuthStrategy.setup({
           name: "email",
           // baseEndpoint: 'http://localhost:8081/',
-          baseEndpoint: "",
+          // baseEndpoint: "",
+          baseEndpoint: environment.endpoint,
           requestPass: false,
           logout: {
             endpoint: "auth/logout",

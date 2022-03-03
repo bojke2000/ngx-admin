@@ -1,7 +1,7 @@
 <div class="row">
   <nb-card style="width: 100%">
     <nb-card-body>
-      <ngx-title-header title='Devices'></ngx-title-header>
+      <ngx-title-header title="Devices"></ngx-title-header>
 
       <div class="ui-g ui-fluid">
         <div class="ui-g-10">
@@ -20,312 +20,616 @@
           </div>
           <div class="ui-g-2">
             <span class="ui-float-label">
-              <p-multiSelect appendTo="body" [options]="addresses" defaultLabel="&nbsp;" [(ngModel)]="address" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"></p-multiSelect>
+              <p-multiSelect
+                appendTo="body"
+                [options]="addresses"
+                defaultLabel="&nbsp;"
+                [(ngModel)]="address"
+                [showTransitionOptions]="'0ms'"
+                [hideTransitionOptions]="'0ms'"
+              ></p-multiSelect>
               <label for="address">{{ "Address" | translate }}</label>
             </span>
           </div>
 
           <div class="ui-g-2">
             <span class="ui-float-label">
-              <input
-              pInputText
-              id="gsmId"
-              [(ngModel)]="gsmId"
-            />
+              <input pInputText id="gsmId" [(ngModel)]="gsmId" />
               <label for="gsmId">{{ "ADOGSM-2 ID" | translate }}</label>
             </span>
           </div>
           <div class="ui-g-2">
             <span class="ui-float-label">
-              <input
-              pInputText
-              id="deviceId"
-              [(ngModel)]="deviceId"
-            />
+              <input pInputText id="deviceId" [(ngModel)]="deviceId" />
               <label for="deviceId">{{ "Device ID" | translate }}</label>
             </span>
           </div>
         </div>
-          <div class="ui-g-2">
-            <div class="ui-g-6">
-              <p-button (click)="search()"  icon="fa fa-search" label="{{ 'Search' | translate }}"></p-button>
-            </div>
-            <div class="ui-g-6">
-              <p-button (click)="clear()" icon="fa fa-refresh" label="&nbsp;&nbsp;{{ 'Clear' | translate }}"></p-button>
-            </div>
+        <div class="ui-g-2">
+          <div class="ui-g-6">
+            <p-button
+              (click)="search()"
+              icon="fa fa-search"
+              label="{{ 'Search' | translate }}"
+            ></p-button>
+          </div>
+          <div class="ui-g-6">
+            <p-button
+              (click)="clear()"
+              icon="fa fa-refresh"
+              label="&nbsp;&nbsp;{{ 'Clear' | translate }}"
+            ></p-button>
+          </div>
         </div>
-        </div>
+      </div>
 
-
-      <ngx-table [columns]="cols$ | async" [value]="userCards" (lazyLoad)="loadUserCardsLazy($event)"
+      <ngx-table
+        [columns]="cols$ | async"
+        [value]="userCards"
+        (lazyLoad)="loadUserCardsLazy($event)"
         dataKey1="customerId"
-        (rowSelect)="onRowSelect($event)"  (rowUnselect)="onRowUnselect($event)" [sortable]="true" rows="8"
+        (rowSelect)="onRowSelect($event)"
+        (rowUnselect)="onRowUnselect($event)"
+        [sortable]="true"
+        rows="8"
         (clickFunction)="onCustomerNameClick($event)"
-        [selection]="selectedUserCard" dataKey="customerId" [totalRecords]="totalRecords" [loading]="loading">
+        [selection]="selectedUserCard"
+        dataKey="customerId"
+        [totalRecords]="totalRecords"
+        [loading]="loading"
+      >
       </ngx-table>
 
       <div class="button-positioner">
-        <p-button (click)="showDialogToAdd()" label="{{ translate.get('Create Device') | async }}"></p-button>
+        <p-button
+          *ngIf="loraOn"
+          (click)="showDialogLoraDownlink()"
+          label="{{ translate.get('Lora Downlink') | async }}"
+        ></p-button>
         <div class="divider"></div>
-        <p-button (click)="showDialogToEdit()" label="{{ translate.get('Edit Device') | async }}"></p-button>
+        <p-button
+          (click)="showDialogToAdd()"
+          label="{{ translate.get('Create Device') | async }}"
+        ></p-button>
         <div class="divider"></div>
-        <p-button label="{{ translate.get('Import Devices') | async }}" (onClick)="onImportClick()"></p-button>
+        <p-button
+          (click)="showDialogToEdit()"
+          label="{{ translate.get('Edit Device') | async }}"
+        ></p-button>
+        <div class="divider"></div>
+        <p-button
+          label="{{ translate.get('Import Devices') | async }}"
+          (onClick)="onImportClick()"
+        ></p-button>
       </div>
 
-      <p-dialog id="deviceDialog" header="{{ 'Device'|translate }}" [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true"  dynamic="true"
-        showEffect="fade" [modal]="true" height="800" [style]="{width: '1200px','z-index': '2500 !important'}">
+      <p-dialog
+        [baseZIndex]="10000"
+        header="{{ 'Warning' | translate }}"
+        [(visible)]="displayWarningDialog"
+      >
+        <span>{{ displayWarningDialogMessage | translate }}</span>
+    </p-dialog>
+    <p-dialog
+        header="{{ 'Lora downlink' | translate }}"
+        [(visible)]="displayLoraDownlinkDialog"
+        [focusOnShow]="false"
+        [responsive]="true"
+        dynamic="true"
+        showEffect="fade"
+        [modal]="true"
+        height="500"
+        [style]="{ width: '600px', 'z-index': '2500 !important' }"
+      >
+      <div class="ui-g ui-fluid" *ngIf="displayLoraDownlinkDialog">
+          <div class="ui-g-12">
+            <div class="ui-g-5">
+              <label for="account">devEUI:</label>
+            </div>
+            <div class="ui-g-7">{{devEUI}}</div>
+          </div>
+          <div class="ui-g-12">
+            <div class="ui-g-5">
+              <label for="account">applicationKey:</label>
+            </div>
+            <div class="ui-g-7">{{applicationKey}}</div>
+          </div>
+          <div class="ui-g-12">
+            <div class="ui-g-5">
+              <span class="ui-float-label">
+                <p-dropdown
+                  [options]="port50Headers"
+                  name="port50Header"
+                  [autoDisplayFirst]="false"
+                  #ddport50Headers
+                  (onChange)="onPort50HeadersChange($event)"
+                  optionLabel="label"
+                  editable="true"
+                ></p-dropdown>
+              </span>
+            </div>
+            <div class="ui-g-7"><input pInputText id="port50Value1" [(ngModel)]="port50Value1" [value]="port50Value1" /></div>
+          </div>
+          <div *ngIf="port50Header1 && port50Header1.value == '0'" class="ui-g-12">
+            <div class="ui-g-5">
+              <input pInputText id="port50Header2" readonly value="Reverse Volume" />
+            </div>
+            <div class="ui-g-7"><input pInputText id="port50Value2" [(ngModel)]="port50Value2" [value]="port50Value2" /></div>
+          </div>
+          <div *ngIf="port50Header1 && port50Header1.value == '2'" class="ui-g-12">
+            <div class="ui-g-5">
+              <input pInputText id="port50Header2" readonly value="Status interval" />
+            </div>
+            <div class="ui-g-7"><input pInputText id="port50Value2" [(ngModel)]="port50Value2" [value]="port50Value2" /></div>
+          </div>
+      </div>
+            
+      <p-footer>
+        <div>
+          <div class="ui-dialog-buttonpane ui-helper-clearfix">
+            <button type="button" pButton icon="fa fa-check" (click)="sendLoradownlinkMessage()" label="Send"></button>
+          </div>
+        </div>
+      </p-footer>
+      </p-dialog>
 
+      <p-dialog
+        id="deviceDialog"
+        header="{{ 'Device' | translate }}"
+        [(visible)]="displayDialog"
+        [focusOnShow]="false"
+        [responsive]="true"
+        dynamic="true"
+        showEffect="fade"
+        [modal]="true"
+        height="800"
+        [style]="{ width: '1200px', 'z-index': '2500 !important' }"
+      >
         <div class="ui-g ui-fluid" *ngIf="!device">
           <i class="pi pi-info"></i>
-          <p>&nbsp;&nbsp; {{"Please select a row for an action."| translate }}</p>
+          <p>
+            &nbsp;&nbsp; {{ "Please select a row for an action." | translate }}
+          </p>
         </div>
         <form [formGroup]="deviceForm" (ngSubmit)="save()">
-
           <div class="ui-g ui-fluid" *ngIf="device">
-
             <!-- HEADER ROW -->
-          <div class="ui-g-12">
-            <div class="ui-g-3">
-              <span class="ui-float-label">
-                <p-dropdown [options]="municipalities$ |async" name="municipality"
-                        [autoDisplayFirst]="false"   #ddMunicipalityStatus (onChange)="onMunicipalityChange($event)"
-                        formControlName="municipality" optionLabel="label" editable="true"></p-dropdown>
-                <label for="municipality">{{ 'Municipality' | translate }}</label>
-              </span>
-            </div>
-            <div class="ui-g-3">
-              <span class="ui-float-label">
-                  <p-dropdown [options]="readingBooks$ |async" name="readingBook"
-                  onclick="this.setSelectionRange(0, this.value.length)"
-                        [autoDisplayFirst]="false"   #ddReadingBookStatus (onChange)="onReadingBookChange($event)"
-                        formControlName="readingBook" optionLabel="label" editable="true"></p-dropdown>
-                  <label for="readingBook">{{ 'Reading Book' | translate }}</label>
-                </span>
-            </div>
-            <div class="ui-g-3">
-              <span class="ui-float-label">
-                <p-dropdown [options]="routes$ | async" name="route" optionLabel="label" [autoDisplayFirst]="false"
-                  #ddStatus (onChange)="onRouteChange($event)" formControlName="route" editable="true"></p-dropdown>
-                <label for="route">{{ 'Route' | translate }}</label>
-              </span>
-            </div>
-
-
-          </div>
-          <!-- FIRST COLUMN -->
-            <div class="ui-g-6">
-              <div class="ui-g-12"><u><b style="color: #212E52">{{ 'Customer Info' | translate }}</b></u></div>
-              <div class="ui-g-6">
-                <span class="ui-float-label">
-                  <input pInputText id="customerId" formControlName="customerId"
-                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.customerId.errors }" />
-                  <label for="customerId">{{ 'Customer ID' | translate }}</label>
-                </span>
-              </div>
-
-              <div class="ui-g-6">
-                <span class="ui-float-label">
-                  <input pInputText id="customerName" formControlName="customerName"
-                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.customerName.errors }" />
-                  <label for="customerName">{{ 'Customer name' | translate }}</label>
-                </span>
-              </div>
-
-              <div class="ui-g-6">
-                <span class="ui-float-label">
-                  <input pInputText id="regNr" formControlName="regNr"
-                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.regNr.errors }" />
-                  <label for="regNr">{{ 'Register Nr.' | translate }}</label>
-                </span>
-              </div>
-
-              <div class="ui-g-6">
-                <span class="ui-float-label">
-                  <input pInputText id="regNr2" formControlName="regNr2"
-                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.regNr2.errors }" />
-                  <label for="regNr2">{{ 'Register Nr. 2' | translate }}</label>
-                </span>
-              </div>
-
-              <div class="ui-g-6">
-                <span class="ui-float-label">
-                  <p-dropdown id="address" [options]="addresses$ | async" name="address" optionLabel="label" [autoDisplayFirst]="false"
-                    #ddAddressStatus (onChange)="onAddressChange($event)" formControlName="address" editable="true"></p-dropdown>
-                  <label for="address">{{ 'Address' | translate }}</label>
-                </span>
-              </div>
+            <div class="ui-g-12">
               <div class="ui-g-3">
                 <span class="ui-float-label">
-                  <input pInputText id="addressNo" formControlName="addressNo"
-                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.addressNo.errors }" />
-                  <label for="addressNo">{{ 'Address number' | translate }}</label>
-                </span>
-              </div>
-              <div class="ui-g-3">
-                <span class="ui-float-label">
-                  <input pInputText id="addressNo2" formControlName="addressNo2"
-                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.addressNo2.errors }" />
-                  <label for="addressNo2">{{ 'Address number 2' | translate }}</label>
-                </span>
-              </div>
-
-              <div class="ui-g-6">
-                <span class="ui-float-label">
-                  <input pInputText id="variance" formControlName="variance"
-                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.variance.errors }" />
-                  <label for="variance">{{ 'Variance' | translate }}</label>
-                </span>
-              </div>
-
-              <div class="ui-g-12" style="padding-top: 24px;"><u><b  style="color: #212E52">{{ 'Remarks' | translate }}</b></u></div>
-
-              <div class="ui-g-6">
-                <span class="ui-float-label">
-                  <textarea pInputTextarea id="customerRemarks" formControlName="customerRemarks" class="form-control"></textarea>
-                <label for="customerRemarks">{{ 'Customer remarks' | translate }}</label>
-                </span>
-              </div>
-
-              <div class="ui-g-6">
-                <span class="ui-float-label">
-                  <textarea pInputTextarea id="siteRemarks" formControlName="siteRemarks" class="form-control"></textarea>
-                  <label for="siteRemarks">{{ 'Site remarks' | translate }}</label>
-                </span>
-              </div>
-
-              <div class="ui-g-6">
-                <span class="ui-float-label">
-                  <textarea pInputTextarea id="routeRemarks" formControlName="routeRemarks" class="form-control"></textarea>
-                <label for="routeRemarks">{{ 'Route Remarks' | translate }}</label>
-                </span>
-              </div>
-
-              <div class="ui-g-6">
-                <span class="ui-float-label">
-                  <textarea pInputTextarea id="gsmRemarks" formControlName="gsmRemarks" class="form-control"></textarea>
-                  <label for="gsmRemarks">{{ 'AdoGsm remarks' | translate }}</label>
-                </span>
-              </div>
-
-
-            </div>
-
-          <!-- END OF FIRST COLUMN -->
-
-          <!-- SECOND COLUMN -->
-            <div class="ui-g-6">
-              <div class="ui-g-12"><u><b  style="color: #212E52">{{ 'Device Info' | translate }}</b></u></div>
-
-
-              <div class="ui-g-4">
-                <span class="ui-float-label">
-                  <input pInputText id="deviceNo" formControlName="deviceNo"
-                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.deviceNo.errors }" />
-                  <label for="deviceNo">{{ 'Device No' | translate }}</label>
-                </span>
-              </div>
-
-              <div class="ui-g-4">
-                <span class="ui-float-label">
-                  <input pInputText id="deviceId" formControlName="deviceId"
-                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.deviceId.errors }" />
-                  <label for="deviceId">{{ 'Device ID' | translate }}</label>
-                </span>
-              </div>
-
-              <div class="ui-g-4">
-                <span class="ui-float-label">
-                  <p-dropdown [options]="modes" name="mode"
+                  <p-dropdown
+                    [options]="municipalities$ | async"
+                    name="municipality"
                     [autoDisplayFirst]="false"
-                    formControlName="mode" optionLabel="label" ></p-dropdown>
-                    <label for="mode">{{ 'Mod (A,B, C)' | translate }}</label>
-               </span>
-              </div>
-              <div class="ui-g-4">
-                <span class="ui-float-label">
-                  <p-dropdown [options]="profiles" name="profile"
-                  [autoDisplayFirst]="false" (onChange)="onProfileChange($event)"
-                  formControlName="profile" optionLabel="label" ></p-dropdown>
-                  <label for="profile">{{ 'Profile' | translate }}</label>
+                    #ddMunicipalityStatus
+                    (onChange)="onMunicipalityChange($event)"
+                    formControlName="municipality"
+                    optionLabel="label"
+                    editable="true"
+                  ></p-dropdown>
+                  <label for="municipality">{{
+                    "Municipality" | translate
+                  }}</label>
                 </span>
               </div>
+              <div class="ui-g-3">
+                <span class="ui-float-label">
+                  <p-dropdown
+                    [options]="readingBooks$ | async"
+                    name="readingBook"
+                    onclick="this.setSelectionRange(0, this.value.length)"
+                    [autoDisplayFirst]="false"
+                    #ddReadingBookStatus
+                    (onChange)="onReadingBookChange($event)"
+                    formControlName="readingBook"
+                    optionLabel="label"
+                    editable="true"
+                  ></p-dropdown>
+                  <label for="readingBook">{{
+                    "Reading Book" | translate
+                  }}</label>
+                </span>
+              </div>
+              <div class="ui-g-3">
+                <span class="ui-float-label">
+                  <p-dropdown
+                    [options]="routes$ | async"
+                    name="route"
+                    optionLabel="label"
+                    [autoDisplayFirst]="false"
+                    #ddStatus
+                    (onChange)="onRouteChange($event)"
+                    formControlName="route"
+                    editable="true"
+                  ></p-dropdown>
+                  <label for="route">{{ "Route" | translate }}</label>
+                </span>
+              </div>
+            </div>
+            <!-- FIRST COLUMN -->
+            <div class="ui-g-6">
+              <div class="ui-g-12">
+                <u
+                  ><b style="color: #212e52">{{
+                    "Customer Info" | translate
+                  }}</b></u
+                >
+              </div>
+              <div class="ui-g-6">
+                <span class="ui-float-label">
+                  <input
+                    pInputText
+                    id="customerId"
+                    formControlName="customerId"
+                    onclick="this.setSelectionRange(0, this.value.length)"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.customerId.errors
+                    }"
+                  />
+                  <label for="customerId">{{
+                    "Customer ID" | translate
+                  }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-6">
+                <span class="ui-float-label">
+                  <input
+                    pInputText
+                    id="customerName"
+                    formControlName="customerName"
+                    onclick="this.setSelectionRange(0, this.value.length)"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.customerName.errors
+                    }"
+                  />
+                  <label for="customerName">{{
+                    "Customer name" | translate
+                  }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-6">
+                <span class="ui-float-label">
+                  <input
+                    pInputText
+                    id="regNr"
+                    formControlName="regNr"
+                    onclick="this.setSelectionRange(0, this.value.length)"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.regNr.errors }"
+                  />
+                  <label for="regNr">{{ "Register Nr." | translate }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-6">
+                <span class="ui-float-label">
+                  <input
+                    pInputText
+                    id="regNr2"
+                    formControlName="regNr2"
+                    onclick="this.setSelectionRange(0, this.value.length)"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.regNr2.errors }"
+                  />
+                  <label for="regNr2">{{ "Register Nr. 2" | translate }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-6">
+                <span class="ui-float-label">
+                  <p-dropdown
+                    id="address"
+                    [options]="addresses$ | async"
+                    name="address"
+                    optionLabel="label"
+                    [autoDisplayFirst]="false"
+                    #ddAddressStatus
+                    (onChange)="onAddressChange($event)"
+                    formControlName="address"
+                    editable="true"
+                  ></p-dropdown>
+                  <label for="address">{{ "Address" | translate }}</label>
+                </span>
+              </div>
+              <div class="ui-g-3">
+                <span class="ui-float-label">
+                  <input
+                    pInputText
+                    id="addressNo"
+                    formControlName="addressNo"
+                    onclick="this.setSelectionRange(0, this.value.length)"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.addressNo.errors
+                    }"
+                  />
+                  <label for="addressNo">{{
+                    "Address number" | translate
+                  }}</label>
+                </span>
+              </div>
+              <div class="ui-g-3">
+                <span class="ui-float-label">
+                  <input
+                    pInputText
+                    id="addressNo2"
+                    formControlName="addressNo2"
+                    onclick="this.setSelectionRange(0, this.value.length)"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.addressNo2.errors
+                    }"
+                  />
+                  <label for="addressNo2">{{
+                    "Address number 2" | translate
+                  }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-6">
+                <span class="ui-float-label">
+                  <input
+                    pInputText
+                    id="variance"
+                    formControlName="variance"
+                    onclick="this.setSelectionRange(0, this.value.length)"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.variance.errors }"
+                  />
+                  <label for="variance">{{ "Variance" | translate }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-12" style="padding-top: 24px">
+                <u
+                  ><b style="color: #212e52">{{ "Remarks" | translate }}</b></u
+                >
+              </div>
+
+              <div class="ui-g-6">
+                <span class="ui-float-label">
+                  <textarea
+                    pInputTextarea
+                    id="customerRemarks"
+                    formControlName="customerRemarks"
+                    class="form-control"
+                  ></textarea>
+                  <label for="customerRemarks">{{
+                    "Customer remarks" | translate
+                  }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-6">
+                <span class="ui-float-label">
+                  <textarea
+                    pInputTextarea
+                    id="siteRemarks"
+                    formControlName="siteRemarks"
+                    class="form-control"
+                  ></textarea>
+                  <label for="siteRemarks">{{
+                    "Site remarks" | translate
+                  }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-6">
+                <span class="ui-float-label">
+                  <textarea
+                    pInputTextarea
+                    id="routeRemarks"
+                    formControlName="routeRemarks"
+                    class="form-control"
+                  ></textarea>
+                  <label for="routeRemarks">{{
+                    "Route Remarks" | translate
+                  }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-6">
+                <span class="ui-float-label">
+                  <textarea
+                    pInputTextarea
+                    id="gsmRemarks"
+                    formControlName="gsmRemarks"
+                    class="form-control"
+                  ></textarea>
+                  <label for="gsmRemarks">{{
+                    "AdoGsm remarks" | translate
+                  }}</label>
+                </span>
+              </div>
+            </div>
+
+            <!-- END OF FIRST COLUMN -->
+
+            <!-- SECOND COLUMN -->
+            <div class="ui-g-6">
+              <div class="ui-g-12">
+                <u
+                  ><b style="color: #212e52">{{
+                    "Device Info" | translate
+                  }}</b></u
+                >
+              </div>
+
               <div class="ui-g-4">
                 <span class="ui-float-label">
-                  <p-dropdown [options]="mediums" name="medium"
-                  [autoDisplayFirst]="false"
-                  formControlName="medium" optionLabel="label" ></p-dropdown>
-                  <label for="medium">{{ 'Medium' | translate }}</label>
+                  <input
+                    pInputText
+                    id="deviceNo"
+                    formControlName="deviceNo"
+                    onclick="this.setSelectionRange(0, this.value.length)"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.deviceNo.errors }"
+                  />
+                  <label for="deviceNo">{{ "Device No" | translate }}</label>
                 </span>
               </div>
 
               <div class="ui-g-4">
                 <span class="ui-float-label">
-                  <p-dropdown [options]="units" name="unit"
-                  [autoDisplayFirst]="false"
-                  formControlName="unit" optionLabel="label" ></p-dropdown>
-                  <label for="unit">{{ 'Unit' | translate }}</label>
+                  <input
+                    pInputText
+                    id="deviceId"
+                    formControlName="deviceId"
+                    onclick="this.setSelectionRange(0, this.value.length)"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.deviceId.errors }"
+                  />
+                  <label for="deviceId">{{ "Device ID" | translate }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-4">
+                <span class="ui-float-label">
+                  <p-dropdown
+                    [options]="modes"
+                    name="mode"
+                    [autoDisplayFirst]="false"
+                    formControlName="mode"
+                    optionLabel="label"
+                  ></p-dropdown>
+                  <label for="mode">{{ "Mod (A,B, C)" | translate }}</label>
+                </span>
+              </div>
+              <div class="ui-g-4">
+                <span class="ui-float-label">
+                  <p-dropdown
+                    [options]="profiles"
+                    name="profile"
+                    [autoDisplayFirst]="false"
+                    (onChange)="onProfileChange($event)"
+                    formControlName="profile"
+                    optionLabel="label"
+                  ></p-dropdown>
+                  <label for="profile">{{ "Profile" | translate }}</label>
+                </span>
+              </div>
+              <div class="ui-g-4">
+                <span class="ui-float-label">
+                  <p-dropdown
+                    [options]="mediums"
+                    name="medium"
+                    [autoDisplayFirst]="false"
+                    formControlName="medium"
+                    optionLabel="label"
+                  ></p-dropdown>
+                  <label for="medium">{{ "Medium" | translate }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-4">
+                <span class="ui-float-label">
+                  <p-dropdown
+                    [options]="units"
+                    name="unit"
+                    [autoDisplayFirst]="false"
+                    formControlName="unit"
+                    optionLabel="label"
+                  ></p-dropdown>
+                  <label for="unit">{{ "Unit" | translate }}</label>
                 </span>
               </div>
 
               <div class="ui-g-4">
                 <span class="ui-float-label" *ngIf="!loraDevice">
-                  <input pInputText id="gsmId" formControlName="gsmId"
-                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.gsmId.errors }" />
-                  <label for="gsmId">{{ 'ADOGSM-2 ID' | translate }}</label>
+                  <input
+                    pInputText
+                    id="gsmId"
+                    formControlName="gsmId"
+                    onclick="this.setSelectionRange(0, this.value.length)"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.gsmId.errors }"
+                  />
+                  <label for="gsmId">{{ "ADOGSM-2 ID" | translate }}</label>
                 </span>
                 <span class="ui-float-label" *ngIf="loraDevice">
-                  <input pInputText id="applicationKey" formControlName="applicationKey"
-                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.gsmId.errors }" />
-                  <label for="applicationKey">{{ 'Application Key' | translate }}</label>
+                  <input
+                    pInputText
+                    id="applicationKey"
+                    formControlName="applicationKey"
+                    onclick="this.setSelectionRange(0, this.value.length)"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.gsmId.errors }"
+                  />
+                  <label for="applicationKey">{{
+                    "Application Key" | translate
+                  }}</label>
                 </span>
               </div>
 
               <div class="ui-g-4">
                 <span class="ui-float-label">
-                  <input pInputText id="gsmLongitude" formControlName="gsmLongitude"
-                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.gsmLongitude.errors }" />
-                  <label for="gsmLongitude">{{ 'GSM Longitude' | translate }}</label>
+                  <input
+                    pInputText
+                    id="gsmLongitude"
+                    formControlName="gsmLongitude"
+                    onclick="this.setSelectionRange(0, this.value.length)"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.gsmLongitude.errors
+                    }"
+                  />
+                  <label for="gsmLongitude">{{
+                    "GSM Longitude" | translate
+                  }}</label>
                 </span>
               </div>
 
               <div class="ui-g-4">
                 <span class="ui-float-label">
-                  <input pInputText id="gsmLatitude" formControlName="gsmLatitude"
-                    onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.gsmLatitude.errors }" />
-                  <label for="gsmLatitude">{{ 'GSM Latitude' | translate }}</label>
+                  <input
+                    pInputText
+                    id="gsmLatitude"
+                    formControlName="gsmLatitude"
+                    onclick="this.setSelectionRange(0, this.value.length)"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.gsmLatitude.errors
+                    }"
+                  />
+                  <label for="gsmLatitude">{{
+                    "GSM Latitude" | translate
+                  }}</label>
                 </span>
               </div>
 
               <div class="ui-g-4">
                 <span class="ui-float-label">
-                  <p-dropdown [options]="multipliers" #ddMultiplierStatus name="multiplier"
-                  [autoDisplayFirst]="false"
-                  (onChange)="onMultiplierChange($event)"
-                  formControlName="multiplier" optionLabel="label" ></p-dropdown>
-                  <label for="multiplier">{{ 'Multiplier' | translate }}</label>
+                  <p-dropdown
+                    [options]="multipliers"
+                    #ddMultiplierStatus
+                    name="multiplier"
+                    [autoDisplayFirst]="false"
+                    (onChange)="onMultiplierChange($event)"
+                    formControlName="multiplier"
+                    optionLabel="label"
+                  ></p-dropdown>
+                  <label for="multiplier">{{ "Multiplier" | translate }}</label>
                 </span>
               </div>
 
               <div class="ui-g-4">
                 <span class="ui-float-label">
-                  <p-dropdown [options]="deviceTypes" #ddDeviceTypeStatus name="deviceType"
-                  [autoDisplayFirst]="false"
-                  (onChange)="onDeviceTypeChange($event)"
-                  formControlName="deviceType" optionLabel="label" ></p-dropdown>
-                  <label for="deviceType">{{ 'Device Type' | translate }}</label>
+                  <p-dropdown
+                    [options]="deviceTypes"
+                    #ddDeviceTypeStatus
+                    name="deviceType"
+                    [autoDisplayFirst]="false"
+                    (onChange)="onDeviceTypeChange($event)"
+                    formControlName="deviceType"
+                    optionLabel="label"
+                  ></p-dropdown>
+                  <label for="deviceType">{{
+                    "Device Type" | translate
+                  }}</label>
                 </span>
               </div>
 
@@ -342,64 +646,91 @@
                   </span>
                 </div>
               </div> -->
-                
+
                 <div class="ui-g-6" [hidden]="!zoneDevice">
                   <span class="ui-float-label">
-                    <p-dropdown [options]="indexes" name="indexa"
+                    <p-dropdown
+                      [options]="indexes"
+                      name="indexa"
                       [autoDisplayFirst]="false"
-                      formControlName="indexa" optionLabel="label" ></p-dropdown>
-                  <label for="indexa">{{ 'Index A' | translate }}</label>
+                      formControlName="indexa"
+                      optionLabel="label"
+                    ></p-dropdown>
+                    <label for="indexa">{{ "Index A" | translate }}</label>
                   </span>
                 </div>
 
                 <div class="ui-g-6" [hidden]="!zoneDevice">
                   <span class="ui-float-label">
-                    <p-dropdown [options]="indexes" name="indexb"
+                    <p-dropdown
+                      [options]="indexes"
+                      name="indexb"
                       [autoDisplayFirst]="false"
-                      formControlName="indexb" optionLabel="label" ></p-dropdown>
-                  <label for="indexb">{{ 'Index B' | translate }}</label>
+                      formControlName="indexb"
+                      optionLabel="label"
+                    ></p-dropdown>
+                    <label for="indexb">{{ "Index B" | translate }}</label>
                   </span>
                 </div>
 
                 <div class="ui-g-6" [hidden]="!zoneDevice">
                   <span class="ui-float-label">
-                    <p-dropdown [options]="indexes" name="indexc"
+                    <p-dropdown
+                      [options]="indexes"
+                      name="indexc"
                       [autoDisplayFirst]="false"
-                      formControlName="indexc" optionLabel="label" ></p-dropdown>
-                  <label for="indexc">{{ 'Index C' | translate }}</label>
+                      formControlName="indexc"
+                      optionLabel="label"
+                    ></p-dropdown>
+                    <label for="indexc">{{ "Index C" | translate }}</label>
                   </span>
                 </div>
 
                 <div class="ui-g-6" [hidden]="!zoneDevice">
                   <span class="ui-float-label">
-                    <p-dropdown [options]="indexes" name="indexd"
+                    <p-dropdown
+                      [options]="indexes"
+                      name="indexd"
                       [autoDisplayFirst]="false"
-                      formControlName="indexd" optionLabel="label" ></p-dropdown>
-                  <label for="indexd">{{ 'Index D' | translate }}</label>
+                      formControlName="indexd"
+                      optionLabel="label"
+                    ></p-dropdown>
+                    <label for="indexd">{{ "Index D" | translate }}</label>
                   </span>
                 </div>
+              </div>
             </div>
-
-            </div>
-          <!-- END OF SECOND COLUMN -->
-
+            <!-- END OF SECOND COLUMN -->
           </div>
-
         </form>
 
         <p-footer>
           <div *ngIf="device">
             <div class="ui-dialog-buttonpane ui-helper-clearfix">
-              <button type="button" *ngIf="device.id" style="float: left;" pButton (click)="delete()" label="Delete"></button>
-              <button type="button" pButton  (click)="close()" label="Close"></button>
-              <button type="button" pButton  (click)="save()" label="Save"></button>
+              <button
+                type="button"
+                *ngIf="device.id"
+                style="float: left"
+                pButton
+                (click)="delete()"
+                label="Delete"
+              ></button>
+              <button
+                type="button"
+                pButton
+                (click)="close()"
+                label="Close"
+              ></button>
+              <button
+                type="button"
+                pButton
+                (click)="save()"
+                label="Save"
+              ></button>
             </div>
           </div>
         </p-footer>
       </p-dialog>
-
-
-
     </nb-card-body>
   </nb-card>
 </div>

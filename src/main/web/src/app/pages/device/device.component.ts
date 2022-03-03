@@ -25,6 +25,8 @@ import { takeUntil } from "rxjs/operators";
 import { LoraConfigService } from "../../service/lora-config.service";
 import { LoraConfig } from "../../domain/lora-config";
 import { DeviceTypeService } from "../../service/device-type.service";
+import { LoraDownlinkService } from "../../service/lora-downlink.service";
+import { LoraFPort50 } from "../../domain/lora-fport50";
 
 const CURRENT_VIEW = 1;
 
@@ -41,6 +43,9 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   deviceForm: FormGroup;
   device: UserCard = undefined;
   displayDialog: boolean;
+  displayLoraDownlinkDialog = false;
+  displayWarningDialog = false;
+  displayWarningDialogMessage: string;
   submitted = false;
   zoneDevice = false;
   loraDevice = false;
@@ -54,6 +59,12 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   units: Option[];
   multipliers: Option[];
   indexes: Option[];
+  port50Headers: Option[];
+  port50Header1: Option;
+  port50Header2;
+  port50Value1 = "";
+  port50Value2 = "";
+
   pageable: {};
   deviceTypes: Option[];
 
@@ -92,6 +103,9 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   @ViewChild("ddMunicipalityStatus")
   ddMunicipalityStatus: Dropdown;
 
+  @ViewChild("ddport50Headers")
+  ddport50Headers: Dropdown;
+
   @ViewChild("ddModeStatus")
   ddModeStatus: Dropdown;
 
@@ -104,6 +118,8 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   @ViewChild(NgxTableComponent)
   child: NgxTableComponent;
   loraOn: number;
+  devEUI: string;
+  applicationKey: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -115,6 +131,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     private municipalityService: MunicipalityService,
     private loraConfigService: LoraConfigService,
     private deviceTypeService: DeviceTypeService,
+    private loraDownlinkService: LoraDownlinkService,
     private router: Router,
     translate: TranslateService
   ) {
@@ -122,6 +139,12 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.port50Headers = [
+      { label: this.translate.instant("Total volume"), value: "0" },
+      { label: this.translate.instant("Date and time"), value: "1" },
+      { label: this.translate.instant("Periodic Interval"), value: "2" },
+    ];
+
     this.deviceForm = this.formBuilder.group({
       id: [""],
       customerId: ["", [Validators.required]],
@@ -231,6 +254,12 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
         { label: this.translate.instant("Reverse"), value: "1" },
         { label: this.translate.instant("Pressure"), value: "2" },
         { label: this.translate.instant("Temperature"), value: "3" },
+      ];
+
+      this.port50Headers = [
+        { label: this.translate.instant("Total volume"), value: "0" },
+        { label: this.translate.instant("Date and time"), value: "1" },
+        { label: this.translate.instant("Periodic Interval"), value: "2" },
       ];
     });
 
@@ -603,6 +632,13 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     this.ddMunicipalityStatus.filled = true;
   }
 
+  onPort50HeadersChange(evt) {
+    this.ddport50Headers.filled = true;
+    this.port50Header1 = evt.value;
+    this.port50Value1 = "";
+    this.port50Value2 = "";
+  }
+
   onDeviceTypeChange(evt) {
     this.ddDeviceTypeStatus.filled = true;
     this.zoneDevice = false;
@@ -722,5 +758,46 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     } else if (data.column === "deviceId") {
       this.deviceId = data.row.deviceId;
     }
+  }
+
+  public showDialogLoraDownlink(): void {
+    this.displayWarningDialog = false;
+    this.displayWarningDialogMessage = "";
+    this.port50Header2 = "";
+    this.port50Value1 = "";
+    this.port50Value2 = "";
+
+    if (!this.device || !this.device.deviceId) {
+      this.displayWarningDialog = true;
+      this.displayWarningDialogMessage =
+        "Please select device to send Lora downlink message";
+      return;
+    }
+    // alert(this.device.deviceId + ',' + this.device.applicationKey);
+    this.devEUI = this.device.deviceId;
+    this.applicationKey = this.device.applicationKey;
+    this.displayLoraDownlinkDialog = true;
+  }
+
+  sendLoradownlinkMessage(): void {
+    const loraDownlinkMessage: LoraFPort50 = {
+      fPort: "50",
+      applicationKey: this.applicationKey,
+      devEUI: this.devEUI,
+      header1: this.port50Header1.value,
+      data1: this.port50Value1,
+      header2:
+        this.port50Header2 && this.port50Header2 !== ""
+          ? this.port50Headers.find((ph) => ph.label === this.port50Header2)
+              .value
+          : "",
+      data2: this.port50Value2,
+    };
+
+    this.loraDownlinkService
+      .sendLoradownlinkMessage(loraDownlinkMessage)
+      .subscribe((response) => {
+        console.log(response);
+      });
   }
 }

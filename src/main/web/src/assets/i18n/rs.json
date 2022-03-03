@@ -169,5 +169,9 @@
   "Message": "Poruka",
   "Imported At": "Vreme uvoza",
   "From": "Od",
-  "To": "Do"
+  "To": "Do",
+  "Please select device to send Lora downlink message": "Izaberite uređaj da bi ste poslali Lora downlink poruku",
+  "Warning": "Upozorenje",
+  "Send": "Pošalji"
+  
 }

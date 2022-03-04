@@ -120,6 +120,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   loraOn: number;
   devEUI: string;
   applicationKey: string;
+  loraDownlinkMessage: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -766,6 +767,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     this.port50Header2 = "";
     this.port50Value1 = "";
     this.port50Value2 = "";
+    this.loraDownlinkMessage = "";
 
     if (!this.device || !this.device.deviceId) {
       this.displayWarningDialog = true;
@@ -773,6 +775,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
         "Please select device to send Lora downlink message";
       return;
     }
+
     // alert(this.device.deviceId + ',' + this.device.applicationKey);
     this.devEUI = this.device.deviceId;
     this.applicationKey = this.device.applicationKey;
@@ -780,6 +783,18 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   }
 
   sendLoradownlinkMessage(): void {
+    if (
+      !this.port50Value1 ||
+      this.port50Value1 === "" ||
+      ((this.port50Header1.value === "0" || this.port50Header1.value === "2") &&
+        (!this.port50Value2 || this.port50Value2 == ""))
+    ) {
+      this.displayWarningDialog = true;
+      this.displayWarningDialogMessage =
+        "Please select value to send Lora downlink message";
+      return;
+    }
+
     const loraDownlinkMessage: LoraFPort50 = {
       fPort: "50",
       applicationKey: this.applicationKey,
@@ -797,7 +812,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     this.loraDownlinkService
       .sendLoradownlinkMessage(loraDownlinkMessage)
       .subscribe((response) => {
-        console.log(response);
+        this.loraDownlinkMessage = response;
       });
   }
 }

@@ -5,3 +5,13 @@
 ::ng-deep  body #deviceDialog {
   z-index: 2500 i !important;
 }
+
+.footer-div {
+  display: flex !important;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.fotter-loraDownlinkMessage {
+  color: red;
+}

@@ -11,7 +11,7 @@ export class LoraDownlinkService extends AbstractService {
 
   constructor(http: HttpClient) { super(http); }
 
-  sendLoradownlinkMessage(loraDownlinkMessage: LoraFPort50): Observable<LoraFPort50> {
+  sendLoradownlinkMessage(loraDownlinkMessage: LoraFPort50): Observable<string> {
     return this.post(this.url, loraDownlinkMessage);    
   }
 }

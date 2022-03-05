@@ -1,17 +1,17 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+import { catchError } from "rxjs/operators";
 
-import { AbstractService } from '../abstract.service';
-import { NgPrimeGridResponse } from '../domain/ngprime-grid-response';
-import { Pageable } from '../domain/pageable';
-import { UserAccount } from '../domain/user-account';
+import { AbstractService } from "../abstract.service";
+import { NgPrimeGridResponse } from "../domain/ngprime-grid-response";
+import { Pageable } from "../domain/pageable";
+import { UserAccount } from "../domain/user-account";
 
 @Injectable()
 export class UserAccountService extends AbstractService {
   private loggedUser: UserAccount;
-  private url = this.prefix + 'user-accounts';
+  private url = this.prefix + "user-accounts";
 
   constructor(http: HttpClient) {
     super(http);
@@ -22,44 +22,58 @@ export class UserAccountService extends AbstractService {
   }
 
   public isAdmin(): boolean {
-    return this.loggedUser.role === 'Admin';
+    return this.loggedUser && this.loggedUser.role === "Admin";
   }
 
   public isSuperadmin(): boolean {
-    return this.loggedUser.role === 'Superadmin';
+    return this.loggedUser && this.loggedUser.role === "Superadmin";
   }
 
   public isUser(): boolean {
-    return this.loggedUser.role === 'User';
+    return this.loggedUser && this.loggedUser.role === "User";
   }
 
   getUserAccounts(pageable?: Pageable) {
-    return this.http.get<any>(this.url.concat('?').concat(this.jsonToHttpParams(pageable)),  this.httpOptions)
+    return this.http
+      .get<any>(
+        this.url.concat("?").concat(this.jsonToHttpParams(pageable)),
+        this.httpOptions
+      )
       .toPromise()
-      .then(res => <NgPrimeGridResponse>res);
+      .then((res) => <NgPrimeGridResponse>res);
   }
 
   searchUserAccounts(query: string, pageable?: Pageable) {
-    const uri = this.url.concat('?search=username==').concat(query)
-      .concat('*,email==*').concat(query).concat('*').concat('&').concat(this.jsonToHttpParams(pageable));
-    return this.http.get<any>(uri, this.httpOptions)
+    const uri = this.url
+      .concat("?search=username==")
+      .concat(query)
+      .concat("*,email==*")
+      .concat(query)
+      .concat("*")
+      .concat("&")
+      .concat(this.jsonToHttpParams(pageable));
+    return this.http
+      .get<any>(uri, this.httpOptions)
       .toPromise()
-      .then(res => <NgPrimeGridResponse>res);
+      .then((res) => <NgPrimeGridResponse>res);
   }
 
   addUserAccount(userAccount: UserAccount): Observable<UserAccount> {
-    return this.http.post<UserAccount>(this.url, userAccount, this.httpOptions)
+    return this.http
+      .post<UserAccount>(this.url, userAccount, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
 
   updateUserAccount(userAccount: UserAccount): Observable<UserAccount> {
-    return this.http.put<UserAccount>(this.url, userAccount, this.httpOptions)
+    return this.http
+      .put<UserAccount>(this.url, userAccount, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
 
   deleteUserAccount(userAccount: UserAccount): Observable<UserAccount> {
     const url = `${this.url}/${userAccount.id}`; // DELETE api/heroes/42
-    return this.http.delete<UserAccount>(url, this.httpOptions)
+    return this.http
+      .delete<UserAccount>(url, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
 }

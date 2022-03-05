@@ -82,7 +82,7 @@
 
       <div class="button-positioner">
         <p-button
-          *ngIf="loraOn"
+          *ngIf="loraOn && isAdmin"
           (click)="showDialogLoraDownlink()"
           label="{{ translate.get('Lora Downlink') | async }}"
         ></p-button>

@@ -6,5 +6,5 @@
 export const environment = {
   production: true,
   endpoint: '',
-  language: 'rs'
+  language: 'en'
 };

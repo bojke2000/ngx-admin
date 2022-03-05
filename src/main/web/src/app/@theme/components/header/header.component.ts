@@ -75,6 +75,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
           .then(result => {
             const user = result && result.totalRecords > 0 && result.data && result.data.length > 0 ? result.data[0] : undefined;
             this.userMenu[0].title = `${user.role} Profile`;
+            this.userAccountService.setLoggerUser(user);
           });
         }
 

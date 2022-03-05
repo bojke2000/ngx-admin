@@ -10,11 +10,27 @@ import { UserAccount } from '../domain/user-account';
 
 @Injectable()
 export class UserAccountService extends AbstractService {
-
+  private loggedUser: UserAccount;
   private url = this.prefix + 'user-accounts';
 
   constructor(http: HttpClient) {
     super(http);
+  }
+
+  public setLoggerUser(loggedUser: UserAccount) {
+    this.loggedUser = loggedUser;
+  }
+
+  public isAdmin(): boolean {
+    return this.loggedUser.role === 'Admin';
+  }
+
+  public isSuperadmin(): boolean {
+    return this.loggedUser.role === 'Superadmin';
+  }
+
+  public isUser(): boolean {
+    return this.loggedUser.role === 'User';
   }
 
   getUserAccounts(pageable?: Pageable) {

@@ -27,6 +27,7 @@ import { LoraConfig } from "../../domain/lora-config";
 import { DeviceTypeService } from "../../service/device-type.service";
 import { LoraDownlinkService } from "../../service/lora-downlink.service";
 import { LoraFPort50 } from "../../domain/lora-fport50";
+import { UserAccountService } from "../../service/user-account.service";
 
 const CURRENT_VIEW = 1;
 
@@ -121,10 +122,12 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   devEUI: string;
   applicationKey: string;
   loraDownlinkMessage: string;
+  isAdmin: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
     private userCardService: UserCardService,
+    private userAccountservice: UserAccountService,
     private userCardColumnService: UserCardColumnService,
     private routeService: RouteService,
     private addressService: AddressService,
@@ -269,6 +272,8 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       const loraConfig: LoraConfig = results[0];
       this.loraOn = loraConfig.loraOn;
     });
+
+    this.isAdmin = !this.userAccountservice.isUser();
   }
 
   get routes$() {

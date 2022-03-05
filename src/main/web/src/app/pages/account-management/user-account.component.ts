@@ -49,7 +49,7 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
     this.cols = [
       { field: 'id', header: '#', width: '50px' },
       { field: 'username', header: 'Name', width: '200px' },
-      { field: 'password', header: 'Password', width: '200px' },
+      // { field: 'password', header: 'Password', width: '200px' },
       { field: 'email', header: 'Email', width: '200px' },
       { field: 'city', header: 'City', width: '200px' },
       { field: 'role', header: 'Role', width: '150px' },

@@ -58,7 +58,7 @@
                 <label for="password">Password:</label>
               </div>
               <div class="ui-g-8">
-                <input pInputText id="password" formControlName="password"
+                <input pInputText type="password" id="password" formControlName="password"
                   onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
                   [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
                 <div *ngIf="submitted && f.password.errors" class="invalid-feedback">

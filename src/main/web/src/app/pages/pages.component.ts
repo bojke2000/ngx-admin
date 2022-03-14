@@ -6,7 +6,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { UserAccountService } from "../service/user-account.service";
 import { NbAuthJWTToken, NbAuthService } from "@nebular/auth";
 import { takeUntil } from "rxjs/operators";
-import { Subject, of } from 'rxjs';
+import { Subject, of } from "rxjs";
 
 @Component({
   selector: "ngx-pages",
@@ -26,50 +26,59 @@ export class PagesComponent implements OnInit, OnDestroy {
   constructor(
     private translate: TranslateService,
     private userAccountService: UserAccountService,
-    private cdr: ChangeDetectorRef, 
+    private cdr: ChangeDetectorRef,
     private authService: NbAuthService
   ) {
     translate.setDefaultLang("rs");
     translate.use("rs");
 
-    this.authService.onTokenChange()
+    this.authService
+      .onTokenChange()
       .pipe(takeUntil(this.destroy$))
       .subscribe((token: NbAuthJWTToken) => {
-
         if (token.isValid()) {
           const payload = token.getPayload();
           // here we receive a payload from the token
           // and assigns it to our `user` variable
           const name = payload.sub;
 
-          const pageable = {page: 0, size: 20, sort: 'username,asc'};
-          this.userAccountService.searchUserAccounts(name, pageable)
-          .then(result => {
-            const user = result && result.totalRecords > 0 && result.data && result.data.length > 0 ? result.data[0] : undefined;
-            this.userAccountService.setLoggerUser(user);
+          const pageable = { page: 0, size: 20, sort: "username,asc" };
+          this.userAccountService
+            .searchUserAccounts(name, pageable)
+            .then((result) => {
+              const user =
+                result &&
+                result.totalRecords > 0 &&
+                result.data &&
+                result.data.length > 0
+                  ? result.data[0]
+                  : undefined;
+              this.userAccountService.setLoggerUser(user);
 
-            const mpp = MENU_ITEMS.filter(
-              (item) =>
-                item.title !== "Administration" ||
-                (item.title === "Administration" && !this.userAccountService.isUser())
-            );
-        
-            // mpp - menu per privileges
-            mpp.forEach((item) => {
-              if (item.children !== undefined) {
-                item.children.forEach((subitem) => this.localizeItem(subitem));
-              }
-              this.localizeItem(item);
+              const mpp = MENU_ITEMS.filter(
+                (item) =>
+                  item.title !== "Administration" ||
+                  (item.title === "Administration" &&
+                    !this.userAccountService.isUser())
+              );
+
+              // mpp - menu per privileges
+              mpp.forEach((item) => {
+                if (item.children !== undefined) {
+                  item.children.forEach((subitem) =>
+                    this.localizeItem(subitem)
+                  );
+                }
+                this.localizeItem(item);
+              });
+
+              this.menu = mpp;
             });
-        
-            this.menu = mpp;
-          });
         }
       });
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy() {
     this.sub.unsubscribe();

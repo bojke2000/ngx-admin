@@ -446,6 +446,17 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       });
     }
 
+    this.loraDevice = false;
+    const val = this.device.deviceType.toString();
+    if (val === DeviceComponent.DEVICE_ZOME_DEVICE) {
+      this.zoneDevice = true;
+    } else if (
+      val === DeviceComponent.DEVICE_LORA_DEVICE ||
+      val === DeviceComponent.DEVICE_LORA_VALVE_DEVICE
+    ) {
+      this.loraDevice = true;
+    }
+
     selected = this.multipliers.filter(
       (multiplier) =>
         parseInt(multiplier.value) ===
@@ -649,11 +660,12 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     this.ddDeviceTypeStatus.filled = true;
     this.zoneDevice = false;
     this.loraDevice = false;
-    if (evt.value.value === DeviceComponent.DEVICE_ZOME_DEVICE) {
+    const val = evt.value.value as string;
+    if (val === DeviceComponent.DEVICE_ZOME_DEVICE) {
       this.zoneDevice = true;
     } else if (
-      evt.value.value === DeviceComponent.DEVICE_LORA_DEVICE ||
-      evt.value.value === DeviceComponent.DEVICE_LORA_VALVE_DEVICE
+      val === DeviceComponent.DEVICE_LORA_DEVICE ||
+      val === DeviceComponent.DEVICE_LORA_VALVE_DEVICE
     ) {
       this.loraDevice = true;
     }

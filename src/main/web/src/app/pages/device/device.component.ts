@@ -829,7 +829,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     this.loraDownlinkService
       .sendLoradownlinkMessage(loraDownlinkMessage)
       .subscribe((response) => {
-        this.loraDownlinkMessage = response;
+        this.loraDownlinkMessage = response.message;
       });
   }
 }

@@ -36,6 +36,8 @@ export class LoraConfigComponent
   loading: boolean;
   loraConfigSearch: string;
   displayDialog: boolean;
+  displayInfoDialog;
+  displayInfoDialogMessage = '';
 
   @ViewChild("table", { static: false }) table: Table;
 
@@ -162,6 +164,14 @@ export class LoraConfigComponent
       this.loraConfigForm.patchValue({ ...this.loraConfig });
       this.displayDialog = true;
     }
+  }
+
+  restartLoraConnection() {
+    this.displayInfoDialogMessage = '';
+    this.loraConfigService.restartLoraConnection().then(resp => {
+      this.displayInfoDialogMessage = 'Sucessfully restarted connection to LORA application.';
+      this.displayInfoDialog = true;
+    });
   }
 
   cloneLoraConfig(c: LoraConfig): LoraConfig {

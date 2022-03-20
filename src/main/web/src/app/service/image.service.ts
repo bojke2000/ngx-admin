@@ -10,7 +10,7 @@ export class ImageService extends AbstractService {
     super(http);
   }
 
-  getURL(customerId: number) {
+  getURL(customerId: string) {
     return `${this.url}/${customerId}?rand=${new Date().getTime()}`;
   }
 }

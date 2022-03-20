@@ -95,7 +95,7 @@ export class UserCardDetailsComponent
 
     if (this.initialized) {
       this.loadPage(0, 7, this.sortBy + "," + this.sortOrder);
-      this.img = imageService.getURL(1);
+      this.img = imageService.getURL(this.customerId);
     } else {
       this.initialized = true;
     }
@@ -207,6 +207,6 @@ export class UserCardDetailsComponent
 
   onDialogImageShow(): void {
     const { imageService } = this;
-    this.img = imageService.getURL(1);
+    this.img = imageService.getURL(this.customerId);
   }
 }

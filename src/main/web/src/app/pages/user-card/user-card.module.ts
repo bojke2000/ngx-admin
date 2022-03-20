@@ -30,6 +30,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { UserCardComponent } from './user-card.component';
 import { UserCardDetailsComponent } from './user-card-details.component';
 import { UserCardGraphComponent } from './user-card-graph.component';
+import {TooltipModule} from 'primeng/tooltip';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -67,6 +68,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TabViewModule,
     ToggleButtonModule,
     SelectButtonModule,
+    TooltipModule,
     TranslateModule.forRoot({
       loader: {
           provide: TranslateLoader,

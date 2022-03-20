@@ -195,7 +195,12 @@ export class UserCardDetailsComponent
     return { userCardId };
   }
 
-  loadImage() {
+  loadImage(): string {
    return this.imageService.getURL(1);
+  }
+
+  showImage(): boolean {
+    alert('pera');
+    return false;
   }
 }

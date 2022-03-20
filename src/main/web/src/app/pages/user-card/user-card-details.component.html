@@ -223,3 +223,18 @@
   </div>
   <!-- fluid -->
 </p-dialog>
+
+<p-dialog
+  [baseZIndex]="10000"
+  header="{{ 'Image' | translate }}"
+  (onShow)="onDialogImageShow()"
+  [focusOnShow]="false"
+  [responsive]="true"
+  dynamic="true"
+  showEffect="fade"
+  [modal]="true"
+  position="center"
+  [(visible)]="displayImageDialog"
+>
+  <img [src]="img" alt="" />
+</p-dialog>

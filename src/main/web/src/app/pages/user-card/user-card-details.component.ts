@@ -56,7 +56,7 @@ export class UserCardDetailsComponent
   page = undefined;
   rows = undefined;
   initialized = false;
-  img='http://localhost:8081/images/1?rand=' + new Date().getTime();
+  img = "http://localhost:8081/images/1?rand=" + new Date().getTime();
 
   // chart
   data = {};
@@ -65,6 +65,7 @@ export class UserCardDetailsComponent
   displayDialog = false;
   @Output()
   closeFunction = new EventEmitter();
+  displayImageDialog: boolean;
 
   constructor(
     translate: TranslateService,
@@ -84,14 +85,14 @@ export class UserCardDetailsComponent
   }
 
   ngOnInit(): void {
-    const {imageService} = this;
+    const { imageService } = this;
 
     this.img = imageService.getURL(1);
   }
 
   onShow() {
-    const {imageService} = this;
-    
+    const { imageService } = this;
+
     if (this.initialized) {
       this.loadPage(0, 7, this.sortBy + "," + this.sortOrder);
       this.img = imageService.getURL(1);
@@ -196,11 +197,16 @@ export class UserCardDetailsComponent
   }
 
   loadImage(): string {
-   return this.imageService.getURL(1);
+    return this.imageService.getURL(1);
   }
 
   showImage(): boolean {
-    alert('pera');
+    this.displayImageDialog = true;
     return false;
+  }
+
+  onDialogImageShow(): void {
+    const { imageService } = this;
+    this.img = imageService.getURL(1);
   }
 }

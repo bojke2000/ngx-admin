@@ -249,7 +249,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
     this.userCardService
       .findBy(this.getSearchCriteria(), pageable)
       .then((ngresp: NgPrimeGridResponse) => {
-        this.userCards = ngresp.data;
+        this.userCards = this.processResponse(ngresp);
         this.totalRecords = ngresp.totalRecords;
         this.loading = false;
       });
@@ -328,12 +328,28 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
     this.userCardService
       .findBy(this.getSearchCriteria(), this.getPageable())
       .then((ngresp: NgPrimeGridResponse) => {
-        this.userCards = ngresp.data;
+        const data = this.processResponse(ngresp);
+        this.userCards = data;
         this.totalRecords = ngresp.totalRecords;
         this.loading = false;
       });
 
     this.getSummaryData();
+  }
+
+  private processResponse(ngresp: NgPrimeGridResponse) {
+    return ngresp.data.map(elem => {
+      elem.usageCurrent = this.round(elem.usageCurrent);
+      elem.usageCurrentReverse = this.round(elem.usageCurrentReverse);
+      elem.usageCurrentMonth = this.round(elem.usageCurrentMonth);
+      elem.usageAverage = this.round(elem.usageAverage);
+      elem.diffLastRead = this.round(elem.diffLastRead);
+      return elem;
+    });
+  }
+
+  private round(value: number): any {
+    return Math.round(value * 100) / 100;
   }
 
   getSearchCriteria() {

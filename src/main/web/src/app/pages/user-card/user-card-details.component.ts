@@ -1,27 +1,23 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 
-import { AbstractComponent } from '../../AbstractComponent';
-import { LazyLoadEvent } from 'primeng/api';
-import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
-import { TranslateService } from '@ngx-translate/core';
-import { UsageHistoryService } from '../../service/usage-history.service';
-import { UserCard } from '../../domain/user-card';
-import { UserCardService } from './../../service/user-card.service';
+import { AbstractComponent } from "../../AbstractComponent";
+import { LazyLoadEvent } from "primeng/api";
+import { NgPrimeGridResponse } from "../../domain/ngprime-grid-response";
+import { TranslateService } from "@ngx-translate/core";
+import { UsageHistoryService } from "../../service/usage-history.service";
+import { UserCard } from "../../domain/user-card";
+import { UserCardService } from "./../../service/user-card.service";
+import { ImageService } from "../../service/image.service";
 
 @Component({
-  selector: 'ngx-user-card-details',
-  templateUrl: './user-card-details.component.html',
-  styleUrls: ['./user-card-details.component.css'],
+  selector: "ngx-user-card-details",
+  templateUrl: "./user-card-details.component.html",
+  styleUrls: ["./user-card-details.component.css"],
 })
 export class UserCardDetailsComponent
   extends AbstractComponent
-  implements OnInit {
+  implements OnInit
+{
   customerId = undefined;
   customerName = undefined;
   address = undefined;
@@ -38,28 +34,29 @@ export class UserCardDetailsComponent
   @Input()
   userCardId = undefined;
   cols = [
-    { field: 'usageCurrent', header: 'Watermeter Status', width: '70px' },
+    { field: "usageCurrent", header: "Watermeter Status", width: "70px" },
     {
-      field: 'usageCurrentReverse',
-      header: 'Reverse Flow Status',
-      width: '70px',
+      field: "usageCurrentReverse",
+      header: "Reverse Flow Status",
+      width: "70px",
     },
     {
-      field: 'usageCurrentMonth',
-      header: 'Status on day of reading',
-      width: '70px',
+      field: "usageCurrentMonth",
+      header: "Status on day of reading",
+      width: "70px",
     },
     //{ field: 'usageAverage', header: 'Average Usage', width: '70px' },
-    { field: 'readTimestamp', header: 'Read Datetime', width: '70px' },
+    { field: "readTimestamp", header: "Read Datetime", width: "70px" },
   ];
   usageHistory = [];
   totalRecords = 0;
   loading = false;
-  sortBy = 'id';
-  sortOrder = 'desc';
+  sortBy = "id";
+  sortOrder = "desc";
   page = undefined;
   rows = undefined;
   initialized = false;
+  img='http://localhost:8081/images/1?rand=' + new Date().getTime();
 
   // chart
   data = {};
@@ -72,7 +69,8 @@ export class UserCardDetailsComponent
   constructor(
     translate: TranslateService,
     private readonly userCardService: UserCardService,
-    private readonly usageHistoryService: UsageHistoryService
+    private readonly usageHistoryService: UsageHistoryService,
+    private readonly imageService: ImageService
   ) {
     super(translate);
   }
@@ -85,27 +83,34 @@ export class UserCardDetailsComponent
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const {imageService} = this;
+
+    this.img = imageService.getURL(1);
+  }
 
   onShow() {
+    const {imageService} = this;
+    
     if (this.initialized) {
-      this.loadPage(0, 7, this.sortBy + ',' + this.sortOrder);
+      this.loadPage(0, 7, this.sortBy + "," + this.sortOrder);
+      this.img = imageService.getURL(1);
     } else {
       this.initialized = true;
     }
 
     this.userCardService.getById(this.userCardId).then((dto: UserCard) => {
       this.customerId = dto.customerId;
-      this.address = dto.address + ' ' + dto.addressNo;
+      this.address = dto.address + " " + dto.addressNo;
       this.addressNo = dto.addressNo;
       this.customerName = dto.customerName;
       this.deviceId = dto.deviceId;
       this.gsmId = dto.gsmId;
-      this.usageCurrent = dto.usageCurrent;
-      this.usageCurrentReverse = dto.usageCurrentReverse;
-      this.usageCurrentMonth = dto.usageCurrentMonth;
+      this.usageCurrent = this.round(dto.usageCurrent);
+      this.usageCurrentReverse = this.round(dto.usageCurrentReverse);
+      this.usageCurrentMonth = this.round(dto.usageCurrentMonth);
       this.readTimestamp = dto.readTimestamp;
-      this.diffLastRead = dto.diffLastRead;
+      this.diffLastRead = this.round(dto.diffLastRead);
       this.magneticSabotageTime = dto.magneticSabotageTime;
     });
 
@@ -115,29 +120,29 @@ export class UserCardDetailsComponent
         data.push(el.usageCurrentMonth);
       }
 
-      const label = this.translate.instant('Monthly Usage')
-        ? this.translate.instant('Monthly Usage')
-        : 'Monthly Usage';
+      const label = this.translate.instant("Monthly Usage")
+        ? this.translate.instant("Monthly Usage")
+        : "Monthly Usage";
       this.data = {
         labels: [
-          'Januar',
-          'Februar',
-          'Mart',
-          'April',
-          'Maj',
-          'Jun',
-          'Juli',
-          'August',
-          'Septembar',
-          'Oktobar',
-          'Novembar',
-          'Decembar',
+          "Januar",
+          "Februar",
+          "Mart",
+          "April",
+          "Maj",
+          "Jun",
+          "Juli",
+          "August",
+          "Septembar",
+          "Oktobar",
+          "Novembar",
+          "Decembar",
         ],
         datasets: [
           {
             label,
-            backgroundColor: '#9CCC65',
-            borderColor: '#7CB342',
+            backgroundColor: "#9CCC65",
+            borderColor: "#7CB342",
             data,
           },
         ],
@@ -150,22 +155,37 @@ export class UserCardDetailsComponent
     this.usageHistoryService
       .findBy(this.getSearchCriteria(), pageable)
       .then((ngresp: NgPrimeGridResponse) => {
-        this.usageHistory = ngresp.data;
+        this.usageHistory = this.processResponse(ngresp);
         this.totalRecords = ngresp.totalRecords;
         this.loading = false;
       });
   }
 
+  private processResponse(ngresp: NgPrimeGridResponse): any[] {
+    return ngresp.data.map((elem) => {
+      elem.usageCurrent = this.round(elem.usageCurrent);
+      elem.usageCurrentReverse = this.round(elem.usageCurrentReverse);
+      elem.usageCurrentMonth = this.round(elem.usageCurrentMonth);
+      elem.usageAverage = this.round(elem.usageAverage);
+      elem.diffLastRead = this.round(elem.diffLastRead);
+      return elem;
+    });
+  }
+
+  private round(value: number): any {
+    return Math.round(value * 100) / 100;
+  }
+
   loadUsageHistoryLazy(event: LazyLoadEvent) {
     this.loading = true;
-    this.sortBy = 'readTimestamp';
-    this.sortOrder = 'desc';
+    this.sortBy = "readTimestamp";
+    this.sortOrder = "desc";
     this.page = event.first / event.rows;
     this.rows = event.rows;
     this.loadPage(
       event.first / event.rows,
       event.rows,
-      this.sortBy + ',' + this.sortOrder
+      this.sortBy + "," + this.sortOrder
     );
   }
 
@@ -173,5 +193,9 @@ export class UserCardDetailsComponent
     const { userCardId } = this;
 
     return { userCardId };
+  }
+
+  loadImage() {
+   return this.imageService.getURL(1);
   }
 }

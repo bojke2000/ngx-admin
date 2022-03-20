@@ -59,6 +59,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ImportLogService } from "./service/import-log.service";
 import { environment } from '../environments/environment';
 import { LoraDownlinkService } from "./service/lora-downlink.service";
+import { ImageService } from "./service/image.service";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/');
@@ -167,6 +168,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     UsageHistoryService,
     LoraDownlinkService,
     ImportLogService,
+    ImageService,
     { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true },
     { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: () => false },
   ],

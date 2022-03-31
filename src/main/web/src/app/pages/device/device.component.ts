@@ -576,13 +576,15 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   }
 
   delete() {
-    this.userCardService
+    if (confirm(this.translate.instant("Are you sure?"))) {
+      this.userCardService
       .deleteUserCard(this.device)
       .pipe(takeUntil(this.destroy$))
       .subscribe((val) => {
         this.displayDialog = false;
         this.loadPageable();
       });
+    }
   }
 
   loadStaticData() {

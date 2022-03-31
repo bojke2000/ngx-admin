@@ -84,18 +84,13 @@ export class UserCardDetailsComponent
     }
   }
 
-  ngOnInit(): void {
-    const { imageService } = this;
-
-    this.img = imageService.getURL(1);
-  }
+  ngOnInit(): void {}
 
   onShow() {
     const { imageService } = this;
 
     if (this.initialized) {
       this.loadPage(0, 7, this.sortBy + "," + this.sortOrder);
-      this.img = imageService.getURL(this.customerId);
     } else {
       this.initialized = true;
     }
@@ -113,6 +108,7 @@ export class UserCardDetailsComponent
       this.readTimestamp = dto.readTimestamp;
       this.diffLastRead = this.round(dto.diffLastRead);
       this.magneticSabotageTime = dto.magneticSabotageTime;
+      this.img = imageService.getURL(this.customerId);
     });
 
     this.usageHistoryService.getCharData(this.userCardId).then((resp) => {
@@ -194,10 +190,6 @@ export class UserCardDetailsComponent
     const { userCardId } = this;
 
     return { userCardId };
-  }
-
-  loadImage(): string {
-    return this.imageService.getURL(1);
   }
 
   showImage(): boolean {

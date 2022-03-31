@@ -19,6 +19,7 @@ import { UserCardColumnService } from "../../service/user-card-column.service";
 import { UserCardService } from "../../service/user-card.service";
 import { UserCardUsage } from "./../../domain/user-card-usage";
 import { saveAs as importedSaveAs } from "file-saver";
+import { environment } from "../../../environments/environment";
 
 const CURRENT_VIEW = 1;
 
@@ -95,14 +96,14 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
     translate: TranslateService
   ) {
     super(translate);
-    translate.setDefaultLang("rs");
-    translate.use("rs");
+    translate.setDefaultLang(environment.language);
+    translate.use(environment.language);
   }
 
   ngOnInit(): void {
     const { translate } = this;
 
-    translate.use("rs");
+    translate.use(environment.language);
 
     this.cols = [];
 

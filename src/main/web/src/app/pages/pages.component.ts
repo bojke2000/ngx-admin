@@ -7,6 +7,7 @@ import { UserAccountService } from "../service/user-account.service";
 import { NbAuthJWTToken, NbAuthService } from "@nebular/auth";
 import { takeUntil } from "rxjs/operators";
 import { Subject, of } from "rxjs";
+import { environment } from "../../environments/environment";
 
 @Component({
   selector: "ngx-pages",
@@ -29,8 +30,8 @@ export class PagesComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private authService: NbAuthService
   ) {
-    translate.setDefaultLang("rs");
-    translate.use("rs");
+    translate.setDefaultLang(environment.language);
+    translate.use(environment.language);
 
     this.authService
       .onTokenChange()

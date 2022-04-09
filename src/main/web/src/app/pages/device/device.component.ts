@@ -459,8 +459,8 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
     selected = this.multipliers.filter(
       (multiplier) =>
-        parseInt(multiplier.value) ===
-        parseInt(this.device.multiplier.toString())
+        parseFloat(multiplier.value) ===
+        parseFloat(this.device.multiplier.toString())
     );
     this.deviceForm.patchValue({
       multiplier: selected && selected.length > 0 ? selected[0] : undefined,

@@ -195,14 +195,16 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
     this.profiles = [
       { label: "DN15", value: "0" },
-      { label: "DN25", value: "1" },
-      { label: "DN32", value: "2" },
-      { label: "DN40", value: "3" },
-      { label: "DN50", value: "4" },
-      { label: "DN80", value: "5" },
-      { label: "DN100", value: "6" },
-      { label: "DN150", value: "7" },
-      { label: "DN200", value: "8" },
+      { label: "DN20", value: "1" },
+      { label: "DN25", value: "2" },
+      { label: "DN32", value: "3" },
+      { label: "DN40", value: "4" },
+      { label: "DN50", value: "5" },
+      { label: "DN65", value: "6" },
+      { label: "DN80", value: "7" },
+      { label: "DN100", value: "8" },
+      { label: "DN150", value: "9" },
+      { label: "DN200", value: "10" },
     ];
 
     this.mediums = [
@@ -678,39 +680,39 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   }
 
   onMultiplierChange(evt) {
-    switch (evt.value.label) {
-      case "0.1":
-        this.deviceForm.patchValue({ profile: this.profiles[7] });
-        break;
-      case "0.01":
-        this.deviceForm.patchValue({ profile: this.profiles[3] });
-        break;
-      case "0.001":
-        this.deviceForm.patchValue({ profile: this.profiles[0] });
-        break;
-    }
+    // switch (evt.value.label) {
+    //   case "0.1":
+    //     this.deviceForm.patchValue({ profile: this.profiles[5] });
+    //     break;
+    //   case "0.01":
+    //     this.deviceForm.patchValue({ profile: this.profiles[6] });
+    //     break;
+    //   case "0.001":
+    //     this.deviceForm.patchValue({ profile: this.profiles[0] });
+    //     break;
+    // }
   }
 
   onProfileChange(evt) {
-    switch (evt.value.label) {
-      case "DN15":
-      case "DN20":
-      case "DN25":
-        this.deviceForm.patchValue({ multiplier: this.multipliers[0] });
-        break;
-      case "DN32":
-      case "DN40":
-        this.deviceForm.patchValue({ multiplier: this.multipliers[1] });
-        break;
-      case "DN50":
-      case "DN65":
-      case "DN80":
-      case "DN100":
-      case "DN150":
-      case "DN200":
-        this.deviceForm.patchValue({ multiplier: this.multipliers[2] });
-        break;
-    }
+    // switch (evt.value.label) {
+    //   case "DN15":
+    //   case "DN20":
+    //   case "DN25":
+    //     this.deviceForm.patchValue({ multiplier: this.multipliers[0] });
+    //     break;
+    //   case "DN32":
+    //   case "DN40":
+    //     this.deviceForm.patchValue({ multiplier: this.multipliers[1] });
+    //     break;
+    //   case "DN50":
+    //   case "DN65":
+    //   case "DN80":
+    //   case "DN100":
+    //   case "DN150":
+    //   case "DN200":
+    //     this.deviceForm.patchValue({ multiplier: this.multipliers[2] });
+    //     break;
+    // }
   }
 
   onRowSelect(event: any) {

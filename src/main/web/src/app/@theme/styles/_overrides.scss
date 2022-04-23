@@ -30,13 +30,13 @@
 }
 
 .nb-theme-default nb-card.status-info nb-card-header {
-  background-color: #0072C6 !important;
-  border-bottom-color: #0072C6 !important;
+  background-color: #006978 !important;
+  border-bottom-color: #006978 !important;
 }
 
 .nb-theme-default nb-checkbox.status-basic .custom-checkbox.checked {
-  background-color: #0072C6 !important;
-  border-color: #0072C6 !important;
+  background-color: #006978 !important;
+  border-color: #006978 !important;
 }
 
 .ui-datatable thead th {
@@ -90,7 +90,9 @@ body .ui-widget {
 }
 
 body .ui-button {
-  background-color: #0072C6 !important;
+  background-color: #006978 !important;
+  color: white !important;
+  border: 1px solid #006978 !important;
 }
 
 body .ui-table .ui-table-thead > tr > th {
@@ -98,7 +100,7 @@ body .ui-table .ui-table-thead > tr > th {
   border: 0 !important;
   border-bottom: 1px solid #c8c8c8 !important;
   color: white !important;
-  background-color: #0072C6 !important;
+  background-color: #006978 !important;
   font-weight: 500 !important;
    height: 54px !important;
 }
@@ -118,12 +120,12 @@ body .ui-table .ui-table-tbody > tr > td {
 
 body .ui-table .ui-table-tbody > tr:nth-child(even).ui-state-highlight {
   background-color: lightgray !important;
-   color: #ffffff;
+   color: white;
 }
 
 body .ui-table .ui-table-tbody > tr.ui-state-highlight {
   background-color: lightgray !important;;
-  color: #ffffff;
+  color: white;
 }
 
 body .ui-paginator {
@@ -134,12 +136,17 @@ body .ui-paginator {
 
 body .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
   background-color: #dee4ea !important;
-  color: #ffffff !important;
+  color: white !important;
 }
 
 body .ui-table .ui-sortable-column.ui-state-highlight {
-  background-color: #0072C6 !important;
+  background-color: #006978 !important;
   color: white !important;
+}
+
+body .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
+  border-radius: 50%;
+  border-color: white !important;
 }
 
 body .ui-table .ui-sortable-column .ui-sortable-column-icon {
@@ -190,7 +197,7 @@ body .ui-dropdown .ui-inputtext  .ui-multiselect {
 
 body .ui-dialog .ui-dialog-titlebar {
   color: white !important;
-  background-color: #0072C6 !important;
+  background-color: #006978 !important;
   font-weight: 500 !important;
   font-size: 13px !important;
 }
@@ -226,3 +233,30 @@ body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon {
   padding: 2.5em 2.5em !important;
 }
 
+.nb-theme-corporate nb-layout.window-mode .layout nb-layout-header {
+  max-width: 1920px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+[_nghost-fvx-c114] nb-layout-header.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1040;
+}
+[_nghost-fvx-c114] nb-layout-header {
+  display: block;
+}
+.nb-theme-corporate nb-layout-header {
+  background-color: #006978 !important;
+  color: white;
+}
+
+.nb-theme-corporate nb-card.status-info nb-card-header {
+  background-color: #006978 !important;
+  border-bottom-width: 0;
+  border-bottom-color: #006978 !important;
+  color: white !important;
+}

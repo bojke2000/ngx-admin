@@ -41,7 +41,7 @@
                 [monthNavigator]="true"
                 yearRange="2000:2030"
                 dateFormat="dd.mm.yy"
-                showIcon="true"
+                showIcon="false"
               ></p-calendar>
               <label for="from">{{ "From" | translate }}</label>
             </span>
@@ -55,7 +55,7 @@
                 [monthNavigator]="true"
                 yearRange="2000:2030"
                 dateFormat="dd.mm.yy"
-                showIcon="true"
+                showIcon="false"
               ></p-calendar>
               <label for="to">{{ "To" | translate }}</label>
             </span>
@@ -65,14 +65,12 @@
           <div class="ui-g-6">
             <p-button
               (click)="search()"
-              icon="fa fa-search"
               label="{{ 'Search' | translate }}"
             ></p-button>
           </div>
           <div class="ui-g-6">
             <p-button
               (click)="clear()"
-              icon="fa fa-refresh"
               label="&nbsp;&nbsp;{{ 'Clear' | translate }}"
             ></p-button>
           </div>

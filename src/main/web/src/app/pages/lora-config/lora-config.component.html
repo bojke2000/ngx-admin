@@ -18,13 +18,11 @@
 
       <div class="button-positioner">
         <p-button
-        icon="fa fa-play"
         (click)="restartLoraConnection()"
         label="{{ translate.get('Restart Lora Connection') | async }}"
        ></p-button>
        &nbsp;&nbsp;
         <p-button
-          icon="fa fa-plus"
           (click)="showDialogToEdit()"
           label="{{ translate.get('Edit Lora Config') | async }}"
         >
@@ -159,7 +157,6 @@
               <button
                 type="button"
                 pButton
-                icon="fa fa-check"
                 (click)="save()"
                 label="Save"
               ></button>

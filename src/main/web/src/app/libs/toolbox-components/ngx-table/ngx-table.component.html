@@ -32,7 +32,7 @@ selectionMode="single"
 <ng-template pTemplate="header" let-columns>
   <tr>
     <th *ngFor="let col of columns " [pSortableColumn]="col.field">
-      {{col.header | translate}}<p-sortIcon *ngIf="sortable === true" [field]="col.field"></p-sortIcon>
+      {{col.header | translate}}<!-- <p-sortIcon *ngIf="sortable === true" [field]="col.field"></p-sortIcon> -->
     </th>
   </tr>
 </ng-template>

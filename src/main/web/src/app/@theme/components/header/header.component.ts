@@ -44,7 +44,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     },
   ];
 
-  currentTheme = 'default';
+  currentTheme = 'dark';
   tag = 'profile-context-menu';
 
   userMenu = [{ title: 'Profile' }, { title: 'Log out' }];

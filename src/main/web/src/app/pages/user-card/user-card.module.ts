@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { NbButtonModule, NbCardModule, NbCheckboxModule, NbToggleModule } from '@nebular/theme';
+import { NbAccordionModule, NbButtonModule, NbCardModule, NbCheckboxModule, NbToggleModule } from '@nebular/theme';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -43,6 +43,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     NbToggleModule,
     NbCheckboxModule,
     CardModule,
+    NbAccordionModule,
     FieldsetModule,
     NbButtonModule,
     ButtonModule,

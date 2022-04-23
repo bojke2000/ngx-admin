@@ -49,14 +49,12 @@
           <div class="ui-g-6">
             <p-button
               (click)="search()"
-              icon="fa fa-search"
               label="{{ 'Search' | translate }}"
             ></p-button>
           </div>
           <div class="ui-g-6">
             <p-button
               (click)="clear()"
-              icon="fa fa-refresh"
               label="&nbsp;&nbsp;{{ 'Clear' | translate }}"
             ></p-button>
           </div>
@@ -168,7 +166,7 @@
         <div class="footer-div">
           <span class="fotter-loraDownlinkMessage" >{{loraDownlinkMessage | translate}}</span>
           <div class="ui-dialog-buttonpane ui-helper-clearfix">
-            <button type="button" pButton icon="fa fa-check" (click)="sendLoradownlinkMessage()" label="Send"></button>
+            <button type="button" pButton (click)="sendLoradownlinkMessage()" label="Send"></button>
           </div>
         </div>
       </p-footer>

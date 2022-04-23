@@ -5,14 +5,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./footer.component.scss'],
   template: `
     <span class="created-by">
-      <b><a href="http://www.insa.rs/rs" target="_blank">INSA</a></b> - 2020
+      <b><a href="http://www.ocitanium.com" target="_blank">Ocitanium</a></b> - All rights reserved 2022
     </span>
-    <div class="socials">
+    <!-- <div class="socials">
       <a href="#" target="_blank" class="ion ion-social-github"></a>
       <a href="#" target="_blank" class="ion ion-social-facebook"></a>
       <a href="#" target="_blank" class="ion ion-social-twitter"></a>
       <a href="#" target="_blank" class="ion ion-social-linkedin"></a>
-    </div>
+    </div> -->
   `,
 })
 export class FooterComponent {

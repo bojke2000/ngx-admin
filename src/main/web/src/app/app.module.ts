@@ -53,16 +53,17 @@ import { UserCardColumnService } from "./service/user-card-column.service";
 import { UserCardService } from "./service/user-card.service";
 import { LoraConfigService } from "./service/lora-config.service";
 import { DeviceTypeService } from "./service/device-type.service";
-import { HttpClient } from '@angular/common/http';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from "@angular/common/http";
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { ImportLogService } from "./service/import-log.service";
-import { environment } from '../environments/environment';
+import { environment } from "../environments/environment";
 import { LoraDownlinkService } from "./service/lora-downlink.service";
 import { ImageService } from "./service/image.service";
+import { LoginModule } from "./pages/login/login.module";
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/');
+  return new TranslateHttpLoader(http, "./assets/i18n/");
 }
 
 @NgModule({
@@ -74,9 +75,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppRoutingModule,
     TranslateModule.forRoot({
       loader: {
-          provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient],
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
       },
     }),
     NbButtonModule,
@@ -87,6 +88,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     NbDialogModule.forRoot(),
     NbWindowModule.forRoot(),
     NbToastrModule.forRoot(),
+    LoginModule,
     NbChatModule.forRoot({
       messageGoogleMapKey: "AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY",
     }),

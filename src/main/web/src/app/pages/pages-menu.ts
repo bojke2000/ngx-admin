@@ -60,7 +60,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
         home: false,
       },
       {
-        title: 'Cities',
+        title: 'Organisations',
         icon: 'keypad-outline',
         link: '/pages/city',
         home: false,

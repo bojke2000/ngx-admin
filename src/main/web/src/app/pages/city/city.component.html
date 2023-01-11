@@ -2,7 +2,7 @@
   <nb-card style="width: 100%">
     <nb-card-body>
 
-      <ngx-title-header title='City'></ngx-title-header>
+      <ngx-title-header title="{{ translate.get('Organisations') | async }}"></ngx-title-header>
 
       <ngx-table [columns]="cols" [value]="cities$ | async" (lazyLoad)="loadCitiesLazy($event)" [selection]="selectedCity"
         dataKey="id" [totalRecords]="totalRecords" [loading]="loading" (rowSelect)="onRowSelect($event)"
@@ -24,29 +24,65 @@
           <form [formGroup]="cityForm" (ngSubmit)="save()">
             <div class="ui-g-12">
               <div class="ui-g-4">
-                <label for="account">City:</label>
+                <label for="name">{{ translate.get('City') | async }}:</label>
               </div>
               <div class="ui-g-8">
                 <input pInputText type="name" id="name" formControlName="name"
-                  onclick="this.setSelectionRange(0, this.value.length)" autofocus class="form-control"
-                  [ngClass]="{ 'is-invalid': submitted && f.account.errors }" />
-                <div *ngIf="submitted && f.account.errors" class="invalid-feedback">
-                  <div *ngIf="f.account.errors.required">Name is required</div>
-                </div>
+                  onclick="this.setSelectionRange(0, this.value.length)" autofocus class="form-control" />
               </div>
             </div>
             <div class="ui-g-12">
               <div class="ui-g-4">
-                <label for="country">Country:</label>
+                <label for="organisation">{{ translate.get('Organisation') | async }}:</label>
               </div>
               <div class="ui-g-8">
-                <input pInputText id="country" formControlName="country" readonly="true"
-                  onclick="this.setSelectionRange(0, this.value.length)" class="form-control"
-                  [ngClass]="{ 'is-invalid': submitted && f.country.errors }" />
-                <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
-                  <div *ngIf="f.country.errors.required">Country is required</div>
-                  <div *ngIf="f.country.errors.minlength">Country must be at least 6 characters</div>
-                </div>
+                <input pInputText id="organisation" formControlName="organisation"
+                  onclick="this.setSelectionRange(0, this.value.length)" class="form-control" />
+              </div>
+            </div>
+            <div class="ui-g-12">
+              <div class="ui-g-4">
+                <label for="address1">{{ translate.get('Address') | async }} 1:</label>
+              </div>
+              <div class="ui-g-8">
+                <input pInputText id="address1" formControlName="address1"
+                  onclick="this.setSelectionRange(0, this.value.length)" class="form-control" />
+              </div>
+            </div>
+            <div class="ui-g-12">
+              <div class="ui-g-4">
+                <label for="address2">{{ translate.get('Address') | async }} 2:</label>
+              </div>
+              <div class="ui-g-8">
+                <input pInputText id="address2" formControlName="address2"
+                  onclick="this.setSelectionRange(0, this.value.length)" class="form-control" />
+              </div>
+            </div>
+            <div class="ui-g-12">
+              <div class="ui-g-4">
+                <label for="phone">{{ translate.get('Phone') | async }}:</label>
+              </div>
+              <div class="ui-g-8">
+                <input pInputText id="phone" formControlName="phone"
+                  onclick="this.setSelectionRange(0, this.value.length)" class="form-control" />
+              </div>
+            </div>
+            <div class="ui-g-12">
+              <div class="ui-g-4">
+                <label for="email">{{ translate.get('Email') | async }}:</label>
+              </div>
+              <div class="ui-g-8">
+                <input pInputText id="email" formControlName="email"
+                  onclick="this.setSelectionRange(0, this.value.length)" class="form-control" />
+              </div>
+            </div>
+            <div class="ui-g-12">
+              <div class="ui-g-4">
+                <label for="lang">{{ translate.get('Language') | async }}:</label>
+              </div>
+              <div class="ui-g-8">
+                <input pInputText id="lang" formControlName="lang"
+                  onclick="this.setSelectionRange(0, this.value.length)" class="form-control" />
               </div>
             </div>
           </form>

@@ -45,13 +45,23 @@ export class CityComponent extends AbstractComponent implements OnInit, OnDestro
     this.cols = [
       { field: 'id', header: '#', width: '50px' },
       { field: 'name', header: 'Name', width: '120px' },
-      { field: 'country', header: 'Country', width: '120px' },
+      { field: 'organisation', header: 'Organisation', width: '120px' },
+      { field: 'address1', header: 'Address1', width: '120px' },
+      { field: 'address2', header: 'Address2', width: '120px' },
+      { field: 'phone', header: 'Phone', width: '120px' },
+      { field: 'email', header: 'Email', width: '120px' },
+      { field: 'lang', header: 'Language', width: '120px' },
     ];
 
     this.cityForm = this.formBuilder.group({
       id : [''],
       name: ['', Validators.required],
-      country: ['', Validators.required],
+      organisation: [''],
+      address1: [''],
+      address2: [''],
+      phone: [''],
+      email: [''],
+      lang: [''],
     });
 
     const pageable = {page: 1, size: 20, sort: 'id'};
@@ -164,13 +174,19 @@ export class CityComponent extends AbstractComponent implements OnInit, OnDestro
     const city = {
       id: undefined,
       name: undefined,
-      country: undefined,
+      organisation: undefined,
+      address1: undefined,
+      address2: undefined,
+      phone: undefined,
+      email: undefined,
+      lang: undefined,
     };
 
     for (const prop in c) {
-      if (c[prop] !== undefined) {
-        city[prop] = c[prop];
-      }
+      city[prop] = (c[prop] !== undefined) ? c[prop] : "";
+      // if (c[prop] !== undefined) {
+      //   city[prop] = c[prop];
+      // }
     }
 
     return city;

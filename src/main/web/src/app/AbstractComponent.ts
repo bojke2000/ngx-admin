@@ -1,6 +1,5 @@
-import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { environment } from '../environments/environment';
+import { Subject } from 'rxjs';
 
 export abstract class AbstractComponent {
   destroy$: Subject<void>;
@@ -8,8 +7,6 @@ export abstract class AbstractComponent {
   translate: TranslateService;
   constructor(translateService: TranslateService) {
     this.translate = translateService;
-    this.translate.setDefaultLang(environment.language);
-    this.translate.use(environment.language);
     this.destroy$ = new Subject();
   }
 }

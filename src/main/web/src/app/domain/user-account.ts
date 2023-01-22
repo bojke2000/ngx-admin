@@ -8,4 +8,5 @@ export interface UserAccount {
   city: string;
   active: string;
   lastLogin: string;
+  lang?: string;
 }

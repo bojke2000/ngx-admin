@@ -2,24 +2,23 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { LazyLoadEvent, SelectItem } from "primeng/api/public_api";
 import { Observable, of } from "rxjs";
 
+import { Router } from "@angular/router";
+import { TranslateService } from "@ngx-translate/core";
+import { saveAs as importedSaveAs } from "file-saver";
+import { Table } from "primeng/table";
 import { AbstractComponent } from "../../AbstractComponent";
-import { AddressService } from "../../service/address.service";
 import { Grid } from "../../domain/grid";
-import { MunicipalityService } from "../../service/municipailty.service";
 import { NgPrimeGridResponse } from "../../domain/ngprime-grid-response";
+import { UserCard } from "../../domain/user-card";
 import { NgxTableComponent } from "../../libs/toolbox-components/ngx-table/ngx-table.component";
-import { Pageable } from "./../../domain/pageable";
+import { AddressService } from "../../service/address.service";
+import { MunicipalityService } from "../../service/municipailty.service";
 import { ReadingBookService } from "../../service/reading-book.service";
 import { RouteService } from "../../service/route.service";
-import { Router } from "@angular/router";
-import { Table } from "primeng/table";
-import { TranslateService } from "@ngx-translate/core";
-import { UserCard } from "../../domain/user-card";
 import { UserCardColumnService } from "../../service/user-card-column.service";
 import { UserCardService } from "../../service/user-card.service";
+import { Pageable } from "./../../domain/pageable";
 import { UserCardUsage } from "./../../domain/user-card-usage";
-import { saveAs as importedSaveAs } from "file-saver";
-import { environment } from "../../../environments/environment";
 
 const CURRENT_VIEW = 1;
 
@@ -96,17 +95,12 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
     translate: TranslateService
   ) {
     super(translate);
-    translate.setDefaultLang(environment.language);
-    translate.use(environment.language);
   }
 
   ngOnInit(): void {
     const { translate } = this;
 
-    translate.use(environment.language);
-
     this.cols = [];
-
     this.userCardColumnService.findAll(Grid.USER_CARD).then((columns) => {
       this.cols = [...this.cols, ...columns];
     });

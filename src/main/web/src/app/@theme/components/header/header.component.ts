@@ -8,6 +8,7 @@ import { filter, map, takeUntil } from 'rxjs/operators';
 import { AlarmService } from '../../../service/alarm.service';
 import { Router } from '@angular/router';
 import { UserAccountService } from './../../../service/user-account.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'ngx-header',
@@ -58,6 +59,8 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     private breakpointService: NbMediaBreakpointsService,
     private alarmService: AlarmService,
     private userAccountService: UserAccountService,
+
+    private translate: TranslateService,
     private authService: NbAuthService) {
 
     this.authService.onTokenChange()
@@ -76,6 +79,8 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
             const user = result && result.totalRecords > 0 && result.data && result.data.length > 0 ? result.data[0] : undefined;
             this.userMenu[0].title = `${user.role} Profile`;
             this.userAccountService.setLoggerUser(user);
+            this.translate.setDefaultLang(user.lang);
+            this.translate.use(user.lang);
           });
         }
 

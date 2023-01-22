@@ -30,8 +30,8 @@ export class PagesComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private authService: NbAuthService
   ) {
-    translate.setDefaultLang(environment.language);
-    translate.use(environment.language);
+    // translate.setDefaultLang(environment.language);
+    // translate.use(environment.language);
 
     this.authService
       .onTokenChange()
@@ -55,6 +55,8 @@ export class PagesComponent implements OnInit, OnDestroy {
                   ? result.data[0]
                   : undefined;
               this.userAccountService.setLoggerUser(user);
+              this.translate.setDefaultLang(user.lang);
+              this.translate.use(user.lang);
 
               const mpp = MENU_ITEMS.filter(
                 (item) =>

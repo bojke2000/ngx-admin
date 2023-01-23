@@ -147,6 +147,7 @@ export class UserAccountComponent extends AbstractComponent implements OnInit, O
   }
 
   showDialogToAdd() {
+    
     this.newUserAccount = true;
     this.submitted = false;
     this.userAccount = {

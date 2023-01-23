@@ -15,6 +15,7 @@ import { distinctUntilChanged, takeUntil } from "rxjs/operators";
 import { AbstractComponent } from "../../AbstractComponent";
 import { LoraConfig } from "../../domain/lora-config";
 import { LoraConfigService } from "../../service/lora-config.service";
+import { UserAccountService } from "../../service/user-account.service";
 
 @Component({
   selector: "ngx-lora-config",
@@ -39,12 +40,16 @@ export class LoraConfigComponent
   displayInfoDialog;
   displayInfoDialogMessage = '';
 
+  isVisible = true;
+
   @ViewChild("table", { static: false }) table: Table;
 
   constructor(
     private loraConfigService: LoraConfigService,
     translate: TranslateService,
     private formBuilder: FormBuilder,
+
+    private userAccountService: UserAccountService,
     private cdr: ChangeDetectorRef
   ) {
     super(translate);
@@ -52,6 +57,8 @@ export class LoraConfigComponent
 
   ngOnInit(): void {
     this.loadLoraConfigs(0, 20, "id,asc");
+
+    this.isVisible = this.userAccountService.isSuperadmin();
 
     this.cols = [
       { field: "id", header: "#", width: "50px" },

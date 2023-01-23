@@ -24,6 +24,7 @@
        ></p-button>
        &nbsp;&nbsp;
         <p-button
+          *ngIf="isVisible"
           icon="fa fa-plus"
           (click)="showDialogToEdit()"
           label="{{ translate.get('Edit Lora Config') | async }}"

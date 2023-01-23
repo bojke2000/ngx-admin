@@ -58,12 +58,29 @@ export class PagesComponent implements OnInit, OnDestroy {
               this.translate.setDefaultLang(user.lang);
               this.translate.use(user.lang);
 
-              const mpp = MENU_ITEMS.filter(
-                (item) =>
-                  item.title !== "Administration" ||
-                  (item.title === "Administration" &&
-                    !this.userAccountService.isUser())
-              );
+              let mpp: any;
+              if  (this.userAccountService.isSuperadmin()) {
+                mpp = MENU_ITEMS;  
+              } else if (this.userAccountService.isUser()) {
+                mpp = MENU_ITEMS.filter(
+                  item =>
+                    item.title !== "Administration"
+                );
+              } else if (this.userAccountService.isAdmin()) {
+                mpp = MENU_ITEMS;  
+                mpp.forEach(item => {
+                  if (item.children !== undefined) {
+                    item.children = item.children.filter(child => 
+                       child.title === "Account Management" 
+                    || child.title === "Column Template"
+                    || child.title === "Devices"
+                    || child.title === "Organisations"
+                    || child.title === "Routes"
+                    || child.title === "Lora Config"
+                    || child.title === "Import Log");
+                  }
+                });
+              }
 
               // mpp - menu per privileges
               mpp.forEach((item) => {

@@ -310,6 +310,10 @@
           </div>
           <div class="button-positioner">
             <p-button
+              *ngIf="(route && route.toString().trim() !== '') 
+              || (readingBook && readingBook.toString().trim() !== '') 
+              || (address && address.toString().trim() !== '') 
+              || (municipality && municipality.toString().trim() !== '')"
               (onClick)="onSummariesButtonClick()"
               label="{{ 'Summary Graph' | translate }}"
             ></p-button>

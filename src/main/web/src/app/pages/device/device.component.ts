@@ -419,7 +419,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       });
     }
     selected = this.mediums.filter(
-      (medium) => medium.label === this.device.medium.toString()
+      (medium) => medium.label === this.translate.instant(this.device.medium.toString())
     );
     this.deviceForm.patchValue({
       medium: selected && selected.length > 0 ? selected[0] : undefined,
@@ -427,7 +427,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
     if (this.device.unit) {
       selected = this.units.filter(
-        (unit) => unit.label === this.device.unit.toString()
+        (unit) => unit.label === this.translate.instant(this.device.unit.toString())
       );
       this.deviceForm.patchValue({
         unit: selected && selected.length > 0 ? selected[0] : undefined,

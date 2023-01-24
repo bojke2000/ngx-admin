@@ -405,6 +405,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
     this.deviceForm.patchValue({ ...this.device });
     this.deviceForm.patchValue({profile: this.profiles[3] });
+    this.deviceForm.patchValue({multiplier: this.multipliers[1] });
     this.displayDialog = true;
   }
 

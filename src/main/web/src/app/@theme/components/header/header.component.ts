@@ -91,7 +91,9 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe(bag => {
         if (bag.item.title === 'Log out') {
           this.authService.logout('email');
+          this.userAccountService.setLoggerUser(undefined);
           this.nbTokenService.clear();
+          this.nbTokenService.tokenChange();
           this.router.navigate(['/']);
         }
       });

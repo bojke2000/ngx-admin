@@ -1,13 +1,11 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
 
-import { MENU_ITEMS } from "./pages-menu";
-import { Subscription } from "rxjs";
-import { TranslateService } from "@ngx-translate/core";
-import { UserAccountService } from "../service/user-account.service";
 import { NbAuthJWTToken, NbAuthService } from "@nebular/auth";
+import { TranslateService } from "@ngx-translate/core";
+import { Subject, Subscription } from "rxjs";
 import { takeUntil } from "rxjs/operators";
-import { Subject, of } from "rxjs";
-import { environment } from "../../environments/environment";
+import { UserAccountService } from "../service/user-account.service";
+import { MENU_ITEMS } from "./pages-menu";
 
 @Component({
   selector: "ngx-pages",
@@ -42,7 +40,6 @@ export class PagesComponent implements OnInit, OnDestroy {
           // here we receive a payload from the token
           // and assigns it to our `user` variable
           const name = payload.sub;
-
           const pageable = { page: 0, size: 20, sort: "username,asc" };
           this.userAccountService
             .searchUserAccounts(name, pageable)
@@ -54,20 +51,20 @@ export class PagesComponent implements OnInit, OnDestroy {
                 result.data.length > 0
                   ? result.data[0]
                   : undefined;
+
               this.userAccountService.setLoggerUser(user);
               this.translate.setDefaultLang(user.lang);
               this.translate.use(user.lang);
 
-              let mpp: any;
+              let mpp = JSON.parse(JSON.stringify(MENU_ITEMS));
+              
               if  (this.userAccountService.isSuperadmin()) {
-                mpp = MENU_ITEMS;  
               } else if (this.userAccountService.isUser()) {
-                mpp = MENU_ITEMS.filter(
+                mpp = mpp.filter(
                   item =>
                     item.title !== "Administration"
                 );
               } else if (this.userAccountService.isAdmin()) {
-                mpp = MENU_ITEMS;  
                 mpp.forEach(item => {
                   if (item.children !== undefined) {
                     item.children = item.children.filter(child => 
@@ -92,7 +89,8 @@ export class PagesComponent implements OnInit, OnDestroy {
                 this.localizeItem(item);
               });
 
-              this.menu = mpp;
+              this.menu = [...mpp];
+              this.cdr.detectChanges();
             });
         }
       });
@@ -104,7 +102,6 @@ export class PagesComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
     this.cdr.detach();
   }
-
   private localizeItem(item) {
     const su = this.translate.get(item.title).subscribe((response) => {
       item.title = response; // update value field here.

@@ -8,6 +8,7 @@ export interface Alarm {
   flowDirection: string;
   memoryThreshold: string;
   residualLeak: string;
+  extremeLeak: string;
   sensor1: string;
   sensor2: string;
   stateLeap: string;

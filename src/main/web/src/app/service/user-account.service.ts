@@ -8,7 +8,7 @@ import { NgPrimeGridResponse } from "../domain/ngprime-grid-response";
 import { Pageable } from "../domain/pageable";
 import { UserAccount } from "../domain/user-account";
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class UserAccountService extends AbstractService {
   private loggedUser: UserAccount;
   private url = this.prefix + "user-accounts";

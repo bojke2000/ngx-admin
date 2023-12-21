@@ -666,7 +666,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   onDeviceTypeChange(evt) {
     this.ddDeviceTypeStatus.filled = true;
     this.zoneDevice = false;
-    this.loraDevice = false;
+    this.deviceForm.patchValue({applicationKey: undefined});
     const val = evt.value.value as string;
     if (val === DeviceComponent.DEVICE_ZOME_DEVICE) {
       this.zoneDevice = true;
@@ -675,6 +675,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       val === DeviceComponent.DEVICE_LORA_VALVE_DEVICE
     ) {
       this.loraDevice = true;
+      this.deviceForm.patchValue({gsmId: undefined});
     }
   }
 

@@ -143,13 +143,16 @@ export class LoraConfigComponent
       return;
     }
 
-    const loraConfigs = [...this.loraConfigs];
+    const loraConfigs = Array.from(this.loraConfigs);
     this.loraConfig = { ...this.loraConfigForm.value };
     this.loraConfigService
       .updateLoraConfig(this.loraConfig)
       .pipe(takeUntil(this.destroy$))
       .subscribe((loraConfig: LoraConfig) => {
-        loraConfigs[0] = loraConfig;
+        const index = loraConfigs.findIndex((el:LoraConfig) => el.id === loraConfig.id);
+        if (index >= 0) {
+          loraConfigs[index] = loraConfig;
+        }
       });
 
     this.loraConfigs = loraConfigs;

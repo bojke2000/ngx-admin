@@ -14,6 +14,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: true,
   },
   {
+    title: 'Zone devices',
+    icon: 'speaker-outline',
+    link: '/pages/alarm',
+    home: true,
+  },
+  {
     title: 'WMBUS Import',
     icon: 'arrowhead-up-outline',
     link: '/pages/import-ado',

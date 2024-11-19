@@ -12,8 +12,8 @@
   "scripts": {
     "ng": "ng",
     "conventional-changelog": "conventional-changelog",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "export  NODE_OPTIONS=--openssl-legacy-provider && ng serve",
+    "build": "export  NODE_OPTIONS=--openssl-legacy-provider && ng build",
     "build:prod": "npm run build -- --prod --aot --outputHashing=all",
     "test": "ng test",
     "test:coverage": "rimraf coverage && npm run test -- --code-coverage",

@@ -17,6 +17,7 @@ import { PagesComponent } from "./pages.component";
 import { RouteComponent } from "./route/route.component";
 import { UserCardComponent } from "./user-card/user-card.component";
 import { WmbusDeviceComponent } from "./wmbus-device/wmbus-device.component";
+import { ZoneDeviceComponent } from "../zone-device/zone-device.component";
 
 
 const routes: Routes = [
@@ -87,6 +88,10 @@ const routes: Routes = [
       {
         path: "import-log",
         component: ImportLogComponent,
+      },
+      {
+        path: "zone-device",
+        component: ZoneDeviceComponent,
       },
       {
         path: "",

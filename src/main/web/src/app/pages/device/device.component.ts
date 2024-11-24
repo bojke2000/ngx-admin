@@ -66,6 +66,8 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   port50Value1 = "";
   port50Value2 = "";
 
+  parent: string;
+
   pageable: {};
   deviceTypes: Option[];
 
@@ -176,6 +178,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       gsmLatitude: [""],
       multiplier: ["", [Validators.required]],
       deviceType: ["", [Validators.required]],
+      parent: [""],
       gsmId: [""],
       applicationKey: [""],
       zoneDevice: [null],
@@ -518,10 +521,27 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     this.displayDialog = true;
   }
 
+  get invalidFields(): string[] {
+    const invalidFields: string[] = [];
+
+    // Iterate through all fields in the form
+    Object.keys(this.deviceForm.controls).forEach(field => {
+      const control = this.deviceForm.get(field);
+
+      // Check if the control is invalid and has been touched or is dirty
+      if (control && control.invalid && (control.touched || control.dirty)) {
+        invalidFields.push(field);
+      }
+    });
+
+    return invalidFields;
+  }
+
   save() {
     this.submitted = true;
     // stop here if form is invalid
     if (this.deviceForm.invalid) {
+      this.invalidFields;
       return;
     }
 

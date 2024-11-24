@@ -60,13 +60,14 @@ import { ImportLogService } from "./service/import-log.service";
 import { environment } from '../environments/environment';
 import { LoraDownlinkService } from "./service/lora-downlink.service";
 import { ImageService } from "./service/image.service";
+import { ZoneDeviceComponent } from './zone-device/zone-device.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/');
 }
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ZoneDeviceComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

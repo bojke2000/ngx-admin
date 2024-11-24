@@ -109,8 +109,8 @@
         [(visible)]="displayWarningDialog"
       >
         <span>{{ displayWarningDialogMessage | translate }}</span>
-    </p-dialog>
-    <p-dialog
+      </p-dialog>
+      <p-dialog
         header="{{ 'Lora downlink' | translate }}"
         [(visible)]="displayLoraDownlinkDialog"
         [focusOnShow]="false"
@@ -121,18 +121,18 @@
         height="500"
         [style]="{ width: '600px', 'z-index': '2500 !important' }"
       >
-      <div class="ui-g ui-fluid" *ngIf="displayLoraDownlinkDialog">
+        <div class="ui-g ui-fluid" *ngIf="displayLoraDownlinkDialog">
           <div class="ui-g-12">
             <div class="ui-g-5">
               <label for="account">devEUI:</label>
             </div>
-            <div class="ui-g-7">{{devEUI}}</div>
+            <div class="ui-g-7">{{ devEUI }}</div>
           </div>
           <div class="ui-g-12">
             <div class="ui-g-5">
               <label for="account">applicationKey:</label>
             </div>
-            <div class="ui-g-7">{{applicationKey}}</div>
+            <div class="ui-g-7">{{ applicationKey }}</div>
           </div>
           <div class="ui-g-12">
             <div class="ui-g-5">
@@ -148,30 +148,75 @@
                 ></p-dropdown>
               </span>
             </div>
-            <div class="ui-g-7"><input pInputText id="port50Value1" [(ngModel)]="port50Value1" [value]="port50Value1" /></div>
-          </div>
-          <div *ngIf="port50Header1 && port50Header1.value == '0'" class="ui-g-12">
-            <div class="ui-g-5">
-              <input pInputText id="port50Header2" readonly value="Reverse Volume" />
+            <div class="ui-g-7">
+              <input
+                pInputText
+                id="port50Value1"
+                [(ngModel)]="port50Value1"
+                [value]="port50Value1"
+              />
             </div>
-            <div class="ui-g-7"><input pInputText id="port50Value2" [(ngModel)]="port50Value2" [value]="port50Value2" /></div>
           </div>
-          <div *ngIf="port50Header1 && port50Header1.value == '2'" class="ui-g-12">
+          <div
+            *ngIf="port50Header1 && port50Header1.value == '0'"
+            class="ui-g-12"
+          >
             <div class="ui-g-5">
-              <input pInputText id="port50Header2" readonly value="Status interval" />
+              <input
+                pInputText
+                id="port50Header2"
+                readonly
+                value="Reverse Volume"
+              />
             </div>
-            <div class="ui-g-7"><input pInputText id="port50Value2" [(ngModel)]="port50Value2" [value]="port50Value2" /></div>
+            <div class="ui-g-7">
+              <input
+                pInputText
+                id="port50Value2"
+                [(ngModel)]="port50Value2"
+                [value]="port50Value2"
+              />
+            </div>
           </div>
-      </div>
-            
-      <p-footer>
-        <div class="footer-div">
-          <span class="fotter-loraDownlinkMessage" >{{loraDownlinkMessage | translate}}</span>
-          <div class="ui-dialog-buttonpane ui-helper-clearfix">
-            <button type="button" pButton icon="fa fa-check" (click)="sendLoradownlinkMessage()" label="Send"></button>
+          <div
+            *ngIf="port50Header1 && port50Header1.value == '2'"
+            class="ui-g-12"
+          >
+            <div class="ui-g-5">
+              <input
+                pInputText
+                id="port50Header2"
+                readonly
+                value="Status interval"
+              />
+            </div>
+            <div class="ui-g-7">
+              <input
+                pInputText
+                id="port50Value2"
+                [(ngModel)]="port50Value2"
+                [value]="port50Value2"
+              />
+            </div>
           </div>
         </div>
-      </p-footer>
+
+        <p-footer>
+          <div class="footer-div">
+            <span class="fotter-loraDownlinkMessage">{{
+              loraDownlinkMessage | translate
+            }}</span>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix">
+              <button
+                type="button"
+                pButton
+                icon="fa fa-check"
+                (click)="sendLoradownlinkMessage()"
+                label="Send"
+              ></button>
+            </div>
+          </div>
+        </p-footer>
       </p-dialog>
 
       <p-dialog
@@ -634,20 +679,23 @@
                 </span>
               </div>
 
-              <div class="ui-g-12" style="margin-top: 0px !important">
-                <!-- <div class="ui-g-12"><div class="ui-g-4"><nb-checkbox [value]="(zoneDevice$ | async) ? true : undefined" (checkedChange)="handleChange($event)"><u><b>{{ 'Zone device' | translate }}</b></u></nb-checkbox></div>
-                <div class="ui-g-4" *ngIf="loraOn"><nb-checkbox [value]="(loraDevice$ | async) ? true : undefined" (checkedChange)="handleLoraDeviceChange($event)"><u><b>{{ 'Lora device' | translate }}</b></u></nb-checkbox></div>
-                <div class="ui-g-4">
-                  <span class="ui-float-label">
-                    <p-dropdown [options]="deviceTypes" #ddDeviceTypeStatus name="deviceType"
-                    [autoDisplayFirst]="false"
-                    (onChange)="onDeviceTypeChange($event)"
-                    formControlName="deviceType" optionLabel="label" ></p-dropdown>
-                    <label for="deviceType">{{ 'Device Type' | translate }}</label>
-                  </span>
-                </div>
-              </div> -->
+              <div class="ui-g-4">
+                <span class="ui-float-label">
+                  <input
+                    pInputText
+                    id="parent"
+                    formControlName="parent"
+                    onclick="this.setSelectionRange(0, this.value.length)"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.gsmLatitude.errors
+                    }"
+                  />
+                  <label for="parent">{{ "Superior device" | translate }}</label>
+                </span>
+              </div>
 
+              <div class="ui-g-12" style="margin-top: 0px !important">
                 <div class="ui-g-6" [hidden]="!zoneDevice">
                   <span class="ui-float-label">
                     <p-dropdown

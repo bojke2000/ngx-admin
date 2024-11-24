@@ -16,7 +16,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Zone devices',
     icon: 'speaker-outline',
-    link: '/pages/alarm',
+    link: '/pages/zone-device',
     home: true,
   },
   {

@@ -46,6 +46,7 @@ export interface UserCard {
   gsmRemarks: string;
 
   deviceType: number;
+  parent: number;
   indexa: string;
   indexb: string;
   indexc: string;

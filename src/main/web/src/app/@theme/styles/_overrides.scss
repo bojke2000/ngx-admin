@@ -173,6 +173,29 @@ body .ui-dropdown-label-container > .ui-inputtext {
   border-bottom: 1px solid white !important;
 }
 
+body .ui-autocomplete {
+  border-top-color: white !important;
+  border-left-color: white !important;
+  border-right-color: white !important;
+  border-bottom: white !important;
+  border-radius: 0 !important;
+  margin-top: 7px !important;
+  font-size: 13px !important;
+}
+
+body .ui-autocomplete button {
+  background-color: white !important;
+  border-top-color: white !important;
+  border-left-color: white !important;
+  border-right-color: white !important;
+  border-bottom: 1px solid white;
+  background-image: 'pi-chevron-down';
+}
+
+body .ui-autocomplete-label-container > .ui-inputtext {
+  border-bottom: 1px solid white !important;
+}
+
 body .ui-multiselect {
   border-top-color: white !important;
   border-left-color: white !important;

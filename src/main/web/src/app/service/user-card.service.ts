@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AbstractService } from '../abstract.service';
-import { LoraFPort50 } from '../domain/lora-fport50';
 import { UserCard } from '../domain/user-card';
 import { Pageable } from './../domain/pageable';
 

@@ -125,6 +125,8 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   applicationKey: string;
   loraDownlinkMessage: string;
   isAdmin: boolean;
+  zoneDevices: any[];
+  filteredZoneDevices: any[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -189,6 +191,12 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     });
 
     this.loadStaticData();
+
+    this.zoneDevices = [
+      { label: "ZONE A", value: "0" },
+      { label: "ZONE B", value: "1" },
+      { label: "ZONE C", value: "2" },
+    ];
 
     this.modes = [
       { label: "Mode A", value: "0" },
@@ -400,6 +408,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       gsmRemarks: undefined,
 
       deviceType: undefined,
+      parent: undefined,
       indexa: undefined,
       indexb: undefined,
       indexc: undefined,
@@ -407,8 +416,8 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     };
 
     this.deviceForm.patchValue({ ...this.device });
-    this.deviceForm.patchValue({profile: this.profiles[3] });
-    this.deviceForm.patchValue({multiplier: this.multipliers[1] });
+    this.deviceForm.patchValue({ profile: this.profiles[3] });
+    this.deviceForm.patchValue({ multiplier: this.multipliers[1] });
     this.displayDialog = true;
   }
 
@@ -425,7 +434,8 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       });
     }
     selected = this.mediums.filter(
-      (medium) => medium.label === this.translate.instant(this.device.medium.toString())
+      (medium) =>
+        medium.label === this.translate.instant(this.device.medium.toString())
     );
     this.deviceForm.patchValue({
       medium: selected && selected.length > 0 ? selected[0] : undefined,
@@ -433,7 +443,8 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
     if (this.device.unit) {
       selected = this.units.filter(
-        (unit) => unit.label === this.translate.instant(this.device.unit.toString())
+        (unit) =>
+          unit.label === this.translate.instant(this.device.unit.toString())
       );
       this.deviceForm.patchValue({
         unit: selected && selected.length > 0 ? selected[0] : undefined,
@@ -525,7 +536,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     const invalidFields: string[] = [];
 
     // Iterate through all fields in the form
-    Object.keys(this.deviceForm.controls).forEach(field => {
+    Object.keys(this.deviceForm.controls).forEach((field) => {
       const control = this.deviceForm.get(field);
 
       // Check if the control is invalid and has been touched or is dirty
@@ -603,12 +614,12 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   delete() {
     if (confirm(this.translate.instant("Are you sure?"))) {
       this.userCardService
-      .deleteUserCard(this.device)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((val) => {
-        this.displayDialog = false;
-        this.loadPageable();
-      });
+        .deleteUserCard(this.device)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((val) => {
+          this.displayDialog = false;
+          this.loadPageable();
+        });
     }
   }
 
@@ -686,7 +697,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   onDeviceTypeChange(evt) {
     this.ddDeviceTypeStatus.filled = true;
     this.zoneDevice = false;
-    this.deviceForm.patchValue({applicationKey: undefined});
+    this.deviceForm.patchValue({ applicationKey: undefined });
     const val = evt.value.value as string;
     if (val === DeviceComponent.DEVICE_ZOME_DEVICE) {
       this.zoneDevice = true;
@@ -695,7 +706,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       val === DeviceComponent.DEVICE_LORA_VALVE_DEVICE
     ) {
       this.loraDevice = true;
-      this.deviceForm.patchValue({gsmId: undefined});
+      this.deviceForm.patchValue({ gsmId: undefined });
     }
   }
 
@@ -825,6 +836,20 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     this.devEUI = this.device.deviceId;
     this.applicationKey = this.device.applicationKey;
     this.displayLoraDownlinkDialog = true;
+  }
+
+  filterZoneDevice(event) {
+    let filtered: any[] = [];
+    let query = event.query;
+
+    for (let i = 0; i < (this.zoneDevices as any[]).length; i++) {
+      let zoneDevice = (this.zoneDevices as any[])[i];
+      if (zoneDevice.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        filtered.push(zoneDevice);
+      }
+    }
+
+    this.filteredZoneDevices = filtered;
   }
 
   sendLoradownlinkMessage(): void {

@@ -681,17 +681,25 @@
 
               <div class="ui-g-4">
                 <span class="ui-float-label">
-                  <input
-                    pInputText
-                    id="parent"
+                  <p-dropdown
+                  [options]="zoneDevices"
+                  name="parent"
+                  filter="true"
+                  [autoDisplayFirst]="false"
+                  formControlName="parent"
+                  optionLabel="label"
+                ></p-dropdown>
+                  <!--
+                  <p-autoComplete
+                    [dropdown]="true"
+                    [suggestions]="filteredZoneDevices"
+                    (completeMethod)="filterZoneDevice($event)"
                     formControlName="parent"
-                    onclick="this.setSelectionRange(0, this.value.length)"
-                    class="form-control"
-                    [ngClass]="{
-                      'is-invalid': submitted && f.gsmLatitude.errors
-                    }"
-                  />
-                  <label for="parent">{{ "Superior device" | translate }}</label>
+                    optionLabel="label"
+                  ></p-autoComplete> -->
+                  <label for="parent">{{
+                    "Superior device" | translate
+                  }}</label>
                 </span>
               </div>
 

@@ -314,7 +314,7 @@
                     }"
                   />
                   <label for="customerId">{{
-                    "Customer ID" | translate
+                    !zoneDevice ?  ("Customer ID" | translate)  : ("Zone Device ID" | translate)
                   }}</label>
                 </span>
               </div>
@@ -332,7 +332,7 @@
                     }"
                   />
                   <label for="customerName">{{
-                    "Customer name" | translate
+                   !zoneDevice ? ("Customer name" | translate) : ("Zone Device Name" | translate)
                   }}</label>
                 </span>
               </div>

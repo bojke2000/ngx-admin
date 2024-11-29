@@ -41,6 +41,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   public static DEVICE_ZOME_DEVICE = "1";
   public static DEVICE_LORA_DEVICE = "2";
   public static DEVICE_LORA_VALVE_DEVICE = "3";
+  public static DEVICE_LORA_ZONE_DEVICE = "6";
   deviceForm: FormGroup;
   device: UserCard = undefined;
   displayDialog: boolean;
@@ -623,28 +624,17 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     }
   }
 
-  loadStaticData() {
-    this.routeService.getRoutesAsOptions().then((routes) => {
-      this.routes = routes;
-    });
+  async loadStaticData() {
+    this.routes = await this.routeService.getRoutesAsOptions();
 
-    this.addressService.getAddresssAsOptions().then((addresses) => {
-      this.addresses = addresses;
-    });
+    this.addresses = await this.addressService.getAddresssAsOptions();
 
-    this.readingBookService.getReadingBooksAsOptions().then((readingBooks) => {
-      this.readingBooks = readingBooks;
-    });
+    this.readingBooks = await this.readingBookService.getReadingBooksAsOptions();
 
-    this.municipalityService
-      .getMunicipalitiesAsOptions()
-      .then((municipalities) => {
-        this.municipalities = municipalities;
-      });
+    this.municipalities = await this.municipalityService
+      .getMunicipalitiesAsOptions();
 
-    this.deviceTypeService.getDeviceTypesAsOptions().then((deviceTypes) => {
-      this.deviceTypes = deviceTypes;
-    });
+      this.deviceTypes = await this.deviceTypeService.getDeviceTypesAsOptions();
   }
 
   getValue(value: any): any {

@@ -182,5 +182,7 @@
   "Phone": "Telefon",
   "Email": "Mejl",
   "Organisations": "Organizacije",
-  "Superior device": "Nadređeni uređaj"
+  "Superior device": "Nadređeni uređaj",
+  "Zone Device ID": "Sifra Zonskog Uređaja",
+  "Zone Device Name": "Naziv Zonskog Uređaja"
 }

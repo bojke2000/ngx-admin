@@ -147,7 +147,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     super(translate);
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.port50Headers = [
       { label: this.translate.instant("Total volume"), value: "0" },
       { label: this.translate.instant("Date and time"), value: "1" },
@@ -192,12 +192,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     });
 
     this.loadStaticData();
-
-    this.zoneDevices = [
-      { label: "ZONE A", value: "0" },
-      { label: "ZONE B", value: "1" },
-      { label: "ZONE C", value: "2" },
-    ];
+    this.loadZoneDevices();
 
     this.modes = [
       { label: "Mode A", value: "0" },
@@ -288,6 +283,14 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     });
 
     this.isAdmin = !this.userAccountservice.isUser();
+  }
+
+  private loadZoneDevices() {
+    const criteria = {};
+    criteria['deviceType'] = 1;
+    this.userCardService.findBy(criteria, {}).then((ngresp: NgPrimeGridResponse) => {
+      this.zoneDevices = ngresp.data.map((item) => ({ 'label': item.customerName, 'value': item.id }));
+    });
   }
 
   get routes$() {
@@ -416,6 +419,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       indexd: undefined,
     };
 
+    this.loadZoneDevices();
     this.deviceForm.patchValue({ ...this.device });
     this.deviceForm.patchValue({ profile: this.profiles[3] });
     this.deviceForm.patchValue({ multiplier: this.multipliers[1] });
@@ -424,6 +428,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
   showDialogToEdit() {
     this.submitted = false;
+    this.loadZoneDevices();
     this.deviceForm.patchValue({ ...this.device });
     let selected;
     if (this.device.mode) {
@@ -529,7 +534,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     this.ddMunicipalityStatus.filled = true;
     this.routeStatus.filled = true;
     this.addressStatus.filled = true;
-
+    this.zoneDevices = this.zoneDevices.filter((item) => item.label !== this.customerName);
     this.displayDialog = true;
   }
 
@@ -826,20 +831,6 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     this.devEUI = this.device.deviceId;
     this.applicationKey = this.device.applicationKey;
     this.displayLoraDownlinkDialog = true;
-  }
-
-  filterZoneDevice(event) {
-    let filtered: any[] = [];
-    let query = event.query;
-
-    for (let i = 0; i < (this.zoneDevices as any[]).length; i++) {
-      let zoneDevice = (this.zoneDevices as any[])[i];
-      if (zoneDevice.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-        filtered.push(zoneDevice);
-      }
-    }
-
-    this.filteredZoneDevices = filtered;
   }
 
   sendLoradownlinkMessage(): void {

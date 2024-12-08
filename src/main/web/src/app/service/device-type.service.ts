@@ -11,13 +11,13 @@ export class DeviceTypeService extends AbstractService {
     super(http);
   }
 
-  public getDeviceTypesAsOptions() {
+  public async getDeviceTypesAsOptions() {
     let url = `${this.url}/options`;
 
-    return this.http
+    const res = await this.http
       .get<any>(url)
-      .toPromise()
-      .then((res) => <Option[]>res.data)
-      .then((data) => data);
+      .toPromise();
+    const data = <Option[]>res.data;
+    return data;
   }
 }

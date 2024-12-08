@@ -1,6 +1,6 @@
 import * as _ from "lodash";
 
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { LazyLoadEvent, SelectItem } from "primeng/api/public_api";
 import { Observable, of } from "rxjs";
@@ -67,7 +67,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   port50Value1 = "";
   port50Value2 = "";
 
-  parent: string;
+  parentId: string;
 
   pageable: {};
   deviceTypes: Option[];
@@ -89,7 +89,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
   userCards: UserCard[];
   totalRecords: number;
-  cols: any[];
+  cols = [];
   isResisable: boolean = true;
   loading: boolean;
   @ViewChild("table", { static: false }) table: Table;
@@ -126,7 +126,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   applicationKey: string;
   loraDownlinkMessage: string;
   isAdmin: boolean;
-  zoneDevices: any[];
+  zoneDevices = [];
   filteredZoneDevices: any[];
 
   constructor(
@@ -142,7 +142,8 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     private deviceTypeService: DeviceTypeService,
     private loraDownlinkService: LoraDownlinkService,
     private router: Router,
-    translate: TranslateService
+    translate: TranslateService,
+    private cdref: ChangeDetectorRef
   ) {
     super(translate);
   }
@@ -181,7 +182,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       gsmLatitude: [""],
       multiplier: ["", [Validators.required]],
       deviceType: ["", [Validators.required]],
-      parent: [""],
+      parentId: [""],
       gsmId: [""],
       applicationKey: [""],
       zoneDevice: [null],
@@ -192,7 +193,6 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     });
 
     this.loadStaticData();
-    this.loadZoneDevices();
 
     this.modes = [
       { label: "Mode A", value: "0" },
@@ -245,6 +245,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
     this.userCardColumnService.findAll(Grid.DEVICE).then((columns) => {
       this.cols = [...this.cols, ...columns];
+      this.cdref.detectChanges();
     });
 
     this.loading = true;
@@ -283,14 +284,16 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     });
 
     this.isAdmin = !this.userAccountservice.isUser();
+
   }
 
-  private loadZoneDevices() {
-    const criteria = {};
-    criteria['deviceType'] = 1;
-    this.userCardService.findBy(criteria, {}).then((ngresp: NgPrimeGridResponse) => {
-      this.zoneDevices = ngresp.data.map((item) => ({ 'label': item.customerName, 'value': item.id }));
-    });
+private async loadZoneDevices() {
+      const criteria = {};
+      this.zoneDevices = [];
+      criteria['deviceType'] = 1;
+      this.userCardService.findBy(criteria, {}).then((ngresp: any) => {
+        ngresp.data.forEach(item => this.zoneDevices.push({'label': item.customerName, 'value': item.id }));  
+      });
   }
 
   get routes$() {
@@ -412,14 +415,15 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       gsmRemarks: undefined,
 
       deviceType: undefined,
-      parent: undefined,
+      parentId: undefined,
       indexa: undefined,
       indexb: undefined,
       indexc: undefined,
       indexd: undefined,
     };
 
-    this.loadZoneDevices();
+    this.filteredZoneDevices = [...this.zoneDevices];
+
     this.deviceForm.patchValue({ ...this.device });
     this.deviceForm.patchValue({ profile: this.profiles[3] });
     this.deviceForm.patchValue({ multiplier: this.multipliers[1] });
@@ -428,7 +432,6 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
   showDialogToEdit() {
     this.submitted = false;
-    this.loadZoneDevices();
     this.deviceForm.patchValue({ ...this.device });
     let selected;
     if (this.device.mode) {
@@ -454,6 +457,15 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       );
       this.deviceForm.patchValue({
         unit: selected && selected.length > 0 ? selected[0] : undefined,
+      });
+    }
+    if (this.device.parentId) {
+      selected = this.zoneDevices.filter(
+        (zoneDevice) =>
+          zoneDevice.value === this.device.parentId
+      );
+      this.deviceForm.patchValue({
+        parentId: selected && selected.length > 0 ? selected[0] : undefined,
       });
     }
     selected = this.profiles.filter(
@@ -534,7 +546,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     this.ddMunicipalityStatus.filled = true;
     this.routeStatus.filled = true;
     this.addressStatus.filled = true;
-    this.zoneDevices = this.zoneDevices.filter((item) => item.label !== this.customerName);
+    this.filteredZoneDevices = this.zoneDevices.filter((item) => item.label !== this.device.customerName);
     this.displayDialog = true;
   }
 
@@ -554,7 +566,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     return invalidFields;
   }
 
-  save() {
+  async save() {
     this.submitted = true;
     // stop here if form is invalid
     if (this.deviceForm.invalid) {
@@ -575,6 +587,19 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     this.device.profile = this.getLabel(this.device.profile);
     this.device.medium = this.getLabel(this.device.medium);
     this.device.deviceType = parseInt(this.getValue(this.device.deviceType));
+    this.device.parentId = parseInt(this.getValue(this.device.parentId));
+   
+    if (this.device.parentId) {
+      const ng: any = await this.userCardService.findBy({customerId: this.device.parentId});
+      if (ng && ng.data && ng.data.length > 0) {
+        const parent: UserCard = ng.data[0];
+        if (parent.parentId === this.device.id) {
+          alert(`Greska ne mogu jedan drugom biti parent` );
+          this.displayDialog = false;
+        }
+        
+      }
+    }
 
     this.device.indexa = _.isNil(this.device.indexa)
       ? undefined
@@ -590,7 +615,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       : this.getLabel(this.device.indexd);
 
     this.userCardService
-      .saveUser(this.device)
+      .saveUserCard(this.device)
       .pipe(takeUntil(this.destroy$))
       .subscribe((val) => {
         this.loadPageable();
@@ -640,6 +665,8 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       .getMunicipalitiesAsOptions();
 
       this.deviceTypes = await this.deviceTypeService.getDeviceTypesAsOptions();
+
+      await this.loadZoneDevices();
   }
 
   getValue(value: any): any {

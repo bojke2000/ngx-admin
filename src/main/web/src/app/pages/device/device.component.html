@@ -682,14 +682,14 @@
               <div class="ui-g-4">
                 <span class="ui-float-label">
                   <p-dropdown
-                  [options]="zoneDevices"
-                  name="parent"
+                  [options]="filteredZoneDevices"
+                  name="parentId"
                   filter="true"
                   [autoDisplayFirst]="false"
-                  formControlName="parent"
+                  formControlName="parentId"
                   optionLabel="label"
                 ></p-dropdown>
-                  <label for="parent">{{
+                  <label for="parentId">{{
                     "Superior device" | translate
                   }}</label>
                 </span>

@@ -72,7 +72,7 @@ export class UserCardService extends AbstractService {
 
     if (searchCriteria.deviceType !== undefined) {
       const condition = searchCriteria.deviceType === 1 ? 'deviceType=in=(' : 'deviceType=out=(';
-      url = url.concat(separator).concat(condition).concat('1').concat(')');
+      url = url.concat(separator).concat(condition).concat('1,6').concat(')');
       
       separator = ';';
     }
@@ -159,7 +159,7 @@ export class UserCardService extends AbstractService {
     return super.getById(this.url, id);
   }
 
-  saveUser(userCard: UserCard): Observable<UserCard> {
+  saveUserCard(userCard: UserCard): Observable<UserCard> {
     return userCard.id ? this.updateUser(userCard) : this.post(this.url, userCard);
   }
 

@@ -14,15 +14,15 @@ export class ReadingBookService extends AbstractService {
     super(http);
   }
 
-  getReadingBooksAsOptions(query?: string) {
+  async getReadingBooksAsOptions(query?: string) {
     let url = `${this.url}/options`;
     if (query !== undefined) {
       url += '?query=' + query;
     }
-    return this.http.get<any>(url)
-      .toPromise()
-      .then(res => <Option[]>res.data)
-      .then(data => data);
+    const res = await this.http.get<any>(url)
+      .toPromise();
+    const data = <Option[]>res.data;
+    return data;
   }
 
   search(criteria: string, pageable: Pageable) {

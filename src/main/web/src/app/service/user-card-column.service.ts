@@ -21,7 +21,7 @@ export class UserCardColumnService extends AbstractService {
       .then(res => <Option[]>res);
   }
 
-  findAll(gridId: number) {
+  async findAll(gridId: number) {
     const url = `${this.url}/${gridId}`;
     return this.http.get<any>(url, this.httpOptions)
       .toPromise()

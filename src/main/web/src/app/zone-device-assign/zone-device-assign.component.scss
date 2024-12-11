@@ -57,3 +57,38 @@
     margin-left: 20px;
     margin-top: 10px;
   }
+
+  .pagination {
+    margin-top: 5px; // Adjust the margin as needed
+    display: flex;
+    align-items: center;
+  }
+
+  .pagination button {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .pagination button:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .pagination button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  .pagination button {
+    padding: 10px 20px;
+    margin: 5px; // Add margin between buttons
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff; // Blue background color
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }

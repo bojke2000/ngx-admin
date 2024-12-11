@@ -1,42 +1,50 @@
 <div class="dual-listbox-container">
-    <div class="listbox">
-        <p-header>
-            <input type="text" pInputText placeholder="Search Available Items" [(ngModel)]="filterTextAvailable" />
-            <input style="margin-bottom: 10px; margin-right: 5px;" type="checkbox" (change)="toggleSelectAll(filteredAvailableItems, $event.target.checked)" />
-            <label style="margin-bottom: 0px;">Select All</label>
-        </p-header>
-
-
-        <p-virtualScroller [value]="filteredAvailableItems" scrollHeight="500px" [itemSize]="35">
-            <ng-template let-item pTemplate="item">
-                <input type="checkbox" [(ngModel)]="item.selected" [id]="'available_' + item.id" />
-                <label [for]="'available_' + item.id">{{ item.name }}</label>
-            </ng-template>
-        </p-virtualScroller>
+    <div class="listbox available-items">
+      <p-header>
+        <input type="text" pInputText placeholder="Search Available Items" [(ngModel)]="filterTextAvailable" />
+        <input type="checkbox" style="margin-bottom: 10px; margin-right: 5px;" (change)="toggleSelectAll(filteredAvailableItems, $event.target.checked)" />
+        <label style="margin-bottom: 0px;" for="selectAllAvailable">Select All</label>
+      </p-header>
+  
+      <p-virtualScroller [value]="filteredAvailableItems" scrollHeight="500px" [itemSize]="30">
+        <ng-template let-item pTemplate="item">
+          <input type="checkbox" [(ngModel)]="item.selected" [id]="'available_' + item.id" />
+          <label [for]="'available_' + item.id">{{ item.name }}</label>
+        </ng-template>
+      </p-virtualScroller>
+  
+      <div class="pagination">
+        <button (click)="previousPageAvailable()">Previous</button>
+        <span>Page {{ currentPageAvailable }} of {{ totalPagesAvailable }}</span>
+        <button (click)="nextPageAvailable()">Next</button>
+      </div>
     </div>
-
+  
     <div class="transfer-buttons">
-        <div class="transfer-buttons">
-            <button pButton icon="pi pi-angle-right" (click)="assignSelected()"></button>
-            <button pButton icon="pi pi-angle-left" (click)="removeSelected()"></button>
-            <button pButton icon="pi pi-angle-double-right" (click)="assignAll()"></button>
-            <button pButton icon="pi pi-angle-double-left" (click)="removeAll()"></button>
-          </div>
+      <button pButton icon="pi pi-angle-right" (click)="assignSelected()"></button>
+      <button pButton icon="pi pi-angle-left" (click)="removeSelected()"></button>
+      <button pButton icon="pi pi-angle-double-right" (click)="assignAll()"></button>
+      <button pButton icon="pi pi-angle-double-left" (click)="removeAll()"></button>
     </div>
-
-    <div class="listbox">
-        <p-header>
-            <input type="text"  pInputText placeholder="Search Assigned Items" [(ngModel)]="filterTextAssigned" />
-            <input type="checkbox" style="margin-bottom: 10px; margin-right: 5px;" (change)="toggleSelectAll(filteredAssignedItems, $event.target.checked)" />
-            <label style="margin-bottom: 0px;">Select All</label>
-        </p-header>
-
-        <p-virtualScroller [value]="filteredAssignedItems" scrollHeight="500px" [itemSize]="35">
-            <ng-template let-item pTemplate="item">
-                <input type="checkbox" [(ngModel)]="item.selected" [id]="'assigned_' + item.id" />
-                <label [for]="'assigned_' + item.id">{{ item.name }}</label>
-
-            </ng-template>
-        </p-virtualScroller>
+  
+    <div class="listbox assigned-items">
+      <p-header>
+        <input type="text" pInputText placeholder="Search Assigned Items" [(ngModel)]="filterTextAssigned" />
+        <input style="margin-bottom: 10px; margin-right: 5px;" type="checkbox" (change)="toggleSelectAll(filteredAssignedItems, $event.target.checked)" />
+        <label style="margin-bottom: 0px;" for="selectAllAssigned">Select All</label>
+      </p-header>
+  
+      <p-virtualScroller [value]="filteredAssignedItems" scrollHeight="500px" [itemSize]="30">
+        <ng-template let-item pTemplate="item">
+          <input type="checkbox" [(ngModel)]="item.selected" [id]="'assigned_' + item.id" />
+          <label [for]="'assigned_' + item.id">{{ item.name }}</label>
+        </ng-template>
+      </p-virtualScroller>
+  
+      <div class="pagination">
+        <button (click)="previousPageAssigned()">Previous</button>
+        <span>Page {{ currentPageAssigned }} of {{ totalPagesAssigned }}</span>
+        <button (click)="nextPageAssigned()">Next</button>
+      </div>
     </div>
-</div>
+  </div>

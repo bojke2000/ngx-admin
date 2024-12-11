@@ -60,6 +60,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
         home: false,
       },
       {
+        title: 'Zone devices assign',
+        icon: 'speaker-outline',
+        link: '/pages/zone-device-assign',
+        home: true,
+      },
+      {
         title: 'Lora Config',
         icon: 'keypad-outline',
         link: '/pages/lora-config',

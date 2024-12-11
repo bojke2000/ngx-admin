@@ -61,6 +61,7 @@ import { environment } from '../environments/environment';
 import { LoraDownlinkService } from "./service/lora-downlink.service";
 import { ImageService } from "./service/image.service";
 import { ZoneDeviceComponent } from './zone-device/zone-device.component';
+import { ZoneDeviceAssignComponent } from './zone-device-assign/zone-device-assign.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/');

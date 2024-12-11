@@ -1,0 +1,40 @@
+<div class="dual-listbox-container">
+    <div class="listbox">
+        <p-header>
+            <input type="text" pInputText placeholder="Search Available Items" [(ngModel)]="filterTextAvailable" />
+            <input type="checkbox" (change)="toggleSelectAll(filteredAvailableItems, $event.target.checked)" />
+            <label>Select All</label>
+        </p-header>
+
+
+        <p-virtualScroller [value]="filteredAvailableItems" scrollHeight="500px" [itemSize]="30">
+            <ng-template let-item pTemplate="item">
+                <input type="checkbox" [(ngModel)]="item.selected" [id]="'available_' + item.id" />
+                <label [for]="'available_' + item.id">{{ item.name }}</label>
+            </ng-template>
+        </p-virtualScroller>
+    </div>
+
+    <div class="transfer-buttons">
+        <button (click)="assignSelected()">></button>
+        <button (click)="removeSelected()"><</button>
+                <button (click)="assignAll()">>></button>
+                <button (click)="removeAll()"><<</button>
+    </div>
+
+    <div class="listbox">
+        <p-header>
+            <input type="text" pInputText placeholder="Search Assigned Items" [(ngModel)]="filterTextAssigned" />
+            <input type="checkbox" (change)="toggleSelectAll(filteredAssignedItems, $event.target.checked)" />
+            <label>Select All</label>
+        </p-header>
+
+        <p-virtualScroller [value]="filteredAssignedItems" scrollHeight="500px" [itemSize]="30">
+            <ng-template let-item pTemplate="item">
+                <input type="checkbox" [(ngModel)]="item.selected" [id]="'assigned_' + item.id" />
+                <label [for]="'assigned_' + item.id">{{ item.name }}</label>
+
+            </ng-template>
+        </p-virtualScroller>
+    </div>
+</div>

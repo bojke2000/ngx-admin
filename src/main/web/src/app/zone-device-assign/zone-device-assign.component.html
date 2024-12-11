@@ -2,12 +2,12 @@
     <div class="listbox">
         <p-header>
             <input type="text" pInputText placeholder="Search Available Items" [(ngModel)]="filterTextAvailable" />
-            <input type="checkbox" (change)="toggleSelectAll(filteredAvailableItems, $event.target.checked)" />
-            <label>Select All</label>
+            <input style="margin-bottom: 10px; margin-right: 5px;" type="checkbox" (change)="toggleSelectAll(filteredAvailableItems, $event.target.checked)" />
+            <label style="margin-bottom: 0px;">Select All</label>
         </p-header>
 
 
-        <p-virtualScroller [value]="filteredAvailableItems" scrollHeight="500px" [itemSize]="30">
+        <p-virtualScroller [value]="filteredAvailableItems" scrollHeight="500px" [itemSize]="35">
             <ng-template let-item pTemplate="item">
                 <input type="checkbox" [(ngModel)]="item.selected" [id]="'available_' + item.id" />
                 <label [for]="'available_' + item.id">{{ item.name }}</label>
@@ -16,20 +16,22 @@
     </div>
 
     <div class="transfer-buttons">
-        <button (click)="assignSelected()">></button>
-        <button (click)="removeSelected()"><</button>
-                <button (click)="assignAll()">>></button>
-                <button (click)="removeAll()"><<</button>
+        <div class="transfer-buttons">
+            <button pButton icon="pi pi-angle-right" (click)="assignSelected()"></button>
+            <button pButton icon="pi pi-angle-left" (click)="removeSelected()"></button>
+            <button pButton icon="pi pi-angle-double-right" (click)="assignAll()"></button>
+            <button pButton icon="pi pi-angle-double-left" (click)="removeAll()"></button>
+          </div>
     </div>
 
     <div class="listbox">
         <p-header>
-            <input type="text" pInputText placeholder="Search Assigned Items" [(ngModel)]="filterTextAssigned" />
-            <input type="checkbox" (change)="toggleSelectAll(filteredAssignedItems, $event.target.checked)" />
-            <label>Select All</label>
+            <input type="text"  pInputText placeholder="Search Assigned Items" [(ngModel)]="filterTextAssigned" />
+            <input type="checkbox" style="margin-bottom: 10px; margin-right: 5px;" (change)="toggleSelectAll(filteredAssignedItems, $event.target.checked)" />
+            <label style="margin-bottom: 0px;">Select All</label>
         </p-header>
 
-        <p-virtualScroller [value]="filteredAssignedItems" scrollHeight="500px" [itemSize]="30">
+        <p-virtualScroller [value]="filteredAssignedItems" scrollHeight="500px" [itemSize]="35">
             <ng-template let-item pTemplate="item">
                 <input type="checkbox" [(ngModel)]="item.selected" [id]="'assigned_' + item.id" />
                 <label [for]="'assigned_' + item.id">{{ item.name }}</label>

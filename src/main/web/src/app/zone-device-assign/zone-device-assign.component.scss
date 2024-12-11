@@ -18,3 +18,42 @@
     gap: 0.5rem;
   }
   
+  .dual-listbox-container {
+    display: flex; /* Arrange listboxes side-by-side */
+    width: 100%; /* Match container width */
+  }
+
+  .listbox {
+    flex: 1; /* Allocate equal space to listboxes */
+    border: 1px solid #ddd; /* Add a border for separation */
+    border-radius: 4px; /* Rounded corners */
+    padding: 10px; /* Inner padding */
+    margin: 5px; /* Spacing between listboxes and container edges */
+  }
+
+  .listbox p-header {
+    display: flex; /* Arrange header elements in a row */
+    align-items: center; /* Align search icon and input vertically */
+  }
+
+  .listbox p-header i {
+    margin-right: 5px; /* Spacing between search icon and input */
+  }
+
+  .transfer-buttons {
+    display: flex; /* Arrange buttons horizontally */
+    justify-content: center; /* Center buttons within the container */
+    align-items: center; /* Align buttons vertically */
+    margin: 10px 0; /* Spacing above and below buttons */
+  }
+
+  .transfer-buttons button {
+    margin: 0 5px; /* Spacing between buttons */
+  }
+
+  /* Custom styling for checkboxes and labels (optional) */
+  .listbox input[type="checkbox"] {
+    margin-right: 15px; /* Spacing between checkbox and label */
+    margin-left: 20px;
+    margin-top: 10px;
+  }

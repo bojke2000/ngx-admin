@@ -8,16 +8,26 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./zone-device-assign.component.scss']
 })
 export class ZoneDeviceAssignComponent extends AbstractComponent implements OnInit {
-  availableItems = Array.from({ length: 500 }, (_, i) => ({ id: i + 1, name: `Item ${i + 1}`, selected: false }));
+  availableItems = Array.from({ length: 25000 }, (_, i) => ({ id: i + 1, name: `Item ${i + 1}`, selected: false }));
   assignedItems: any[] = [];
   filterTextAvailable = '';
   filterTextAssigned = '';
+
+
+  pageSize = 10; // Number of items per page
+  currentPageAvailable = 1;
+  currentPageAssigned = 1;
+  totalPagesAvailable = 0;
+  totalPagesAssigned = 0;
 
   constructor(translate: TranslateService) {
     super(translate);
   }
 
   ngOnInit(): void {
+       // Calculate total pages for available and assigned items
+       this.totalPagesAvailable = Math.ceil(this.availableItems.length / this.pageSize);
+       this.totalPagesAssigned = Math.ceil(this.assignedItems.length / this.pageSize);   
   }
 
   get filteredAvailableItems() {

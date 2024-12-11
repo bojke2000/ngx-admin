@@ -14,9 +14,11 @@
       </p-virtualScroller>
   
       <div class="pagination">
-        <button (click)="previousPageAvailable()">Previous</button>
+        <p-button label="Previous" (click)="previousPageAvailable()"></p-button>
+        <div class="divider"></div>
         <span>Page {{ currentPageAvailable }} of {{ totalPagesAvailable }}</span>
-        <button (click)="nextPageAvailable()">Next</button>
+        <div class="divider"></div>
+        <p-button label="Next" (click)="nextPageAvailable()"></p-button>
       </div>
     </div>
   
@@ -42,9 +44,11 @@
       </p-virtualScroller>
   
       <div class="pagination">
-        <button (click)="previousPageAssigned()">Previous</button>
+        <p-button label="Previous" (click)="previousPageAssigned()"></p-button>
+        <div class="divider"></div>
         <span>Page {{ currentPageAssigned }} of {{ totalPagesAssigned }}</span>
-        <button (click)="nextPageAssigned()">Next</button>
+        <div class="divider"></div>
+        <p-button label="Next" (click)="nextPageAssigned()"></p-button>
       </div>
     </div>
   </div>

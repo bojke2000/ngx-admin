@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractComponent } from '../AbstractComponent';
 import { TranslateService } from '@ngx-translate/core';
+import { SelectItem } from 'primeng/api';
 
 @Component({
   selector: 'ngx-zone-device-assign',
@@ -18,6 +19,7 @@ export class ZoneDeviceAssignComponent extends AbstractComponent implements OnIn
   currentPageAssigned = 1;
   totalPagesAvailable = 0;
   totalPagesAssigned = 0;
+  zoneDevices: SelectItem[] = [];
 
   constructor(translate: TranslateService) {
     super(translate);

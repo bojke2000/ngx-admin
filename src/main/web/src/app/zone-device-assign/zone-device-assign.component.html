@@ -1,3 +1,11 @@
+<div class="ui-g-12">
+  <div class="ui-g-1">
+    <label for="protocol">{{translate.get('Zone device') | async }}:</label>
+  </div>
+  <div class="ui-g-11">
+    <p-dropdown [options]="zoneDevices"></p-dropdown>
+  </div>
+</div>
 <div class="dual-listbox-container">
     <div class="listbox available-items">
       <p-header>

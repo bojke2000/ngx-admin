@@ -170,4 +170,8 @@ export class UserCardService extends AbstractService {
   deleteUserCard(userCard: UserCard): Observable<UserCard> {
     return super.delete(this.url, `${userCard.id}`);
   }
+
+  async findAllUcps() {
+    return this.get(`${this.url}/ucps`);
+  }
 }

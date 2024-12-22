@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AbstractComponent } from '../AbstractComponent';
 import { TranslateService } from '@ngx-translate/core';
 import { SelectItem } from 'primeng/api';
+import { UserCardService } from '../service/user-card.service';
+import { AddressService } from '../service/address.service';
+import { Option } from '../domain/option';
 
 @Component({
   selector: 'ngx-zone-device-assign',
   templateUrl: './zone-device-assign.component.html',
   styleUrls: ['./zone-device-assign.component.scss']
 })
-export class ZoneDeviceAssignComponent extends AbstractComponent implements OnInit {
-  availableItems = Array.from({ length: 50 }, (_, i) => ({ id: i + 1, name: `Item ${i + 1}`, selected: false }));
+export class ZoneDeviceAssignComponent extends AbstractComponent implements OnInit, AfterViewInit {
+  availableItems = [];//Array.from({ length: 50 }, (_, i) => ({ id: i + 1, name: `Item ${i + 1}`, selected: false }));
   assignedItems = [];
   filterTextAvailable = '';
   filterTextAssigned = '';
@@ -19,16 +22,63 @@ export class ZoneDeviceAssignComponent extends AbstractComponent implements OnIn
   currentPageAssigned = 1;
   totalPagesAvailable = 0;
   totalPagesAssigned = 0;
-  zoneDevices: SelectItem[] = [];
+  zoneDevices: Option[] = [];
+  addresses: Option[] = [];
+  zoneDevice: Option;
+  address: Option;
 
-  constructor(translate: TranslateService) {
+  constructor(translate: TranslateService,
+    private userCardService: UserCardService,
+    private cdr: ChangeDetectorRef,
+    private addressService: AddressService) {
     super(translate);
   }
+  ngAfterViewInit(): void {
+    this.cdr.detectChanges();
+  }
 
-  ngOnInit() {
+  async ngOnInit() {
     // Calculate total pages for available and assigned items
+    this.calcTotalPagesAvailable();
+    await this.loadZoneDevices();
+    await this.loadDevicesByAddress();
+  }
+  private calcTotalPagesAvailable() {
     this.totalPagesAvailable = Math.ceil(this.availableItems.length / this.pageSize);
     this.totalPagesAssigned = Math.ceil(this.assignedItems.length / this.pageSize);
+  }
+
+  loadDevicesByAddress() {
+    this.addressService.getAddresssAsOptions().then(addresses => {
+      this.addresses = addresses;
+      this.address = addresses && addresses.length > 0 ? addresses[2] : undefined;
+      let criteria = {};
+      if (this.address) {
+        criteria = `address=in=('${this.address.value}')`;
+      }
+      this.userCardService.findBy(criteria).then((response: any) => {
+        response.data.forEach(item => {
+          if (item.parentId === this.zoneDevice.value) {
+            this.assignedItems.push({ 'id': item.id, 'name': item.customerName, selected: false });
+          } else {
+            this.availableItems.push({ 'id': item.id, 'name': item.customerName, selected: false });
+          }
+
+          this.calcTotalPagesAvailable();
+        });
+      });
+    });
+  }
+
+  private async loadZoneDevices() {
+    const criteria = {};
+    this.zoneDevices = [];
+    criteria['deviceType'] = 1;
+    this.userCardService.findBy(criteria, {}).then((ngresp: any) => {
+      ngresp.data.forEach(item => this.zoneDevices.push({ 'label': item.customerName, 'value': item.id }));
+      this.zoneDevice = this.zoneDevices && this.zoneDevices.length > 0 ? this.zoneDevices[0] : undefined;
+    });
+
   }
 
   get filteredAvailableItems(): any[] {

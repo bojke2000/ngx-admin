@@ -670,7 +670,7 @@ private async loadZoneDevices() {
   }
 
   getValue(value: any): any {
-    if (value === undefined) {
+    if (value === undefined || value === null) {
       return value;
     } else if (typeof value === "string" || value instanceof String) {
       return value;

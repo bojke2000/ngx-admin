@@ -73,14 +73,15 @@ export class ZoneDeviceAssignComponent extends AbstractComponent implements OnIn
       this.availableItems = [];
       this.userCardService.findBy(criteria).then((response: any) => {
         response.data.forEach(item => {
-          if (item.parentId === this.zoneDevice.value) {
-            this.assignedItems.push({ 'id': item.id, 'name': item.customerName, selected: false });
-          } else {
-            this.availableItems.push({ 'id': item.id, 'name': item.customerName, selected: false });
+          if (item.id !== this.zoneDevice.value) {
+            if (item.parentId === this.zoneDevice.value) {
+              this.assignedItems.push({ 'id': item.id, 'name': item.customerName, selected: false });
+            } else {
+              this.availableItems.push({ 'id': item.id, 'name': item.customerName, selected: false });
+            }
           }
-
-          this.calcTotalPagesAvailable();
         });
+        this.calcTotalPagesAvailable();
       });
     });
   }

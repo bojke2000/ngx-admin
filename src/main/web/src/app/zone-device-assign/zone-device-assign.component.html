@@ -1,11 +1,17 @@
 <div class="ui-g-12">
   <div class="ui-g-3">
     <label for="protocol">{{translate.get('Address') | async }}:&nbsp;&nbsp;</label>
-    <p-dropdown [options]="addresses" optionLabel="label" optionValue="value" [(ngModel)]="address"></p-dropdown>
+    <p-dropdown [options]="addresses" 
+    optionLabel="label" 
+    optionValue="value" 
+    [(ngModel)]="address"
+    (onChange)="onAddressChange($event)"></p-dropdown>
   </div>
   <div class="ui-g-3">
     <label for="protocol">{{translate.get('Zone device') | async }}:&nbsp;&nbsp;</label>
-    <p-dropdown [options]="zoneDevices"  [(ngModel)]="zoneDevice" ></p-dropdown>
+    <p-dropdown [options]="zoneDevices"  
+    [(ngModel)]="zoneDevice"
+    (onChange)="onZoneDeviceChange($event)" ></p-dropdown>
   </div>
   <div class="ui-g-5">
     <div class="divider"></div>

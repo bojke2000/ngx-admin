@@ -48,14 +48,29 @@ export class ZoneDeviceAssignComponent extends AbstractComponent implements OnIn
     this.totalPagesAssigned = Math.ceil(this.assignedItems.length / this.pageSize);
   }
 
-  loadDevicesByAddress() {
+  onAddressChange(event$) {
+    const address: Option = event$.value;
+    this.loadDevicesByAddress(address);
+  }
+
+  onZoneDeviceChange(event$) {
+    this.loadDevicesByAddress();
+  }
+
+  save() {
+
+  }
+
+  async loadDevicesByAddress(address?: Option) {
     this.addressService.getAddresssAsOptions().then(addresses => {
       this.addresses = addresses;
-      this.address = addresses && addresses.length > 0 ? addresses[2] : undefined;
-      let criteria = {};
+      this.address = address ? address : addresses && addresses.length > 0 ? addresses[0] : undefined;
+      let criteria: any = {};
       if (this.address) {
-        criteria = `address=in=('${this.address.value}')`;
+        criteria.address = this.address.value;
       }
+      this.assignedItems = [];
+      this.availableItems = [];
       this.userCardService.findBy(criteria).then((response: any) => {
         response.data.forEach(item => {
           if (item.parentId === this.zoneDevice.value) {

@@ -151,7 +151,6 @@ export class ZoneDeviceAssignComponent extends AbstractComponent implements OnIn
     // Clear selection after moving items
     selected.forEach(item => (item.selected = false));
     // Recalculate total pages for assigned items after update
-    this.totalPagesAssigned = Math.ceil(this.assignedItems.length / this.pageSize);
 
     // Sort the available items
     this.availableItems = this.sortItemsByName(this.availableItems);

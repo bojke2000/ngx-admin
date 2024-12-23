@@ -167,6 +167,10 @@ export class UserCardService extends AbstractService {
     return this.put(this.url, userCard);
   }
 
+  updateParentId(userCard: UserCard): Observable<UserCard> {
+    return this.put(`${this.url}/parent-id`, userCard);
+  }
+
   deleteUserCard(userCard: UserCard): Observable<UserCard> {
     return super.delete(this.url, `${userCard.id}`);
   }

@@ -1,5 +1,5 @@
 
-export interface UserCard {
+export class UserCard {
   id: number;
   customerId: string;
   regNr: string;

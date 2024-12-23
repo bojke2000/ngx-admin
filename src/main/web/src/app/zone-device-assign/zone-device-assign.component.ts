@@ -5,6 +5,8 @@ import { SelectItem } from 'primeng/api';
 import { UserCardService } from '../service/user-card.service';
 import { AddressService } from '../service/address.service';
 import { Option } from '../domain/option';
+import { UserCard } from '../domain/user-card';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'ngx-zone-device-assign',
@@ -57,8 +59,32 @@ export class ZoneDeviceAssignComponent extends AbstractComponent implements OnIn
     this.loadDevicesByAddress();
   }
 
-  save() {
+  saveAssignements() {
+    const updateAssigned = this.assignedItems.filter(item => item.parentId !== this.zoneDevice.value);
+    const updateAvailable = this.availableItems.filter(item => item.parentId === this.zoneDevice.value).map(item => {
+      item.parentUd = undefined;
+      return item
+    });
 
+    const self = this;
+    updateAssigned.forEach(item => {
+      const uc = new UserCard();
+      uc.id = item.id;
+      uc.parentId = Number(this.zoneDevice.value);
+      self.userCardService.updateParentId(uc).subscribe((val) => {
+        console.log(val);
+      });
+    });
+
+    updateAvailable.forEach(item => {
+      const uc = new UserCard();
+      uc.id = item.id;
+      uc.parentId = undefined;
+      self.userCardService.updateParentId(uc)
+        .subscribe((val) => {
+          console.log(val);
+        });
+    });
   }
 
   async loadDevicesByAddress(address?: Option) {
@@ -75,9 +101,9 @@ export class ZoneDeviceAssignComponent extends AbstractComponent implements OnIn
         response.data.forEach(item => {
           if (item.id !== this.zoneDevice.value) {
             if (item.parentId === this.zoneDevice.value) {
-              this.assignedItems.push({ 'id': item.id, 'name': item.customerName, selected: false });
+              this.assignedItems.push({ 'id': item.id, 'name': item.customerName, selected: false, 'parentId': item.parentId });
             } else {
-              this.availableItems.push({ 'id': item.id, 'name': item.customerName, selected: false });
+              this.availableItems.push({ 'id': item.id, 'name': item.customerName, selected: false, 'parentId': item.parentId });
             }
           }
         });

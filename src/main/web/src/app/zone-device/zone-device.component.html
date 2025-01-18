@@ -1,5 +1,5 @@
 <div class="row">
-    <nb-card style="width: 100%; margin-top: -25px">
+    <nb-card style="width: 100%">
       <nb-card-body>
         <nb-card status="info">
           <nb-card-header>{{ "Zone devices" | translate }}</nb-card-header>
@@ -16,7 +16,7 @@
                         onclick="this.setSelectionRange(0, this.value.length)"
                       />
                       <label for="customerName">{{
-                        "Customer name" | translate
+                        "Name" | translate
                       }}</label>
                     </span>
                   </div>
@@ -28,7 +28,7 @@
                         [(ngModel)]="customerId"
                       />
                       <label for="customerId">{{
-                        "Customer ID" | translate
+                        "Zone Device ID" | translate
                       }}</label>
                     </span>
                   </div>

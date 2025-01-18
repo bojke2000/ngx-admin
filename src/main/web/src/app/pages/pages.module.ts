@@ -14,6 +14,7 @@ import { ThemeModule } from '../@theme/theme.module';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { UserCardModule } from './user-card/user-card.module';
 import { ZoneDeviceAssignModule } from '../zone-device-assign/zone-device-assign.module';
+import { ZoneDeviceModule } from '../zone-device/zone-device.module';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -26,6 +27,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ThemeModule,
     NbMenuModule,
     UserCardModule,
+    ZoneDeviceModule,
     ZoneDeviceAssignModule,
     DialogModule,
     VirtualScrollerModule,

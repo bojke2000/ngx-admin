@@ -60,7 +60,6 @@ import { ImportLogService } from "./service/import-log.service";
 import { environment } from '../environments/environment';
 import { LoraDownlinkService } from "./service/lora-downlink.service";
 import { ImageService } from "./service/image.service";
-import { ZoneDeviceComponent } from './zone-device/zone-device.component';
 import { ZoneDeviceAssignComponent } from './zone-device-assign/zone-device-assign.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -68,7 +67,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [AppComponent, ZoneDeviceComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

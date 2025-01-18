@@ -1,0 +1,44 @@
+p {
+    font-family: Lato;
+  }
+   ::ng-deep .ui-datatable .ui-datatable-loading {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+      opacity: 0.2;
+    }
+    ::ng-deep .ui-datatable .ui-datatable-loading-content {
+        position: absolute;
+        left: 50%;
+        top: 25%;
+    }
+  
+    ::ng-deep nb-checkbox label {
+      margin-top: 20px !important;
+    }
+  
+    ::ng-deep .ui-table,
+    .ui-table .ui-table-wrapper table {
+      font-size: 13px !important;
+    }
+  
+    .divider{
+      width:5px;
+      height:auto;
+      display:inline-block;
+    }
+  
+  ::ng-deep .ui-g-1, .ui-g-2, .ui-g-3, .ui-g-4, .ui-g-5, .ui-g-6, .ui-g-7, .ui-g-8, .ui-g-9, .ui-g-10, .ui-g-11, .ui-g-12 {
+    margin-top: 0.0em !important;
+  }
+  
+  ::ng-deep .ui-float-label>input:focus~label,
+  ::ng-deep .ui-float-label>input.ui-state-filled~label,
+  ::ng-deep .ui-float-label>.ui-inputwrapper-focus~label,
+  ::ng-deep .ui-float-label>.ui-inputwrapper-filled~label {
+      top: -.75em;
+      font-size: 12px;
+      font-weight: bold;
+  }
+  

@@ -489,6 +489,7 @@ private async loadZoneDevices() {
       this.zoneDevice = true;
     } else if (
       val === DeviceComponent.DEVICE_LORA_DEVICE ||
+      val === DeviceComponent.DEVICE_LORA_ZONE_DEVICE ||
       val === DeviceComponent.DEVICE_LORA_VALVE_DEVICE
     ) {
       this.loraDevice = true;

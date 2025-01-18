@@ -71,9 +71,8 @@ export class UserCardService extends AbstractService {
     }
 
     if (searchCriteria.deviceType !== undefined) {
-      const condition = searchCriteria.deviceType === 1 ? 'deviceType=in=(' : 'deviceType=out=(';
+      const condition = searchCriteria.deviceType === 1 || searchCriteria.deviceType === 6 ? 'deviceType=in=(' : 'deviceType=out=(';
       url = url.concat(separator).concat(condition).concat('1,6').concat(')');
-      
       separator = ';';
     }
 

@@ -485,4 +485,9 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
             },
     });
   }
+
+  onUserCardHeaderDblClick() {
+    const metrics = document.getElementById("metrics");
+    metrics.style.display = metrics.style.display == 'block' ? 'none' : 'block';
+  }
 }

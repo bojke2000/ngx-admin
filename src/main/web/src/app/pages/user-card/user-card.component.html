@@ -2,10 +2,10 @@
   <nb-card style="width: 100%; margin-top: -25px">
     <nb-card-body>
       <nb-card status="info">
-        <nb-card-header>{{ "User Card" | translate }}</nb-card-header>
+        <nb-card-header (dblclick)="onUserCardHeaderDblClick()">{{ "User Card" | translate }}</nb-card-header>
         <nb-card-body>
           <div class="ui-g ui-fluid">
-            <div class="ui-g-12">
+            <div class="ui-g-12" id="metrics">
               <div class="ui-g-6">
                 <div class="ui-g-2">
                   <div class="ui-float-label">

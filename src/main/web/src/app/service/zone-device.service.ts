@@ -1,23 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AbstractService } from '../abstract.service';
 import { UserCard } from '../domain/user-card';
-import { Pageable } from './../domain/pageable';
+import { Pageable } from '../domain/pageable';
+import { UserCardService } from './user-card.service';
 
 const CURRENT_VIEW = 1;
 const URL_ALL = 1;
 
 @Injectable()
-export class UserCardService extends AbstractService {
+export class ZoneDeviceService extends UserCardService {
   public static URL_ALL = 1;
   public static URL_PART_ONE = 2;
   public static URL_PART_TWO = 3;
 
-
-  protected url = this.prefix + 'user-cards';
-
-  constructor(http: HttpClient) { super(http); }
+  constructor(http: HttpClient) { super(http); 
+    this.url = this.prefix + 'zone-device-cards';
+  }
 
   findAll(pageable?: Pageable) {
     return this.get(this.url, pageable);
@@ -155,7 +154,7 @@ export class UserCardService extends AbstractService {
   }
 
   getById(id: any) {
-    return super.getById(this.url, id);
+    return super.getById(id);
   }
 
   saveUserCard(userCard: UserCard): Observable<UserCard> {

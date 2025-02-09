@@ -60,7 +60,8 @@ import { ImportLogService } from "./service/import-log.service";
 import { environment } from '../environments/environment';
 import { LoraDownlinkService } from "./service/lora-downlink.service";
 import { ImageService } from "./service/image.service";
-import { ZoneDeviceAssignComponent } from './zone-device-assign/zone-device-assign.component';
+import { ZoneDeviceAssignComponent } from './pages/zone-device-assign/zone-device-assign.component';
+import { ZoneDeviceService } from "./service/zone-device.service";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/');
@@ -148,6 +149,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   providers: [
     AuthGuard,
     UserCardService,
+    ZoneDeviceService,
     UserAccountService,
     MailAccountService,
     RouteService,

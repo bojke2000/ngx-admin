@@ -6,19 +6,21 @@ import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { saveAs as importedSaveAs } from "file-saver";
 import { Table } from "primeng/table";
-import { AbstractComponent } from "../AbstractComponent";
-import { Grid } from "../domain/grid";
-import { NgPrimeGridResponse } from "../domain/ngprime-grid-response";
-import { UserCard } from "../domain/user-card";
-import { NgxTableComponent } from "../libs/toolbox-components/ngx-table/ngx-table.component";
-import { AddressService } from "../service/address.service";
-import { MunicipalityService } from "../service/municipailty.service";
-import { ReadingBookService } from "../service/reading-book.service";
-import { RouteService } from "../service/route.service";
-import { UserCardColumnService } from "../service/user-card-column.service";
-import { UserCardService } from "../service/user-card.service";
-import { Pageable } from "./../domain/pageable";
-import { UserCardUsage } from "./../domain/user-card-usage";
+import { AbstractComponent } from "../../AbstractComponent";
+import { Grid } from "../../domain/grid";
+import { NgPrimeGridResponse } from "../../domain/ngprime-grid-response";
+import { UserCard } from "../../domain/user-card";
+import { NgxTableComponent } from "../../libs/toolbox-components/ngx-table/ngx-table.component";
+import { AddressService } from "../../service/address.service";
+import { MunicipalityService } from "../../service/municipailty.service";
+import { ReadingBookService } from "../../service/reading-book.service";
+import { RouteService } from "../../service/route.service";
+import { UserCardColumnService } from "../../service/user-card-column.service";
+import { UserCardService } from "../../service/user-card.service";
+import { Pageable } from "../../domain/pageable";
+import { UserCardUsage } from "../../domain/user-card-usage";
+import { ZoneDeviceService } from "../../service/zone-device.service";
+import { forEach } from "lodash";
 
 const CURRENT_VIEW = 1;
 
@@ -85,7 +87,7 @@ export class ZoneDeviceComponent extends AbstractComponent implements OnInit {
   data = {};
 
   constructor(
-    private userCardService: UserCardService,
+    private zoneDeviceService: ZoneDeviceService,
     private userCardColumnService: UserCardColumnService,
     private routeService: RouteService,
     private addressService: AddressService,
@@ -101,7 +103,16 @@ export class ZoneDeviceComponent extends AbstractComponent implements OnInit {
     const { translate } = this;
 
     this.cols = [];
-    this.userCardColumnService.findAll(Grid.USER_CARD).then((columns) => {
+    this.userCardColumnService.findAll(Grid.ZONE_DEVICE_CARD).then((columns) => {
+      forEach(columns, (column) => {
+        if (column.header === 'Customer name') {
+          column.header = 'Device Name';
+        } else if (column.header === 'Address') {
+          column.header = 'Location';
+        } else if (column.header === 'Watermeter ID') {
+          column.header = 'Device ID';
+        }
+      });
       this.cols = [...this.cols, ...columns];
     });
 
@@ -159,97 +170,19 @@ export class ZoneDeviceComponent extends AbstractComponent implements OnInit {
     return of(this.cols);
   }
 
-  get sumUsageCurrent$() {
-    return of(this.sumUsageCurrent);
-  }
-
-  get sumUsageCurrentReverse$() {
-    return of(this.sumUsageCurrentReverse);
-  }
-
-  get sumUsageCurrentMonth$() {
-    return of(this.sumUsageCurrentMonth);
-  }
-
-  get sumUsageAverage$() {
-    return of(this.sumUsageAverage);
-  }
-
-  get sumDiffLastRead$() {
-    return of(this.sumDiffLastRead);
-  }
-
   get displayId$() {
     return of(this.id);
   }
 
-  get displayGraph$() {
-    return of(this.displayGraph);
-  }
-
-  private getSummaryData() {
-    if (this.page === 0) {
-      this.userCardService
-        .findSumBy(this.getSearchCriteria())
-        .then((dto: UserCardUsage) => {
-          this.sumUsageCurrent = dto.usageCurrent;
-          this.sumUsageCurrentReverse = dto.usageCurrentReverse;
-          this.sumUsageCurrentMonth = dto.usageCurrentMonth;
-          this.sumUsageAverage = dto.usageAverage;
-          this.sumDiffLastRead = dto.diffLastRead;
-
-          this.data = {
-            labels: ["Usage"],
-            datasets: [
-              {
-                label: "Ukupna",
-                backgroundColor: "#9CCC65",
-                borderColor: "#7CB342",
-                data: [this.sumUsageCurrent],
-                width: "200px",
-                height: "50px",
-              },
-              {
-                label: "Mesecna",
-                backgroundColor: "#42A5F5",
-                borderColor: "#1E88E5",
-                data: [this.sumUsageCurrentMonth],
-              },
-              {
-                label: "Prosek",
-                backgroundColor: "#ffc77d",
-                borderColor: "#AFFFFF",
-                data: [this.sumUsageAverage],
-              },
-              {
-                label: "Stanje",
-                backgroundColor: "#03DAC5",
-                borderColor: "#1E88E5",
-                data: [this.sumDiffLastRead],
-              },
-              {
-                label: "Reverzna",
-                backgroundColor: "#eaed87",
-                borderColor: "#AFFFFF",
-                data: [this.sumUsageCurrentReverse],
-              },
-            ],
-          };
-        });
-    }
-  }
-
   private loadPage(page: number, size: number, sort?: string) {
     const pageable = { page, size, sort };
-    this.userCardService
+    this.zoneDeviceService
       .findBy(this.getSearchCriteria(), pageable)
       .then((ngresp: NgPrimeGridResponse) => {
         this.userCards = this.processResponse(ngresp);
         this.totalRecords = ngresp.totalRecords;
         this.loading = false;
       });
-
-    this.getSummaryData();
   }
 
   loadUserCardsLazy(event: LazyLoadEvent) {
@@ -320,7 +253,7 @@ export class ZoneDeviceComponent extends AbstractComponent implements OnInit {
 
   search() {
     this.page = 0;
-    this.userCardService
+    this.zoneDeviceService
       .findBy(this.getSearchCriteria(), this.getPageable())
       .then((ngresp: NgPrimeGridResponse) => {
         const data = this.processResponse(ngresp);
@@ -328,8 +261,6 @@ export class ZoneDeviceComponent extends AbstractComponent implements OnInit {
         this.totalRecords = ngresp.totalRecords;
         this.loading = false;
       });
-
-    this.getSummaryData();
   }
 
   private processResponse(ngresp: NgPrimeGridResponse) {
@@ -417,15 +348,13 @@ export class ZoneDeviceComponent extends AbstractComponent implements OnInit {
     this.zoneDevice = false;
     this.child.reset();
 
-    this.userCardService
+    this.zoneDeviceService
       .findBy({ displayType: CURRENT_VIEW, deviceType: 0 }, this.getPageable())
       .then((ngresp: NgPrimeGridResponse) => {
         this.userCards = ngresp.data;
         this.totalRecords = ngresp.totalRecords;
         this.loading = false;
       });
-
-    this.getSummaryData();
   }
 
   onDisplayTypeChange(event) {}
@@ -449,7 +378,7 @@ export class ZoneDeviceComponent extends AbstractComponent implements OnInit {
   }
 
   onReportButtonClick() {
-    this.userCardService
+    this.zoneDeviceService
       .reportBy(this.getSearchCriteria())
       .subscribe((data: any) => this.downloadFile(data, "report.pdf"));
   }
@@ -465,19 +394,19 @@ export class ZoneDeviceComponent extends AbstractComponent implements OnInit {
       queryParams:
         !searchCriteria.dateTo && !searchCriteria.dateFrom
           ? {
-              search: this.userCardService.getUrl(
+              search: this.zoneDeviceService.getUrl(
                 "",
                 this.getSearchCriteria(),
                 UserCardService.URL_ALL
               ),
             }
           : {
-              search: this.userCardService.getUrl(
+              search: this.zoneDeviceService.getUrl(
                 "",
                 this.getSearchCriteria(),
                 UserCardService.URL_PART_ONE
               ),
-              historySearch: this.userCardService.getUrl(
+              historySearch: this.zoneDeviceService.getUrl(
                 "",
                 this.getSearchCriteria(),
                 UserCardService.URL_PART_TWO

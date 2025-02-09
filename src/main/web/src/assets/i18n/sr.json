@@ -185,6 +185,8 @@
   "Superior device": "Nadređeni uređaj",
   "Zone Device ID": "Sifra Zonskog Uređaja",
   "Zone Device Name": "Naziv Zonskog Uređaja",
+  "Device Name": "Ime Uređaja",
   "Save": "Snimi",
-  "Zone Device Config": "Konfiguracija zonskih uređaja"
+  "Zone Device Config": "Konfiguracija zonskih uređaja",
+  "Location": "Lokacija"
 }

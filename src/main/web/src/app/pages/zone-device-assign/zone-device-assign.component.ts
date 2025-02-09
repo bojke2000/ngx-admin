@@ -1,11 +1,11 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { AbstractComponent } from '../AbstractComponent';
+import { AbstractComponent } from '../../AbstractComponent';
 import { TranslateService } from '@ngx-translate/core';
 import { SelectItem } from 'primeng/api';
-import { UserCardService } from '../service/user-card.service';
-import { AddressService } from '../service/address.service';
-import { Option } from '../domain/option';
-import { UserCard } from '../domain/user-card';
+import { UserCardService } from '../../service/user-card.service';
+import { AddressService } from '../../service/address.service';
+import { Option } from '../../domain/option';
+import { UserCard } from '../../domain/user-card';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({

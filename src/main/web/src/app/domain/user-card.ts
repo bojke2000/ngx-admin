@@ -39,7 +39,6 @@ export class UserCard {
   alarms: number;
   mainBattery: number;
   gsmBattery: number;
-
   customerRemarks: string;
   siteRemarks: string;
   routeRemarks: string;

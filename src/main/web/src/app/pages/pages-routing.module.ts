@@ -17,8 +17,8 @@ import { PagesComponent } from "./pages.component";
 import { RouteComponent } from "./route/route.component";
 import { UserCardComponent } from "./user-card/user-card.component";
 import { WmbusDeviceComponent } from "./wmbus-device/wmbus-device.component";
-import { ZoneDeviceComponent } from "../zone-device/zone-device.component";
-import { ZoneDeviceAssignComponent } from "../zone-device-assign/zone-device-assign.component";
+import { ZoneDeviceComponent } from "./zone-device/zone-device.component";
+import { ZoneDeviceAssignComponent } from "./zone-device-assign/zone-device-assign.component";
 
 
 const routes: Routes = [

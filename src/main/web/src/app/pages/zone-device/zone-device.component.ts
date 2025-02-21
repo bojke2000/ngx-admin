@@ -118,25 +118,7 @@ export class ZoneDeviceComponent extends AbstractComponent implements OnInit {
 
     this.loading = true;
 
-    this.routeService.getRoutesAsOptions().then((routes) => {
-      this.routes = routes;
-    });
-
-    this.addressService.getAddresssAsOptions().then((addresses) => {
-      this.addresses = addresses;
-    });
-
-    this.readingBookService.getReadingBooksAsOptions().then((readingBooks) => {
-      this.readingBooks = readingBooks;
-    });
-
-    this.municipalityService
-      .getMunicipalitiesAsOptions()
-      .then((municipalities) => {
-        this.municipalities = municipalities;
-      });
-
-    translate.get("Current").subscribe((value) => {
+  translate.get("Current").subscribe((value) => {
       this.displayTypes = [
         { value: 1, label: translate.instant("Current") },
         { value: 2, label: translate.instant("Historical") },

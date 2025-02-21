@@ -1,12 +1,12 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AbstractComponent } from '../../AbstractComponent';
 import { TranslateService } from '@ngx-translate/core';
-import { SelectItem } from 'primeng/api';
 import { UserCardService } from '../../service/user-card.service';
 import { AddressService } from '../../service/address.service';
 import { Option } from '../../domain/option';
 import { UserCard } from '../../domain/user-card';
-import { takeUntil } from 'rxjs/operators';
+import { ZoneDevice } from '../../domain/zone-device';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'ngx-zone-device-assign',
@@ -26,7 +26,7 @@ export class ZoneDeviceAssignComponent extends AbstractComponent implements OnIn
   totalPagesAssigned = 0;
   zoneDevices: Option[] = [];
   addresses: Option[] = [];
-  zoneDevice: Option;
+  zoneDevice: string;
   address: Option;
 
   constructor(translate: TranslateService,
@@ -51,17 +51,19 @@ export class ZoneDeviceAssignComponent extends AbstractComponent implements OnIn
   }
 
   onAddressChange(event$) {
-    const address: Option = event$.value;
-    this.loadDevicesByAddress(address);
+    // const address: Option = event$.value;
+    this.loadDevicesByAddress();
   }
 
   onZoneDeviceChange(event$) {
+    // this.zoneDevice = this.zoneDevices.find(zone => zone.value === event$.value);
+    //const zoneDevice: Option = event$.value;
     this.loadDevicesByAddress();
   }
 
   saveAssignements() {
-    const updateAssigned = this.assignedItems.filter(item => item.parentId !== this.zoneDevice.value);
-    const updateAvailable = this.availableItems.filter(item => item.parentId === this.zoneDevice.value).map(item => {
+    const updateAssigned = this.assignedItems.filter(item => item.parentId !== this.zoneDevice);
+    const updateAvailable = this.availableItems.filter(item => item.parentId === this.zoneDevice).map(item => {
       item.parentUd = undefined;
       return item
     });
@@ -70,7 +72,7 @@ export class ZoneDeviceAssignComponent extends AbstractComponent implements OnIn
     updateAssigned.forEach(item => {
       const uc = new UserCard();
       uc.id = item.id;
-      uc.parentId = Number(this.zoneDevice.value);
+      uc.parentId = Number(this.zoneDevice);
       self.userCardService.updateParentId(uc).subscribe((val) => {
         console.log(val);
       });
@@ -90,7 +92,8 @@ export class ZoneDeviceAssignComponent extends AbstractComponent implements OnIn
   async loadDevicesByAddress(address?: Option) {
     this.addressService.getAddresssAsOptions().then(addresses => {
       this.addresses = addresses;
-      this.address = address ? address : addresses && addresses.length > 0 ? addresses[0] : undefined;
+      this.address = this.address ? this.address : addresses && addresses.length > 0 ? addresses[0] : undefined;
+      //this.address = address ? address : addresses && addresses.length > 0 ? addresses[0] : undefined;
       let criteria: any = {};
       if (this.address) {
         criteria.address = this.address.value;
@@ -99,8 +102,8 @@ export class ZoneDeviceAssignComponent extends AbstractComponent implements OnIn
       this.availableItems = [];
       this.userCardService.findBy(criteria).then((response: any) => {
         response.data.forEach(item => {
-          if (item.id !== this.zoneDevice.value) {
-            if (item.parentId === this.zoneDevice.value) {
+          if (String(item.id) !== this.zoneDevice) {
+            if (String(item.parentId) === this.zoneDevice) {
               this.assignedItems.push({ 'id': item.id, 'name': item.customerName, selected: false, 'parentId': item.parentId });
             } else {
               this.availableItems.push({ 'id': item.id, 'name': item.customerName, selected: false, 'parentId': item.parentId });
@@ -112,16 +115,23 @@ export class ZoneDeviceAssignComponent extends AbstractComponent implements OnIn
     });
   }
 
+   get zoneDevices$() {
+      return of(this.zoneDevices);
+    }
+
   private async loadZoneDevices() {
     const criteria = {};
     this.zoneDevices = [];
     criteria['deviceType'] = 1;
+    const self = this;
     this.userCardService.findBy(criteria, {}).then((ngresp: any) => {
-      ngresp.data.forEach(item => this.zoneDevices.push({ 'label': item.customerName, 'value': item.id }));
-      this.zoneDevice = this.zoneDevices && this.zoneDevices.length > 0 ? this.zoneDevices[0] : undefined;
+      ngresp.data.forEach(item => {
+        const el: Option = { label: item.customerName , value: `${item.id}`};
+        self.zoneDevices.push(el);
+        self.zoneDevice = self.zoneDevices && self.zoneDevices.length > 0 ? self.zoneDevices[0].value : undefined;
     });
-
-  }
+  });
+}
 
   get filteredAvailableItems(): any[] {
     const startIndex = (this.currentPageAvailable - 1) * this.pageSize;

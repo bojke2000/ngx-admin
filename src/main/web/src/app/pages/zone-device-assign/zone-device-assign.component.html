@@ -9,7 +9,9 @@
   </div>
   <div class="ui-g-3">
     <label for="protocol">{{translate.get('Zone device') | async }}:&nbsp;&nbsp;</label>
-    <p-dropdown [options]="zoneDevices"  
+    <p-dropdown [options]="zoneDevices$ | async"  
+    optionValue="value" 
+    name="zoneDevice"
     [(ngModel)]="zoneDevice"
     (onChange)="onZoneDeviceChange($event)" ></p-dropdown>
   </div>

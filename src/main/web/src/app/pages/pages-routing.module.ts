@@ -19,6 +19,7 @@ import { UserCardComponent } from "./user-card/user-card.component";
 import { WmbusDeviceComponent } from "./wmbus-device/wmbus-device.component";
 import { ZoneDeviceComponent } from "./zone-device/zone-device.component";
 import { ZoneDeviceAssignComponent } from "./zone-device-assign/zone-device-assign.component";
+import { GoogleMapsComponent } from "./google-maps/google-maps.component";
 
 
 const routes: Routes = [
@@ -102,6 +103,10 @@ const routes: Routes = [
       {
         path: "zone-device-assign",
         component: ZoneDeviceAssignComponent,
+      },
+      {
+        path: "google-maps",
+        component: GoogleMapsComponent,
       },
     ],
   },

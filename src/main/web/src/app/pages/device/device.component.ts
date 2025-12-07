@@ -51,6 +51,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   submitted = false;
   zoneDevice = false;
   loraDevice = false;
+  valveDevice = false;
   routes: SelectItem[];
   addresses: SelectItem[];
   readingBooks: SelectItem[];
@@ -190,6 +191,8 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       indexb: [''],
       indexc: [''],
       indexd: [''],
+      valveStatus: ['2'],
+      valvePosition: ['20'],
     });
 
     this.loadStaticData();
@@ -420,6 +423,8 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       indexb: undefined,
       indexc: undefined,
       indexd: undefined,
+      valveStatus: undefined,
+      valvePosition: undefined,
     };
 
     this.filteredZoneDevices = [...this.zoneDevices];
@@ -484,6 +489,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     }
 
     this.loraDevice = false;
+    this.valveDevice = false;
     const val = this.device.deviceType.toString();
     if (val === DeviceComponent.DEVICE_ZOME_DEVICE) {
       this.zoneDevice = true;
@@ -493,6 +499,9 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       val === DeviceComponent.DEVICE_LORA_VALVE_DEVICE
     ) {
       this.loraDevice = true;
+    }
+    if (val === DeviceComponent.DEVICE_LORA_VALVE_DEVICE) {
+      this.valveDevice = true;
     }
 
     selected = this.multipliers.filter(
@@ -715,6 +724,8 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   onDeviceTypeChange(evt) {
     this.ddDeviceTypeStatus.filled = true;
     this.zoneDevice = false;
+    this.valveDevice = false;
+    this.loraDevice = false;
     this.deviceForm.patchValue({ applicationKey: undefined });
     const val = evt.value.value as string;
     if (val === DeviceComponent.DEVICE_ZOME_DEVICE) {
@@ -725,6 +736,10 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     ) {
       this.loraDevice = true;
       this.deviceForm.patchValue({ gsmId: undefined });
+    }
+
+    if (val === DeviceComponent.DEVICE_LORA_VALVE_DEVICE) {
+      this.valveDevice = true;
     }
   }
 

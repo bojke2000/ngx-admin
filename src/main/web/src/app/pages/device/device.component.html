@@ -759,6 +759,35 @@
                     <label for="indexd">{{ "Index D" | translate }}</label>
                   </span>
                 </div>
+
+                <div class="ui-g-6" [hidden]="!valveDevice">
+                  <span class="ui-float-label">
+                      <input
+                      readonly
+                    pInputText
+                    id="valvePosition"
+                    formControlName="valvePosition"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.valvePosition.errors }"
+                  />
+                    <label for="valvePosition">{{ "Valve Position" | translate }}</label>
+                  </span>
+                </div>
+
+                <div class="ui-g-6" [hidden]="!valveDevice">
+                  <span class="ui-float-label">
+                      <input
+                      readonly
+                    pInputText
+                    id="valveStatus"
+                    formControlName="valveStatus"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.valveStatus.errors }"
+                  />
+                    <label for="valveStatus">{{ "Valve Status" | translate }}</label>
+                  </span>
+                </div>
+
               </div>
             </div>
             <!-- END OF SECOND COLUMN -->

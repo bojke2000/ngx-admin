@@ -44,6 +44,8 @@
               <label for="deviceId">{{ "Device ID" | translate }}</label>
             </span>
           </div>
+          <!-- Dropdown for device type -->
+          <!-- -->
         </div>
         <div class="ui-g-2">
           <div class="ui-g-6">
@@ -81,10 +83,20 @@
       </ngx-table>
 
       <div class="button-positioner">
-        <p-button
+         <p-button
+         style="display: none;"
+         id="loraValveCommand"
           *ngIf="loraOn && isAdmin"
           (click)="showDialogLoraDownlink()"
-          label="{{ translate.get('Lora Downlink') | async }}"
+          label="{{ translate.get('Lora Valve Command') | async }}"
+        ></p-button>
+        <div class="divider"></div>
+        <p-button
+          style="display: none;"
+           id="loraConfigDownlink"
+          *ngIf="loraOn && isAdmin"
+          (click)="showDialogLoraDownlink()"
+          label="{{ translate.get('Lora Config Downlink') | async }}"
         ></p-button>
         <div class="divider"></div>
         <p-button

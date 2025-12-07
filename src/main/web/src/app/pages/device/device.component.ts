@@ -1,47 +1,47 @@
-import * as _ from "lodash";
+import * as _ from 'lodash';
 
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { LazyLoadEvent, SelectItem } from "primeng/api/public_api";
-import { Observable, of } from "rxjs";
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LazyLoadEvent, SelectItem } from 'primeng/api/public_api';
+import { Observable, of } from 'rxjs';
 
-import { AbstractComponent } from "../../AbstractComponent";
-import { AddressService } from "../../service/address.service";
-import { Dropdown } from "primeng/dropdown";
-import { Grid } from "../../domain/grid";
-import { MunicipalityService } from "../../service/municipailty.service";
-import { NgPrimeGridResponse } from "../../domain/ngprime-grid-response";
-import { NgxTableComponent } from "../../libs/toolbox-components/ngx-table/ngx-table.component";
-import { Option } from "./../../domain/option";
-import { ReadingBookService } from "../../service/reading-book.service";
-import { RouteService } from "./../../service/route.service";
-import { Router } from "@angular/router";
-import { Table } from "primeng/table";
-import { TranslateService } from "@ngx-translate/core";
-import { UserCard } from "../../domain/user-card";
-import { UserCardColumnService } from "../../service/user-card-column.service";
-import { UserCardService } from "../../service/user-card.service";
-import { takeUntil } from "rxjs/operators";
-import { LoraConfigService } from "../../service/lora-config.service";
-import { LoraConfig } from "../../domain/lora-config";
-import { DeviceTypeService } from "../../service/device-type.service";
-import { LoraDownlinkService } from "../../service/lora-downlink.service";
-import { LoraFPort50 } from "../../domain/lora-fport50";
-import { UserAccountService } from "../../service/user-account.service";
+import { AbstractComponent } from '../../AbstractComponent';
+import { AddressService } from '../../service/address.service';
+import { Dropdown } from 'primeng/dropdown';
+import { Grid } from '../../domain/grid';
+import { MunicipalityService } from '../../service/municipailty.service';
+import { NgPrimeGridResponse } from '../../domain/ngprime-grid-response';
+import { NgxTableComponent } from '../../libs/toolbox-components/ngx-table/ngx-table.component';
+import { Option } from './../../domain/option';
+import { ReadingBookService } from '../../service/reading-book.service';
+import { RouteService } from './../../service/route.service';
+import { Router } from '@angular/router';
+import { Table } from 'primeng/table';
+import { TranslateService } from '@ngx-translate/core';
+import { UserCard } from '../../domain/user-card';
+import { UserCardColumnService } from '../../service/user-card-column.service';
+import { UserCardService } from '../../service/user-card.service';
+import { takeUntil } from 'rxjs/operators';
+import { LoraConfigService } from '../../service/lora-config.service';
+import { LoraConfig } from '../../domain/lora-config';
+import { DeviceTypeService } from '../../service/device-type.service';
+import { LoraDownlinkService } from '../../service/lora-downlink.service';
+import { LoraFPort50 } from '../../domain/lora-fport50';
+import { UserAccountService } from '../../service/user-account.service';
 
 const CURRENT_VIEW = 1;
 
 @Component({
-  selector: "ngx-device",
-  templateUrl: "./device.component.html",
-  styleUrls: ["./device.component.css"],
+  selector: 'ngx-device',
+  templateUrl: './device.component.html',
+  styleUrls: ['./device.component.css'],
 })
 export class DeviceComponent extends AbstractComponent implements OnInit {
-  public static DEVICE_WMBUS = "0";
-  public static DEVICE_ZOME_DEVICE = "1";
-  public static DEVICE_LORA_DEVICE = "2";
-  public static DEVICE_LORA_VALVE_DEVICE = "3";
-  public static DEVICE_LORA_ZONE_DEVICE = "6";
+  public static DEVICE_WMBUS = '0';
+  public static DEVICE_ZOME_DEVICE = '1';
+  public static DEVICE_LORA_DEVICE = '2';
+  public static DEVICE_LORA_VALVE_DEVICE = '3';
+  public static DEVICE_LORA_ZONE_DEVICE = '6';
   deviceForm: FormGroup;
   device: UserCard = undefined;
   displayDialog: boolean;
@@ -64,8 +64,8 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   port50Headers: Option[];
   port50Header1: Option;
   port50Header2;
-  port50Value1 = "";
-  port50Value2 = "";
+  port50Value1 = '';
+  port50Value2 = '';
 
   parentId: string;
 
@@ -92,31 +92,31 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   cols = [];
   isResisable: boolean = true;
   loading: boolean;
-  @ViewChild("table", { static: false }) table: Table;
+  @ViewChild('table', { static: false }) table: Table;
   selectedUserCard: UserCard;
 
-  @ViewChild("ddStatus")
+  @ViewChild('ddStatus')
   routeStatus: Dropdown;
 
-  @ViewChild("ddAddressStatus")
+  @ViewChild('ddAddressStatus')
   addressStatus: Dropdown;
 
-  @ViewChild("ddReadingBookStatus")
+  @ViewChild('ddReadingBookStatus')
   readingBookStatus: Dropdown;
 
-  @ViewChild("ddMunicipalityStatus")
+  @ViewChild('ddMunicipalityStatus')
   ddMunicipalityStatus: Dropdown;
 
-  @ViewChild("ddport50Headers")
+  @ViewChild('ddport50Headers')
   ddport50Headers: Dropdown;
 
-  @ViewChild("ddModeStatus")
+  @ViewChild('ddModeStatus')
   ddModeStatus: Dropdown;
 
-  @ViewChild("ddMultiplierStatus")
+  @ViewChild('ddMultiplierStatus')
   ddMultiplierStatus: Dropdown;
 
-  @ViewChild("ddDeviceTypeStatus")
+  @ViewChild('ddDeviceTypeStatus')
   ddDeviceTypeStatus: Dropdown;
 
   @ViewChild(NgxTableComponent)
@@ -143,102 +143,102 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     private loraDownlinkService: LoraDownlinkService,
     private router: Router,
     translate: TranslateService,
-    private cdref: ChangeDetectorRef
+    private cdref: ChangeDetectorRef,
   ) {
     super(translate);
   }
 
   async ngOnInit(): Promise<void> {
     this.port50Headers = [
-      { label: this.translate.instant("Total volume"), value: "0" },
-      { label: this.translate.instant("Date and time"), value: "1" },
-      { label: this.translate.instant("Periodic Interval"), value: "2" },
+      { label: this.translate.instant('Total volume'), value: '0' },
+      { label: this.translate.instant('Date and time'), value: '1' },
+      { label: this.translate.instant('Periodic Interval'), value: '2' },
     ];
 
     this.deviceForm = this.formBuilder.group({
-      id: [""],
-      customerId: ["", [Validators.required]],
-      regNr: [""],
-      regNr2: [""],
-      customerName: ["", [Validators.required]],
-      address: ["", [Validators.required]],
-      addressNo: [""],
-      addressNo2: [""],
-      municipality: [""],
-      route: [""],
-      readingBook: [""],
-      variance: ["20", [Validators.required]],
-      customerRemarks: [""],
-      siteRemarks: [""],
-      routeRemarks: [""],
-      gsmRemarks: [""],
-      deviceNo: ["", [Validators.required]],
-      deviceId: ["", [Validators.required]],
-      mode: ["", [Validators.required]],
-      profile: ["", [Validators.required]],
-      medium: [""],
-      unit: ["", [Validators.required]],
-      gsmLongitude: [""],
-      gsmLatitude: [""],
-      multiplier: ["", [Validators.required]],
-      deviceType: ["", [Validators.required]],
-      parentId: [""],
-      gsmId: [""],
-      applicationKey: [""],
+      id: [''],
+      customerId: ['', [Validators.required]],
+      regNr: [''],
+      regNr2: [''],
+      customerName: ['', [Validators.required]],
+      address: ['', [Validators.required]],
+      addressNo: [''],
+      addressNo2: [''],
+      municipality: [''],
+      route: [''],
+      readingBook: [''],
+      variance: ['20', [Validators.required]],
+      customerRemarks: [''],
+      siteRemarks: [''],
+      routeRemarks: [''],
+      gsmRemarks: [''],
+      deviceNo: ['', [Validators.required]],
+      deviceId: ['', [Validators.required]],
+      mode: ['', [Validators.required]],
+      profile: ['', [Validators.required]],
+      medium: [''],
+      unit: ['', [Validators.required]],
+      gsmLongitude: [''],
+      gsmLatitude: [''],
+      multiplier: ['', [Validators.required]],
+      deviceType: ['', [Validators.required]],
+      parentId: [''],
+      gsmId: [''],
+      applicationKey: [''],
       zoneDevice: [null],
-      indexa: [""],
-      indexb: [""],
-      indexc: [""],
-      indexd: [""],
+      indexa: [''],
+      indexb: [''],
+      indexc: [''],
+      indexd: [''],
     });
 
     this.loadStaticData();
 
     this.modes = [
-      { label: "Mode A", value: "0" },
-      { label: "Mode B", value: "1" },
-      { label: "Mode C", value: "2" },
+      { label: 'Mode A', value: '0' },
+      { label: 'Mode B', value: '1' },
+      { label: 'Mode C', value: '2' },
     ];
 
     this.profiles = [
-      { label: "DN15", value: "0" },
-      { label: "DN20", value: "1" },
-      { label: "DN25", value: "2" },
-      { label: "DN32", value: "3" },
-      { label: "DN40", value: "4" },
-      { label: "DN50", value: "5" },
-      { label: "DN65", value: "6" },
-      { label: "DN80", value: "7" },
-      { label: "DN100", value: "8" },
-      { label: "DN150", value: "9" },
-      { label: "DN200", value: "10" },
+      { label: 'DN15', value: '0' },
+      { label: 'DN20', value: '1' },
+      { label: 'DN25', value: '2' },
+      { label: 'DN32', value: '3' },
+      { label: 'DN40', value: '4' },
+      { label: 'DN50', value: '5' },
+      { label: 'DN65', value: '6' },
+      { label: 'DN80', value: '7' },
+      { label: 'DN100', value: '8' },
+      { label: 'DN150', value: '9' },
+      { label: 'DN200', value: '10' },
     ];
 
     this.mediums = [
-      { label: this.translate.instant("Cold Water"), value: "0" },
-      { label: this.translate.instant("Hot Water"), value: "1" },
-      { label: this.translate.instant("Gasoline"), value: "2" },
+      { label: this.translate.instant('Cold Water'), value: '0' },
+      { label: this.translate.instant('Hot Water'), value: '1' },
+      { label: this.translate.instant('Gasoline'), value: '2' },
     ];
 
     this.units = [
-      { label: "m3", value: "0" },
-      { label: "Litre", value: "1" },
+      { label: 'm3', value: '0' },
+      { label: 'Litre', value: '1' },
     ];
 
     this.multipliers = [
-      { label: "0.1", value: "0.1" },
-      { label: "0.01", value: "0.01" },
-      { label: "0.001", value: "0.001" },
+      { label: '0.1', value: '0.1' },
+      { label: '0.01', value: '0.01' },
+      { label: '0.001', value: '0.001' },
       // {label: '0.010', value: '0.010'},
       // {label: '0.100', value: '0.100'},
     ];
 
     this.indexes = [
-      { label: "", value: undefined },
-      { label: "Direct", value: "0" },
-      { label: "Reverse", value: "1" },
-      { label: "Pressure", value: "2" },
-      { label: "Temperature", value: "3" },
+      { label: '', value: undefined },
+      { label: 'Direct', value: '0' },
+      { label: 'Reverse', value: '1' },
+      { label: 'Pressure', value: '2' },
+      { label: 'Temperature', value: '3' },
     ];
 
     this.cols = [];
@@ -252,32 +252,32 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
     this.translate.onLangChange.subscribe(() => {
       this.mediums = [
-        { label: this.translate.instant("Cold Water"), value: "0" },
-        { label: this.translate.instant("Hot Water"), value: "1" },
-        { label: this.translate.instant("Gasoline"), value: "2" },
+        { label: this.translate.instant('Cold Water'), value: '0' },
+        { label: this.translate.instant('Hot Water'), value: '1' },
+        { label: this.translate.instant('Gasoline'), value: '2' },
       ];
 
       this.units = [
-        { label: "m3", value: "0" },
-        { label: this.translate.instant("Litre"), value: "1" },
+        { label: 'm3', value: '0' },
+        { label: this.translate.instant('Litre'), value: '1' },
       ];
 
       this.indexes = [
-        { label: "", value: undefined },
-        { label: this.translate.instant("Direct"), value: "0" },
-        { label: this.translate.instant("Reverse"), value: "1" },
-        { label: this.translate.instant("Pressure"), value: "2" },
-        { label: this.translate.instant("Temperature"), value: "3" },
+        { label: '', value: undefined },
+        { label: this.translate.instant('Direct'), value: '0' },
+        { label: this.translate.instant('Reverse'), value: '1' },
+        { label: this.translate.instant('Pressure'), value: '2' },
+        { label: this.translate.instant('Temperature'), value: '3' },
       ];
 
       this.port50Headers = [
-        { label: this.translate.instant("Total volume"), value: "0" },
-        { label: this.translate.instant("Date and time"), value: "1" },
-        { label: this.translate.instant("Periodic Interval"), value: "2" },
+        { label: this.translate.instant('Total volume'), value: '0' },
+        { label: this.translate.instant('Date and time'), value: '1' },
+        { label: this.translate.instant('Periodic Interval'), value: '2' },
       ];
     });
 
-    const pageable = { page: 1, size: 20, sort: "id" };
+    const pageable = { page: 1, size: 20, sort: 'id' };
     this.loraConfigService.getAll(pageable).then((results) => {
       const loraConfig: LoraConfig = results[0];
       this.loraOn = loraConfig.loraOn;
@@ -287,13 +287,13 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
   }
 
-private async loadZoneDevices() {
-      const criteria = {};
-      this.zoneDevices = [];
-      criteria['deviceType'] = 1;
-      this.userCardService.findBy(criteria, {}).then((ngresp: any) => {
-        ngresp.data.forEach(item => this.zoneDevices.push({'label': item.customerName, 'value': item.id }));  
-      });
+  private async loadZoneDevices() {
+    const criteria = {};
+    this.zoneDevices = [];
+    criteria['deviceType'] = 1;
+    this.userCardService.findBy(criteria, {}).then((ngresp: any) => {
+      ngresp.data.forEach(item => this.zoneDevices.push({ 'label': item.customerName, 'value': item.id }));
+    });
   }
 
   get routes$() {
@@ -345,26 +345,26 @@ private async loadZoneDevices() {
     this.loading = true;
     const sortBy =
       event.sortField === undefined
-        ? "id"
-        : event.sortField === "city"
-        ? "cityId"
-        : event.sortField;
-    const sortOrder = event.sortOrder === -1 ? "desc" : "asc";
+        ? 'id'
+        : event.sortField === 'city'
+          ? 'cityId'
+          : event.sortField;
+    const sortOrder = event.sortOrder === -1 ? 'desc' : 'asc';
     this.loadPage(
       event.first / event.rows,
       event.rows,
-      sortBy + "," + sortOrder
+      sortBy + ',' + sortOrder,
     );
   }
 
   resetSort() {
     this.table.sortOrder = 0;
-    this.table.sortField = "";
+    this.table.sortField = '';
     this.table.reset();
   }
 
   onImportClick() {
-    this.router.navigate(["/pages/import-user-card"]);
+    this.router.navigate(['/pages/import-user-card']);
   }
 
   showDialogToAdd() {
@@ -436,7 +436,7 @@ private async loadZoneDevices() {
     let selected;
     if (this.device.mode) {
       selected = this.modes.filter(
-        (mode) => mode.label === this.device.mode.toString()
+        (mode) => mode.label === this.device.mode.toString(),
       );
       this.deviceForm.patchValue({
         mode: selected && selected.length > 0 ? selected[0] : undefined,
@@ -444,7 +444,7 @@ private async loadZoneDevices() {
     }
     selected = this.mediums.filter(
       (medium) =>
-        medium.label === this.translate.instant(this.device.medium.toString())
+        medium.label === this.translate.instant(this.device.medium.toString()),
     );
     this.deviceForm.patchValue({
       medium: selected && selected.length > 0 ? selected[0] : undefined,
@@ -453,7 +453,7 @@ private async loadZoneDevices() {
     if (this.device.unit) {
       selected = this.units.filter(
         (unit) =>
-          unit.label === this.translate.instant(this.device.unit.toString())
+          unit.label === this.translate.instant(this.device.unit.toString()),
       );
       this.deviceForm.patchValue({
         unit: selected && selected.length > 0 ? selected[0] : undefined,
@@ -462,21 +462,21 @@ private async loadZoneDevices() {
     if (this.device.parentId) {
       selected = this.zoneDevices.filter(
         (zoneDevice) =>
-          zoneDevice.value === this.device.parentId
+          zoneDevice.value === this.device.parentId,
       );
       this.deviceForm.patchValue({
         parentId: selected && selected.length > 0 ? selected[0] : undefined,
       });
     }
     selected = this.profiles.filter(
-      (profile) => profile.label === this.device.profile.toString()
+      (profile) => profile.label === this.device.profile.toString(),
     );
     this.deviceForm.patchValue({
       profile: selected && selected.length > 0 ? selected[0] : undefined,
     });
     if (this.device.deviceType !== undefined) {
       selected = this.deviceTypes.filter(
-        (deviceType) => deviceType.value === this.device.deviceType.toString()
+        (deviceType) => deviceType.value === this.device.deviceType.toString(),
       );
       this.deviceForm.patchValue({
         deviceType: selected && selected.length > 0 ? selected[0] : undefined,
@@ -498,7 +498,7 @@ private async loadZoneDevices() {
     selected = this.multipliers.filter(
       (multiplier) =>
         parseFloat(multiplier.value) ===
-        parseFloat(this.device.multiplier.toString())
+        parseFloat(this.device.multiplier.toString()),
     );
     this.deviceForm.patchValue({
       multiplier: selected && selected.length > 0 ? selected[0] : undefined,
@@ -509,7 +509,7 @@ private async loadZoneDevices() {
 
     if (!_.isNil(this.device.indexa)) {
       selected = this.indexes.filter(
-        (index) => index.label === this.device.indexa
+        (index) => index.label === this.device.indexa,
       );
       this.deviceForm.patchValue({
         indexa: selected && selected.length > 0 ? selected[0] : undefined,
@@ -518,7 +518,7 @@ private async loadZoneDevices() {
 
     if (!_.isNil(this.device.indexb)) {
       selected = this.indexes.filter(
-        (index) => index.label === this.device.indexb
+        (index) => index.label === this.device.indexb,
       );
       this.deviceForm.patchValue({
         indexb: selected && selected.length > 0 ? selected[0] : undefined,
@@ -527,7 +527,7 @@ private async loadZoneDevices() {
 
     if (!_.isNil(this.device.indexc)) {
       selected = this.indexes.filter(
-        (index) => index.label === this.device.indexc
+        (index) => index.label === this.device.indexc,
       );
       this.deviceForm.patchValue({
         indexc: selected && selected.length > 0 ? selected[0] : undefined,
@@ -536,7 +536,7 @@ private async loadZoneDevices() {
 
     if (!_.isNil(this.device.indexd)) {
       selected = this.indexes.filter(
-        (index) => index.label === this.device.indexd
+        (index) => index.label === this.device.indexd,
       );
       this.deviceForm.patchValue({
         indexd: selected && selected.length > 0 ? selected[0] : undefined,
@@ -587,18 +587,18 @@ private async loadZoneDevices() {
     this.device.multiplier = this.getValue(this.device.multiplier);
     this.device.profile = this.getLabel(this.device.profile);
     this.device.medium = this.getLabel(this.device.medium);
-    this.device.deviceType = parseInt(this.getValue(this.device.deviceType));
-    this.device.parentId = parseInt(this.getValue(this.device.parentId));
-   
+    this.device.deviceType = parseInt(this.getValue(this.device.deviceType), 10);
+    this.device.parentId = parseInt(this.getValue(this.device.parentId), 10);
+
     if (this.device.parentId) {
-      const ng: any = await this.userCardService.findBy({customerId: this.device.parentId});
+      const ng: any = await this.userCardService.findBy({ customerId: this.device.parentId });
       if (ng && ng.data && ng.data.length > 0) {
         const parent: UserCard = ng.data[0];
         if (parent.parentId === this.device.id) {
-          alert(`Greska ne mogu jedan drugom biti parent` );
+          alert(`Greska ne mogu jedan drugom biti parent`);
           this.displayDialog = false;
         }
-        
+
       }
     }
 
@@ -644,7 +644,7 @@ private async loadZoneDevices() {
   }
 
   delete() {
-    if (confirm(this.translate.instant("Are you sure?"))) {
+    if (confirm(this.translate.instant('Are you sure?'))) {
       this.userCardService
         .deleteUserCard(this.device)
         .pipe(takeUntil(this.destroy$))
@@ -657,25 +657,20 @@ private async loadZoneDevices() {
 
   async loadStaticData() {
     this.routes = await this.routeService.getRoutesAsOptions();
-
     this.addresses = await this.addressService.getAddresssAsOptions();
-
     this.readingBooks = await this.readingBookService.getReadingBooksAsOptions();
-
     this.municipalities = await this.municipalityService
       .getMunicipalitiesAsOptions();
-
-      this.deviceTypes = await this.deviceTypeService.getDeviceTypesAsOptions();
-
-      await this.loadZoneDevices();
+    this.deviceTypes = await this.deviceTypeService.getDeviceTypesAsOptions();
+    await this.loadZoneDevices();
   }
 
   getValue(value: any): any {
     if (value === undefined || value === null) {
       return value;
-    } else if (typeof value === "string" || value instanceof String) {
+    } else if (typeof value === 'string' || value instanceof String) {
       return value;
-    } else if (value.hasOwnProperty("value")) {
+    } else if (value.hasOwnProperty('value')) {
       return value.value;
     }
   }
@@ -683,9 +678,9 @@ private async loadZoneDevices() {
   getLabel(selection: any): any {
     if (selection === undefined) {
       return selection;
-    } else if (typeof selection === "string" || selection instanceof String) {
+    } else if (typeof selection === 'string' || selection instanceof String) {
       return selection;
-    } else if (selection.hasOwnProperty("value")) {
+    } else if (selection.hasOwnProperty('value')) {
       return selection.label;
     }
   }
@@ -713,8 +708,8 @@ private async loadZoneDevices() {
   onPort50HeadersChange(evt) {
     this.ddport50Headers.filled = true;
     this.port50Header1 = evt.value;
-    this.port50Value1 = "";
-    this.port50Value2 = "";
+    this.port50Value1 = '';
+    this.port50Value2 = '';
   }
 
   onDeviceTypeChange(evt) {
@@ -775,10 +770,24 @@ private async loadZoneDevices() {
 
   onRowSelect(event: any) {
     this.device = { ...event.data };
+    if (this.device.deviceType === parseInt(DeviceComponent.DEVICE_LORA_VALVE_DEVICE, 10)) {
+      document.getElementById('loraValveCommand').style.display = 'inline-block';
+      document.getElementById('loraValveCommand').focus();
+      document.getElementById('loraConfigDownlink').style.display = 'inline-block';
+      document.getElementById('loraConfigDownlink').focus();
+    } else if (this.device.deviceType === parseInt(DeviceComponent.DEVICE_LORA_DEVICE, 10)) {
+      document.getElementById('loraConfigDownlink').style.display = 'inline-block';
+      document.getElementById('loraConfigDownlink').focus();
+    } else {
+      document.getElementById('loraValveCommand').style.display = 'none';
+      document.getElementById('loraConfigDownlink').style.display = 'none';
+    }
   }
 
   onRowUnselect(event: any) {
     this.device = undefined;
+    document.getElementById('loraValveCommand').style.display = 'none';
+    document.getElementById('loraConfigDownlink').style.display = 'none';
   }
 
   getSearchCriteria() {
@@ -794,12 +803,12 @@ private async loadZoneDevices() {
   }
 
   clear() {
-    this.customerName = "";
-    this.address = "";
+    this.customerName = '';
+    this.address = '';
     this.deviceId = undefined;
     this.gsmId = undefined;
-    this.sortBy = "";
-    this.sortOrder = "asc";
+    this.sortBy = '';
+    this.sortOrder = 'asc';
     this.page = 0;
     this.child.reset();
 
@@ -824,38 +833,37 @@ private async loadZoneDevices() {
   }
 
   onCustomerNameClick(data: any) {
-    if (data.column === "customerName") {
+    if (data.column === 'customerName') {
       this.customerName = data.row.customerName;
-    } else if (data.column === "address") {
+    } else if (data.column === 'address') {
       this.addresses.forEach((add) => {
         if (add.label === data.row.address) {
           this.address = add.value;
           return;
         }
       });
-    } else if (data.column === "gsmId") {
+    } else if (data.column === 'gsmId') {
       this.gsmId = data.row.gsmId;
-    } else if (data.column === "deviceId") {
+    } else if (data.column === 'deviceId') {
       this.deviceId = data.row.deviceId;
     }
   }
 
   public showDialogLoraDownlink(): void {
     this.displayWarningDialog = false;
-    this.displayWarningDialogMessage = "";
-    this.port50Header2 = "";
-    this.port50Value1 = "";
-    this.port50Value2 = "";
-    this.loraDownlinkMessage = "";
+    this.displayWarningDialogMessage = '';
+    this.port50Header2 = '';
+    this.port50Value1 = '';
+    this.port50Value2 = '';
+    this.loraDownlinkMessage = '';
 
     if (!this.device || !this.device.deviceId) {
       this.displayWarningDialog = true;
       this.displayWarningDialogMessage =
-        "Please select device to send Lora downlink message";
+        'Please select device to send Lora downlink message';
       return;
     }
 
-    // alert(this.device.deviceId + ',' + this.device.applicationKey);
     this.devEUI = this.device.deviceId;
     this.applicationKey = this.device.applicationKey;
     this.displayLoraDownlinkDialog = true;
@@ -864,27 +872,27 @@ private async loadZoneDevices() {
   sendLoradownlinkMessage(): void {
     if (
       !this.port50Value1 ||
-      this.port50Value1 === "" ||
-      ((this.port50Header1.value === "0" || this.port50Header1.value === "2") &&
-        (!this.port50Value2 || this.port50Value2 == ""))
+      this.port50Value1 === '' ||
+      ((this.port50Header1.value === '0' || this.port50Header1.value === '2') &&
+        (!this.port50Value2 || this.port50Value2 === ''))
     ) {
       this.displayWarningDialog = true;
       this.displayWarningDialogMessage =
-        "Please select value to send Lora downlink message";
+        'Please select value to send Lora downlink message';
       return;
     }
 
     const loraDownlinkMessage: LoraFPort50 = {
-      fPort: "50",
+      fPort: '50',
       applicationKey: this.applicationKey,
       devEUI: this.devEUI,
       header1: this.port50Header1.value,
       data1: this.port50Value1,
       header2:
-        this.port50Header2 && this.port50Header2 !== ""
+        this.port50Header2 && this.port50Header2 !== ''
           ? this.port50Headers.find((ph) => ph.label === this.port50Header2)
-              .value
-          : "",
+            .value
+          : '',
       data2: this.port50Value2,
     };
 

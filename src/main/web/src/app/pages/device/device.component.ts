@@ -191,8 +191,8 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       indexb: [''],
       indexc: [''],
       indexd: [''],
-      valveStatus: ['2'],
-      valvePosition: ['20'],
+      valveStatus: [''],
+      valvePosition: [''],
     });
 
     this.loadStaticData();

@@ -50,6 +50,6 @@ export class UserCard {
   indexb: string;
   indexc: string;
   indexd: string;
-  valveStatus?: string;
-  valvePosition?: string;
+  valveStatus?: number;
+  valvePosition?: number;
 }

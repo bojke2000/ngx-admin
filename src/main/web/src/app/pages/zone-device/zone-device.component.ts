@@ -43,13 +43,13 @@ export class ZoneDeviceComponent extends AbstractComponent implements OnInit {
   customerName: string;
   customerId;
   string;
-  route: string;
+  route: string[] | string;
   routes: SelectItem[];
-  address: string;
+  address: string[] | string;
   addresses: SelectItem[];
-  readingBook: string;
+  readingBook: string[] | string;
   readingBooks: SelectItem[];
-  municipality: string;
+  municipality: string[] | string;
   municipalities: SelectItem[];
   usageCurrentFrom: number;
   usageCurrentTo: number;
@@ -202,7 +202,7 @@ export class ZoneDeviceComponent extends AbstractComponent implements OnInit {
     } else if (data.column === "address") {
       this.addresses.forEach((add) => {
         if (add.label === data.row.address) {
-          this.address = add.value;
+          this.address = [add.value as string];
           return;
         }
       });
@@ -286,10 +286,10 @@ export class ZoneDeviceComponent extends AbstractComponent implements OnInit {
       customerId,
       deviceId,
       gsmId,
-      address: address ? address.toString() : undefined,
-      route: route ? route.toString() : undefined,
-      municipality: municipality ? municipality.toString() : undefined,
-      readingBook: readingBook ? readingBook.toString() : undefined,
+      address: this.toCsv(address),
+      route: this.toCsv(route),
+      municipality: this.toCsv(municipality),
+      readingBook: this.toCsv(readingBook),
       usageCurrentFrom,
       usageCurrentTo,
       usageReverseFrom,
@@ -298,6 +298,20 @@ export class ZoneDeviceComponent extends AbstractComponent implements OnInit {
       deviceType: 1,
       dateTo,
     };
+  }
+
+  private toCsv(value: string[] | string | undefined): string | undefined {
+    if (value === undefined || value === null || value === "") {
+      return undefined;
+    }
+    if (Array.isArray(value)) {
+      const normalized = value
+        .map((v) => (v === undefined || v === null ? "" : v.toString().trim()))
+        .filter((v) => v.length > 0);
+      return normalized.length > 0 ? normalized.join(",") : undefined;
+    }
+    const normalized = value.toString().trim();
+    return normalized.length > 0 ? normalized : undefined;
   }
 
   getPageable(): Pageable {
@@ -311,10 +325,10 @@ export class ZoneDeviceComponent extends AbstractComponent implements OnInit {
   clear() {
     this.customerName = "";
     this.customerId = undefined;
-    this.route = "";
-    this.address = "";
-    this.readingBook = "";
-    this.municipality = "";
+    this.route = [];
+    this.address = [];
+    this.readingBook = [];
+    this.municipality = [];
     this.usageCurrentFrom = undefined;
     this.usageCurrentTo = undefined;
     this.usageCurrentFrom = undefined;

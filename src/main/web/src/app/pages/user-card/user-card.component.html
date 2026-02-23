@@ -93,6 +93,7 @@
                     <p-multiSelect
                       appendTo="body"
                       [options]="addresses"
+                      (onPanelShow)="loadAddressesOptions()"
                       defaultLabel="&nbsp;"
                       [(ngModel)]="address"
                       [showTransitionOptions]="'0ms'"
@@ -167,6 +168,7 @@
                     <p-multiSelect
                       appendTo="body"
                       [options]="readingBooks"
+                      (onPanelShow)="loadReadingBooksOptions()"
                       defaultLabel="&nbsp;"
                       [(ngModel)]="readingBook"
                       [showTransitionOptions]="'0ms'"
@@ -182,6 +184,7 @@
                     <p-multiSelect
                       appendTo="body"
                       [options]="routes"
+                      (onPanelShow)="loadRoutesOptions()"
                       defaultLabel="&nbsp;"
                       [(ngModel)]="route"
                       [showTransitionOptions]="'0ms'"
@@ -195,6 +198,7 @@
                     <p-multiSelect
                       appendTo="body"
                       [options]="municipalities"
+                      (onPanelShow)="loadMunicipalitiesOptions()"
                       defaultLabel="&nbsp;"
                       [(ngModel)]="municipality"
                       [showTransitionOptions]="'0ms'"

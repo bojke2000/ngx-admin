@@ -5,7 +5,6 @@ import { LazyLoadEvent } from "primeng/api";
 import { NgPrimeGridResponse } from "../../domain/ngprime-grid-response";
 import { TranslateService } from "@ngx-translate/core";
 import { UsageHistoryService } from "../../service/usage-history.service";
-import { UserCard } from "../../domain/user-card";
 import { UserCardService } from "./../../service/user-card.service";
 import { ImageService } from "../../service/image.service";
 
@@ -18,18 +17,21 @@ export class UserCardDetailsComponent
   extends AbstractComponent
   implements OnInit
 {
-  customerId = undefined;
-  customerName = undefined;
-  address = undefined;
-  addressNo = undefined;
-  deviceId = undefined;
-  gsmId = undefined;
-  readTimestamp = undefined;
-  usageCurrent: number = undefined;
-  usageCurrentReverse: number = undefined;
-  usageCurrentMonth: number = undefined;
-  diffLastRead: number = undefined;
-  magneticSabotageTime: number = undefined;
+  customerId: string | undefined = undefined;
+  customerName: string | undefined = undefined;
+  address: string | undefined = undefined;
+  addressNo: string | undefined = undefined;
+  deviceId: string | undefined = undefined;
+  gsmId: string | undefined = undefined;
+  readTimestamp: string | undefined = undefined;
+  usageCurrent: number | undefined = undefined;
+  usageCurrentReverse: number | undefined = undefined;
+  usageCurrentMonth: number | undefined = undefined;
+  diffLastRead: number | undefined = undefined;
+  magneticSabotageTime: number | undefined = undefined;
+  valveStatus: number | undefined = undefined;
+  valvePosition: number | undefined = undefined;
+  deviceType: number | undefined = undefined;
 
   @Input()
   userCardId = undefined;
@@ -47,25 +49,31 @@ export class UserCardDetailsComponent
     },
     //{ field: 'usageAverage', header: 'Average Usage', width: '70px' },
     { field: "readTimestamp", header: "Read Datetime", width: "70px" },
+    { field: "valveStatus", header: "Valve Status", width: "70px" },
+    { field: "valvePosition", header: "Valve Position", width: "70px" },
   ];
-  usageHistory = [];
+  usageHistory: any[] = [];
   totalRecords = 0;
   loading = false;
   sortBy = "id";
   sortOrder = "desc";
-  page = undefined;
-  rows = undefined;
+  page: number | undefined = undefined;
+  rows: number | undefined = undefined;
   initialized = false;
   img = "http://localhost:8081/images/1?rand=" + new Date().getTime();
+  imageAvailable = true;
 
   // chart
-  data = {};
+  data = {
+    labels: [],
+    datasets: [],
+  };
 
   @Input()
   displayDialog = false;
   @Output()
   closeFunction = new EventEmitter();
-  displayImageDialog: boolean;
+  displayImageDialog: boolean = false;
 
   constructor(
     translate: TranslateService,
@@ -95,7 +103,7 @@ export class UserCardDetailsComponent
       this.initialized = true;
     }
 
-    this.userCardService.getById(this.userCardId).then((dto: UserCard) => {
+    this.userCardService.getById(this.userCardId).then((dto: any) => {
       this.customerId = dto.customerId;
       this.address = dto.address + " " + dto.addressNo;
       this.addressNo = dto.addressNo;
@@ -108,50 +116,23 @@ export class UserCardDetailsComponent
       this.readTimestamp = dto.readTimestamp;
       this.diffLastRead = this.round(dto.diffLastRead);
       this.magneticSabotageTime = dto.magneticSabotageTime;
-      this.img = imageService.getURL(this.customerId);
-    });
-
-    this.usageHistoryService.getCharData(this.userCardId).then((resp) => {
-      var data = [];
-      for (const el of resp as Array<any>) {
-        data.push(el.usageCurrentMonth);
+      this.valveStatus = dto.valveStatus;
+      this.valvePosition = dto.valvePosition;
+      this.deviceType = dto.deviceType;
+      if (this.customerId) {
+        this.img = imageService.getURL(this.customerId);
+        this.imageAvailable = true;
       }
-
-      const label = this.translate.instant("Monthly Usage")
-        ? this.translate.instant("Monthly Usage")
-        : "Monthly Usage";
-      this.data = {
-        labels: [
-          "Januar",
-          "Februar",
-          "Mart",
-          "April",
-          "Maj",
-          "Jun",
-          "Juli",
-          "August",
-          "Septembar",
-          "Oktobar",
-          "Novembar",
-          "Decembar",
-        ],
-        datasets: [
-          {
-            label,
-            backgroundColor: "#9CCC65",
-            borderColor: "#7CB342",
-            data,
-          },
-        ],
-      };
     });
+
+    this.loadUsageCurrentChartData();
   }
 
   private loadPage(page: number, size: number, sort?: string) {
     const pageable = { page, size, sort };
     this.usageHistoryService
       .findBy(this.getSearchCriteria(), pageable)
-      .then((ngresp: NgPrimeGridResponse) => {
+      .then((ngresp: any) => {
         this.usageHistory = this.processResponse(ngresp);
         this.totalRecords = ngresp.totalRecords;
         this.loading = false;
@@ -169,21 +150,23 @@ export class UserCardDetailsComponent
     });
   }
 
-  private round(value: number): any {
-    return Math.round(value * 100) / 100;
+  private round(value: number | undefined): any {
+    return value !== undefined ? Math.round(value * 100) / 100 : undefined;
   }
 
   loadUsageHistoryLazy(event: LazyLoadEvent) {
     this.loading = true;
     this.sortBy = "readTimestamp";
     this.sortOrder = "desc";
-    this.page = event.first / event.rows;
-    this.rows = event.rows;
-    this.loadPage(
-      event.first / event.rows,
-      event.rows,
-      this.sortBy + "," + this.sortOrder
-    );
+    if (event.rows && event.first !== undefined) {
+      this.page = event.first / event.rows;
+      this.rows = event.rows;
+      this.loadPage(
+        event.first / event.rows,
+        event.rows,
+        this.sortBy + "," + this.sortOrder
+      );
+    }
   }
 
   getSearchCriteria() {
@@ -193,12 +176,85 @@ export class UserCardDetailsComponent
   }
 
   showImage(): boolean {
+    if (!this.imageAvailable) {
+      return false;
+    }
     this.displayImageDialog = true;
     return false;
   }
 
   onDialogImageShow(): void {
     const { imageService } = this;
-    this.img = imageService.getURL(this.customerId);
+    if (this.customerId) {
+      this.img = imageService.getURL(this.customerId);
+      this.imageAvailable = true;
+    }
+  }
+
+  onImageError(): void {
+    this.imageAvailable = false;
+  }
+
+  private loadUsageCurrentChartData(): void {
+    this.usageHistoryService
+      .getCharData(this.userCardId)
+      .then((resp: any) => {
+        const rows = Array.isArray(resp)
+          ? resp
+          : Array.isArray(resp?.data)
+          ? resp.data
+          : [];
+        this.data = this.buildUsageCurrentChartData(rows);
+      })
+      .catch(() => {
+        this.data = {
+          labels: [],
+          datasets: [],
+        };
+      });
+  }
+
+  private buildUsageCurrentChartData(rows: any[]) {
+    const labels = [
+      "Januar",
+      "Februar",
+      "Mart",
+      "April",
+      "Maj",
+      "Jun",
+      "Juli",
+      "August",
+      "Septembar",
+      "Oktobar",
+      "Novembar",
+      "Decembar",
+    ];
+    const values = new Array(12).fill(0);
+
+    rows.forEach((row: any) => {
+      const monthNo = Number(row?.month);
+      const monthIndex = Number.isInteger(monthNo) ? monthNo - 1 : -1;
+      if (monthIndex >= 0 && monthIndex < 12) {
+        values[monthIndex] = this.round(
+          Number(row?.usageCurrent ?? row?.usageCurrentMonth) || 0
+        );
+      }
+    });
+
+    const label = this.translate.instant("Watermeter Status")
+      ? this.translate.instant("Watermeter Status")
+      : "Watermeter Status";
+
+    return {
+      labels,
+      datasets: [
+        {
+          label,
+          backgroundColor: "#9CCC65",
+          borderColor: "#7CB342",
+          data: values,
+        },
+      ],
+    };
   }
 }

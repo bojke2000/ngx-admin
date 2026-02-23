@@ -10,20 +10,43 @@ import { Address } from '../domain/address';
 export class AddressService extends AbstractService {
 
   private url = this.prefix + 'addresses';
+  private optionsCache: Option[] | null = null;
+  private optionsPromise: Promise<Option[]> | null = null;
 
   constructor(http: HttpClient) {
     super(http);
   }
 
   async getAddresssAsOptions(query?: string) {
+    if (query === undefined && this.optionsCache) {
+      return this.optionsCache;
+    }
+    if (query === undefined && this.optionsPromise) {
+      return this.optionsPromise;
+    }
+
     let url = `${this.url}/options`;
     if (query !== undefined) {
       url += '?query=' + query;
     }
-    const res = await this.http.get<any>(url)
-      .toPromise();
-    const data = <Option[]>res.data;
-    return data;
+
+    const request = this.http.get<any>(url)
+      .toPromise()
+      .then(res => <Option[]>res.data);
+
+    if (query === undefined) {
+      this.optionsPromise = request.then(data => {
+        this.optionsCache = data || [];
+        this.optionsPromise = null;
+        return this.optionsCache;
+      }).catch((err) => {
+        this.optionsPromise = null;
+        throw err;
+      });
+      return this.optionsPromise;
+    }
+
+    return request;
   }
 
   search(criteria: string, pageable: Pageable) {

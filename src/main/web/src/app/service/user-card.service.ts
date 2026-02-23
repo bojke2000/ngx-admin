@@ -70,6 +70,14 @@ export class UserCardService extends AbstractService {
       separator = ';';
     }
 
+    if (searchCriteria.deviceTypeFilter) {
+      const deviceTypes = searchCriteria.deviceTypeFilter.toString().trim();
+      if (deviceTypes !== '') {
+        url = url.concat(separator).concat('deviceType=in=(').concat(deviceTypes).concat(')');
+        separator = ';';
+      }
+    }
+
     if (searchCriteria.deviceType !== undefined) {
       const condition = searchCriteria.deviceType === 1 || searchCriteria.deviceType === 6 ? 'deviceType=in=(' : 'deviceType=out=(';
       url = url.concat(separator).concat(condition).concat('1,6').concat(')');

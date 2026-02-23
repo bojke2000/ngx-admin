@@ -83,18 +83,20 @@
               </div>
 
               <div class="ui-g-4">
-                <a href="#" (click)="showImage()">
+                <a href="#" (click)="showImage()" *ngIf="imageAvailable">
                   <img
                     [src]="img"
+                    (error)="onImageError()"
+                    class="customer-image-thumb"
                     pTooltip="{{ 'Click to see big picture' | translate }}"
                     tooltipPosition="top"
                     placeholder="Top"
-                    width="120px"
-                    height="60px"
-                    style="margin-top: -30px"
                     alt=""
                   />
                 </a>
+                <span *ngIf="!imageAvailable" class="image-unavailable-text image-unavailable-text--thumb">
+                  {{ "Image not available" | translate }}
+                </span>
               </div>
             </div>
           </nb-card-body>
@@ -194,6 +196,35 @@
                 </span>
               </div>
             </div>
+            <div class="ui-g-12" *ngIf="deviceType === 3">
+              <div class="ui-g-4">
+                <span class="ui-float-label">
+                  <input
+                    pInputText
+                    id="valveStatus"
+                    [(ngModel)]="valveStatus"
+                    disabled
+                  />
+                  <label for="valveStatus">{{
+                    "Valve Status" | translate
+                  }}</label>
+                </span>
+              </div>
+
+              <div class="ui-g-4">
+                <span class="ui-float-label">
+                  <input
+                    pInputText
+                    id="valvePosition"
+                    [(ngModel)]="valvePosition"
+                    disabled
+                  />
+                  <label for="valvePosition">{{
+                    "Valve Position" | translate
+                  }}</label>
+                </span>
+              </div>
+            </div>
           </nb-card-body>
         </nb-card>
       </div>
@@ -236,5 +267,10 @@
   position="center"
   [(visible)]="displayImageDialog"
 >
-  <img [src]="img" alt="" />
+  <img *ngIf="imageAvailable" [src]="img" (error)="onImageError()" alt="" />
+  <div *ngIf="!imageAvailable" class="image-unavailable-dialog">
+    <span class="image-unavailable-text image-unavailable-text--dialog">
+      {{ "Image not available" | translate }}
+    </span>
+  </div>
 </p-dialog>

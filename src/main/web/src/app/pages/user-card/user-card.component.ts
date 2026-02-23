@@ -28,11 +28,11 @@ const CURRENT_VIEW = 1;
   styleUrls: ["./user-card.component.css"],
 })
 export class UserCardComponent extends AbstractComponent implements OnInit {
-  userCards: UserCard[];
-  totalRecords: number;
-  cols: any[];
+  userCards: UserCard[] = [];
+  totalRecords: number = 0;
+  cols: any[] = [];
   isResisable: boolean = true;
-  loading: boolean;
+  loading: boolean = false;
   @ViewChild("table", { static: false }) table: Table;
   selectedUserCard: UserCard;
 
@@ -42,13 +42,13 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
   customerId;
   string;
   route: string;
-  routes: SelectItem[];
+  routes: SelectItem[] = [];
   address: string;
-  addresses: SelectItem[];
+  addresses: SelectItem[] = [];
   readingBook: string;
-  readingBooks: SelectItem[];
+  readingBooks: SelectItem[] = [];
   municipality: string;
-  municipalities: SelectItem[];
+  municipalities: SelectItem[] = [];
   usageCurrentFrom: number;
   usageCurrentTo: number;
   usageReverseFrom: number;
@@ -100,30 +100,11 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
   ngOnInit(): void {
     const { translate } = this;
 
-    this.cols = [];
     this.userCardColumnService.findAll(Grid.USER_CARD).then((columns) => {
       this.cols = [...this.cols, ...columns];
     });
 
     this.loading = true;
-
-    this.routeService.getRoutesAsOptions().then((routes) => {
-      this.routes = routes;
-    });
-
-    this.addressService.getAddresssAsOptions().then((addresses) => {
-      this.addresses = addresses;
-    });
-
-    this.readingBookService.getReadingBooksAsOptions().then((readingBooks) => {
-      this.readingBooks = readingBooks;
-    });
-
-    this.municipalityService
-      .getMunicipalitiesAsOptions()
-      .then((municipalities) => {
-        this.municipalities = municipalities;
-      });
 
     translate.get("Current").subscribe((value) => {
       this.displayTypes = [
@@ -285,12 +266,13 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
       this.displayDialog = true;
       this.id = data.row.id;
     } else if (data.column === "address") {
-      this.addresses.forEach((add) => {
-        if (add.label === data.row.address) {
-          this.address = add.value;
-          return;
-        }
-      });
+      if (!this.addresses || this.addresses.length === 0) {
+        this.loadAddressesOptions().then(() => {
+          this.setAddressByLabel(data.row.address);
+        });
+        return;
+      }
+      this.setAddressByLabel(data.row.address);
     } else if (data.column === "gsmId") {
       this.gsmId = data.row.gsmId;
     }
@@ -429,6 +411,54 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
   }
 
   onDisplayTypeChange(event) {}
+
+  loadAddressesOptions(): Promise<SelectItem[]> {
+    if (this.addresses && this.addresses.length > 0) {
+      return Promise.resolve(this.addresses);
+    }
+    return this.addressService.getAddresssAsOptions().then((addresses) => {
+      this.addresses = addresses || [];
+      return this.addresses;
+    });
+  }
+
+  loadRoutesOptions(): void {
+    if (this.routes && this.routes.length > 0) {
+      return;
+    }
+    this.routeService.getRoutesAsOptions().then((routes) => {
+      this.routes = routes || [];
+    });
+  }
+
+  loadReadingBooksOptions(): void {
+    if (this.readingBooks && this.readingBooks.length > 0) {
+      return;
+    }
+    this.readingBookService.getReadingBooksAsOptions().then((readingBooks) => {
+      this.readingBooks = readingBooks || [];
+    });
+  }
+
+  loadMunicipalitiesOptions(): void {
+    if (this.municipalities && this.municipalities.length > 0) {
+      return;
+    }
+    this.municipalityService
+      .getMunicipalitiesAsOptions()
+      .then((municipalities) => {
+        this.municipalities = municipalities || [];
+      });
+  }
+
+  private setAddressByLabel(addressLabel: string): void {
+    this.addresses.forEach((add) => {
+      if (add.label === addressLabel) {
+        this.address = add.value;
+        return;
+      }
+    });
+  }
 
   onUserCardDialogClose(event) {
     this.displayDialog = event.value;

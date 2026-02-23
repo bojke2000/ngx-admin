@@ -1,2 +1,41 @@
 
 
+.customer-image-thumb {
+  display: block;
+  width: 120px;
+  height: 60px;
+  margin-top: -30px;
+}
+
+.image-unavailable-text {
+  color: #8f9bb3;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.image-unavailable-text--thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 60px;
+  margin-top: -30px;
+  text-align: center;
+  background: #f7f9fc;
+  border: 1px dashed #d6dde9;
+  border-radius: 4px;
+}
+
+.image-unavailable-text--dialog {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.image-unavailable-dialog {
+  min-width: 320px;
+  min-height: 190px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

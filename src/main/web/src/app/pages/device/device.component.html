@@ -44,8 +44,22 @@
               <label for="deviceId">{{ "Device ID" | translate }}</label>
             </span>
           </div>
-          <!-- Dropdown for device type -->
-          <!-- -->
+          <div class="ui-g-2">
+            <span class="ui-float-label">
+              <p-multiSelect
+                appendTo="body"
+                inputId="deviceTypeFilter"
+                [options]="searchDeviceTypes"
+                defaultLabel="&nbsp;"
+                [(ngModel)]="deviceTypeFilter"
+                [showTransitionOptions]="'0ms'"
+                [hideTransitionOptions]="'0ms'"
+              ></p-multiSelect>
+              <label for="deviceTypeFilter">{{
+                "Device Type" | translate
+              }}</label>
+            </span>
+          </div>
         </div>
         <div class="ui-g-2">
           <div class="ui-g-6">

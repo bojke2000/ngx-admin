@@ -10,20 +10,42 @@ import { Route } from '../domain/route';
 export class RouteService extends AbstractService {
 
   private url = this.prefix + 'routes';
+  private optionsCache: Option[] | null = null;
+  private optionsPromise: Promise<Option[]> | null = null;
 
   constructor(http: HttpClient) {
     super(http);
   }
 
   async getRoutesAsOptions(query?: string) {
+    if (query === undefined && this.optionsCache) {
+      return this.optionsCache;
+    }
+    if (query === undefined && this.optionsPromise) {
+      return this.optionsPromise;
+    }
+
     let url = `${this.url}/options`;
     if (query !== undefined) {
       url += '?query=' + query;
     }
-    return this.http.get<any>(url)
+    const request = this.http.get<any>(url)
       .toPromise()
-      .then(res => <Option[]>res.data)
-      .then(data => data);
+      .then(res => <Option[]>res.data);
+
+    if (query === undefined) {
+      this.optionsPromise = request.then(data => {
+        this.optionsCache = data || [];
+        this.optionsPromise = null;
+        return this.optionsCache;
+      }).catch((err) => {
+        this.optionsPromise = null;
+        throw err;
+      });
+      return this.optionsPromise;
+    }
+
+    return request;
   }
 
   search(criteria: string, pageable: Pageable) {

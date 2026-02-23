@@ -72,10 +72,12 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
 
   pageable: {};
   deviceTypes: Option[];
+  searchDeviceTypes: Option[] = [];
 
   // search
   customerName: string;
-  address: string;
+  address: string[] | string;
+  deviceTypeFilter: string[] | string;
   deviceId: string;
   gsmId: string;
   displayType: number = 1;
@@ -671,6 +673,15 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     this.municipalities = await this.municipalityService
       .getMunicipalitiesAsOptions();
     this.deviceTypes = await this.deviceTypeService.getDeviceTypesAsOptions();
+    this.searchDeviceTypes = (this.deviceTypes || []).filter((deviceType) => {
+      const value = deviceType && deviceType.value !== undefined
+        ? deviceType.value.toString()
+        : '';
+      return (
+        value !== DeviceComponent.DEVICE_ZOME_DEVICE &&
+        value !== DeviceComponent.DEVICE_LORA_ZONE_DEVICE
+      );
+    });
     await this.loadZoneDevices();
   }
 
@@ -806,20 +817,43 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   }
 
   getSearchCriteria() {
-    const { displayType, customerName, deviceId, gsmId, address } = this;
+    const {
+      displayType,
+      customerName,
+      deviceId,
+      gsmId,
+      address,
+      deviceTypeFilter,
+    } = this;
 
     return {
       displayType,
       customerName,
       deviceId,
       gsmId,
-      address: address ? address.toString() : undefined,
+      address: this.toCsv(address),
+      deviceTypeFilter: this.toCsv(deviceTypeFilter),
     };
+  }
+
+  private toCsv(value: string[] | string | undefined): string | undefined {
+    if (value === undefined || value === null || value === '') {
+      return undefined;
+    }
+    if (Array.isArray(value)) {
+      const normalized = value
+        .map((v) => (v === undefined || v === null ? '' : v.toString().trim()))
+        .filter((v) => v.length > 0);
+      return normalized.length > 0 ? normalized.join(',') : undefined;
+    }
+    const normalized = value.toString().trim();
+    return normalized.length > 0 ? normalized : undefined;
   }
 
   clear() {
     this.customerName = '';
-    this.address = '';
+    this.address = [];
+    this.deviceTypeFilter = [];
     this.deviceId = undefined;
     this.gsmId = undefined;
     this.sortBy = '';
@@ -853,7 +887,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     } else if (data.column === 'address') {
       this.addresses.forEach((add) => {
         if (add.label === data.row.address) {
-          this.address = add.value;
+          this.address = [add.value as string];
           return;
         }
       });

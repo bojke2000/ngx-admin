@@ -101,7 +101,7 @@
          style="display: none;"
          id="loraValveCommand"
           *ngIf="loraOn && isAdmin"
-          (click)="showDialogLoraDownlink()"
+          (click)="showDialogLoraDownlink('67')"
           label="{{ translate.get('Lora Valve Command') | async }}"
         ></p-button>
         <div class="divider"></div>
@@ -109,7 +109,7 @@
           style="display: none;"
            id="loraConfigDownlink"
           *ngIf="loraOn && isAdmin"
-          (click)="showDialogLoraDownlink()"
+          (click)="showDialogLoraDownlink('50')"
           label="{{ translate.get('Lora Config Downlink') | async }}"
         ></p-button>
         <div class="divider"></div>
@@ -160,7 +160,7 @@
             </div>
             <div class="ui-g-7">{{ applicationKey }}</div>
           </div>
-          <div class="ui-g-12">
+          <div class="ui-g-12" *ngIf="loraDownlinkPort === '50'">
             <div class="ui-g-5">
               <span class="ui-float-label">
                 <p-dropdown
@@ -222,6 +222,28 @@
                 id="port50Value2"
                 [(ngModel)]="port50Value2"
                 [value]="port50Value2"
+              />
+            </div>
+          </div>
+
+          <div class="ui-g-12" *ngIf="loraDownlinkPort === '67'">
+            <input
+              type="hidden"
+              id="port67Header"
+              [value]="port67Header"
+            />
+            <div class="ui-g-5">
+              <label for="port67ValvePosition">{{
+                "Valve Position" | translate
+              }}</label>
+            </div>
+            <div class="ui-g-7">
+              <input
+                pInputText
+                id="port67ValvePosition"
+                [(ngModel)]="port67ValvePosition"
+                [value]="port67ValvePosition"
+                placeholder="Valve Position (0-100)"
               />
             </div>
           </div>

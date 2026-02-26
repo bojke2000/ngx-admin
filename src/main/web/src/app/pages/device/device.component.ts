@@ -27,6 +27,7 @@ import { LoraConfig } from '../../domain/lora-config';
 import { DeviceTypeService } from '../../service/device-type.service';
 import { LoraDownlinkService } from '../../service/lora-downlink.service';
 import { LoraFPort50 } from '../../domain/lora-fport50';
+import { LoraFPort67 } from '../../domain/lora-fport67';
 import { UserAccountService } from '../../service/user-account.service';
 
 const CURRENT_VIEW = 1;
@@ -67,6 +68,9 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   port50Header2;
   port50Value1 = '';
   port50Value2 = '';
+  port67Header = '255';
+  port67ValvePosition = '';
+  loraDownlinkPort: '50' | '67' = '50';
 
   parentId: string;
 
@@ -898,12 +902,16 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     }
   }
 
-  public showDialogLoraDownlink(): void {
+  public showDialogLoraDownlink(port: '50' | '67' = '50'): void {
     this.displayWarningDialog = false;
     this.displayWarningDialogMessage = '';
+    this.loraDownlinkPort = port;
     this.port50Header2 = '';
+    this.port50Header1 = undefined;
     this.port50Value1 = '';
     this.port50Value2 = '';
+    this.port67Header = '255';
+    this.port67ValvePosition = '';
     this.loraDownlinkMessage = '';
 
     if (!this.device || !this.device.deviceId) {
@@ -919,7 +927,43 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   }
 
   sendLoradownlinkMessage(): void {
+    if (this.loraDownlinkPort === '67') {
+      const valvePositionValue = this.port67ValvePosition !== undefined
+        ? this.port67ValvePosition.toString().trim()
+        : '';
+
+      if (!valvePositionValue) {
+        this.displayWarningDialog = true;
+        this.displayWarningDialogMessage =
+          'Please select value to send Lora downlink message';
+        return;
+      }
+
+      const valvePosition = Number(valvePositionValue);
+      if (!Number.isInteger(valvePosition) || valvePosition < 0 || valvePosition > 100) {
+        this.displayWarningDialog = true;
+        this.displayWarningDialogMessage = 'Valve position must be between 0 and 100';
+        return;
+      }
+
+      const loraDownlinkMessage: LoraFPort67 = {
+        fPort: '67',
+        applicationKey: this.applicationKey,
+        devEUI: this.devEUI,
+        header: this.port67Header,
+        valvePosition: valvePositionValue,
+      };
+
+      this.loraDownlinkService
+        .sendLoradownlinkFPort67Message(loraDownlinkMessage)
+        .subscribe((response) => {
+          this.loraDownlinkMessage = response.message;
+        });
+      return;
+    }
+
     if (
+      !this.port50Header1 ||
       !this.port50Value1 ||
       this.port50Value1 === '' ||
       ((this.port50Header1.value === '0' || this.port50Header1.value === '2') &&
@@ -946,7 +990,7 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     };
 
     this.loraDownlinkService
-      .sendLoradownlinkMessage(loraDownlinkMessage)
+      .sendLoradownlinkFPort50Message(loraDownlinkMessage)
       .subscribe((response) => {
         this.loraDownlinkMessage = response.message;
       });

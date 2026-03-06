@@ -227,11 +227,6 @@
           </div>
 
           <div class="ui-g-12" *ngIf="loraDownlinkPort === '67'">
-            <input
-              type="hidden"
-              id="port67Header"
-              [value]="port67Header"
-            />
             <div class="ui-g-5">
               <label for="port67ValvePosition">{{
                 "Valve Position" | translate
@@ -243,7 +238,7 @@
                 id="port67ValvePosition"
                 [(ngModel)]="port67ValvePosition"
                 [value]="port67ValvePosition"
-                placeholder="Valve Position (0-100)"
+                placeholder="Valve Position (0-255)"
               />
             </div>
           </div>

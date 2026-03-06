@@ -68,7 +68,6 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
   port50Header2;
   port50Value1 = '';
   port50Value2 = '';
-  port67Header = '255';
   port67ValvePosition = '';
   loraDownlinkPort: '50' | '67' = '50';
 
@@ -910,7 +909,6 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
     this.port50Header1 = undefined;
     this.port50Value1 = '';
     this.port50Value2 = '';
-    this.port67Header = '255';
     this.port67ValvePosition = '';
     this.loraDownlinkMessage = '';
 
@@ -940,9 +938,9 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
       }
 
       const valvePosition = Number(valvePositionValue);
-      if (!Number.isInteger(valvePosition) || valvePosition < 0 || valvePosition > 100) {
+      if (!Number.isInteger(valvePosition) || valvePosition < 0 || valvePosition > 255) {
         this.displayWarningDialog = true;
-        this.displayWarningDialogMessage = 'Valve position must be between 0 and 100';
+        this.displayWarningDialogMessage = 'Valve position must be between 0 and 255';
         return;
       }
 
@@ -950,7 +948,6 @@ export class DeviceComponent extends AbstractComponent implements OnInit {
         fPort: '67',
         applicationKey: this.applicationKey,
         devEUI: this.devEUI,
-        header: this.port67Header,
         valvePosition: valvePositionValue,
       };
 

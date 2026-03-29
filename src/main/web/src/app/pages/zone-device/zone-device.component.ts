@@ -192,7 +192,7 @@ export class ZoneDeviceComponent extends AbstractComponent implements OnInit {
   }
 
   onImportClick() {
-    alert("onImportClick");
+    this.router.navigate(['/pages/import-user-card']);
   }
 
   onCustomerNameClick(data: any) {
@@ -411,4 +411,3 @@ export class ZoneDeviceComponent extends AbstractComponent implements OnInit {
     });
   }
 }
-

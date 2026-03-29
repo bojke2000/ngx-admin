@@ -1,110 +1,295 @@
 <div class="row">
-  <nb-card style="width: 100%" [nbSpinner]="loading" nbSpinnerStatus="danger">
+  <nb-card class="import-card" [nbSpinner]="loading" nbSpinnerStatus="danger">
     <nb-card-body>
+      <ngx-title-header [title]="pageTitle | translate"></ngx-title-header>
 
-      <ngx-title-header title='Import Database'></ngx-title-header>
+      <nb-stepper #stepper orientation="horizontal">
+        <nb-step [stepControl]="setupForm" label="{{ 'Setup' | translate }}">
+          <form [formGroup]="setupForm" class="step-container">
+            <div class="step-header">
+              <h4>{{ (isTemplateMode ? 'Import setup' : 'Import using template') | translate }}</h4>
+              <p>{{ (isTemplateMode ? 'Choose import context and optionally reuse a saved mapping profile.' : 'Choose a saved import template, upload a file and send data to backend import.' ) | translate }}</p>
+            </div>
 
-      <nb-stepper #stepper>
-        <nb-step [stepControl]="zeroForm" label="{{ 'Select City' | translate }}">
-          <form [formGroup]="zeroForm" (ngSubmit)="onZeroSubmit()" class="step-container">
-            <h4>{{ 'Select City' | translate }}</h4>
-            <br>
-            <div class="input-group">
-              <div class="ui-inputgroup">
-                <p-dropdown formControlName="city" [options]="cities" name="city"
-                  autoWidth="false" [style]="{'width':'400px'}"></p-dropdown>
+            <div class="form-grid">
+              <div class="field-card">
+                <label>{{ 'City' | translate }}</label>
+                <p-dropdown formControlName="city" [options]="cities" [style]="{'width':'100%'}"></p-dropdown>
+              </div>
+
+              <div class="field-card">
+                <label>{{ 'Device type' | translate }}</label>
+                <p-dropdown formControlName="deviceType" [options]="deviceTypes" [style]="{'width':'100%'}"></p-dropdown>
+              </div>
+
+              <div class="field-card">
+                <label>{{ 'File type' | translate }}</label>
+                <p-dropdown formControlName="fileType" [options]="fileTypes" [style]="{'width':'100%'}"></p-dropdown>
+              </div>
+
+              <div class="field-card">
+                <label>{{ 'Saved mapping profile' | translate }}</label>
+                <p-dropdown formControlName="profileId" [options]="profiles" [showClear]="true"
+                  (onChange)="onProfileChange()" [style]="{'width':'100%'}"></p-dropdown>
+              </div>
+
+              <div *ngIf="isTemplateMode" class="field-card">
+                <label>{{ 'Profile name to save' | translate }}</label>
+                <input pInputText formControlName="profileName" [placeholder]="'Sarajevo monthly import' | translate" />
+                <small class="field-help">{{ profileModeLabel | translate }}</small>
               </div>
             </div>
-            <div class="divider"></div>
-            <button nbButton status="primary" nbStepperNext>next</button>
+
+            <div class="toggles">
+              <label class="toggle-row">
+                <input type="checkbox" formControlName="skipHeader" />
+                <span>{{ 'Skip first row as header' | translate }}</span>
+              </label>
+
+              <label class="toggle-row">
+                <input type="checkbox" formControlName="ignoreMissingDeviceId" />
+                <span>{{ 'Ignore rows without device ID' | translate }}</span>
+              </label>
+            </div>
+
+            <div class="step-actions">
+              <button nbButton status="primary" nbStepperNext [disabled]="setupForm.invalid">{{ 'Next' | translate }}</button>
+            </div>
           </form>
         </nb-step>
 
-        <nb-step [stepControl]="deviceForm" label="{{ 'Select Device Type' | translate }}">
-          <form [formGroup]="deviceForm" (ngSubmit)="onDeviceFormSubmit()" class="step-container">
-            <h4>{{ 'Select Device Type' | translate }}</h4>
-            <br>
-            <div class="input-group">
-              <div class="ui-inputgroup">
-                <p-dropdown formControlName="deviceType" [options]="deviceTypes" name="deviceType"
-                  autoWidth="false" [style]="{'width':'400px'}"></p-dropdown>
+        <nb-step [stepControl]="uploadForm" label="{{ 'Upload & Preview' | translate }}">
+          <form [formGroup]="uploadForm" class="step-container">
+            <div class="step-header">
+              <h4>{{ 'Upload source file' | translate }}</h4>
+              <p>{{ 'Backend reads the file, detects source columns and returns a preview sample.' | translate }}</p>
+            </div>
+
+            <div class="upload-panel">
+              <p-fileUpload name="importFile[]" customUpload="true" [auto]="true" accept=".csv,.txt,.xml,.dbf"
+                [disabled]="!canUploadSourceFile"
+                (uploadHandler)="onFileUpload($event)">
+              </p-fileUpload>
+            </div>
+
+            <div *ngIf="!canUploadSourceFile" class="error-box">
+              <strong>{{ 'Select a saved import template before uploading the file.' | translate }}</strong>
+            </div>
+
+            <div *ngIf="preview" class="preview-summary">
+              <div class="summary-item">
+                <span class="summary-label">{{ 'File' | translate }}</span>
+                <strong>{{ preview.originalFileName }}</strong>
+              </div>
+              <div class="summary-item">
+                <span class="summary-label">{{ 'Columns' | translate }}</span>
+                <strong>{{ preview.columns.length }}</strong>
+              </div>
+              <div class="summary-item">
+                <span class="summary-label">{{ 'Preview rows' | translate }}</span>
+                <strong>{{ preview.sampleRows.length }}</strong>
               </div>
             </div>
-            <button nbButton nbStepperPrevious>prev</button>
-            <div class="divider"></div>
-            <button nbButton status="primary" nbStepperNext>next</button>
+
+            <div *ngIf="preview?.sampleRows?.length" class="table-shell">
+              <p-table [value]="preview.sampleRows" [columns]="preview.columns" [scrollable]="true" scrollHeight="18rem">
+                <ng-template pTemplate="header" let-columns>
+                  <tr>
+                    <th *ngFor="let col of columns">{{ col.header }}</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-row let-columns="columns">
+                  <tr>
+                    <td *ngFor="let col of columns">{{ row[col.field] }}</td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+
+            <div class="step-actions">
+              <button nbButton nbStepperPrevious>{{ 'Prev' | translate }}</button>
+              <button nbButton status="primary" nbStepperNext [disabled]="uploadForm.invalid">{{ 'Next' | translate }}</button>
+            </div>
           </form>
         </nb-step>
 
-        <nb-step [stepControl]="firstForm" label="{{ 'Select File Type' | translate }}">
-          <form [formGroup]="firstForm" (ngSubmit)="onFirstSubmit()" class="step-container">
-            <h4>{{ 'Select File Type' | translate }}</h4>
-            <br>
-            <div class="input-group">
-              <div class="ui-inputgroup">
-                <p-dropdown formControlName="fileType" [options]="fileTypes" name="fileType"
-                  autoWidth="false" [style]="{'width':'400px'}"></p-dropdown>
+        <nb-step *ngIf="isTemplateMode" [stepControl]="mappingForm" label="{{ 'Map Columns' | translate }}">
+          <form [formGroup]="mappingForm" class="step-container">
+            <div class="step-header">
+              <h4>{{ 'Map source columns to INSA fields' | translate }}</h4>
+              <p>{{ 'Only map columns you want to import. Unmapped optional fields are ignored.' | translate }}</p>
+            </div>
+
+            <div class="mapping-list" *ngIf="mappingRows.length">
+              <div class="mapping-row" *ngFor="let row of mappingRows; trackBy: trackBySourceIndex">
+                <div class="mapping-source">
+                  <div class="mapping-title">{{ row.sourceLabel }}</div>
+                  <div class="mapping-sample">{{ row.sampleValue || '-' }}</div>
+                </div>
+
+                <div class="mapping-arrow">→</div>
+
+                <div class="mapping-target">
+                  <p-dropdown
+                    [options]="targetFieldOptions"
+                    name="targetField{{ row.sourceIndex }}"
+                    placeholder="{{ 'Select INSA field' | translate }}"
+                    [showClear]="true"
+                    appendTo="body"
+                    [(ngModel)]="row.targetField"
+                    [ngModelOptions]="{standalone: true}"
+                    [style]="{'width':'100%'}">
+                  </p-dropdown>
+                </div>
               </div>
             </div>
-            <button nbButton nbStepperPrevious>prev</button>
-            <div class="divider"></div>
-            <button nbButton status="primary" nbStepperNext>next</button>
+
+            <div *ngIf="!mappingRows.length" class="empty-state">
+              {{ 'Upload a file first to map its columns.' | translate }}
+            </div>
+
+            <div *ngIf="requiredMappingStatuses.length" class="review-grid">
+              <div class="summary-item" *ngFor="let item of requiredMappingStatuses">
+                <span class="summary-label">{{ item.label }}</span>
+                <strong>{{ item.mappedSourceLabel || ('Not mapped' | translate) }}</strong>
+              </div>
+            </div>
+
+            <div *ngIf="missingRequiredMappings.length" class="error-box">
+              <strong>{{ 'These source mappings are required before you can continue:' | translate }}</strong>
+              <ul>
+                <li *ngFor="let field of missingRequiredMappings">{{ field.label }}</li>
+              </ul>
+            </div>
+
+            <div class="step-actions">
+              <button nbButton nbStepperPrevious>{{ 'Prev' | translate }}</button>
+              <button nbButton status="primary" nbStepperNext [disabled]="!canValidate">{{ 'Next' | translate }}</button>
+            </div>
           </form>
         </nb-step>
 
-        <nb-step [stepControl]="secondForm" label="{{ 'Upload File' | translate }}">
-          <p-toast></p-toast>
+        <nb-step *ngIf="isTemplateMode && hasMissingDefaultsStep" [stepControl]="defaultsForm" label="{{ 'Missing INSA Fields' | translate }}">
+          <form [formGroup]="defaultsForm" class="step-container">
+            <div class="step-header">
+              <h4>{{ 'Set fixed INSA values' | translate }}</h4>
+              <p>{{ 'Some required INSA fields are not mapped from the source file. Set one fixed value for all imported rows.' | translate }}</p>
+            </div>
 
-          <form [formGroup]="secondForm" (ngSubmit)="onSecondSubmit()" class="step-container">
-            <h4>{{ 'Upload File' | translate }}</h4>
-            <br>
-            <div class="input-group">
-              <div class="ui-inputgroup">
-                <p-fileUpload name="importFile[]" customUpload="true" (uploadHandler)="onFileUpload($event)">
-                  accept=".ts" maxFileSize="1000000">
+            <div class="default-list">
+              <div class="default-row" *ngFor="let field of defaultFields; trackBy: trackByField">
+                <div class="default-meta">
+                  <div class="mapping-title">{{ field.label }}</div>
+                  <div class="mapping-sample">{{ field.description }}</div>
+                </div>
 
-                  <ng-template pTemplate="content">
-                    <ul *ngIf="uploadedFiles.length">
-                      <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
-                    </ul>
+                <div class="default-input">
+                  <p-dropdown *ngIf="field.controlType === 'SELECT'"
+                    [options]="field.options"
+                    name="defaultField{{ field.field }}"
+                    appendTo="body"
+                    [(ngModel)]="field.value"
+                    [ngModelOptions]="{standalone: true}"
+                    [style]="{'width':'100%'}">
+                  </p-dropdown>
+
+                  <input *ngIf="field.controlType !== 'SELECT'" pInputText
+                    name="defaultField{{ field.field }}"
+                    [(ngModel)]="field.value"
+                    [ngModelOptions]="{standalone: true}"
+                    [placeholder]="field.label" />
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="defaultFieldStatuses.length" class="review-grid">
+              <div class="summary-item" *ngFor="let field of defaultFieldStatuses">
+                <span class="summary-label">{{ field.label }}</span>
+                <strong>{{ field.value || ('Not mapped' | translate) }}</strong>
+              </div>
+            </div>
+
+            <div class="step-actions">
+              <button nbButton nbStepperPrevious>{{ 'Prev' | translate }}</button>
+              <button nbButton status="primary" nbStepperNext [disabled]="!canProceedFromDefaults">{{ 'Next' | translate }}</button>
+            </div>
+          </form>
+        </nb-step>
+
+        <nb-step [stepControl]="reviewForm" label="{{ (isTemplateMode ? 'Save import template' : 'Validate') | translate }}">
+          <form [formGroup]="reviewForm" class="step-container">
+            <div class="step-header">
+              <h4>{{ (isTemplateMode ? 'Save import template' : 'Validate import') | translate }}</h4>
+              <p>{{ (isTemplateMode ? 'Save the current import mapping as a reusable template.' : 'Run backend validation before executing the import.') | translate }}</p>
+            </div>
+
+            <div class="review-grid">
+              <div class="summary-item">
+                <span class="summary-label">{{ 'Mapped columns' | translate }}</span>
+                <strong>{{ getSelectedMappings().length }}</strong>
+              </div>
+              <div class="summary-item">
+                <span class="summary-label">{{ 'Profile name' | translate }}</span>
+                <strong>{{ setupForm.value.profileName || '-' }}</strong>
+              </div>
+              <div class="summary-item">
+                <span class="summary-label">{{ 'Default values' | translate }}</span>
+                <strong>{{ getSelectedDefaultValues().length }}</strong>
+              </div>
+              <div class="summary-item">
+                <span class="summary-label">{{ 'Missing required fields' | translate }}</span>
+                <strong>{{ missingRequiredFields.length }}</strong>
+              </div>
+            </div>
+
+            <div *ngIf="!isTemplateMode && missingRequiredFields.length" class="error-box">
+              <strong>{{ 'These fields still need a mapped or fixed value:' | translate }}</strong>
+              <ul>
+                <li *ngFor="let field of missingRequiredFields">{{ field.label }}</li>
+              </ul>
+            </div>
+
+            <div *ngIf="!isTemplateMode && validationResult" class="validation-box" [class.validation-error]="!validationResult.valid">
+              <div class="validation-stats">
+                <div class="summary-item"><span class="summary-label">{{ 'Rows' | translate }}</span><strong>{{ validationResult.totalRows }}</strong></div>
+                <div class="summary-item"><span class="summary-label">{{ 'Valid' | translate }}</span><strong>{{ validationResult.validRows }}</strong></div>
+                <div class="summary-item"><span class="summary-label">{{ 'Skipped' | translate }}</span><strong>{{ validationResult.skippedRows }}</strong></div>
+                <div class="summary-item"><span class="summary-label">{{ 'Errors' | translate }}</span><strong>{{ validationResult.errorRows }}</strong></div>
+                <div class="summary-item"><span class="summary-label">{{ 'Creates' | translate }}</span><strong>{{ validationResult.createCount }}</strong></div>
+                <div class="summary-item"><span class="summary-label">{{ 'Updates' | translate }}</span><strong>{{ validationResult.updateCount }}</strong></div>
+              </div>
+
+              <div *ngIf="validationResult.errors?.length" class="table-shell compact-shell">
+                <p-table [value]="validationResult.errors" [scrollable]="true" scrollHeight="14rem">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th>{{ 'Row' | translate }}</th>
+                      <th>{{ 'Field' | translate }}</th>
+                      <th>{{ 'Value' | translate }}</th>
+                      <th>{{ 'Message' | translate }}</th>
+                    </tr>
                   </ng-template>
-                </p-fileUpload>
+                  <ng-template pTemplate="body" let-error>
+                    <tr>
+                      <td>{{ error.rowNumber }}</td>
+                      <td>{{ error.targetField || '-' }}</td>
+                      <td>{{ error.value || '-' }}</td>
+                      <td>{{ error.message }}</td>
+                    </tr>
+                  </ng-template>
+                </p-table>
               </div>
             </div>
-            <button nbButton nbStepperPrevious>prev</button>
-            <div class="divider"></div>
-            <button nbButton status="primary" nbStepperNext>next</button>
-          </form>
-        </nb-step>
 
-        <nb-step [stepControl]="thirdForm" label="{{ 'Map columns' | translate }}">
-          <form [formGroup]="thirdForm" (ngSubmit)="onThirdSubmit()" class="step-container">
-            <h4>{{ 'Map columns' | translate }}</h4>
-            <br>
-            <div class="input-group">
-              <div class="ui-inputgroup">
-                <ng-container *ngIf="data$ | async as data">
-                  <ngx-import-mapper (onSelectValue)='selectValue($event)' [data]="data" [cols]="cols">
-                  </ngx-import-mapper>
-                </ng-container>
-              </div>
-              <div><b>* {{ 'This table displays just subset of the imported data needed for mapping.' | translate }}</b></div>
+            <div class="step-actions">
+              <button nbButton nbStepperPrevious>{{ 'Prev' | translate }}</button>
+              <button *ngIf="isTemplateMode" nbButton status="success" type="button" (click)="onSaveTemplate()" [disabled]="!canValidate">{{ 'Save import template' | translate }}</button>
+              <button *ngIf="!isTemplateMode" nbButton status="info" type="button" (click)="onValidate()" [disabled]="!canValidate">{{ 'Validate' | translate }}</button>
+              <button *ngIf="!isTemplateMode" nbButton status="success" type="button" (click)="onImport()" [disabled]="!canExecute">{{ 'Import' | translate }}</button>
             </div>
-
-            <button nbButton nbStepperPrevious>prev</button>
-            <div class="divider"></div>
-            <button nbButton status="primary" nbStepperNext>next</button>
           </form>
-        </nb-step>
-
-        <nb-step [stepControl]="fourthForm" label="{{'Run Import' | translate}}">
-          <div class="step-container">
-            <h3>{{'Run Import' | translate}}</h3>
-            <button nbButton (click)="onImport()">import</button>
-          </div>
         </nb-step>
       </nb-stepper>
-
     </nb-card-body>
   </nb-card>
 </div>

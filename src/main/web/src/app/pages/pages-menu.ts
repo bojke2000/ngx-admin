@@ -26,6 +26,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: true,
   },
   {
+    title: 'Import',
+    icon: 'upload-outline',
+    link: '/pages/import-user-card',
+    home: true,
+  },
+  {
     title: 'WMBUS Export',
     icon: 'arrowhead-down-outline',
     link: '/pages/export-ado',
@@ -87,6 +93,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Import Log',
         // icon: 'keypad-outline',
         link: '/pages/import-log',
+        home: false,
+      },
+      {
+        title: 'Import Template',
+        link: '/pages/import-template',
         home: false,
       },
       {

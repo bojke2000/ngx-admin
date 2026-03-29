@@ -258,7 +258,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
   }
 
   onImportClick() {
-    alert("onImportClick");
+    this.router.navigate(['/pages/import-user-card']);
   }
 
   onCustomerNameClick(data: any) {

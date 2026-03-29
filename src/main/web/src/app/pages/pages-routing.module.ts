@@ -49,6 +49,17 @@ const routes: Routes = [
       {
         path: "import-user-card",
         component: ImportUserCardComponent,
+        data: { mode: "import" },
+      },
+      {
+        path: "user-card-import",
+        redirectTo: "import-user-card",
+        pathMatch: "full",
+      },
+      {
+        path: "import-template",
+        component: ImportUserCardComponent,
+        data: { mode: "template" },
       },
       {
         path: "export-user-card",

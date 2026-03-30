@@ -1,0 +1,30 @@
+<div class="row">
+  <nb-card style="width: 100%">
+    <nb-card-body>
+      <ngx-title-header title="Import Failure Details"></ngx-title-header>
+
+      <div class="ui-g ui-fluid" style="margin-bottom: 1rem">
+        <div class="ui-g-6">
+          <strong>Import Log ID:</strong> {{ importLogId }}
+        </div>
+        <div class="ui-g-6" style="text-align: right">
+          <p-button
+            (click)="back()"
+            icon="fa fa-arrow-left"
+            label="{{ 'Back' | translate }}"
+          ></p-button>
+        </div>
+      </div>
+
+      <ngx-table
+        [columns]="cols"
+        [value]="failures"
+        (lazyLoad)="loadFailuresLazy($event)"
+        dataKey="id"
+        [totalRecords]="totalRecords"
+        [loading]="loading"
+      >
+      </ngx-table>
+    </nb-card-body>
+  </nb-card>
+</div>

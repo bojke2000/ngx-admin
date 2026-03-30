@@ -82,11 +82,39 @@
         [columns]="cols"
         [value]="importLogs"
         (lazyLoad)="loadImportLogsLazy($event)"
+        (clickFunction)="onTableClick($event)"
         dataKey="id"
+        dataKey1="id"
         [totalRecords]="totalRecords"
         [loading]="loading"
       >
       </ngx-table>
+
+      <p-dialog
+        header="Import Failure Details"
+        [(visible)]="displayFailuresDialog"
+        [modal]="true"
+        [style]="{ width: '92vw' }"
+        [contentStyle]="{ overflow: 'hidden' }"
+        [baseZIndex]="10000"
+        (onHide)="closeFailures()"
+      >
+        <div class="ui-g ui-fluid" style="margin-bottom: 1rem">
+          <div class="ui-g-6">
+            <strong>Import Log ID:</strong> {{ selectedImportLogId }}
+          </div>
+        </div>
+
+        <ngx-table
+          [columns]="failureCols"
+          [value]="failures"
+          (lazyLoad)="loadFailuresLazy($event)"
+          dataKey="id"
+          [totalRecords]="failureTotalRecords"
+          [loading]="failureLoading"
+        >
+        </ngx-table>
+      </p-dialog>
     </nb-card-body>
   </nb-card>
 </div>

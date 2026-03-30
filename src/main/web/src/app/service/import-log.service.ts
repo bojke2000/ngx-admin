@@ -51,6 +51,11 @@ export class ImportLogService extends AbstractService {
     return super.get(url, pageable).then(res => <NgPrimeGridResponse>res);;
   }
 
+  public getFailures(importLogId: number, pageable: Pageable): Promise<NgPrimeGridResponse> {
+    const url = `${this.url}/${importLogId}/failures`;
+    return super.get(url, pageable).then(res => <NgPrimeGridResponse>res);
+  }
+
   deleteImportLog(importlog: ImportLog) {
     return super.delete(this.url, `${importlog.importedAt}`);
   }

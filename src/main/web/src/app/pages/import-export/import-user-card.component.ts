@@ -19,11 +19,11 @@ import {
 } from '../../domain/import-user-card-v2';
 
 interface MappingRowVm {
-  sourceIndex: number;
-  sourceKey: string;
-  sourceLabel: string;
-  sampleValue: string;
   targetField?: string;
+  sourceIndex?: number;
+  sourceKey?: string;
+  sourceLabel?: string;
+  sampleValue?: string;
 }
 
 interface RequiredMappingStatusVm {
@@ -49,13 +49,25 @@ interface DefaultFieldStatusVm {
   satisfied: boolean;
 }
 
+interface CustomDefaultRowVm {
+  field?: string;
+  label?: string;
+  description?: string;
+  controlType: string;
+  valueType: string;
+  options: SelectItem[];
+  value?: string;
+}
+
 @Component({
   selector: 'ngx-import-user-card',
   templateUrl: './import-user-card.component.html',
   styleUrls: ['./import-user-card.component.css'],
 })
 export class ImportUserCardComponent extends AbstractComponent implements OnInit {
+  private readonly maxPreviewRows = 30;
   private readonly requiredMappingFields = ['customerId', 'deviceId'];
+  private readonly excludedDefaultFields = ['profileCode'];
   private readonly defaultDeviceType = 0;
   fileTypes: SelectItem[] = [];
   deviceTypes: SelectItem[] = [];
@@ -75,6 +87,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
 
   mappingRows: MappingRowVm[] = [];
   defaultFields: DefaultFieldVm[] = [];
+  customDefaultRows: CustomDefaultRowVm[] = [];
   sourceColumnOptions: SelectItem[] = [];
   targetFieldOptions: SelectItem[] = [];
   activeProfile?: ImportProfileDto;
@@ -125,13 +138,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
       }
     });
 
-    this.importUserCardService.getProfiles().then(profiles => {
-      this.profiles = [{ label: this.translate.instant('No saved profile'), value: undefined }]
-        .concat((profiles || []).map(profile => ({
-          label: profile.name,
-          value: profile.id,
-        })));
-    });
+    this.loadProfiles();
   }
 
   get hasPreview(): boolean {
@@ -141,6 +148,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
   get canValidate(): boolean {
     return this.hasPreview
       && this.requiredMappingFields.every(field => this.hasMappingForField(field))
+      && this.mappingRows.every(row => this.isMappingRowEmpty(row) || this.isMappingRowComplete(row))
       && (!this.isTemplateMode ? !!this.setupForm.value.profileId : true);
   }
 
@@ -163,14 +171,14 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
       const mappedRow = this.mappingRows.find(row => row.targetField === requiredField);
       return {
         field: requiredField,
-        label: targetField?.label || requiredField,
+        label: this.getDisplayLabel(targetField),
         mappedSourceLabel: mappedRow?.sourceLabel,
       };
     });
   }
 
   get hasMissingDefaultsStep(): boolean {
-    return this.defaultFields.length > 0;
+    return this.isTemplateMode || this.defaultFields.length > 0;
   }
 
   get missingRequiredFields(): ImportTargetFieldDto[] {
@@ -178,16 +186,28 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
   }
 
   get canProceedFromDefaults(): boolean {
-    return this.defaultFieldStatuses.every(field => field.satisfied);
+    return this.defaultFieldStatuses.every(field => field.satisfied)
+      && this.customDefaultRows.every(row => this.isCustomDefaultRowEmpty(row) || this.isCustomDefaultRowComplete(row));
   }
 
   get defaultFieldStatuses(): DefaultFieldStatusVm[] {
-    return this.defaultFields.map(field => ({
+    const statuses = this.defaultFields.map(field => ({
       field: field.field,
       label: field.label,
       value: this.normalizeFieldValue(field.value),
       satisfied: this.hasMappingForField(field.field) || !!this.normalizeFieldValue(field.value),
     }));
+
+    this.customDefaultRows.forEach((row, index) => {
+      statuses.push({
+        field: row.field || `custom-${index}`,
+        label: row.label || this.translate.instant('Additional fixed value'),
+        value: this.normalizeFieldValue(row.value),
+        satisfied: !!row.field && !!this.normalizeFieldValue(row.value),
+      });
+    });
+
+    return statuses;
   }
 
   get canExecute(): boolean {
@@ -206,6 +226,14 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     return this.isTemplateMode || !!this.setupForm.value.profileId;
   }
 
+  get previewRows(): any[] {
+    return this.preview?.sampleRows?.slice(0, this.maxPreviewRows) || [];
+  }
+
+  get previewRowCount(): number {
+    return this.previewRows.length;
+  }
+
   get profileModeLabel(): string {
     return this.activeProfile ? 'Loaded profile will be updated on import.' : 'Current mapping will be saved on import.';
   }
@@ -221,6 +249,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     this.preview = undefined;
     this.mappingRows = [];
     this.defaultFields = [];
+    this.customDefaultRows = [];
     this.targetFieldOptions = [];
 
     try {
@@ -240,14 +269,14 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
         this.setDeviceTypes(preview.deviceTypeOptions);
       }
       this.targetFieldOptions = (preview.targetFields || []).map(field => ({
-        label: this.requiredMappingFields.includes(field.field) ? `${field.label} *` : field.label,
+        label: this.requiredMappingFields.includes(field.field) ? `${this.getDisplayLabel(field)} *` : this.getDisplayLabel(field),
         value: field.field,
       }));
-      this.mappingRows = this.buildMappingRows(preview);
+      this.mappingRows = [];
       this.defaultFields = this.buildDefaultFields(preview.targetFields);
-      this.sourceColumnOptions = this.mappingRows.map(row => ({
-        label: row.sourceLabel,
-        value: row.sourceIndex,
+      this.sourceColumnOptions = (preview.columns || []).map((column, index) => ({
+        label: this.buildSourceColumnOptionLabel(column, preview.sampleRows || []),
+        value: index + 1,
       }));
 
       await this.applySelectedProfile();
@@ -262,6 +291,10 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
       return;
     }
     await this.applySelectedProfile();
+  }
+
+  async refreshProfiles(): Promise<void> {
+    await this.loadProfiles();
   }
 
   async onValidate(): Promise<void> {
@@ -308,23 +341,83 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
         profileId: profile.id,
         profileName: profile.name,
       });
-      const profiles = await this.importUserCardService.getProfiles();
-      this.profiles = [{ label: this.translate.instant('No saved profile'), value: undefined }]
-        .concat((profiles || []).map(item => ({
-          label: item.name,
-          value: item.id,
-        })));
+      await this.loadProfiles();
     } finally {
       this.loading = false;
     }
   }
 
-  trackBySourceIndex(_: number, row: MappingRowVm): number {
-    return row.sourceIndex;
+  trackByMappingRow(index: number): string {
+    return `mapping-row-${index}`;
   }
 
   trackByField(_: number, row: DefaultFieldVm): string {
     return row.field;
+  }
+
+  trackByCustomDefaultRow(index: number): string {
+    return `custom-default-${index}`;
+  }
+
+  onDeviceTypeChange(): void {
+    // Device type itself is already handled via formControlName and request building.
+  }
+
+  addCustomDefaultRow(): void {
+    this.customDefaultRows = this.customDefaultRows.concat({
+      field: undefined,
+      label: undefined,
+      description: undefined,
+      controlType: 'TEXT',
+      valueType: 'string',
+      options: [],
+      value: undefined,
+    });
+  }
+
+  removeCustomDefaultRow(index: number): void {
+    this.customDefaultRows = this.customDefaultRows.filter((_, rowIndex) => rowIndex !== index);
+  }
+
+  addMappingRow(): void {
+    this.mappingRows = this.mappingRows.concat({
+      targetField: undefined,
+      sourceIndex: undefined,
+      sourceKey: undefined,
+      sourceLabel: undefined,
+      sampleValue: undefined,
+    });
+  }
+
+  removeMappingRow(index: number): void {
+    this.mappingRows = this.mappingRows.filter((_, rowIndex) => rowIndex !== index);
+  }
+
+  onSourceMappingChange(row: MappingRowVm): void {
+    const selectedIndex = Number(row.sourceIndex);
+    if (!selectedIndex || !this.preview) {
+      row.sourceIndex = undefined;
+      row.sourceKey = undefined;
+      row.sourceLabel = undefined;
+      row.sampleValue = undefined;
+      return;
+    }
+
+    const column = (this.preview.columns || [])[selectedIndex - 1];
+    row.sourceIndex = selectedIndex;
+    row.sourceKey = column?.field;
+    row.sourceLabel = column?.header || column?.field;
+    row.sampleValue = column ? this.getSourceColumnSampleValue(column, this.preview.sampleRows || []) : undefined;
+  }
+
+  onCustomDefaultFieldChange(row: CustomDefaultRowVm): void {
+    const definition = this.getDefaultFieldDefinition(row.field);
+    row.label = definition ? this.getDisplayLabel(definition) : undefined;
+    row.description = definition?.description;
+    row.controlType = definition?.controlType || 'TEXT';
+    row.valueType = definition?.valueType || 'string';
+    row.options = (definition?.options || []).map(option => ({ label: option.label, value: option.value }));
+    row.value = row.controlType === 'SELECT' ? row.options?.[0]?.value : undefined;
   }
 
   getTargetFieldLabel(field: string): string {
@@ -332,7 +425,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
       return field;
     }
     const item = this.preview.targetFields.find(target => target.field === field);
-    return item ? item.label : field;
+    return item ? this.getDisplayLabel(item) : field;
   }
 
   private async applySelectedProfile(): Promise<void> {
@@ -341,9 +434,10 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
       this.activeProfile = undefined;
       this.setupForm.patchValue({ profileName: '' });
       if (!this.isTemplateMode) {
-        this.mappingRows = this.mappingRows.map(row => ({ ...row, targetField: undefined }));
+        this.mappingRows = [];
         this.defaultFields = this.buildDefaultFields(this.preview?.targetFields || []);
       }
+      this.customDefaultRows = [];
       return;
     }
 
@@ -366,23 +460,13 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     }
   }
 
-  private buildMappingRows(preview: ImportPreviewResponseDto): MappingRowVm[] {
-    const firstSample = preview.sampleRows && preview.sampleRows.length > 0 ? preview.sampleRows[0] : {};
-    return (preview.columns || []).map((column, index) => ({
-      sourceIndex: index + 1,
-      sourceKey: column.field,
-      sourceLabel: column.header || column.field,
-      sampleValue: firstSample ? firstSample[column.field] : '',
-      targetField: undefined,
-    }));
-  }
-
   private buildDefaultFields(targetFields: ImportTargetFieldDto[]): DefaultFieldVm[] {
     return (targetFields || [])
       .filter(field => field.required)
+      .filter(field => !this.excludedDefaultFields.includes(field.field))
       .map(field => ({
         field: field.field,
-        label: field.label,
+        label: this.getDisplayLabel(field),
         description: field.description,
         controlType: field.controlType,
         valueType: field.valueType,
@@ -392,12 +476,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
   }
 
   private applySavedMappings(mappings: ImportMappingItemDto[]): void {
-    const mappingBySourceIndex = new Map<number, ImportMappingItemDto>();
-    (mappings || []).forEach(mapping => mappingBySourceIndex.set(mapping.sourceIndex, mapping));
-    this.mappingRows = this.mappingRows.map(row => ({
-      ...row,
-      targetField: mappingBySourceIndex.get(row.sourceIndex)?.targetField,
-    }));
+    this.mappingRows = (mappings || []).map(mapping => this.createMappingRow(mapping.targetField, mapping.sourceIndex));
   }
 
   private applySavedDefaults(defaultValues: ImportFieldDefaultDto[]): void {
@@ -407,6 +486,11 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
       ...field,
       value: valuesByField.get(field.field) || field.value || (field.controlType === 'SELECT' ? field.options?.[0]?.value : undefined),
     }));
+    const requiredFieldNames = new Set(this.defaultFields.map(field => field.field));
+    this.customDefaultRows = (defaultValues || [])
+      .filter(item => !!item.targetField)
+      .filter(item => !requiredFieldNames.has(item.targetField))
+      .map(item => this.createCustomDefaultRow(item.targetField, item.value));
   }
 
   private buildExecutionRequest(): ImportExecutionRequestDto {
@@ -436,6 +520,21 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     });
   }
 
+  private async loadProfiles(): Promise<void> {
+    const defaultOption = { label: this.translate.instant('No saved profile'), value: undefined };
+    this.profiles = [defaultOption];
+
+    try {
+      const profiles = await this.importUserCardService.getProfiles();
+      this.profiles = [defaultOption].concat((profiles || []).map(profile => ({
+        label: profile.name,
+        value: profile.id,
+      })));
+    } catch {
+      this.profiles = [defaultOption];
+    }
+  }
+
   private setDeviceTypes(options?: Array<{ label: string; value: string }>): void {
     const normalizedOptions = (options || []).map(option => ({
       label: option.label,
@@ -457,10 +556,10 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
 
   getSelectedMappings(): ImportMappingItemDto[] {
     return this.mappingRows
-      .filter(row => !!this.normalizeTargetField(row.targetField))
+      .filter(row => this.isMappingRowComplete(row))
       .map(row => ({
-        sourceIndex: row.sourceIndex,
-        sourceKey: row.sourceKey,
+        sourceIndex: row.sourceIndex as number,
+        sourceKey: row.sourceKey as string,
         targetField: this.normalizeTargetField(row.targetField) as string,
       }));
   }
@@ -479,13 +578,40 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     return normalized ? normalized : undefined;
   }
 
+  private isMappingRowEmpty(row: MappingRowVm): boolean {
+    return !this.normalizeTargetField(row.targetField) && !row.sourceIndex;
+  }
+
+  private isMappingRowComplete(row: MappingRowVm): boolean {
+    return !!this.normalizeTargetField(row.targetField) && !!row.sourceIndex;
+  }
+
+  private isCustomDefaultRowEmpty(row: CustomDefaultRowVm): boolean {
+    return !row.field && !this.normalizeFieldValue(row.value);
+  }
+
+  private isCustomDefaultRowComplete(row: CustomDefaultRowVm): boolean {
+    return !!row.field && !!this.normalizeFieldValue(row.value);
+  }
+
   getSelectedDefaultValues(): ImportFieldDefaultDto[] {
-    return this.defaultFields
+    const defaultValues = this.defaultFields
       .filter(field => !!this.normalizeFieldValue(field.value))
       .map(field => ({
         targetField: field.field,
         value: this.normalizeFieldValue(field.value) as string,
       }));
+
+    this.customDefaultRows
+      .filter(row => !!row.field && !!this.normalizeFieldValue(row.value))
+      .forEach(row => {
+        defaultValues.push({
+          targetField: row.field as string,
+          value: this.normalizeFieldValue(row.value) as string,
+        });
+      });
+
+    return defaultValues;
   }
 
   private getMissingRequiredFields(): ImportTargetFieldDto[] {
@@ -506,14 +632,115 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
 
     const currentValues = new Map<string, string>();
     this.defaultFields.forEach(field => currentValues.set(field.field, field.value || ''));
-    this.defaultFields = requiredFields.map(field => ({
+    this.defaultFields = requiredFields
+      .filter(field => !this.excludedDefaultFields.includes(field.field))
+      .map(field => ({
       field: field.field,
-      label: field.label,
+      label: this.getDisplayLabel(field),
       description: field.description,
       controlType: field.controlType,
       valueType: field.valueType,
       options: (field.options || []).map(option => ({ label: option.label, value: option.value })),
       value: currentValues.get(field.field) || (field.controlType === 'SELECT' ? field.options?.[0]?.value : undefined),
     }));
+  }
+
+  get customDefaultFieldOptions(): SelectItem[] {
+    return (this.preview?.targetFields || [])
+      .filter(field => !this.excludedDefaultFields.includes(field.field))
+      .map(field => ({
+        label: this.getDisplayLabel(field),
+        value: field.field,
+      }));
+  }
+
+  private getDisplayLabel(field?: Pick<ImportTargetFieldDto, 'field' | 'label'>): string {
+    if (!field) {
+      return '';
+    }
+    if (field.field === 'profileCode') {
+      return this.translate.instant('Profile');
+    }
+    return field.label || field.field;
+  }
+
+  private createMappingRow(targetField?: string, sourceIndex?: number): MappingRowVm {
+    const normalizedSourceIndex = sourceIndex ? Number(sourceIndex) : undefined;
+    const column = normalizedSourceIndex && this.preview ? (this.preview.columns || [])[normalizedSourceIndex - 1] : undefined;
+    return {
+      targetField,
+      sourceIndex: normalizedSourceIndex,
+      sourceKey: column?.field,
+      sourceLabel: column?.header || column?.field,
+      sampleValue: column ? this.getSourceColumnSampleValue(column, this.preview?.sampleRows || []) : undefined,
+    };
+  }
+
+  private buildSourceColumnOptionLabel(column: { field: string; header?: string }, sampleRows: any[]): string {
+    const label = column.header || column.field;
+    const exampleValue = this.getSourceColumnSampleValue(column, sampleRows);
+    const normalizedExampleValue = exampleValue === null || exampleValue === undefined ? '' : String(exampleValue).trim();
+    return normalizedExampleValue ? `${label} - ${normalizedExampleValue}` : label;
+  }
+
+  private getSourceColumnSampleValue(column: { field: string; header?: string }, sampleRows: any[]): string | undefined {
+    if (!column?.field || !sampleRows || sampleRows.length === 0) {
+      return undefined;
+    }
+
+    const candidateRows = sampleRows.slice(0, 2);
+    let fallbackValue: string | undefined;
+
+    for (const row of candidateRows) {
+      const rawValue = row ? row[column.field] : undefined;
+      const value = rawValue === null || rawValue === undefined ? '' : String(rawValue).trim();
+      if (!value) {
+        continue;
+      }
+      if (!fallbackValue) {
+        fallbackValue = value;
+      }
+      if (!this.matchesColumnLabel(value, column)) {
+        return value;
+      }
+    }
+
+    return fallbackValue;
+  }
+
+  private matchesColumnLabel(value: string, column: { field: string; header?: string }): boolean {
+    const normalizedValue = this.normalizeComparisonValue(value);
+    if (!normalizedValue) {
+      return false;
+    }
+
+    const normalizedHeader = this.normalizeComparisonValue(column.header);
+    const normalizedField = this.normalizeComparisonValue(column.field);
+    return normalizedValue === normalizedHeader || normalizedValue === normalizedField;
+  }
+
+  private normalizeComparisonValue(value?: string): string {
+    return (value || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
+  }
+
+  private getDefaultFieldDefinition(field?: string): ImportTargetFieldDto | undefined {
+    if (!field || !this.preview) {
+      return undefined;
+    }
+    return (this.preview.targetFields || []).find(targetField => targetField.field === field);
+  }
+
+  private createCustomDefaultRow(field: string, value?: string): CustomDefaultRowVm {
+    const definition = this.getDefaultFieldDefinition(field);
+    const options = (definition?.options || []).map(option => ({ label: option.label, value: option.value }));
+    return {
+      field,
+      label: definition ? this.getDisplayLabel(definition) : field,
+      description: definition?.description,
+      controlType: definition?.controlType || 'TEXT',
+      valueType: definition?.valueType || 'string',
+      options,
+      value: value || (definition?.controlType === 'SELECT' ? definition.options?.[0]?.value : undefined),
+    };
   }
 }

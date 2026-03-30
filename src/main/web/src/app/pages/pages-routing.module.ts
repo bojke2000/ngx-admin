@@ -9,6 +9,7 @@ import { ExportAdoComponent } from "./import-export/export-ado.component";
 import { ExportUserCardComponent } from "./import-export/export-user-card.component";
 import { ImportAdoComponent } from "./import-export/import-ado.component";
 import { ImportUserCardComponent } from "./import-export/import-user-card.component";
+import { ImportLogFailuresComponent } from "./import-log/import-log-failures.component";
 import { TemplateComponent } from "./import-export/template.component";
 import { ImportLogComponent } from "./import-log/import-log.component";
 import { LogfileComponent } from "./logfile/logfile.component";
@@ -100,6 +101,10 @@ const routes: Routes = [
       {
         path: "import-log",
         component: ImportLogComponent,
+      },
+      {
+        path: "import-log/:id/failures",
+        component: ImportLogFailuresComponent,
       },
       {
         path: "zone-device",

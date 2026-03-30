@@ -6,6 +6,7 @@ import { DialogModule } from 'primeng/dialog';
 import {VirtualScrollerModule} from 'primeng/virtualscroller';
 import { HttpClient } from '@angular/common/http';
 import { ImportExportModule } from './import-export/import-export.module';
+import { ImportLogModule } from './import-log/import-log.module';
 import { NbMenuModule } from '@nebular/theme';
 import { NgModule } from '@angular/core';
 import { PagesComponent } from './pages.component';
@@ -34,6 +35,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AccountManagementModule,
     AlarmModule,
     ImportExportModule,
+    ImportLogModule,
     TranslateModule.forRoot({
       loader: {
           provide: TranslateLoader,

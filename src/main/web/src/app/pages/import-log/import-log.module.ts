@@ -16,6 +16,7 @@ import { PanelModule } from "primeng/panel";
 import { TableModule } from "primeng/table";
 import { ThemeModule } from "../../@theme/theme.module";
 import { ToolboxComponentsModule } from "../../libs/toolbox-components/toolbox-components.module";
+import { ImportLogFailuresComponent } from "./import-log-failures.component";
 import { ImportLogComponent } from "./import-log.component";
 import { MultiSelectModule } from 'primeng/multiselect';
 
@@ -52,6 +53,6 @@ export function HttpLoaderFactory(http: HttpClient) {
       },
     }),
   ],
-  declarations: [ImportLogComponent],
+  declarations: [ImportLogComponent, ImportLogFailuresComponent],
 })
 export class ImportLogModule {}

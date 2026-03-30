@@ -17,7 +17,7 @@
                 <p-dropdown formControlName="city" [options]="cities" [style]="{'width':'100%'}"></p-dropdown>
               </div>
 
-              <div class="field-card">
+              <div *ngIf="!isTemplateMode" class="field-card">
                 <label>{{ 'Device type' | translate }}</label>
                 <p-dropdown formControlName="deviceType" [options]="deviceTypes" [style]="{'width':'100%'}"></p-dropdown>
               </div>
@@ -30,6 +30,7 @@
               <div class="field-card">
                 <label>{{ 'Saved mapping profile' | translate }}</label>
                 <p-dropdown formControlName="profileId" [options]="profiles" [showClear]="true"
+                  (onShow)="refreshProfiles()"
                   (onChange)="onProfileChange()" [style]="{'width':'100%'}"></p-dropdown>
               </div>
 
@@ -87,12 +88,12 @@
               </div>
               <div class="summary-item">
                 <span class="summary-label">{{ 'Preview rows' | translate }}</span>
-                <strong>{{ preview.sampleRows.length }}</strong>
+                <strong>{{ previewRowCount }}</strong>
               </div>
             </div>
 
-            <div *ngIf="preview?.sampleRows?.length" class="table-shell">
-              <p-table [value]="preview.sampleRows" [columns]="preview.columns" [scrollable]="true" scrollHeight="18rem">
+            <div *ngIf="previewRows.length" class="table-shell">
+              <p-table [value]="previewRows" [columns]="preview.columns" [scrollable]="true" scrollHeight="18rem">
                 <ng-template pTemplate="header" let-columns>
                   <tr>
                     <th *ngFor="let col of columns">{{ col.header }}</th>
@@ -120,19 +121,29 @@
               <p>{{ 'Only map columns you want to import. Unmapped optional fields are ignored.' | translate }}</p>
             </div>
 
-            <div class="mapping-list" *ngIf="mappingRows.length">
-              <div class="mapping-row" *ngFor="let row of mappingRows; trackBy: trackBySourceIndex">
+            <div class="mapping-list" *ngIf="preview">
+              <div class="mapping-row">
                 <div class="mapping-source">
-                  <div class="mapping-title">{{ row.sourceLabel }}</div>
-                  <div class="mapping-sample">{{ row.sampleValue || '-' }}</div>
+                  <div class="mapping-title">{{ 'INSA field' | translate }}</div>
+                  <div class="mapping-sample">{{ 'Use + to add a mapping row, then choose the INSA field.' | translate }}</div>
                 </div>
 
-                <div class="mapping-arrow">→</div>
-
                 <div class="mapping-target">
+                  <div class="mapping-target-header">
+                    <div>
+                      <div class="mapping-title">{{ 'Source column' | translate }}</div>
+                      <div class="mapping-sample">{{ 'Choose one parsed column from the uploaded file.' | translate }}</div>
+                    </div>
+                    <button nbButton status="success" size="small" type="button" (click)="addMappingRow()">+</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mapping-row" *ngFor="let row of mappingRows; let i = index; trackBy: trackByMappingRow">
+                <div class="mapping-source">
                   <p-dropdown
                     [options]="targetFieldOptions"
-                    name="targetField{{ row.sourceIndex }}"
+                    name="targetField{{ i }}"
                     placeholder="{{ 'Select INSA field' | translate }}"
                     [showClear]="true"
                     appendTo="body"
@@ -141,10 +152,32 @@
                     [style]="{'width':'100%'}">
                   </p-dropdown>
                 </div>
+
+                <div class="mapping-target mapping-target-row">
+                  <div class="mapping-target-controls">
+                    <p-dropdown
+                      [options]="sourceColumnOptions"
+                      name="sourceColumn{{ i }}"
+                      placeholder="{{ 'Select source column' | translate }}"
+                      [showClear]="true"
+                      appendTo="body"
+                      [(ngModel)]="row.sourceIndex"
+                      (onChange)="onSourceMappingChange(row)"
+                      [ngModelOptions]="{standalone: true}"
+                      [style]="{'width':'100%'}">
+                    </p-dropdown>
+
+                    <button nbButton status="danger" size="small" type="button" (click)="removeMappingRow(i)">-</button>
+                  </div>
+
+                  <div class="mapping-sample" *ngIf="row.sourceLabel || row.sampleValue">
+                    {{ row.sourceLabel || '-' }}: {{ row.sampleValue || '-' }}
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div *ngIf="!mappingRows.length" class="empty-state">
+            <div *ngIf="!preview" class="empty-state">
               {{ 'Upload a file first to map its columns.' | translate }}
             </div>
 
@@ -177,6 +210,23 @@
             </div>
 
             <div class="default-list">
+              <div *ngIf="isTemplateMode" class="default-row">
+                <div class="default-meta">
+                  <div class="mapping-title">{{ 'Device type' | translate }}</div>
+                  <div class="mapping-sample">{{ 'Select fixed device type for this import template.' | translate }}</div>
+                </div>
+
+                <div class="default-input">
+                  <p-dropdown
+                    [options]="deviceTypes"
+                    formControlName="deviceType"
+                    (onChange)="onDeviceTypeChange()"
+                    appendTo="body"
+                    [style]="{'width':'100%'}">
+                  </p-dropdown>
+                </div>
+              </div>
+
               <div class="default-row" *ngFor="let field of defaultFields; trackBy: trackByField">
                 <div class="default-meta">
                   <div class="mapping-title">{{ field.label }}</div>
@@ -198,6 +248,54 @@
                     [(ngModel)]="field.value"
                     [ngModelOptions]="{standalone: true}"
                     [placeholder]="field.label" />
+                </div>
+              </div>
+
+              <div *ngIf="isTemplateMode" class="default-row">
+                <div class="default-meta">
+                  <div class="mapping-title">{{ 'Additional fixed values' | translate }}</div>
+                  <div class="mapping-sample">{{ 'Use + to add any field from the Device screen and set a fixed value.' | translate }}</div>
+                </div>
+
+                <div class="default-input" style="display:flex; justify-content:flex-end;">
+                  <button nbButton status="success" size="small" type="button" (click)="addCustomDefaultRow()">+</button>
+                </div>
+              </div>
+
+              <div class="default-row" *ngFor="let row of customDefaultRows; let i = index; trackBy: trackByCustomDefaultRow">
+                <div class="default-meta">
+                  <p-dropdown
+                    [options]="customDefaultFieldOptions"
+                    name="customDefaultField{{ i }}"
+                    appendTo="body"
+                    [(ngModel)]="row.field"
+                    (onChange)="onCustomDefaultFieldChange(row)"
+                    [ngModelOptions]="{standalone: true}"
+                    [showClear]="true"
+                    [style]="{'width':'100%'}"
+                    placeholder="{{ 'Select field' | translate }}">
+                  </p-dropdown>
+                  <div class="mapping-sample" *ngIf="row.description">{{ row.description }}</div>
+                </div>
+
+                <div class="default-input" style="display:flex; gap:0.5rem; align-items:center;">
+                  <p-dropdown *ngIf="row.controlType === 'SELECT'"
+                    [options]="row.options"
+                    name="customDefaultValue{{ i }}"
+                    appendTo="body"
+                    [(ngModel)]="row.value"
+                    [ngModelOptions]="{standalone: true}"
+                    [style]="{'width':'100%'}">
+                  </p-dropdown>
+
+                  <input *ngIf="row.controlType !== 'SELECT'" pInputText
+                    name="customDefaultValue{{ i }}"
+                    [(ngModel)]="row.value"
+                    [ngModelOptions]="{standalone: true}"
+                    [placeholder]="row.label || ('Value' | translate)"
+                    style="width:100%;" />
+
+                  <button nbButton status="danger" size="small" type="button" (click)="removeCustomDefaultRow(i)">-</button>
                 </div>
               </div>
             </div>

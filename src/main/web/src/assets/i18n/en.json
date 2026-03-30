@@ -18,6 +18,7 @@
   "Choose a saved import template, upload a file and send data to backend import.": "Choose a saved import template, upload a file and send data to backend import.",
   "City": "City",
   "Device type": "Device type",
+  "Select fixed device type for this import template.": "Select fixed device type for this import template.",
   "File type": "File type",
   "Saved mapping profile": "Saved mapping profile",
   "Profile name to save": "Profile name to save",

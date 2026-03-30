@@ -199,6 +199,7 @@
   "Choose import context and optionally reuse a saved mapping profile.": "Izaberite kontekst uvoza i po želji iskoristite sačuvani profil mapiranja.",
   "Choose a saved import template, upload a file and send data to backend import.": "Izaberite sačuvani import template, otpremite fajl i pošaljite podatke backend importu.",
   "Device type": "Tip uređaja",
+  "Select fixed device type for this import template.": "Izaberite fiksni tip uređaja za ovaj import template.",
   "File type": "Tip fajla",
   "Saved mapping profile": "Sačuvani profil mapiranja",
   "Profile name to save": "Naziv profila za čuvanje",

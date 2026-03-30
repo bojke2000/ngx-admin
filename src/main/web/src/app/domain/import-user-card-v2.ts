@@ -31,6 +31,7 @@ export interface ImportPreviewResponseDto {
   originalFileName: string;
   fileType: string;
   delimiter: string;
+  deviceTypeOptions?: ImportFieldOptionDto[];
   columns: Column[];
   sampleRows: any[];
   availableTargetFields: { [key: string]: string };

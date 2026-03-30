@@ -6,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { AbstractComponent } from '../../AbstractComponent';
 import { CityService } from '../../service/city.service';
-import { Grid } from '../../domain/grid';
+import { DeviceTypeService } from '../../service/device-type.service';
 import { ImportUserCardService } from '../../service/import-user-card.service';
 import {
   ImportExecutionRequestDto,
@@ -56,6 +56,7 @@ interface DefaultFieldStatusVm {
 })
 export class ImportUserCardComponent extends AbstractComponent implements OnInit {
   private readonly requiredMappingFields = ['customerId', 'deviceId'];
+  private readonly defaultDeviceType = 0;
   fileTypes: SelectItem[] = [];
   deviceTypes: SelectItem[] = [];
   cities: SelectItem[] = [];
@@ -84,6 +85,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     private router: Router,
     private route: ActivatedRoute,
     private cityService: CityService,
+    private deviceTypeService: DeviceTypeService,
     private importUserCardService: ImportUserCardService,
     private fb: FormBuilder,
   ) {
@@ -94,7 +96,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     this.mode = this.route.snapshot.data['mode'] === 'template' ? 'template' : 'import';
     this.setupForm = this.fb.group({
       city: [undefined, [Validators.required]],
-      deviceType: [Grid.USER_CARD, [Validators.required]],
+      deviceType: [this.defaultDeviceType, [Validators.required]],
       fileType: ['SEMI-COL', [Validators.required]],
       profileId: [undefined, this.isTemplateMode ? [] : [Validators.required]],
       profileName: [''],
@@ -114,9 +116,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
       { label: this.translate.instant('DBF'), value: 'DBF' },
     ];
 
-    this.deviceTypes = [
-      { label: this.translate.instant('User Card'), value: Grid.USER_CARD },
-    ];
+    this.loadDeviceTypes();
 
     this.cityService.getCitiesAsOptions().then(cities => {
       this.cities = cities || [];
@@ -236,6 +236,9 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
         this.setupForm.value.city,
       );
       this.preview = preview;
+      if (preview?.deviceTypeOptions && preview.deviceTypeOptions.length > 0) {
+        this.setDeviceTypes(preview.deviceTypeOptions);
+      }
       this.targetFieldOptions = (preview.targetFields || []).map(field => ({
         label: this.requiredMappingFields.includes(field.field) ? `${field.label} *` : field.label,
         value: field.field,
@@ -425,6 +428,31 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
       mappings: this.getSelectedMappings(),
       defaultValues: this.getSelectedDefaultValues(),
     };
+  }
+
+  private loadDeviceTypes(): void {
+    this.deviceTypeService.getDeviceTypesAsOptions().then(options => {
+      this.setDeviceTypes(options || []);
+    });
+  }
+
+  private setDeviceTypes(options?: Array<{ label: string; value: string }>): void {
+    const normalizedOptions = (options || []).map(option => ({
+      label: option.label,
+      value: parseInt(option.value, 10),
+    })).filter(option => !Number.isNaN(option.value));
+
+    this.deviceTypes = normalizedOptions;
+    if (!this.deviceTypes.length) {
+      return;
+    }
+
+    const selectedDeviceType = Number(this.setupForm?.value?.deviceType);
+    const matchingOption = this.deviceTypes.find(option => option.value === selectedDeviceType);
+    const defaultOption = this.deviceTypes.find(option => option.value === this.defaultDeviceType) || this.deviceTypes[0];
+    this.setupForm.patchValue({
+      deviceType: matchingOption ? matchingOption.value : defaultOption.value,
+    });
   }
 
   getSelectedMappings(): ImportMappingItemDto[] {

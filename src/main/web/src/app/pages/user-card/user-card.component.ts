@@ -83,6 +83,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
 
   // chart
   data = {};
+  private lastSummaryCriteriaKey: string = undefined;
 
   constructor(
     private userCardService: UserCardService,
@@ -169,55 +170,62 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
   }
 
   private getSummaryData() {
-    if (this.page === 0) {
-      this.userCardService
-        .findSumBy(this.getSearchCriteria())
-        .then((dto: UserCardUsage) => {
-          this.sumUsageCurrent = dto.usageCurrent;
-          this.sumUsageCurrentReverse = dto.usageCurrentReverse;
-          this.sumUsageCurrentMonth = dto.usageCurrentMonth;
-          this.sumUsageAverage = dto.usageAverage;
-          this.sumDiffLastRead = dto.diffLastRead;
-
-          this.data = {
-            labels: ["Usage"],
-            datasets: [
-              {
-                label: "Ukupna",
-                backgroundColor: "#9CCC65",
-                borderColor: "#7CB342",
-                data: [this.sumUsageCurrent],
-                width: "200px",
-                height: "50px",
-              },
-              {
-                label: "Mesecna",
-                backgroundColor: "#42A5F5",
-                borderColor: "#1E88E5",
-                data: [this.sumUsageCurrentMonth],
-              },
-              {
-                label: "Prosek",
-                backgroundColor: "#ffc77d",
-                borderColor: "#AFFFFF",
-                data: [this.sumUsageAverage],
-              },
-              {
-                label: "Stanje",
-                backgroundColor: "#03DAC5",
-                borderColor: "#1E88E5",
-                data: [this.sumDiffLastRead],
-              },
-              {
-                label: "Reverzna",
-                backgroundColor: "#eaed87",
-                borderColor: "#AFFFFF",
-                data: [this.sumUsageCurrentReverse],
-              },
-            ],
-          };
-        });
+    if (this.page !== 0) {
+      return;
     }
+
+    const searchCriteria = this.getSearchCriteria();
+    const summaryCriteriaKey = this.getSummaryCriteriaKey(searchCriteria);
+    if (summaryCriteriaKey === this.lastSummaryCriteriaKey) {
+      return;
+    }
+
+    this.lastSummaryCriteriaKey = summaryCriteriaKey;
+    this.userCardService.findSumBy(searchCriteria).then((dto: UserCardUsage) => {
+      this.sumUsageCurrent = dto.usageCurrent;
+      this.sumUsageCurrentReverse = dto.usageCurrentReverse;
+      this.sumUsageCurrentMonth = dto.usageCurrentMonth;
+      this.sumUsageAverage = dto.usageAverage;
+      this.sumDiffLastRead = dto.diffLastRead;
+
+      this.data = {
+        labels: ["Usage"],
+        datasets: [
+          {
+            label: "Ukupna",
+            backgroundColor: "#9CCC65",
+            borderColor: "#7CB342",
+            data: [this.sumUsageCurrent],
+            width: "200px",
+            height: "50px",
+          },
+          {
+            label: "Mesecna",
+            backgroundColor: "#42A5F5",
+            borderColor: "#1E88E5",
+            data: [this.sumUsageCurrentMonth],
+          },
+          {
+            label: "Prosek",
+            backgroundColor: "#ffc77d",
+            borderColor: "#AFFFFF",
+            data: [this.sumUsageAverage],
+          },
+          {
+            label: "Stanje",
+            backgroundColor: "#03DAC5",
+            borderColor: "#1E88E5",
+            data: [this.sumDiffLastRead],
+          },
+          {
+            label: "Reverzna",
+            backgroundColor: "#eaed87",
+            borderColor: "#AFFFFF",
+            data: [this.sumUsageCurrentReverse],
+          },
+        ],
+      };
+    });
   }
 
   private loadPage(page: number, size: number, sort?: string) {
@@ -228,9 +236,8 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
         this.userCards = this.processResponse(ngresp);
         this.totalRecords = ngresp.totalRecords;
         this.loading = false;
+        this.getSummaryData();
       });
-
-    this.getSummaryData();
   }
 
   loadUserCardsLazy(event: LazyLoadEvent) {
@@ -302,6 +309,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
 
   search() {
     this.page = 0;
+    this.lastSummaryCriteriaKey = undefined;
     this.userCardService
       .findBy(this.getSearchCriteria(), this.getPageable())
       .then((ngresp: NgPrimeGridResponse) => {
@@ -309,9 +317,8 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
         this.userCards = data;
         this.totalRecords = ngresp.totalRecords;
         this.loading = false;
+        this.getSummaryData();
       });
-
-    this.getSummaryData();
   }
 
   private processResponse(ngresp: NgPrimeGridResponse) {
@@ -397,6 +404,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
     this.sortOrder = "asc";
     this.page = 0;
     this.zoneDevice = false;
+    this.lastSummaryCriteriaKey = undefined;
     this.child.reset();
 
     this.userCardService
@@ -405,9 +413,8 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
         this.userCards = ngresp.data;
         this.totalRecords = ngresp.totalRecords;
         this.loading = false;
+        this.getSummaryData();
       });
-
-    this.getSummaryData();
   }
 
   onDisplayTypeChange(event) {}
@@ -519,5 +526,45 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
   onUserCardHeaderDblClick() {
     const metrics = document.getElementById("metrics");
     metrics.style.display = metrics.style.display == 'block' ? 'none' : 'block';
+  }
+
+  private getSummaryCriteriaKey(searchCriteria: any): string {
+    const {
+      displayType,
+      customerName,
+      customerId,
+      deviceId,
+      gsmId,
+      address,
+      route,
+      municipality,
+      readingBook,
+      usageCurrentFrom,
+      usageCurrentTo,
+      usageReverseFrom,
+      usageReverseTo,
+      dateFrom,
+      dateTo,
+      deviceType,
+    } = searchCriteria;
+
+    return JSON.stringify({
+      displayType,
+      customerName,
+      customerId,
+      deviceId,
+      gsmId,
+      address,
+      route,
+      municipality,
+      readingBook,
+      usageCurrentFrom,
+      usageCurrentTo,
+      usageReverseFrom,
+      usageReverseTo,
+      dateFrom,
+      dateTo,
+      deviceType,
+    });
   }
 }

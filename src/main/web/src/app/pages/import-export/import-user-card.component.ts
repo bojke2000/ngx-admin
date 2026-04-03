@@ -114,6 +114,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
       profileId: [undefined, this.isTemplateMode ? [] : [Validators.required]],
       profileName: [''],
       skipHeader: [false],
+      syncChirpstack: [false],
       ignoreMissingDeviceId: [true],
     });
     this.uploadForm = this.fb.group({ uploadFlag: [false, Validators.requiredTrue] });
@@ -139,6 +140,9 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     });
 
     this.loadProfiles();
+    this.setupForm.get('profileName')?.valueChanges.subscribe(value => {
+      this.onProfileNameEdited(value);
+    });
   }
 
   get hasPreview(): boolean {
@@ -287,9 +291,6 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
   }
 
   async onProfileChange(): Promise<void> {
-    if (!this.preview) {
-      return;
-    }
     await this.applySelectedProfile();
   }
 
@@ -447,17 +448,37 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
 
     try {
       const parsed = JSON.parse(profile.mappingJson) as ImportExecutionRequestDto;
-      this.applySavedMappings(parsed.mappings || []);
-      this.applySavedDefaults(parsed.defaultValues || []);
+      if (this.preview) {
+        this.applySavedMappings(parsed.mappings || []);
+        this.applySavedDefaults(parsed.defaultValues || []);
+      }
       if (parsed.skipHeader !== undefined) {
         this.setupForm.patchValue({ skipHeader: parsed.skipHeader });
       }
       if (parsed.ignoreMissingDeviceId !== undefined) {
         this.setupForm.patchValue({ ignoreMissingDeviceId: parsed.ignoreMissingDeviceId });
       }
+      if (!this.isTemplateMode && parsed.syncChirpstack !== undefined) {
+        this.setupForm.patchValue({ syncChirpstack: parsed.syncChirpstack });
+      }
     } catch {
       // Ignore invalid saved JSON and let the user map manually.
     }
+  }
+
+  private onProfileNameEdited(value: string): void {
+    if (!this.isTemplateMode || !this.activeProfile) {
+      return;
+    }
+
+    const normalizedValue = (value || '').trim();
+    const normalizedActiveName = (this.activeProfile.name || '').trim();
+    if (normalizedValue === normalizedActiveName) {
+      return;
+    }
+
+    this.activeProfile = undefined;
+    this.setupForm.patchValue({ profileId: undefined }, { emitEvent: false });
   }
 
   private buildDefaultFields(targetFields: ImportTargetFieldDto[]): DefaultFieldVm[] {
@@ -508,6 +529,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
       skipHeader: !!this.setupForm.value.skipHeader,
       cityId: this.setupForm.value.city,
       deviceType: this.setupForm.value.deviceType,
+      syncChirpstack: this.isTemplateMode ? undefined : !!this.setupForm.value.syncChirpstack,
       ignoreMissingDeviceId: !!this.setupForm.value.ignoreMissingDeviceId,
       mappings: this.getSelectedMappings(),
       defaultValues: this.getSelectedDefaultValues(),

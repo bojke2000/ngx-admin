@@ -51,6 +51,11 @@
                 <input type="checkbox" formControlName="ignoreMissingDeviceId" />
                 <span>{{ 'Ignore rows without device ID' | translate }}</span>
               </label>
+
+              <label *ngIf="!isTemplateMode" class="toggle-row">
+                <input type="checkbox" formControlName="syncChirpstack" />
+                <span>{{ 'Propagate changes to ChirpStack' | translate }}</span>
+              </label>
             </div>
 
             <div class="step-actions">

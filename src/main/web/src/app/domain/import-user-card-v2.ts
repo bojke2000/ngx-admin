@@ -83,6 +83,7 @@ export interface ImportExecutionRequestDto {
   skipHeader: boolean;
   cityId: number | string;
   deviceType: number;
+  syncChirpstack?: boolean;
   ignoreMissingDeviceId: boolean;
   mappings: ImportMappingItemDto[];
   defaultValues: ImportFieldDefaultDto[];

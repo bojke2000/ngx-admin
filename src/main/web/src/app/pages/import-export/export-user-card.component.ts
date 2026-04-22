@@ -45,7 +45,7 @@ export class ExportUserCardComponent
     });
 
     this.form1 = this.fb.group({ template: ["Export", Validators.required] });
-    this.form2 = this.fb.group({ fileType: ["0", Validators.required] });
+    this.form2 = this.fb.group({ fileType: ["0", Validators.required], noColumnNames: [false] });
     this.form3 = this.fb.group({});
 
     this.templateService
@@ -73,16 +73,19 @@ export class ExportUserCardComponent
     const { search, historySearch } = this;
 
     const fileType: string = this.form2.controls["fileType"].value;
+    const noColumnNames: boolean = this.form2.controls["noColumnNames"].value;
     const request = historySearch
       ? {
           template: this.form1.controls["template"].value,
           fileType,
+          noColumnNames,
           search,
           historySearch,
         }
       : {
           template: this.form1.controls["template"].value,
           fileType,
+          noColumnNames,
           search,
         };
 

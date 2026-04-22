@@ -1,6 +1,6 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { NbButtonModule, NbCardModule, NbSpinnerModule, NbStepperModule } from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbCheckboxModule, NbSpinnerModule, NbStepperModule } from '@nebular/theme';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -34,6 +34,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   imports: [
     NbCardModule,
     NbButtonModule,
+    NbCheckboxModule,
     NbStepperModule,
     NbSpinnerModule,
     ButtonModule,

@@ -91,8 +91,22 @@
           <div *ngIf="city">
             <div class="ui-dialog-buttonpane ui-helper-clearfix">
               <button type="button" pButton icon="fa fa-check" (click)="save()" label="Save"></button>
+              <button type="button" pButton icon="fa fa-cog" (click)="openConfigEditor()" label="Configuration"></button>
+              <button type="button" pButton icon="fa fa-close" (click)="closeDialog()" label="Close"></button>
             </div>
           </div>
+        </p-footer>
+      </p-dialog>
+
+      <p-dialog header="City Configuration" [(visible)]="displayConfigDialog" [focusOnShow]="false" [responsive]="true"
+        showEffect="fade" [modal]="true" [style]="{width: '800px', height: '600px'}">
+        <ngx-monaco-editor *ngIf="displayConfigDialog" [options]="editorOptions" [(ngModel)]="configValue" (init)="onEditorInit($event)" style="height: 400px; display: block;"></ngx-monaco-editor>
+        <div *ngIf="configError" class="ui-message ui-messages-error" style="margin-top: 8px;">
+          <i class="pi pi-times"></i> {{ configError }}
+        </div>
+        <p-footer>
+          <button type="button" pButton icon="fa fa-check" (click)="saveConfig()" label="Save"></button>
+          <button type="button" pButton icon="fa fa-close" (click)="closeConfigEditor()" label="Close"></button>
         </p-footer>
       </p-dialog>
 

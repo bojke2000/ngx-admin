@@ -27,6 +27,11 @@ export class CityComponent extends AbstractComponent implements OnInit, OnDestro
   loading: boolean;
   citySearch: string;
   displayDialog: boolean;
+  displayConfigDialog = false;
+  configValue: string = '';
+  configError: string | null = null;
+  editorOptions = { theme: 'vs', language: 'json', automaticLayout: true, minimap: { enabled: false } };
+  private monacoEditor: any = null;
 
   @ViewChild('table', { static: false }) table: Table;
 
@@ -62,6 +67,7 @@ export class CityComponent extends AbstractComponent implements OnInit, OnDestro
       phone: [''],
       email: [''],
       lang: [''],
+      config: [''],
     });
 
     const pageable = {page: 1, size: 20, sort: 'id'};
@@ -180,6 +186,7 @@ export class CityComponent extends AbstractComponent implements OnInit, OnDestro
       phone: undefined,
       email: undefined,
       lang: undefined,
+      config: undefined,
     };
 
     for (const prop in c) {
@@ -190,5 +197,73 @@ export class CityComponent extends AbstractComponent implements OnInit, OnDestro
     }
 
     return city;
+  }
+
+  onEditorInit(editor: any) {
+    this.monacoEditor = editor;
+    editor.setValue(this.configValue);
+  }
+
+  openConfigEditor() {
+    this.cityService.getCityById(this.city.id)
+      .then((fresh: City) => {
+        this.setConfigValue((fresh && fresh.config) ? fresh.config : (this.city.config || '{}'));
+        this.displayConfigDialog = true;
+        this.cdr.detectChanges();
+      })
+      .catch((err) => {
+        console.error('getCityById failed, using cached value', err);
+        this.setConfigValue(this.city.config || '{}');
+        this.displayConfigDialog = true;
+        this.cdr.detectChanges();
+      });
+  }
+
+  private setConfigValue(raw: string) {
+    try {
+      this.configValue = JSON.stringify(JSON.parse(raw), null, 2);
+    } catch {
+      this.configValue = raw;
+    }
+    if (this.monacoEditor) {
+      this.monacoEditor.setValue(this.configValue);
+    }
+  }
+
+  saveConfig() {
+    const value = this.monacoEditor ? this.monacoEditor.getValue() : this.configValue;
+    try {
+      JSON.parse(value);
+    } catch (e) {
+      this.configError = 'Invalid JSON: ' + e.message;
+      return;
+    }
+    this.configError = null;
+    const updatedCity: City = { ...this.city, config: value };
+    this.cityService.updateCity(updatedCity)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (saved: City) => {
+          this.city = saved;
+          this.cityForm.patchValue({ config: saved.config });
+          this.monacoEditor = null;
+          this.displayConfigDialog = false;
+        },
+        (err) => {
+          this.configError = 'Save failed: ' + (err.message || err.status);
+        }
+      );
+  }
+
+  closeDialog() {
+    this.cityForm.reset();
+    this.city = undefined;
+    this.displayDialog = false;
+  }
+
+  closeConfigEditor() {
+    this.configError = null;
+    this.monacoEditor = null;
+    this.displayConfigDialog = false;
   }
 }

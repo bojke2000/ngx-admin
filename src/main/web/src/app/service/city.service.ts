@@ -45,4 +45,8 @@ export class CityService extends AbstractService {
   deleteCity(city: City) {
     return super.delete(this.url, `${city.id}`);
   }
+
+  getCityById(id: number): Promise<City> {
+    return super.getById(this.url, id) as Promise<City>;
+  }
 }

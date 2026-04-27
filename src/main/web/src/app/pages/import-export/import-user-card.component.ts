@@ -66,9 +66,55 @@ interface CustomDefaultRowVm {
 })
 export class ImportUserCardComponent extends AbstractComponent implements OnInit {
   private readonly maxPreviewRows = 30;
+  readonly previewColumnWidth = 200;
   private readonly requiredMappingFields = ['customerId', 'deviceId'];
   private readonly excludedDefaultFields = ['profileCode'];
   private readonly defaultDeviceType = 0;
+  private readonly targetFieldTranslationKeys: { [field: string]: string } = {
+    customerId: 'Customer ID',
+    customerName: 'Customer name',
+    addressNo: 'Address number',
+    address: 'Address',
+    route: 'Route',
+    readingBook: 'Reading Book',
+    municipality: 'Municipality',
+    regNr: 'Register Nr.',
+    regNr2: 'Register Nr. 2',
+    deviceNo: 'Device No',
+    deviceId: 'Device ID',
+    applicationKey: 'Application Key',
+    addressNo2: 'Address number 2',
+    profileCode: 'Profile',
+    medium: 'Medium',
+    mode: 'Mode',
+    unit: 'Unit',
+    readTimestamp: 'Read Datetime',
+    usageCurrent: 'Usage Current',
+    usageCurrentReverse: 'Usage Reverse',
+    usageCurrentMonth: 'Monthly Usage',
+    usageAverage: 'Usage Average',
+    diffLastRead: 'Difference from last reading',
+    mainBattery: 'Main Battery',
+    gsmBattery: 'GSM Battery',
+    signalLevel: 'Strength of Signal',
+    alarms: 'Alarms',
+    variance: 'Variance',
+    netId: 'Net ID',
+    channel: 'Channel',
+    magneticSabotageTime: 'Magnetic sabotage time',
+    valveStatus: 'Valve status',
+    valvePosition: 'Valve position',
+    parentId: 'Superior device',
+    gsmId: 'ADOGSM-2 ID',
+    gsmLongitude: 'GSM longitude',
+    gsmLatitude: 'GSM latitude',
+    comm: 'Communication',
+    type: 'Type',
+    gsmRemarks: 'AdoGsm remarks',
+    siteRemarks: 'Site remarks',
+    customerRemarks: 'Customer remarks',
+    routeRemarks: 'Route Remarks',
+  };
   fileTypes: SelectItem[] = [];
   deviceTypes: SelectItem[] = [];
   cities: SelectItem[] = [];
@@ -236,6 +282,11 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
 
   get previewRowCount(): number {
     return this.previewRows.length;
+  }
+
+  get previewTableMinWidth(): string {
+    const columnCount = this.preview?.columns?.length || 1;
+    return `${columnCount * this.previewColumnWidth}px`;
   }
 
   get profileModeLabel(): string {
@@ -680,10 +731,8 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     if (!field) {
       return '';
     }
-    if (field.field === 'profileCode') {
-      return this.translate.instant('Profile');
-    }
-    return field.label || field.field;
+    const translationKey = this.targetFieldTranslationKeys[field.field] || field.label || field.field;
+    return this.translate.instant(translationKey);
   }
 
   private createMappingRow(targetField?: string, sourceIndex?: number): MappingRowVm {

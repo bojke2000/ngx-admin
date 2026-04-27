@@ -77,7 +77,16 @@
 .table-shell {
   border: 1px solid #e4e9f2;
   border-radius: 0.75rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
+
+.table-shell ::ng-deep .preview-table th,
+.table-shell ::ng-deep .preview-table td {
+  white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .compact-shell {

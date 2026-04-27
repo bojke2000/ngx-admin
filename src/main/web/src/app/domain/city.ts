@@ -7,4 +7,5 @@ export interface City {
   phone: string;
   email: string;
   lang: string;
+  config?: string;
 }

@@ -1,6 +1,7 @@
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { AccountManagementModule } from './account-management/account-management.module';
+import { CityModule } from './city/city.module';
 import { AlarmModule } from './alarm/alarm.module';
 import { DialogModule } from 'primeng/dialog';
 import {VirtualScrollerModule} from 'primeng/virtualscroller';
@@ -33,6 +34,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     DialogModule,
     VirtualScrollerModule,
     AccountManagementModule,
+    CityModule,
     AlarmModule,
     ImportExportModule,
     ImportLogModule,

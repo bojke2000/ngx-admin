@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NbButtonModule, NbCardModule } from '@nebular/theme';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -48,9 +49,10 @@ export function HttpLoaderFactory(http: HttpClient) {
           deps: [HttpClient],
       },
     }),
+    MonacoEditorModule.forRoot({ baseUrl: './assets' }),
   ],
   declarations: [
     CityComponent,
   ],
 })
-export class AccountManagementModule { }
+export class CityModule { }

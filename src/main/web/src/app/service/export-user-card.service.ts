@@ -11,6 +11,9 @@ export class ExportUserCardService extends AbstractService {
   downloadUserCard(request: any) {
     const url = `${this.url}`;
     const getUrl = url.concat('?').concat(this.jsonToHttpParams(request));
-    return this.download(getUrl);
+    return this.http.get(getUrl, {
+      observe: 'response',
+      responseType: 'arraybuffer',
+    });
    }
 }

@@ -34,9 +34,13 @@
                   (onChange)="onProfileChange()" [style]="{'width':'100%'}"></p-dropdown>
               </div>
 
-              <div *ngIf="isTemplateMode" class="field-card">
+              <div *ngIf="isTemplateMode || activeProfile" class="field-card">
                 <label>{{ 'Profile name to save' | translate }}</label>
                 <input pInputText formControlName="profileName" [placeholder]="'Import 1' | translate" />
+                <button *ngIf="activeProfile" nbButton status="info" size="small" type="button"
+                  (click)="onRenameProfile()" [disabled]="!canRenameProfile">
+                  {{ 'Rename profile' | translate }}
+                </button>
                 <small class="field-help">{{ profileModeLabel | translate }}</small>
               </div>
             </div>
@@ -231,8 +235,9 @@
                 <div class="default-input">
                   <p-dropdown
                     [options]="deviceTypes"
-                    formControlName="deviceType"
-                    (onChange)="onDeviceTypeChange()"
+                    [(ngModel)]="templateDeviceType"
+                    (ngModelChange)="onTemplateDeviceTypeChange($event)"
+                    [ngModelOptions]="{standalone: true}"
                     appendTo="body"
                     [style]="{'width':'100%'}">
                   </p-dropdown>
@@ -340,7 +345,7 @@
               </div>
               <div class="summary-item">
                 <span class="summary-label">{{ 'Profile name' | translate }}</span>
-                <strong>{{ setupForm.value.profileName || '-' }}</strong>
+                <strong>{{ effectiveProfileName || '-' }}</strong>
               </div>
               <div class="summary-item">
                 <span class="summary-label">{{ 'Default values' | translate }}</span>
@@ -393,7 +398,7 @@
 
             <div class="step-actions">
               <button nbButton nbStepperPrevious>{{ 'Prev' | translate }}</button>
-              <button *ngIf="isTemplateMode" nbButton status="success" type="button" (click)="onSaveTemplate()" [disabled]="!canValidate">{{ 'Save import template' | translate }}</button>
+              <button *ngIf="isTemplateMode" nbButton status="success" type="button" (click)="onSaveTemplate()" [disabled]="!canValidate || !hasProfileName">{{ 'Save import template' | translate }}</button>
               <button *ngIf="!isTemplateMode" nbButton status="info" type="button" (click)="onValidate()" [disabled]="!canValidate">{{ 'Validate' | translate }}</button>
               <button *ngIf="!isTemplateMode" nbButton status="success" type="button" (click)="onImport()" [disabled]="!canExecute">{{ 'Import' | translate }}</button>
             </div>

@@ -68,7 +68,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
   private readonly maxPreviewRows = 30;
   readonly previewColumnWidth = 200;
   private readonly requiredMappingFields = ['customerId', 'deviceId'];
-  private readonly excludedDefaultFields = ['profileCode'];
+  private readonly excludedDefaultFields: string[] = [];
   private readonly defaultDeviceType = 0;
   private readonly targetFieldTranslationKeys: { [field: string]: string } = {
     customerId: 'Customer ID',
@@ -130,6 +130,8 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
   uploadedFileName?: string;
   preview?: ImportPreviewResponseDto;
   validationResult?: ImportValidationResultDto;
+  templateDeviceType?: number;
+  pendingProfileName = '';
 
   mappingRows: MappingRowVm[] = [];
   defaultFields: DefaultFieldVm[] = [];
@@ -276,6 +278,21 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     return this.isTemplateMode || !!this.setupForm.value.profileId;
   }
 
+  get canRenameProfile(): boolean {
+    const profileName = this.normalizeFieldValue(this.effectiveProfileName);
+    return !!this.activeProfile
+      && !!profileName
+      && profileName !== (this.activeProfile.name || '').trim();
+  }
+
+  get hasProfileName(): boolean {
+    return !!this.normalizeFieldValue(this.effectiveProfileName);
+  }
+
+  get effectiveProfileName(): string {
+    return this.setupForm?.value?.profileName || this.pendingProfileName || this.activeProfile?.name || '';
+  }
+
   get previewRows(): any[] {
     return this.preview?.sampleRows?.slice(0, this.maxPreviewRows) || [];
   }
@@ -298,6 +315,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     if (!file) {
       return;
     }
+    this.rememberProfileName();
 
     this.loading = true;
     this.validationResult = undefined;
@@ -335,6 +353,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
       }));
 
       await this.applySelectedProfile();
+      this.restoreProfileNameIfNeeded();
       this.uploadForm.patchValue({ uploadFlag: true });
     } finally {
       this.loading = false;
@@ -384,10 +403,32 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     if (!this.preview) {
       return;
     }
+    this.restoreProfileNameIfNeeded();
 
     this.loading = true;
     try {
       const profile = await this.importUserCardService.saveProfile(this.buildExecutionRequest());
+      this.activeProfile = profile;
+      this.setupForm.patchValue({
+        profileId: profile.id,
+        profileName: profile.name,
+      });
+      await this.loadProfiles();
+    } finally {
+      this.loading = false;
+    }
+  }
+
+  async onRenameProfile(): Promise<void> {
+    const profileId = this.activeProfile?.id || this.setupForm.value.profileId;
+    const profileName = this.normalizeFieldValue(this.effectiveProfileName);
+    if (!profileId || !profileName) {
+      return;
+    }
+
+    this.loading = true;
+    try {
+      const profile = await this.importUserCardService.renameProfile(profileId, profileName);
       this.activeProfile = profile;
       this.setupForm.patchValue({
         profileId: profile.id,
@@ -413,6 +454,10 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
 
   onDeviceTypeChange(): void {
     // Device type itself is already handled via formControlName and request building.
+  }
+
+  onTemplateDeviceTypeChange(deviceType: number): void {
+    this.setSelectedDeviceType(deviceType);
   }
 
   addCustomDefaultRow(): void {
@@ -484,10 +529,13 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     const profileId = this.setupForm.value.profileId;
     if (!profileId) {
       this.activeProfile = undefined;
-      this.setupForm.patchValue({ profileName: '' });
       if (!this.isTemplateMode) {
+        this.setupForm.patchValue({ profileName: '' });
+        this.pendingProfileName = '';
         this.mappingRows = [];
         this.defaultFields = this.buildDefaultFields(this.preview?.targetFields || []);
+      } else {
+        this.restoreProfileNameIfNeeded();
       }
       this.customDefaultRows = [];
       return;
@@ -495,6 +543,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
 
     const profile = await this.importUserCardService.getProfile(profileId);
     this.activeProfile = profile;
+    this.pendingProfileName = profile.name || '';
     this.setupForm.patchValue({ profileName: profile.name });
 
     try {
@@ -509,6 +558,9 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
       if (parsed.ignoreMissingDeviceId !== undefined) {
         this.setupForm.patchValue({ ignoreMissingDeviceId: parsed.ignoreMissingDeviceId });
       }
+      if (parsed.deviceType !== undefined && parsed.deviceType !== null) {
+        this.setSelectedDeviceType(parsed.deviceType);
+      }
       if (!this.isTemplateMode && parsed.syncChirpstack !== undefined) {
         this.setupForm.patchValue({ syncChirpstack: parsed.syncChirpstack });
       }
@@ -517,19 +569,9 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     }
   }
 
-  private onProfileNameEdited(value: string): void {
-    if (!this.isTemplateMode || !this.activeProfile) {
-      return;
-    }
-
-    const normalizedValue = (value || '').trim();
-    const normalizedActiveName = (this.activeProfile.name || '').trim();
-    if (normalizedValue === normalizedActiveName) {
-      return;
-    }
-
-    this.activeProfile = undefined;
-    this.setupForm.patchValue({ profileId: undefined }, { emitEvent: false });
+  private onProfileNameEdited(value?: string): void {
+    this.pendingProfileName = value || '';
+    // A changed name is an intentional rename for the selected profile.
   }
 
   private buildDefaultFields(targetFields: ImportTargetFieldDto[]): DefaultFieldVm[] {
@@ -572,7 +614,7 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
 
     return {
       profileId: this.setupForm.value.profileId,
-      profileName: this.setupForm.value.profileName,
+      profileName: this.effectiveProfileName,
       storedFileName: this.preview.storedFileName,
       originalFileName: this.preview.originalFileName,
       fileType: this.preview.fileType,
@@ -622,9 +664,16 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     const selectedDeviceType = Number(this.setupForm?.value?.deviceType);
     const matchingOption = this.deviceTypes.find(option => option.value === selectedDeviceType);
     const defaultOption = this.deviceTypes.find(option => option.value === this.defaultDeviceType) || this.deviceTypes[0];
-    this.setupForm.patchValue({
-      deviceType: matchingOption ? matchingOption.value : defaultOption.value,
-    });
+    this.setSelectedDeviceType(matchingOption ? matchingOption.value : defaultOption.value);
+  }
+
+  private setSelectedDeviceType(deviceType: number | string): void {
+    const normalizedDeviceType = Number(deviceType);
+    if (Number.isNaN(normalizedDeviceType)) {
+      return;
+    }
+    this.templateDeviceType = normalizedDeviceType;
+    this.setupForm.patchValue({ deviceType: normalizedDeviceType });
   }
 
   getSelectedMappings(): ImportMappingItemDto[] {
@@ -638,17 +687,40 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
   }
 
   private hasMappingForField(field: string): boolean {
-    return this.mappingRows.some(row => this.normalizeTargetField(row.targetField) === field);
+    const normalizedField = this.normalizeTargetField(field);
+    return this.getSelectedMappings().some(mapping => this.normalizeTargetField(mapping.targetField) === normalizedField);
   }
 
   private normalizeTargetField(targetField?: string): string | undefined {
     const normalized = (targetField || '').trim();
-    return normalized ? normalized : undefined;
+    if (!normalized) {
+      return undefined;
+    }
+    return normalized === 'profile' ? 'profileCode' : normalized;
   }
 
   private normalizeFieldValue(value?: string): string | undefined {
     const normalized = (value || '').trim();
     return normalized ? normalized : undefined;
+  }
+
+  private rememberProfileName(): void {
+    const profileName = this.setupForm?.value?.profileName;
+    if (profileName) {
+      this.pendingProfileName = profileName;
+    }
+  }
+
+  private restoreProfileNameIfNeeded(): void {
+    if (!this.isTemplateMode) {
+      return;
+    }
+    const profileName = this.normalizeFieldValue(this.setupForm?.value?.profileName)
+      || this.normalizeFieldValue(this.pendingProfileName);
+    if (profileName) {
+      this.pendingProfileName = profileName;
+      this.setupForm.patchValue({ profileName }, { emitEvent: false });
+    }
   }
 
   private isMappingRowEmpty(row: MappingRowVm): boolean {
@@ -691,22 +763,38 @@ export class ImportUserCardComponent extends AbstractComponent implements OnInit
     if (!this.preview) {
       return [];
     }
-    const statusesByField = new Map(this.defaultFieldStatuses.map(field => [field.field, field]));
+    const mappedFields = new Set(this.getSelectedMappings()
+      .map(mapping => this.normalizeTargetField(mapping.targetField))
+      .filter(field => !!field));
+    const defaultFields = new Set(this.getSelectedDefaultValues()
+      .map(defaultValue => this.normalizeTargetField(defaultValue.targetField))
+      .filter(field => !!field));
     return (this.preview.targetFields || [])
       .filter(field => field.required)
-      .filter(field => !statusesByField.get(field.field)?.satisfied);
+      .filter(field => {
+        const normalizedField = this.normalizeTargetField(field.field);
+        return !normalizedField || (!mappedFields.has(normalizedField) && !defaultFields.has(normalizedField));
+      });
+  }
+
+  private hasDefaultValueForField(field: string): boolean {
+    return this.defaultFields.some(defaultField =>
+      defaultField.field === field && !!this.normalizeFieldValue(defaultField.value))
+      || this.customDefaultRows.some(row =>
+        row.field === field && !!this.normalizeFieldValue(row.value));
   }
 
   private syncRequiredDefaultsFromValidation(): void {
-    const requiredFields = this.validationResult?.requiredUnmappedFields || [];
-    if (requiredFields.length === 0) {
+    if (!this.preview) {
       return;
     }
 
     const currentValues = new Map<string, string>();
     this.defaultFields.forEach(field => currentValues.set(field.field, field.value || ''));
-    this.defaultFields = requiredFields
+
+    this.defaultFields = (this.preview.targetFields || [])
       .filter(field => !this.excludedDefaultFields.includes(field.field))
+      .filter(field => field.required)
       .map(field => ({
       field: field.field,
       label: this.getDisplayLabel(field),

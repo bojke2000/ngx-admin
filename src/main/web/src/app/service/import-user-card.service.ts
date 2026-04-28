@@ -60,6 +60,11 @@ export class ImportUserCardService extends AbstractService {
       .toPromise();
   }
 
+  renameProfile(id: number, profileName: string) {
+    return this.http.post<ImportProfileDto>(`${this.v2Url}/profiles/${id}/rename`, { profileName }, this.httpOptions)
+      .toPromise();
+  }
+
   getProfiles() {
     return this.http.get<ImportProfileDto[]>(`${this.v2Url}/profiles`, this.httpOptions)
       .toPromise();

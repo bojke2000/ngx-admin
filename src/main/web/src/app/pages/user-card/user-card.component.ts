@@ -33,6 +33,7 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
   cols: any[] = [];
   isResisable: boolean = true;
   loading: boolean = false;
+  metricsHidden: boolean = false;
   @ViewChild("table", { static: false }) table: Table;
   selectedUserCard: UserCard;
 
@@ -518,6 +519,8 @@ export class UserCardComponent extends AbstractComponent implements OnInit {
 
   onUserCardHeaderDblClick() {
     const metrics = document.getElementById("metrics");
-    metrics.style.display = metrics.style.display == 'block' ? 'none' : 'block';
+    const hidden = metrics.style.display === 'none';
+    metrics.style.display = hidden ? 'block' : 'none';
+    this.metricsHidden = !hidden;
   }
 }

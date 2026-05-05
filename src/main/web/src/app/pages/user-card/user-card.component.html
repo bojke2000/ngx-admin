@@ -2,7 +2,14 @@
   <nb-card style="width: 100%; margin-top: -25px">
     <nb-card-body>
       <nb-card status="info">
-        <nb-card-header (dblclick)="onUserCardHeaderDblClick()">{{ "User Card" | translate }}</nb-card-header>
+        <nb-card-header (dblclick)="onUserCardHeaderDblClick()" style="display: flex; justify-content: space-between; align-items: center;">
+          <span>{{ "User Card" | translate }}</span>
+          <a
+            href="javascript:void(0)"
+            style="font-size: 0.85em; font-weight: normal;"
+            (click)="onUserCardHeaderDblClick()"
+          >{{ (metricsHidden ? "Show" : "Hide") | translate }}</a>
+        </nb-card-header>
         <nb-card-body>
           <div class="ui-g ui-fluid">
             <div class="ui-g-12" id="metrics">
